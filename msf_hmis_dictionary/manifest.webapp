@@ -1,0 +1,28 @@
+{
+	"version":"1.0.1",
+	"name":"HMIS Dictionary",
+	"description":"HMIS Dictionary",
+	"launch_path":"index.html",
+	"icons":{"16":null,
+	"48":"assets/img/Logo_48.png",
+	"128":null
+	},
+	"developer1":{
+		"url":"http://rishimsf.github.io/ResumeOnline/",
+		"name":"Rishi Sukul - MSFOCBA",
+		"email":"justRishi2@yahoo.com"
+	},
+	"developer2":{
+		"url":"http://braimbault.github.io/",
+		"name":"Bruno Raimbault - MSFOCBA",
+		"email":"raimbault.bruno@gmail.com"
+	},
+	"installs_allowed_from":null,
+	"default_locale":"en",
+	"activities": {
+		"dhis": {
+	  		"href": "*",
+			"namespace": "HMIS_Dictionary"
+		}
+	}
+}
