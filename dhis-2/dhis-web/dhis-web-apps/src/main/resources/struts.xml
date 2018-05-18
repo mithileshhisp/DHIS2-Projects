@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+		"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+		"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+	<include file="dhis-web-commons.xml" />
+
+	<package name="dhis-web-apps" extends="dhis-web-commons" namespace="/dhis-web-apps">
+		<action name="index" class="org.hisp.dhis.commons.action.NoAction">
+			<result name="success" type="redirect">index.html</result>
+		</action>
+	</package>
+
+	<package name="dhis-web-visualizer" extends="dhis-web-commons" namespace="/dhis-web-visualizer">
+		<action name="index" class="org.hisp.dhis.commons.action.NoAction">
+			<result name="success" type="redirect">index.html</result>
+		</action>
+	</package>
+
+	<package name="dhis-web-event-reports" extends="dhis-web-commons" namespace="/dhis-web-event-reports">
+		<action name="index" class="org.hisp.dhis.commons.action.NoAction">
+			<result name="success" type="redirect">index.html</result>
+		</action>
+	</package>
+
+	<package name="dhis-web-event-visualizer" extends="dhis-web-commons" namespace="/dhis-web-event-visualizer">
+		<action name="index" class="org.hisp.dhis.commons.action.NoAction">
+			<result name="success" type="redirect">index.html</result>
+		</action>
+	</package>
+
+    <!-- Pulled from Maven repository -->
+
+	<package name="dhis-web-settings" extends="dhis-web-commons" namespace="/dhis-web-settings">
+		<action name="index" class="org.hisp.dhis.commons.action.NoAction">
+			<result name="success" type="redirect">#</result>
+		</action>
+	</package>
+
+	<package name="dhis-web-maintenance" extends="dhis-web-commons" namespace="/dhis-web-maintenance">
+		<action name="index" class="org.hisp.dhis.commons.action.NoAction">
+			<result name="success" type="redirect">#</result>
+		</action>
+	</package>
+
+	<package name="dhis-web-app-management" extends="dhis-web-commons" namespace="/dhis-web-app-management">
+		<action name="index" class="org.hisp.dhis.commons.action.NoAction">
+			<result name="success" type="redirect">#</result>
+		</action>
+	</package>
+
+	<package name="dhis-web-pivot" extends="dhis-web-commons" namespace="/dhis-web-pivot">
+		<action name="index" class="org.hisp.dhis.commons.action.NoAction">
+			<result name="success" type="redirect">#</result>
+		</action>
+	</package>
+
+	<package name="dhis-web-mapping" extends="dhis-web-commons" namespace="/dhis-web-mapping">
+		<action name="index" class="org.hisp.dhis.commons.action.NoAction">
+			<result name="success" type="redirect">#</result>
+		</action>
+	</package>
+
+	<package name="dhis-web-usage-analytics" extends="dhis-web-commons" namespace="/dhis-web-usage-analytics">
+		<action name="index" class="org.hisp.dhis.commons.action.NoAction">
+			<result name="success" type="redirect">index.html</result>
+		</action>
+	</package>
+
+	<package name="dhis-web-event-capture" extends="dhis-web-commons" namespace="/dhis-web-event-capture">
+		<action name="index" class="org.hisp.dhis.commons.action.NoAction">
+			<result name="success" type="redirect">index.html</result>
+		</action>
+		<action name="cacheManifest" class="org.hisp.dhis.appcache.CacheManifestAction">
+			<param name="appPath">dhis-web-event-capture</param>
+			<param name="i18nPath">i18n</param>
+			<param name="appCache">event-capture.appcache</param>
+			<result type="stream">
+				<param name="contentType">text/cache-manifest</param>
+				<param name="inputName">inputStream</param>
+			</result>
+		</action>
+	</package>
+
+	<package name="dhis-web-tracker-capture" extends="dhis-web-commons" namespace="/dhis-web-tracker-capture">
+		<action name="index" class="org.hisp.dhis.commons.action.NoAction">
+			<result name="success" type="redirect">index.html</result>
+		</action>
+	</package>
+
+	<package name="dhis-web-cache-cleaner" extends="dhis-web-commons" namespace="/dhis-web-cache-cleaner">
+		<action name="index" class="org.hisp.dhis.commons.action.NoAction">
+			<result name="success" type="redirect">index.html</result>
+		</action>
+	</package>
+
+	<package name="dhis-web-menu-management" extends="dhis-web-commons" namespace="/dhis-web-menu-management">
+		<action name="index" class="org.hisp.dhis.commons.action.NoAction">
+			<result name="success" type="redirect">index.html</result>
+		</action>
+	</package>
+	
+	
+	<!-- Environmental Health System -->
+	<package name="dhis-web-ehs" extends="dhis-web-commons" namespace="/dhis-web-ehs">
+		<action name="index" class="org.hisp.dhis.commons.action.NoAction">
+			<result name="success" type="redirect">index.html</result>
+		</action>
+		
+		<!-- Scheduling Inspections List -->
+		<action name="schedulingInspectionsList" class="org.hisp.dhis.schedulinginspections.action.GetSchedulingInspectionsListAction">
+       		<result name="success" type="velocity">/main.vm</result>
+      		<param name="page">/dhis-web-ehs/ehs/scheduling-Inspections/schedulingInspectionsList.vm</param>
+      		<param name="menu">/dhis-web-ehs/ehs/scheduling-Inspections/menu.vm</param>
+      		<param name="javascripts">../dhis-web-ehs/ehs/scheduling-Inspections/javascript/schedulingInspections.js</param>
+      		<param name="stylesheets">../dhis-web-ehs/ehs/scheduling-Inspections/css/style.css</param>
+ 		</action>
+		
+		<!--  Add Scheduled Inspection Form -->
+	    <action name="showAddScheduledInspectionForm" class="org.hisp.dhis.schedulinginspections.action.ShowAddScheduledInspectionFormAction">
+	      <result name="success" type="velocity">/main.vm</result>
+	      <param name="page">/dhis-web-ehs/ehs/scheduling-Inspections/addScheduledInspectionForm.vm</param>
+	      <param name="menu">/dhis-web-ehs/ehs/scheduling-Inspections/menu.vm</param>
+	      <param name="javascripts">../dhis-web-ehs/ehs/scheduling-Inspections/javascript/schedulingInspections.js</param>
+	      <!--
+	      
+	      <param name="stylesheets">style/basic.css</param>
+	      <param name="anyAuthorities">F_TRACKED_ENTITY_ATTRIBUTE_PUBLIC_ADD, F_TRACKED_ENTITY_ATTRIBUTE_PRIVATE_ADD</param>
+	      -->
+	      <param name="anyAuthorities">F_SCHEDULE_INSECPTION_ADD</param>
+	    </action>
+	    
+		<!--  Add Scheduled Inspection -->
+	    <action name="addScheduledInspection" class="org.hisp.dhis.schedulinginspections.action.AddScheduledInspectionAction">
+	      <result name="success" type="redirect">schedulingInspectionsList.action?listAll=${listAll}</result>
+	      <param name="listAll">true</param>
+	      <param name="anyAuthorities">F_SCHEDULE_INSECPTION_ADD</param>	
+	    </action>	    
+	    <!--  -->
+	    
+		<!--  Update Scheduled Inspection Form -->
+	    <action name="showUpdateScheduledInspectionForm" class="org.hisp.dhis.schedulinginspections.action.ShowUpdateScheduledInspectionFormAction">
+	      <result name="success" type="velocity">/main.vm</result>
+	      <param name="page">/dhis-web-ehs/ehs/scheduling-Inspections/updateScheduledInspectionForm.vm</param>
+	      <param name="menu">/dhis-web-ehs/ehs/scheduling-Inspections/menu.vm</param>
+	      <param name="javascripts">../dhis-web-ehs/ehs/scheduling-Inspections/javascript/schedulingInspections.js</param>
+	      <param name="anyAuthorities">F_SCHEDULE_INSECPTION_UPDATE</param>
+	    </action>	
+	        
+		<!--  Update Scheduled Inspection -->
+	    <action name="updateScheduledInspection" class="org.hisp.dhis.schedulinginspections.action.UpdateScheduledInspectionAction">
+	      <result name="success" type="redirect">schedulingInspectionsList.action?listAll=${listAll}</result>
+	      <param name="anyAuthorities">F_SCHEDULE_INSECPTION_UPDATE</param>	
+	    </action>	    
+	    
+		<!--  Remove Scheduled Inspection -->
+	    <action name="removeScheduledInspection" class="org.hisp.dhis.schedulinginspections.action.RemoveScheduledInspectionAction">
+	      <result name="success" type="velocity-json">/dhis-web-commons/ajax/jsonResponseSuccess.vm</result>
+      	  <result name="error" type="velocity-json">/dhis-web-commons/ajax/jsonResponseError.vm</result>
+	      <param name="anyAuthorities">F_SCHEDULE_INSECPTION_DELETE</param>	
+	    </action>		    
+	    	   
+	    <!-- Get Program Stage List-->
+		<action name="getprogramStageList" class="org.hisp.dhis.schedulinginspections.action.GetProgramStageListAction">
+			<result name="success" type="velocity-xml">/dhis-web-ehs/ehs/scheduling-Inspections/responseProgramStageList.vm</result>
+			<param name="onExceptionReturn">plainTextError</param>
+		</action>
+		
+		<!--  TEI Attribute Details -->
+        <action name="getTEIAttributeDetails" class="org.hisp.dhis.schedulinginspections.action.GetTEIAttributeSetailsAction">
+            <result name="success" type="velocity-xml">/dhis-web-ehs/ehs/scheduling-Inspections/responseTEIAttributeDetails.vm</result>
+            <param name="onExceptionReturn">plainTextError</param>
+        </action>	    
+
+		<!--  TEI List -->
+        <action name="showTEIList" class="org.hisp.dhis.schedulinginspections.action.GetTEIListAction">
+            <result name="success" type="velocity">/content.vm</result>
+            <param name="page">/dhis-web-ehs/ehs/scheduling-Inspections/teiList.vm</param>
+        </action>
+        
+	    <!-- Get Children OrgUnit List-->
+		<action name="getChildrenOrganisationList" class="org.hisp.dhis.schedulinginspections.action.GetChildOrgUnitListAction">
+			<!--<result name="success" type="velocity-xml">/dhis-web-ehs/ehs/scheduling-Inspections/responsechildOrgUnitList.vm</result>-->
+			<result name="success" type="velocity-json">/dhis-web-ehs/ehs/scheduling-Inspections/responseJsonChildOrgUnitList.vm</result>
+			<param name="onExceptionReturn">plainTextError</param>
+		</action>
+		
+		<!-- Escalations List -->
+		<action name="escalationsList" class="org.hisp.dhis.escalations.action.GetEscalationsListAction">
+       		<result name="success" type="velocity">/main.vm</result>
+      		<param name="page">/dhis-web-ehs/ehs/escalations/escalationsList.vm</param>
+      		<param name="menu">/dhis-web-ehs/ehs/escalations/menu.vm</param>
+      		<param name="javascripts">../dhis-web-ehs/ehs/escalations/javascript/escalations.js</param>
+      		<param name="stylesheets">../dhis-web-ehs/ehs/escalations/css/style.css</param>
+ 		</action>
+ 			
+        <action name="exportToWorkBook" class="org.hisp.dhis.escalations.action.ExportToExcelAction">
+	        <result name="success" type="stream">
+	            <param name="contentType">application/vnd.ms-excel</param>
+	            <param name="inputName">inputStream</param>
+	            <param name="contentDisposition">attachment;filename="${fileName}"</param>
+	            <param name="bufferSize">1024</param>
+	        </result>
+        </action> 			
+ 			
+		<!--  Update Escalations status -->
+	    <action name="updateEscalationsStatus" class="org.hisp.dhis.escalations.action.UpdateEscalationsStatusAction">
+	      <result name="success" type="velocity-json">/dhis-web-commons/ajax/jsonResponseSuccess.vm</result>
+	    </action>		
+		
+		<!--  Update Escalations status Authorities -->
+	    <action name="updateEscalationsStatusAuthorities" class="org.hisp.dhis.commons.action.NoAction">
+	      <param name="anyAuthorities">F_ESCALATION_STATUS_UPDATE</param>
+	    </action>		
+		
+		<!--  TEI List -->
+        <action name="showMessEventConcessionierDetailsList" class="org.hisp.dhis.schedulinginspections.action.GetMessEventConcessionierDetailsListAction">
+            <result name="success" type="velocity">/content.vm</result>
+            <param name="page">/dhis-web-ehs/ehs/scheduling-Inspections/concessionierDetailsList.vm</param>
+        </action>		
+		
+		
+		<!-- Food Condemnation List -->
+		<action name="foodCondemnationList" class="org.hisp.dhis.foodcondemnation.action.GetFoodCondemnationListListAction">
+       		<result name="success" type="velocity">/main.vm</result>
+      		<param name="page">/dhis-web-ehs/ehs/foodCondemnation/foodCondemnationList.vm</param>
+      		<param name="menu">/dhis-web-ehs/ehs/foodCondemnation/menu.vm</param>
+      		<param name="javascripts">../dhis-web-ehs/ehs/foodCondemnation/javascript/foodCondemnation.js</param>
+      		<param name="stylesheets">../dhis-web-ehs/ehs/foodCondemnation/css/style.css</param>
+ 		</action>		
+		
+		
+	</package>
+</struts>

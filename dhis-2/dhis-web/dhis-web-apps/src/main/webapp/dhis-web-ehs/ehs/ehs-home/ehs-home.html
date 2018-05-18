@@ -1,0 +1,124 @@
+<style>
+    .quality_program
+    {
+        color:#3162C5;
+        cursor: pointer;
+    }
+    .quality_program:hover
+    {
+        color: black;
+        text-decoration:underline;
+    }
+    .quality_program:active
+    {
+        color:red;
+    }
+</style>
+<div id="leftBar">
+    <div class="left-bar-menu" ng-controller="LeftBarMenuController">
+        <!--
+        <ul class="nav nav-pills nav-stacked">
+            <li><a href ng-click="showHome()">{{'registration_and_data_entry'| translate}}</a></li>
+            <li><a href ng-click="showReportTypes()">{{'reports'| translate}}</a></li>
+        </ul>
+        -->
+    </div>
+</div>
+<fieldset id="mainPage">
+    <h1>{{'ehs'| translate}}</h1>
+
+    <table width="90%" class="row col-sm-12">
+        <tr>
+            <td width="30%" height="120" style="text-align: center" class="col-sm-4 ehs-home-container"   ng-if=userfoodsafetyprogram  ng-click="foodSafetyProgram()">
+                <img src="../dhis-web-ehs/images/Capture1.png"  style="height: 120px; width: 120px; cursor: pointer;"/>
+                <span style="cursor: pointer"><h2 class="quality_program">Food Safety Program </h2></span>
+            </td>
+
+            <td width="30%" height="120" style="text-align: center" class="col-sm-4 ehs-home-container"  ng-if=!userfoodsafetyprogram>
+                <img src="../dhis-web-ehs/images/Capture1.png"  style="height: 120px; width: 120px; cursor: pointer;"/>
+                <span style="cursor: pointer"><h2 class="quality_program">Food Safety Program </h2></span>
+            </td>
+
+            <td width="30%" height="120" style="text-align: center" class="col-sm-4 ehs-home-container"  ng-if=userwatersafetyprogram ng-click="waterSafetyProgram()">
+                <img src="../dhis-web-ehs/images/watersafety.png"  style="height: 120px; width: 120px; cursor: pointer;"/>
+                <span style="cursor: pointer"><h2 class="quality_program">Water Quality Program </h2></span>
+            </td>
+
+            <td width="30%" height="120" style="text-align: center" class="col-sm-4 ehs-home-container"  ng-if=!userwatersafetyprogram>
+                <img src="../dhis-web-ehs/images/watersafety.png"  style="height: 120px; width: 120px; cursor: pointer;"/>
+                <span style="cursor: pointer"><h2 class="quality_program">Water Quality Program </h2></span>
+            </td>
+
+            <td width="30%" height="120" style="text-align: center" class="col-sm-4 ehs-home-container" ng-if=useroperatorregistry>
+                <a href="../dhis-web-ehs/index.html#/operators-registration?program=ieLe1vT4Vad" onclick="javascript:window.location.reload(true)">
+                    <img src="../dhis-web-ehs/images/registryofbusinessowner.png"  style="height: 120px; width: 120px; cursor: pointer;"/>
+                </a>
+                <span style="cursor: pointer"><a href="../dhis-web-ehs/index.html#/operators-registration?program=ieLe1vT4Vad" onclick="javascript:window.location.reload(true)"><h2>Registry of Business Owners </h2></a></span>
+            </td>
+
+            <td width="30%" height="120" style="text-align: center" ng-if=!useroperatorregistry>
+                    <img src="../dhis-web-ehs/images/registryofbusinessowner.png"  style="height: 120px; width: 120px; cursor: pointer;"/>
+
+                <span style="cursor: pointer"><h2>Registry of Business Owners </h2></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td width="30%" height="120" style="text-align: center" class="col-sm-4 ehs-home-container">
+                <img src="../dhis-web-ehs/images/vectorcontrolprogram.png"  style="height: 120px; width: 120px;"/>
+                <span style="cursor: pointer"><h2>Vector Control Program </h2></span>
+            </td>
+
+            <td width="30%" height="120" style="text-align: center" class="col-sm-4 ehs-home-container">
+                <img src="../dhis-web-ehs/images/Institutionalhygiene.png"  style="height: 120px; width: 120px;"/>
+                <span style="cursor: pointer"><h2>Institutional Hygiene </h2></span>
+                <!--<h2><span class="horizontal-spacing">{{'food_safety'| translate}}</span></h2>-->
+            </td>
+
+            <td width="30%" height="120" style="text-align: center" class="col-sm-4 ehs-home-container">
+                <img src="../dhis-web-ehs/images/porthealth.png"  style="height: 120px; width: 120px;"/>
+                <span style="cursor: pointer"><h2>Port Health </h2></span>
+                <!--<h2><span class="horizontal-spacing">{{'food_safety'| translate}}</span></h2>-->
+            </td>
+        </tr>
+
+        <tr>
+            <td width="30%" height="120" style="text-align: center" class="col-sm-4 ehs-home-container" ng-if="useroperatorregistry || userwatersafetyprogram">
+                <a ng-href="../dhis-web-ehs/schedulingInspectionsList.action?listAll=true&fromwhere=dashboard">
+                    <img src="../dhis-web-ehs/images/scheduling.png" style="height: 120px; width: 120px;"/>
+                </a>
+                <span style="cursor: pointer"><a ng-href="../dhis-web-ehs/schedulingInspectionsList.action?listAll=true&fromwhere=dashboard"><h2>Scheduling </h2></a></span>
+                <!--<h2><span class="horizontal-spacing">{{'food_safety'| translate}}</span></h2>-->
+            </td>
+
+            <td width="30%" height="120" style="text-align: center" class="col-sm-4 ehs-home-container" ng-if="!userfoodsafetyprogram && !userwatersafetyprogram" >
+                   <img src="../dhis-web-ehs/images/scheduling.png" style="height: 120px; width: 120px;"/>
+                <span style="cursor: pointer"><h2>Scheduling </h2></span>
+                <!--<h2><span class="horizontal-spacing">{{'food_safety'| translate}}</span></h2>-->
+            </td>
+
+            <td width="30%" height="120" style="text-align: center" class="col-sm-4 ehs-home-container" >
+                <a ng-href="../dhis-web-dashboard-integration/index.action">
+                    <img src="../dhis-web-ehs/images/reports.png" style="height: 120px; width: 120px;"/>
+                </a>
+                <span style="cursor: pointer"><a ng-href="../dhis-web-dashboard-integration/index.action"><h2>Reports </h2></a></span>
+                <!--<h2><span class="horizontal-spacing">{{'food_safety'| translate}}</span></h2>-->
+            </td>
+
+            <td width="30%" height="120" style="text-align: center" class="col-sm-4 ehs-home-container" ng-if="useroperatorregistry || userwatersafetyprogram" >
+                <a ng-href="../dhis-web-ehs/escalationsList.action?listAll=true&fromwhere=dashboard">
+                    <img src="../dhis-web-ehs/images/Executiveboard.png" style="height: 120px; width: 120px;"/>
+                </a>
+                <span style="cursor: pointer"><a ng-href="../dhis-web-ehs/escalationsList.action?listAll=true&fromwhere=dashboard"><h2>Executive board </h2></a></span>
+                <!--<h2><span class="horizontal-spacing">{{'food_safety'| translate}}</span></h2>-->
+            </td>
+
+            <td width="30%" height="120" style="text-align: center" class="col-sm-4 ehs-home-container"  ng-if="!useroperatorregistry || !userwatersafetyprogram">
+                    <img src="../dhis-web-ehs/images/reports.png" style="height: 120px; width: 120px;"/>
+                <span style="cursor: pointer"><h2>Executive board </h2></span>
+                <!--<h2><span class="horizontal-spacing">{{'food_safety'| translate}}</span></h2>-->
+            </td>
+        </tr>
+    </table>
+
+</fieldset>
