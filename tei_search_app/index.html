@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <title>TEI Search App</title>
+    <!-- jQuery -->
+	<script  type="text/javascript" ></script>
+    <script type="text/javascript" src="scripts/lib/jQuery/jquery.min.js"></script>
+    <script type="text/javascript" src="scripts/lib/jQuery/ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="scripts/lib/jQuery/jquery.plugin.min.js"></script>
+    <script type="text/javascript" src="scripts/lib/jQuery/jquery.tmpl.js"></script>
+
+
+    <script type="text/javascript" src="scripts/lib/bootstrap/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet"  href="scripts/lib/bootstrap/css/bootstrap.min.css">
+
+    <script type="text/javascript" src="scripts/lib/angular/angular.js"></script>
+    <script type="text/javascript" src="scripts/lib/angular/angular-resource.js"></script>
+    <script type="text/javascript" src="scripts/lib/angular/angular-route.js"></script>
+    <script type="text/javascript" src="scripts/lib/angular/angular-cookies.js"></script>
+    <script type="text/javascript" src="scripts/lib/angular/angular-animate.js"></script>
+    <script type="text/javascript" src="scripts/lib/angular/angular-messages.js"></script>
+    <script type="text/javascript" src="scripts/lib/angular/angular-sanitize.js"></script>
+    <script type="text/javascript" src="scripts/lib/angular/ui-bootstrap-tpls-0.14.0.js"></script>
+    <script type="text/javascript" src="scripts/lib/angular/plugins/angular-translate.min.js"></script>
+    
+<style>
+
+
+</style>
+</head>
+<body>
+<div>
+
+</div>		
+</body>
+
+<script type="text/javascript">
+
+window.onload=function(){
+
+  //alert( "ewewwee");
+  var url = window.location.href;
+  //var urlParams = url.split('&');
+  var params = url.split('=');
+  var attributeValue = params[1];
+  //alert( attributeValue );
+
+
+  //http://127.0.0.1:8090/dhis/api/trackedEntityInstances.json?fields=trackedEntityInstance,enrollments&filter=uHv60gjn2gp:EQ:CHD25/0471B1/SHEE/H1&ouMode=ALL&skipPaging=true
+  //http://192.168.0.57:8090/dhis/api/apps/TEI-Search-App/index.html?tei=CHD25/0471B1/SHEE/H1
+
+
+  $.get("../../trackedEntityInstances.json?fields=trackedEntityInstance,enrollments&filter=uHv60gjn2gp:EQ:" + attributeValue + "&ouMode=ALL&skipPaging=true" ,function(responseTei){
+
+    var trackedEntityInstanceUid = responseTei.trackedEntityInstances[0].trackedEntityInstance;
+    var programUid = responseTei.trackedEntityInstances[0].enrollments[0].program;
+    var orgUnitUid = responseTei.trackedEntityInstances[0].enrollments[0].orgUnit;
+
+    //alert( trackedEntityInstanceUid + " -- " + programUid + orgUnitUid );
+    var redirectUrl = 'http://192.168.0.57:8090/dhis/dhis-web-tracker-capture/index.html#/dashboard?tei=' + trackedEntityInstanceUid + "&program=" + programUid + "&ou=" + orgUnitUid;
+
+    window.location.href = redirectUrl;
+
+  })
+
+}
+
+
+</script>
+
+
+
+</html>
