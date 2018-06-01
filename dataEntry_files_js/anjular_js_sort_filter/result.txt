@@ -1,0 +1,16 @@
+
+
+Sort Type: name
+
+Sort Reverse: false
+
+Search Query:
+Sushi Roll 	Fish Type 	Taste Level
+Cali Roll 	Crab 	2
+Philly 	Tuna 	4
+Rainbow 	Variety 	6
+Tiger 	Eel 	7
+
+Read the Tutorial
+
+by scotch.io

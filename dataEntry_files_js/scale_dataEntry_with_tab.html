@@ -1,0 +1,2324 @@
+<title></title>
+<style type="text/css">#tabs ul {
+    padding: 0px;
+    margin: 0px;
+    margin-left: 10px;
+    list-style-type: none;
+}
+
+#tabs ul li {
+    display: block;
+    clear: none;
+    float: left;
+    height: 24px;
+}
+
+.active {
+    background: #B8B6BA;
+}
+
+#tabs ul li a {
+    position: relative;
+    margin-top: 16px;
+    display: block;
+    margin-left: 6px;
+    line-height: 24px;
+    padding-left: 10px;
+    border-style: solid solid solid;
+    border-color: #CCC;
+    -moz-border-top-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    border-image: none;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    width: 130px;
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+#tabs ul li a:hover {
+    background: #F6F6F6;
+}
+
+#tabs #Content_Area {
+    padding: 0 15px;
+    clear:both;
+    overflow:hidden;
+    line-height:19px;
+    position: relative;
+    top: 20px;
+    z-index: 5;
+    height: 850px;
+    overflow: hidden;
+}
+p { padding-left: 15px; }
+</style>
+<script type="text/javascript">
+    function tab(tab) {
+        document.getElementById('tab1').style.display = 'none';
+        document.getElementById('tab2').style.display = 'none';
+        document.getElementById('tab3').style.display = 'none';
+        document.getElementById('tab4').style.display = 'none';
+        document.getElementById('tab5').style.display = 'none';
+        document.getElementById('tab6').style.display = 'none';
+        document.getElementById('tab7').style.display = 'none';
+        document.getElementById('tab8').style.display = 'none';
+        document.getElementById('tab9').style.display = 'none';
+        document.getElementById('tab10').style.display = 'none';
+        document.getElementById('tab11').style.display = 'none';
+        document.getElementById('tab12').style.display = 'none';
+        document.getElementById('tab13').style.display = 'none';
+        document.getElementById('tab14').style.display = 'none';
+        document.getElementById('tab15').style.display = 'none';
+        document.getElementById('tab16').style.display = 'none';
+        document.getElementById('a_tab1').setAttribute("class", "");
+        document.getElementById('a_tab2').setAttribute("class", "");
+        document.getElementById('a_tab3').setAttribute("class", "");
+        document.getElementById('a_tab4').setAttribute("class", "");
+        document.getElementById('a_tab5').setAttribute("class", "");
+        document.getElementById('a_tab6').setAttribute("class", "");
+        document.getElementById('a_tab7').setAttribute("class", "");
+        document.getElementById('a_tab8').setAttribute("class", "");
+        document.getElementById('a_tab9').setAttribute("class", "");
+        document.getElementById('a_tab10').setAttribute("class", "");
+        document.getElementById('a_tab11').setAttribute("class", "");
+        document.getElementById('a_tab12').setAttribute("class", "");
+        document.getElementById('a_tab13').setAttribute("class", "");
+        document.getElementById('a_tab14').setAttribute("class", "");
+        document.getElementById('a_tab15').setAttribute("class", "");
+        document.getElementById('a_tab16').setAttribute("class", "");
+        document.getElementById(tab).style.display = 'block';
+        document.getElementById('a_'+tab).setAttribute("class", "active");
+    }
+</script>
+<div id="tabs">
+<ul>
+	<li id="li_tab1" onclick="tab('tab1')"><a class="active" id="a_tab1">ANC</a></li>
+	<li id="li_tab2" onclick="tab('tab2')"><a id="a_tab2">Deliveries</a></li>
+	<li id="li_tab3" onclick="tab('tab3')"><a id="a_tab3">PNC</a></li>
+	<li id="li_tab4" onclick="tab('tab4')"><a id="a_tab4">MTP</a></li>
+	<li id="li_tab5" onclick="tab('tab5')"><a id="a_tab5">RTI/STI</a></li>
+	<li id="li_tab6" onclick="tab('tab6')"><a id="a_tab6">Family Planning</a></li>
+	<li id="li_tab7" onclick="tab('tab7')"><a id="a_tab7">Immunisation</a></li>
+	<li id="li_tab8" onclick="tab('tab8')"><a id="a_tab8">Morbidity Profile</a></li>
+	<li id="li_tab9" onclick="tab('tab9')"><a id="a_tab9">Morbidity Profile</a></li>
+	<li id="li_tab10" onclick="tab('tab10')"><a id="a_tab10">NPCB</a></li>
+	<li id="li_tab11" onclick="tab('tab11')"><a id="a_tab11">Health Services</a></li>
+	<li id="li_tab12" onclick="tab('tab12')"><a id="a_tab12">Lab Services</a></li>
+	<li id="li_tab12" onclick="tab('tab13')"><a id="a_tab13">Mortality</a></li>
+	<li id="li_tab13" onclick="tab('tab14')"><a id="a_tab14">Stock</a></li>
+	<li id="li_tab14" onclick="tab('tab15')"><a id="a_tab15">Cold Chain</a></li>
+	<li id="li_tab15" onclick="tab('tab16')"><a id="a_tab16">IMNCI</a></li>
+</ul>
+
+<div dir="ltr" id="Content_Area">
+<div id="tab1">
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width: 700px;">
+	<tbody>
+		<tr>
+			<td colspan="2" style="text-align: center; background-color: rgb(204, 204, 204);">
+			<p><strong><span style="font-size:16px;">Antenatal Care</span></strong></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: center;">
+			<p><b>ANC Registration and Services</b></p>
+			</td>
+			<td style="text-align: center;"><font color="#000000"><b>Reported during the month</b></font></td>
+		</tr>
+		<tr>
+			<td>
+			<p>ANC registrations</p>
+			</td>
+			<td style="text-align: center;"><input id="nlyO8gj4uHd-wgLXMRheSyB-val" size="5" title="nlyO8gj4uHd - ANC new - wgLXMRheSyB - (default) - int" value="[ ANC new (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>ANC registrations in first trimester</p>
+			</td>
+			<td style="text-align: center;"><input id="wsYVhfyrUzO-wgLXMRheSyB-val" size="5" title="wsYVhfyrUzO - ANC registration-1st trimester - wgLXMRheSyB - (default) - int" value="[ ANC registration-1st trimester (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>New JSY registrations</p>
+			</td>
+			<td style="text-align: center;"><input id="IAHtNg7IwdD-wgLXMRheSyB-val" size="5" title="IAHtNg7IwdD - JSY registration-new - wgLXMRheSyB - (default) - int" value="[ JSY registration-new (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>Pregnant women with 3 ANC checkups</p>
+			</td>
+			<td style="text-align: center;"><input id="EimorkPYMQs-wgLXMRheSyB-val" size="5" title="EimorkPYMQs - ANC 3 checkups - wgLXMRheSyB - (default) - int" value="[ ANC 3 checkups (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>TT1 doses given</p>
+			</td>
+			<td style="text-align: center;"><input id="pPGFo5cDWV3-wgLXMRheSyB-val" size="5" title="pPGFo5cDWV3 - TT1 dose - wgLXMRheSyB - (default) - int" value="[ TT1 dose (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>TT2 doses given</p>
+			</td>
+			<td style="text-align: center;"><input id="rAsclKonZ9V-wgLXMRheSyB-val" size="5" title="rAsclKonZ9V - TT2 dose - wgLXMRheSyB - (default) - int" value="[ TT2 dose (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>TT booster doses given</p>
+			</td>
+			<td style="text-align: center;"><input id="SkC5SSfK4Xe-wgLXMRheSyB-val" size="5" title="SkC5SSfK4Xe - TT booster dose - wgLXMRheSyB - (default) - int" value="[ TT booster dose (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>Pregnant women given 100 IFA tablets</p>
+			</td>
+			<td style="text-align: center;"><input id="jkKce4gZypt-wgLXMRheSyB-val" size="5" title="jkKce4gZypt - IFA 100 tablets given - wgLXMRheSyB - (default) - int" value="[ IFA 100 tablets given (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p><span style="line-height: 19px;">Pregnant women given 200 IFA tablets (anaemic cases)</span></p>
+			</td>
+			<td style="text-align: center;"><input id="ucXeVmv0GOn-wgLXMRheSyB-val" size="5" title="ucXeVmv0GOn - IFA 200 tablets given (anaemic cases) - wgLXMRheSyB - (default) - int" value="[ IFA 200 tablets given (anaemic cases) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p class="p1">New cases of pregnant women with Hypertension (BP&gt;140/90)&nbsp;</p>
+			</td>
+			<td style="text-align: center;"><input id="GH2TDDVTDAJ-wgLXMRheSyB-val" size="5" title="GH2TDDVTDAJ - Hypertension-new cases (BP&gt;140/90) - wgLXMRheSyB - (default) - int" value="[ Hypertension-new cases (BP&gt;140/90) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p class="p1">Hb Level&lt;11&nbsp;(tested cases)</p>
+			</td>
+			<td style="text-align: center;"><input id="pekGuea8ITY-wgLXMRheSyB-val" size="5" title="pekGuea8ITY - Hb level &lt; 11 mg/dl (tested cases) - wgLXMRheSyB - (default) - int" value="[ Hb level &lt; 11 mg/dl (tested cases) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p class="p1">Urine tests</p>
+			</td>
+			<td style="text-align: center;"><input id="XUGQ1TsJz6E-wgLXMRheSyB-val" size="5" title="XUGQ1TsJz6E - ANC Urine tests - wgLXMRheSyB - (default) - int" value="[ ANC Urine tests (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>Pregnancy complication cases treated</p>
+			</td>
+			<td style="text-align: center;"><input id="XJJ8cR3nJLA-wgLXMRheSyB-val" size="5" title="XJJ8cR3nJLA - Pregnancy complications-treated cases - wgLXMRheSyB - (default) - int" value="[ Pregnancy complications-treated cases (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>Pregnancy complication cases referred to higher facility</p>
+			</td>
+			<td style="text-align: center;"><input id="UqSTUdMIj8a-wgLXMRheSyB-val" size="5" title="UqSTUdMIj8a - Pregnancy complications-referred to higher facilities - wgLXMRheSyB - (default) - int" value="[ Pregnancy complications-referred to higher facilities (default) ]" /></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<div id="tab2" style="display: none;">
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width:700px;">
+	<tbody>
+		<tr>
+			<td colspan="5" style="text-align: center; background-color: rgb(204, 204, 204);">
+			<p><strong>Delivery Services</strong></p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5">
+			<p style="text-align: center;"><strong>Home deliveries</strong></p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" rowspan="2">
+			<p>&nbsp;Home deliveries</p>
+			</td>
+			<td style="text-align: center;">
+			<p><strong><span style="line-height: 20.8px;">&nbsp;</span></strong><span style="line-height: 20.8px;">SBA (</span><span style="line-height: 1.6;">Doctor/Nurse/ANM)</span></p>
+			</td>
+			<td colspan="2" style="text-align: center;"><span style="line-height: 20.8px;">Non-SBA (</span><span style="line-height: 1.6;">Trained TBA/Relatives)</span></td>
+		</tr>
+		<tr>
+			<td>
+			<p style="text-align: center;"><input id="GIEG4zAJNIL-DZKlXrg0RZB-val" size="5" title="GIEG4zAJNIL - Home deliveries - DZKlXrg0RZB - (SBA (Doctor/Nurse/ANM)) - int" value="[ Home deliveries (SBA (Doctor/Nurse/ANM)) ]" /></p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="GIEG4zAJNIL-O9asxCSJPwA-val" size="5" title="GIEG4zAJNIL - Home deliveries - O9asxCSJPwA - (Non SBA (Trained TBA/Relatives/etc.)) - int" value="[ Home deliveries (Non SBA (Trained TBA/Relatives/etc.)) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;<span style="line-height: 1.6;">Newborns visited within 24 hours</span></p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="hHHo6JigktC-wgLXMRheSyB-val" size="5" title="hHHo6JigktC - Home-delivery-newborns visited within 24 hrs - wgLXMRheSyB - (default) - int" value="[ Home-delivery-newborns visited within 24 hrs (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;BPL given JSY benefits 8-12 weeks before delivery</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="JqKdYM5y5Tu-wgLXMRheSyB-val" size="5" title="JqKdYM5y5Tu - Home deliveries-BPL given JSY benefits - wgLXMRheSyB - (default) - int" value="[ Home deliveries-BPL given JSY benefits (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Home deliveries-BPL</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="LnS77tWpRv3-wgLXMRheSyB-val" size="5" title="LnS77tWpRv3 - Home deliveries-BPL - wgLXMRheSyB - (default) - int" value="[ Home deliveries-BPL (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="5">
+			<p style="text-align: center;"><strong><span style="line-height: 20.8px;">&nbsp;Institutional deliveries&nbsp;</span></strong></p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Institutional deliveries</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="CKMPE7RrCLn-wgLXMRheSyB-val" size="5" title="CKMPE7RrCLn - Institutional deliveries - wgLXMRheSyB - (default) - int" value="[ Institutional deliveries (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2" rowspan="2">
+			<p>&nbsp;Post delivery discharge</p>
+			</td>
+			<td>
+			<p style="text-align: center;"><span style="line-height: 20.8px;">24 hours of delivery</span></p>
+			</td>
+			<td colspan="2" style="text-align: center;"><span style="line-height: 20.8px;">24-48 hours of delivery</span></td>
+		</tr>
+		<tr>
+			<td>
+			<p><input id="zeQw2sXshnK-ifswQgEoh4R-val" size="5" title="zeQw2sXshnK - Institutional deliveries-discharge - ifswQgEoh4R - (&gt; 24 hours) - int" value="[ Institutional deliveries-discharge (&gt; 24 hours) ]" /></p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="zeQw2sXshnK-ATCxyRik2x2-val" size="5" title="zeQw2sXshnK - Institutional deliveries-discharge - ATCxyRik2x2 - (24-48 hours) - int" value="[ Institutional deliveries-discharge (24-48 hours) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="5">
+			<p style="text-align: center;">&nbsp;<strong>JSY benefits given</strong></p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" rowspan="2">
+			<p>&nbsp;Mothers</p>
+			</td>
+			<td>
+			<p style="text-align: center;">Rural area</p>
+			</td>
+			<td colspan="2" style="text-align: center;">Urban area</td>
+		</tr>
+		<tr>
+			<td>
+			<p style="text-align: center;"><input id="hTjVb9NpTvJ-k9zwjhmQQNq-val" size="5" title="hTjVb9NpTvJ - JSY incentives - k9zwjhmQQNq - (Mothers Rural) - int" value="[ JSY incentives (Mothers Rural) ]" /></p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="hTjVb9NpTvJ-anJW9IcvDqv-val" size="5" title="hTjVb9NpTvJ - JSY incentives - anJW9IcvDqv - (Mothers Urban) - int" value="[ JSY incentives (Mothers Urban) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;ASHAs</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="hTjVb9NpTvJ-YT3AF4nKgBI-val" size="5" title="hTjVb9NpTvJ - JSY incentives - YT3AF4nKgBI - (ASHAs) - int" value="[ JSY incentives (ASHAs) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Jan Mangal Jodas</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="hTjVb9NpTvJ-awYUl4ozZvG-val" size="5" title="hTjVb9NpTvJ - JSY incentives - awYUl4ozZvG - (Jan Mangal Jodas) - int" value="[ JSY incentives (Jan Mangal Jodas) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;TBAs</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="hTjVb9NpTvJ-QHaecdGpYMh-val" size="5" title="hTjVb9NpTvJ - JSY incentives - QHaecdGpYMh - (TBAs) - int" value="[ JSY incentives (TBAs) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Institutional deliveries-BPL</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="NWOMi2pT4mT-wgLXMRheSyB-val" size="5" title="NWOMi2pT4mT - Institutional deliveries-BPL - wgLXMRheSyB - (default) - int" value="[ Institutional deliveries-BPL (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;<span style="line-height: 1.6;">Institutional delivery-BPL(with first child)</span></p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="BWQi401c7Fa-wgLXMRheSyB-val" size="5" title="BWQi401c7Fa - Institutional deliveries-BPL(with first child) - wgLXMRheSyB - (default) - int" value="[ Institutional deliveries-BPL(with first child) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Caesarean section deliveries</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="nNRnuQfXH68-wgLXMRheSyB-val" size="5" title="nNRnuQfXH68 - C-section deliveries - wgLXMRheSyB - (default) - int" value="[ C-section deliveries (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="5">
+			<p style="text-align: center;"><strong>Delivery outcome and newborn details</strong></p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" rowspan="2">
+			<p>&nbsp;Live births</p>
+			</td>
+			<td>
+			<p style="text-align: center;">Male</p>
+			</td>
+			<td colspan="2" style="text-align: center;">Female</td>
+		</tr>
+		<tr>
+			<td>
+			<p style="text-align: center;"><input id="Cigpw6Kel7p-HVIoxHVKOS3-val" size="5" title="Cigpw6Kel7p - Live births - HVIoxHVKOS3 - (Male) - int" value="[ Live births (Male) ]" /></p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="Cigpw6Kel7p-nI90YWZ2Zaf-val" size="5" title="Cigpw6Kel7p - Live births - nI90YWZ2Zaf - (Female) - int" value="[ Live births (Female) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2" rowspan="2">
+			<p>&nbsp;Premature births</p>
+			</td>
+			<td>
+			<p style="text-align: center;">Male</p>
+			</td>
+			<td colspan="2" style="text-align: center;">Female</td>
+		</tr>
+		<tr>
+			<td>
+			<p style="text-align: center;"><input id="p5FL3pEQcdT-HVIoxHVKOS3-val" size="5" title="p5FL3pEQcdT - Pre-mature births - HVIoxHVKOS3 - (Male) - int" value="[ Pre-mature births (Male) ]" /></p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="p5FL3pEQcdT-nI90YWZ2Zaf-val" size="5" title="p5FL3pEQcdT - Pre-mature births - nI90YWZ2Zaf - (Female) - int" value="[ Pre-mature births (Female) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Still births</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="taIcC5CKZgf-wgLXMRheSyB-val" size="5" title="taIcC5CKZgf - Still births - wgLXMRheSyB - (default) - int" value="[ Still births (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Abortion (spontaneous and induced)</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="FrxJc88s8vO-wgLXMRheSyB-val" size="5" title="FrxJc88s8vO - Abortions conducted (spontaneous or induced) - wgLXMRheSyB - (default) - int" value="[ Abortions conducted (spontaneous or induced) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Newborns weighed at birth</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="OjWlyfU1AEz-wgLXMRheSyB-val" size="5" title="OjWlyfU1AEz - Newborns weighed at birth - wgLXMRheSyB - (default) - int" value="[ Newborns weighed at birth (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2" rowspan="2">
+			<p>&nbsp;Weight at birth</p>
+			</td>
+			<td>
+			<p style="text-align: center;"><span style="line-height: 20.8px;">Weight between 1.5 kg - 2.5 kg</span></p>
+			</td>
+			<td colspan="2" style="text-align: center;"><span style="line-height: 20.8px;">Weight &lt; 1.5 kg</span></td>
+		</tr>
+		<tr>
+			<td>
+			<p style="text-align: center;"><input id="EgsJuMTPAs3-p5tqXSOZwOQ-val" size="5" title="EgsJuMTPAs3 - Low birth weight - p5tqXSOZwOQ - (1.5 kg-2.5 kg) - int" value="[ Low birth weight (1.5 kg-2.5 kg) ]" /></p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="EgsJuMTPAs3-O18qrWyEglF-val" size="5" title="EgsJuMTPAs3 - Low birth weight - O18qrWyEglF - (&lt; 1.5 kg) - int" value="[ Low birth weight (&lt; 1.5 kg) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;<span style="line-height: 1.6;">Newborns breast fed within 1 hour</span></p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="kY3D92WC1Ix-wgLXMRheSyB-val" size="5" title="kY3D92WC1Ix - Newborns breast fed within 1 hour - wgLXMRheSyB - (default) - int" value="[ Newborns breast fed within 1 hour (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="5">
+			<p style="text-align: center;">&nbsp;<strong>Complicated deliveries management</strong></p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" rowspan="5">&nbsp;Complicated deliveries managed by</td>
+			<td>
+			<p>&nbsp;Antibiotcs</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="C4z2jrfmj3r-HQqEHrxU2bJ-val" size="5" title="C4z2jrfmj3r - Complicated deliveries managed - HQqEHrxU2bJ - (Antibiotics) - int" value="[ Complicated deliveries managed (Antibiotics) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Anti-hypertensive</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="C4z2jrfmj3r-mT27xQ24dKl-val" size="5" title="C4z2jrfmj3r - Complicated deliveries managed - mT27xQ24dKl - (Anti-hypertensive) - int" value="[ Complicated deliveries managed (Anti-hypertensive) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Oxytocin</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="C4z2jrfmj3r-KlNAQLIN3Op-val" size="5" title="C4z2jrfmj3r - Complicated deliveries managed - KlNAQLIN3Op - (Oxytocin) - int" value="[ Complicated deliveries managed (Oxytocin) ]" /></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<div id="tab3" style="display: none;">
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="line-height: 1.6; width: 700px;">
+	<tbody>
+		<tr>
+			<td colspan="3" style="text-align: center; background-color: rgb(204, 204, 204);">
+			<p><strong>Postnatal Care Services</strong></p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p style="text-align: center;">&nbsp;<strong>Postnatal check-ups</strong></p>
+			</td>
+		</tr>
+		<tr>
+			<td rowspan="2">
+			<p>&nbsp;Postnatal check-ups</p>
+			</td>
+			<td style="text-align: center;">
+			<p><span style="line-height: 20.8px;">Within 48 hours of delivery</span></p>
+			</td>
+			<td style="text-align: center;"><span style="line-height: 20.8px;">Within 48 hours-14 days of delivery</span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center;">
+			<p><input id="cCsTv6nQp0s-G9Qbk8OQkCz-val" size="5" title="cCsTv6nQp0s - Postnatal check-up - G9Qbk8OQkCz - (&lt; 48 hours) - int" value="[ Postnatal check-up (&lt; 48 hours) ]" /></p>
+			</td>
+			<td style="text-align: center;"><input id="cCsTv6nQp0s-LtklEK0Moij-val" size="5" title="cCsTv6nQp0s - Postnatal check-up - LtklEK0Moij - (48 hours-14 days) - int" value="[ Postnatal check-up (48 hours-14 days) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;3 postnatal check ups done</p>
+			</td>
+			<td style="text-align: center;"><input id="eSLLUQQO47o-wgLXMRheSyB-val" size="5" title="eSLLUQQO47o - 3 Postnatal checkups done - wgLXMRheSyB - (default) - int" value="[ 3 Postnatal checkups done (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;<span style="line-height: 20.8px;">Postnatal complication&nbsp;cases treated at facility</span></p>
+			</td>
+			<td style="text-align: center;"><input id="GQ4Mo3YG8Hr-wgLXMRheSyB-val" size="5" title="GQ4Mo3YG8Hr - Postnatal complications-treated cases - wgLXMRheSyB - (default) - int" value="[ Postnatal complications-treated cases (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;Postnatal complication cases referred to higher facility</p>
+			</td>
+			<td style="text-align: center;"><input id="cJh14jZkr8Z-wgLXMRheSyB-val" size="5" title="cJh14jZkr8Z - Postnatal complications-mothers referred to higher facility - wgLXMRheSyB - (default) - int" value="[ Postnatal complications-mothers referred to higher facility (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;Newborns 3 follow up visits within 10 days of birth</p>
+			</td>
+			<td style="text-align: center;"><input id="bBshcBs5ybj-wgLXMRheSyB-val" size="5" title="bBshcBs5ybj - Newborns 3 follow-up visits within 10 days of birth - wgLXMRheSyB - (default) - int" value="[ Newborns 3 follow-up visits within 10 days of birth (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;LBW cases followed up within 1 month with 6 post natal checks</p>
+			</td>
+			<td style="text-align: center;"><input id="QD19p2yO06o-wgLXMRheSyB-val" size="5" title="QD19p2yO06o - LBW cases followed up within 1 month with 6 postnatal checks - wgLXMRheSyB - (default) - int" value="[ LBW cases followed up within 1 month with 6 postnatal checks (default) ]" /></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<div id="tab4" style="display: none;">
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width:700px;">
+	<tbody>
+		<tr>
+			<td colspan="3" style="text-align: center; background-color: rgb(204, 204, 204);">
+			<p><b>Abortion Services</b></p>
+			</td>
+		</tr>
+		<tr>
+			<td rowspan="2">
+			<p><strong>&nbsp;</strong>Abortions conducted</p>
+			</td>
+			<td>
+			<p style="text-align: center;"><span style="line-height: 20.8px;">Within 12 weeks</span></p>
+			</td>
+			<td style="text-align: center;"><span style="line-height: 20.8px;">After 12 weeks</span></td>
+		</tr>
+		<tr>
+			<td>
+			<p style="text-align: center;"><input id="Ct7eI8Zgfut-VfM643qJCuC-val" size="5" title="Ct7eI8Zgfut - Abortions conducted - VfM643qJCuC - (&lt; 12 Weeks) - int" value="[ Abortions conducted (&lt; 12 Weeks) ]" /></p>
+			</td>
+			<td style="text-align: center;"><input id="Ct7eI8Zgfut-BaZm3NASMR0-val" size="5" title="Ct7eI8Zgfut - Abortions conducted - BaZm3NASMR0 - (&gt; 12 Weeks) - int" value="[ Abortions conducted (&gt; 12 Weeks) ]" /></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<div id="tab5" style="display: none;">
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width:700px;">
+	<tbody>
+		<tr>
+			<td colspan="3" style="text-align: center; background-color: rgb(204, 204, 204);">
+			<p><strong>Reproductive Tract Infections/Sexually transmitted infections (RTI/STI) Cases</strong></p>
+			</td>
+		</tr>
+		<tr>
+			<td rowspan="2">
+			<p><b>&nbsp;</b>RTI/STI cases for which treatment initiated</p>
+			</td>
+			<td style="text-align: center;">
+			<p><span style="line-height: 20.8px;">Male &nbsp; &nbsp;&nbsp;</span></p>
+			</td>
+			<td style="text-align: center;"><span style="line-height: 20.8px;">Female</span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center;">
+			<p><input id="RLyZkZoZ9d4-HVIoxHVKOS3-val" size="5" title="RLyZkZoZ9d4 - RTI/STI cases-treatment initiated - HVIoxHVKOS3 - (Male) - int" value="[ RTI/STI cases-treatment initiated (Male) ]" /></p>
+			</td>
+			<td style="text-align: center;"><input id="RLyZkZoZ9d4-nI90YWZ2Zaf-val" size="5" title="RLyZkZoZ9d4 - RTI/STI cases-treatment initiated - nI90YWZ2Zaf - (Female) - int" value="[ RTI/STI cases-treatment initiated (Female) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;Wet Mount tests conducted</p>
+			</td>
+			<td style="text-align: center;"><input id="OVtWZtFwBRB-wgLXMRheSyB-val" size="5" title="OVtWZtFwBRB - Wet mount tests conducted - wgLXMRheSyB - (default) - int" value="[ Wet mount tests conducted (default) ]" /></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<div id="tab6" style="display: none;">
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width:700px;">
+	<tbody>
+		<tr>
+			<td colspan="5" style="text-align: center; background-color: rgb(204, 204, 204);">
+			<p><strong>Family Planning Services</strong></p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Sterilisation camps organised</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="FbeIk4ZLox2-wgLXMRheSyB-val" size="5" title="FbeIk4ZLox2 - Sterilisation camps organised - wgLXMRheSyB - (default) - int" value="[ Sterilisation camps organised (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Camps-Family planning operations</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="Wb9jNjRowxR-wgLXMRheSyB-val" size="5" title="Wb9jNjRowxR - Sterilisations conducted at camps - wgLXMRheSyB - (default) - int" value="[ Sterilisations conducted at camps (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Conventional vasectomy conducted at facility</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="kNWJaDf4pof-N7ALjMg2x7n-val" size="5" title="kNWJaDf4pof - Sterilisation (permanent methods) - N7ALjMg2x7n - (Conventional vasectomy) - int" value="[ Sterilisation (permanent methods) (Conventional vasectomy) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p class="p1">&nbsp;Non-Scalpel vasectomy conducted&nbsp;<span style="line-height: 20.8px;">at facility</span></p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="kNWJaDf4pof-z63Odq72aKu-val" size="5" title="kNWJaDf4pof - Sterilisation (permanent methods) - z63Odq72aKu - (Non-Scalpel vasectomy) - int" value="[ Sterilisation (permanent methods) (Non-Scalpel vasectomy) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Laparoscopic tubectomy conducted&nbsp;<span style="line-height: 20.8px;">at facility</span></p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="kNWJaDf4pof-VS3cs3bRAlt-val" size="5" title="kNWJaDf4pof - Sterilisation (permanent methods) - VS3cs3bRAlt - (Laparoscopic tubectomy) - int" value="[ Sterilisation (permanent methods) (Laparoscopic tubectomy) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Minilap other than postpartum conducted&nbsp;<span style="line-height: 20.8px;">at facility</span></p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="kNWJaDf4pof-NqultqRTyim-val" size="5" title="kNWJaDf4pof - Sterilisation (permanent methods) - NqultqRTyim - (Minilap other than postpartum) - int" value="[ Sterilisation (permanent methods) (Minilap other than postpartum) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p><strong><span style="line-height: 20.8px;">&nbsp;</span></strong>Minilap postpartum (within 7 days) conducted&nbsp;<span style="line-height: 20.8px;">at facility</span></p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="kNWJaDf4pof-gUjmPXsySlD-val" size="5" title="kNWJaDf4pof - Sterilisation (permanent methods) - gUjmPXsySlD - (Minilap postpartum (within 7 days)) - int" value="[ Sterilisation (permanent methods) (Minilap postpartum (within 7 days)) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="5">
+			<p>&nbsp;<strong>Temporary methods</strong></p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;IUD insertions (IUD+PPIUCD)&nbsp;<span style="line-height: 20.8px;">at facility</span></p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="ORPQ5YjkrjS-wgLXMRheSyB-val" size="5" title="ORPQ5YjkrjS - IUD insertions (IUD+PPIUCD) - wgLXMRheSyB - (default) - int" value="[ IUD insertions (IUD+PPIUCD) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;PPIUCD insertions (within 48 hrs)&nbsp;<span style="line-height: 20.8px;">at facility</span></p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="Z3EH21ckmRo-wgLXMRheSyB-val" size="5" title="Z3EH21ckmRo - PPIUCD insertions (within 48 hours) - wgLXMRheSyB - (default) - int" value="[ PPIUCD insertions (within 48 hours) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;IUD removals</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="nSEhLM8PSMp-wgLXMRheSyB-val" size="5" title="nSEhLM8PSMp - IUD removals - wgLXMRheSyB - (default) - int" value="[ IUD removals (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Oral pills users (new+old)</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="COgadwQulmU-wgLXMRheSyB-val" size="5" title="COgadwQulmU - Oral pill users - wgLXMRheSyB - (default) - int" value="[ Oral pill users (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Oral Pills cycles distributed</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="TBcUp780bSN-wgLXMRheSyB-val" size="5" title="TBcUp780bSN - Oral Pill cycles distributed - wgLXMRheSyB - (default) - int" value="[ Oral Pill cycles distributed (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Condom users (new+old)</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="vqt1MCM2E6T-wgLXMRheSyB-val" size="5" title="vqt1MCM2E6T - Condom users - wgLXMRheSyB - (default) - int" value="[ Condom users (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Condom pieces distributed</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="CdPve2oyHhE-wgLXMRheSyB-val" size="5" title="CdPve2oyHhE - Condom pieces distributed - wgLXMRheSyB - (default) - int" value="[ Condom pieces distributed (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Emergency contraceptive pills distributed</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="pVeSyEr7DY7-wgLXMRheSyB-val" size="5" title="pVeSyEr7DY7 - Emergency contraceptive pills distributed - wgLXMRheSyB - (default) - int" value="[ Emergency contraceptive pills distributed (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="5">
+			<p>&nbsp;<strong>Quality of sterilisation services</strong></p>
+			</td>
+		</tr>
+		<tr>
+			<td rowspan="2">
+			<p>&nbsp;Sterilisation complications</p>
+			</td>
+			<td colspan="2" style="text-align: center;">
+			<p>Male</p>
+			</td>
+			<td colspan="2" style="text-align: center;">Female</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p style="text-align: center;"><input id="zb9z4cGjqAy-HVIoxHVKOS3-val" size="5" title="zb9z4cGjqAy - Sterilization complications - HVIoxHVKOS3 - (Male) - int" value="[ Sterilization complications (Male) ]" /></p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="zb9z4cGjqAy-nI90YWZ2Zaf-val" size="5" title="zb9z4cGjqAy - Sterilization complications - nI90YWZ2Zaf - (Female) - int" value="[ Sterilization complications (Female) ]" /></td>
+		</tr>
+		<tr>
+			<td rowspan="2">
+			<p>&nbsp;Sterilisation failure cases</p>
+			</td>
+			<td colspan="2">
+			<p style="text-align: center;">Male</p>
+			</td>
+			<td colspan="2" style="text-align: center;">&nbsp;Female</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p style="text-align: center;"><input id="dCXIBAyHVlN-HVIoxHVKOS3-val" size="5" title="dCXIBAyHVlN - Sterilisation failure - HVIoxHVKOS3 - (Male) - int" value="[ Sterilisation failure (Male) ]" /></p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="dCXIBAyHVlN-nI90YWZ2Zaf-val" size="5" title="dCXIBAyHVlN - Sterilisation failure - nI90YWZ2Zaf - (Female) - int" value="[ Sterilisation failure (Female) ]" /></td>
+		</tr>
+		<tr>
+			<td rowspan="2">
+			<p>&nbsp;Sterilisation deaths</p>
+			</td>
+			<td colspan="2">
+			<p style="text-align: center;">Male</p>
+			</td>
+			<td colspan="2" style="text-align: center;">Female</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p style="text-align: center;"><input id="FULnpWwU5z4-HVIoxHVKOS3-val" size="5" title="FULnpWwU5z4 - Sterilisation deaths - HVIoxHVKOS3 - (Male) - int" value="[ Sterilisation deaths (Male) ]" /></p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="FULnpWwU5z4-nI90YWZ2Zaf-val" size="5" title="FULnpWwU5z4 - Sterilisation deaths - nI90YWZ2Zaf - (Female) - int" value="[ Sterilisation deaths (Female) ]" /></td>
+		</tr>
+		<tr>
+			<td rowspan="2">
+			<p>&nbsp;Sterilisation based on number of children</p>
+			</td>
+			<td>
+			<p style="text-align: center;">One child</p>
+			</td>
+			<td style="text-align: center;">Two children</td>
+			<td style="text-align: center;">&nbsp;Three children</td>
+			<td style="text-align: center;">Four children</td>
+		</tr>
+		<tr>
+			<td>
+			<p style="text-align: center;"><input id="ltkhYNDwZ5u-ex0K3m930TW-val" size="5" title="ltkhYNDwZ5u - Sterilisation children wise - ex0K3m930TW - (1 child) - int" value="[ Sterilisation children wise (1 child) ]" /></p>
+			</td>
+			<td style="text-align: center;"><input id="ltkhYNDwZ5u-jNAgZ3WGOxM-val" size="5" title="ltkhYNDwZ5u - Sterilisation children wise - jNAgZ3WGOxM - (2 children) - int" value="[ Sterilisation children wise (2 children) ]" /></td>
+			<td style="text-align: center;"><input id="ltkhYNDwZ5u-uHcexjOq3dP-val" size="5" title="ltkhYNDwZ5u - Sterilisation children wise - uHcexjOq3dP - (3 children) - int" value="[ Sterilisation children wise (3 children) ]" /></td>
+			<td style="text-align: center;"><input id="ltkhYNDwZ5u-GjCk6MK3mS6-val" size="5" title="ltkhYNDwZ5u - Sterilisation children wise - GjCk6MK3mS6 - (4 or more children) - int" value="[ Sterilisation children wise (4 or more children) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;NSV trained doctors available at facility</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="UbkVD8XuQkg-wgLXMRheSyB-val" size="5" title="UbkVD8XuQkg - Institution having NSV trained doctors - wgLXMRheSyB - (default) - bool" value="[ Institution having NSV trained doctors (default) ]" /></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<div id="tab7" style="display: none;">
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width:700px;">
+	<tbody>
+		<tr>
+			<td colspan="4" style="text-align: center; background-color: rgb(204, 204, 204);">
+			<p><strong>Immunisation&nbsp;Services</strong></p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4">
+			<p>&nbsp;<strong>Infants 0 to 11 months old who received the following</strong></p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;BCG</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="LHdifHRgz0A-wgLXMRheSyB-val" size="5" title="LHdifHRgz0A - BCG dose - wgLXMRheSyB - (default) - int" value="[ BCG dose (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;DPT 1</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="wdQIUyjuN52-wgLXMRheSyB-val" size="5" title="wdQIUyjuN52 - DPT1 dose - wgLXMRheSyB - (default) - int" value="[ DPT1 dose (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;DPT 2</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="QAfKa2Exkjg-wgLXMRheSyB-val" size="5" title="QAfKa2Exkjg - DPT2 dose - wgLXMRheSyB - (default) - int" value="[ DPT2 dose (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;DPT 3</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="ihPISUzfYUH-wgLXMRheSyB-val" size="5" title="ihPISUzfYUH - DPT3 dose - wgLXMRheSyB - (default) - int" value="[ DPT3 dose (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;Pentavalent 1</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="ZhyTXg8RuqQ-wgLXMRheSyB-val" size="5" title="ZhyTXg8RuqQ - Pentavalent1 dose - wgLXMRheSyB - (default) - int" value="[ Pentavalent1 dose (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;<span style="line-height: 20.8px;">Pentavalent 2</span></p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="aQj99aEs3DT-wgLXMRheSyB-val" size="5" title="aQj99aEs3DT - Pentavalent2 dose - wgLXMRheSyB - (default) - int" value="[ Pentavalent2 dose (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;<span style="line-height: 20.8px;">Pentavalent 3</span></p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="UkCdOTKdfEl-wgLXMRheSyB-val" size="5" title="UkCdOTKdfEl - Pentavalent3 dose - wgLXMRheSyB - (default) - int" value="[ Pentavalent3 dose (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;OPV0 (birth dose)</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="GAvcmCXY1Wk-wgLXMRheSyB-val" size="5" title="GAvcmCXY1Wk - OPV0 dose - wgLXMRheSyB - (default) - int" value="[ OPV0 dose (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;OPV 1</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="vv7Z1GpYkmj-wgLXMRheSyB-val" size="5" title="vv7Z1GpYkmj - OPV1 dose - wgLXMRheSyB - (default) - int" value="[ OPV1 dose (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;OPV 2</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="OTGYFc9FFod-wgLXMRheSyB-val" size="5" title="OTGYFc9FFod - OPV2 dose - wgLXMRheSyB - (default) - int" value="[ OPV2 dose (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;OPV 3</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="TabXQfr6E4N-wgLXMRheSyB-val" size="5" title="TabXQfr6E4N - OPV3 dose - wgLXMRheSyB - (default) - int" value="[ OPV3 dose (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;Hepatitis B0</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="qdIl9lr1nF1-wgLXMRheSyB-val" size="5" title="qdIl9lr1nF1 - Hepatitis B0 dose - wgLXMRheSyB - (default) - int" value="[ Hepatitis B0 dose (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;Hepatitis B1</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="FVrymXkRpfL-wgLXMRheSyB-val" size="5" title="FVrymXkRpfL - Hepatitis B1 dose - wgLXMRheSyB - (default) - int" value="[ Hepatitis B1 dose (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;<span style="line-height: 20.8px;">Hepatitis B2</span></p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="D4pwKlR8g7A-wgLXMRheSyB-val" size="5" title="D4pwKlR8g7A - Hepatitis B2 dose - wgLXMRheSyB - (default) - int" value="[ Hepatitis B2 dose (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;<span style="line-height: 20.8px;">Hepatitis B3</span></p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="I1P6Ad3Ry4z-wgLXMRheSyB-val" size="5" title="I1P6Ad3Ry4z - Hepatitis B3 dose - wgLXMRheSyB - (default) - int" value="[ Hepatitis B3 dose (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;Measles dose&nbsp;1</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="MFQtHQ0VH3D-wgLXMRheSyB-val" size="5" title="MFQtHQ0VH3D - Measles dose 1 - wgLXMRheSyB - (default) - int" value="[ Measles dose 1 (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;Japanese Encephalitis&nbsp;dose 1 (9-12 months)</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="XquHsozn0oh-wgLXMRheSyB-val" size="5" title="XquHsozn0oh - Japanese Encephalitis dose 1 (9-12 months) - wgLXMRheSyB - (default) - int" value="[ Japanese Encephalitis dose 1 (9-12 months) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2" rowspan="2">
+			<p class="p1">&nbsp;F<span style="line-height: 20.8px;">ully&nbsp;</span><span style="line-height: 20.8px;">immunised cases (9-11 months) </span></p>
+
+			<p class="p1"><span style="line-height: 20.8px;">&nbsp;(with&nbsp;BCG+DPT123/pentavalent123+OPV123+Measles)</span></p>
+			</td>
+			<td style="text-align: center;">
+			<p>Male</p>
+			</td>
+			<td style="text-align: center;">Female</td>
+		</tr>
+		<tr>
+			<td style="text-align: center;">
+			<p><input id="XMzLKfYiLLG-HVIoxHVKOS3-val" size="5" title="XMzLKfYiLLG - Fully immunised children (0-11 months) - HVIoxHVKOS3 - (Male) - int" value="[ Fully immunised children (0-11 months) (Male) ]" /></p>
+			</td>
+			<td style="text-align: center;"><input id="XMzLKfYiLLG-nI90YWZ2Zaf-val" size="5" title="XMzLKfYiLLG - Fully immunised children (0-11 months) - nI90YWZ2Zaf - (Female) - int" value="[ Fully immunised children (0-11 months) (Female) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="4">
+			<p class="p1">&nbsp;<strong>Children more than 16 months who received the following</strong></p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;Japanese encephalitis 2nd dose&nbsp;</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="PB7aDjHsFBX-wgLXMRheSyB-val" size="5" title="PB7aDjHsFBX - Japanese encephalitis dose (&gt;16 months) - wgLXMRheSyB - (default) - int" value="[ Japanese encephalitis dose (&gt;16 months) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;DPT Booster&nbsp;</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="Zualfz7LtxE-wgLXMRheSyB-val" size="5" title="Zualfz7LtxE - DPT booster dose - wgLXMRheSyB - (default) - int" value="[ DPT booster dose (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;OPV Booster</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="vSEIOnC8nCw-wgLXMRheSyB-val" size="5" title="vSEIOnC8nCw - OPV booster dose - wgLXMRheSyB - (default) - int" value="[ OPV booster dose (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;Measles, Mumps, Rubella (MMR) Vaccine</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="QqZx6rTRAaH-wgLXMRheSyB-val" size="5" title="QqZx6rTRAaH - Measles dose 2 - wgLXMRheSyB - (default) - int" value="[ Measles dose 2 (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2" rowspan="2">
+			<p class="p1">&nbsp;<span style="line-height: 20.8px;">F</span><span style="line-height: 20.8px;">ully&nbsp;</span><span style="line-height: 20.8px;">immunised cases (12-23&nbsp;months)&nbsp;</span></p>
+
+			<p class="p1"><strong style="line-height: 20.8px;"><span style="line-height: 20.8px;">&nbsp;</span></strong><span style="line-height: 20.8px;">(with&nbsp;BCG+DPT123/pentavalent123+OPV123+Measles)</span><strong style="line-height: 20.8px;"><span style="line-height: 20.8px;">&nbsp;&nbsp;</span></strong></p>
+			</td>
+			<td style="text-align: center;">Male</td>
+			<td style="text-align: center;">Female</td>
+		</tr>
+		<tr>
+			<td style="text-align: center;"><input id="UgE6F8BxuUX-HVIoxHVKOS3-val" size="5" title="UgE6F8BxuUX - Fully immunised children (12-23 months) - HVIoxHVKOS3 - (Male) - int" value="[ Fully immunised children (12-23 months) (Male) ]" /></td>
+			<td style="text-align: center;"><input id="UgE6F8BxuUX-nI90YWZ2Zaf-val" size="5" title="UgE6F8BxuUX - Fully immunised children (12-23 months) - nI90YWZ2Zaf - (Female) - int" value="[ Fully immunised children (12-23 months) (Female) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;Children more than 5 years given DPT5/DT5</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="mfSK4twFRyt-wgLXMRheSyB-val" size="5" title="mfSK4twFRyt - DT5 dose (&gt;5 yrs) - wgLXMRheSyB - (default) - int" value="[ DT5 dose (&gt;5 yrs) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;Children more than 10 years given TT10</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="D6ZGAvugnip-wgLXMRheSyB-val" size="5" title="D6ZGAvugnip - TT10 dose (&gt;10 yrs) - wgLXMRheSyB - (default) - int" value="[ TT10 dose (&gt;10 yrs) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;Children more than 16 years given TT16</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="t7rdjY5ZwlL-wgLXMRheSyB-val" size="5" title="t7rdjY5ZwlL - TT16 dose (&gt;16 yrs) - wgLXMRheSyB - (default) - int" value="[ TT16 dose (&gt;16 yrs) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="4">
+			<p>&nbsp;<strong>Vitamin A doses</strong></p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;Vitamin dose 1</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="C9yknaLmV4i-wgLXMRheSyB-val" size="5" title="C9yknaLmV4i - Vitamin A dose 1 - wgLXMRheSyB - (default) - int" value="[ Vitamin A dose 1 (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;Vitamin dose 5</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="gwZO0ZVFd5y-wgLXMRheSyB-val" size="5" title="gwZO0ZVFd5y - Vitamin A dose 5 - wgLXMRheSyB - (default) - int" value="[ Vitamin A dose 5 (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;Vitamin dose 9</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="f0FXjH7X6zB-wgLXMRheSyB-val" size="5" title="f0FXjH7X6zB - Vitamin A dose 9 - wgLXMRheSyB - (default) - int" value="[ Vitamin A dose 9 (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="4">
+			<p><strong>&nbsp;Adverse Event Following Immunisation (AEFI)</strong></p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;Abcess</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="uIPsEMwHP8w-X3IsGnyy4BN-val" size="5" title="uIPsEMwHP8w - AEFI cases - X3IsGnyy4BN - (Abcess) - int" value="[ AEFI cases (Abcess) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;Death</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="uIPsEMwHP8w-mMEUJzVzBcy-val" size="5" title="uIPsEMwHP8w - AEFI cases - mMEUJzVzBcy - (Deaths) - int" value="[ AEFI cases (Deaths) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;Others</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="uIPsEMwHP8w-T8r35uU8thF-val" size="5" title="uIPsEMwHP8w - AEFI cases - T8r35uU8thF - (Others) - int" value="[ AEFI cases (Others) ]" /></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<div id="tab8" style="display: none;">
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width:700px;">
+	<tbody>
+		<tr>
+			<td colspan="6" style="text-align: center; background-color: rgb(204, 204, 204);">
+			<p><b>Immunisation sessions</b></p>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;Immunisation session type</td>
+			<td style="text-align: center;">
+			<p>Type A</p>
+			</td>
+			<td style="text-align: center;">Type B</td>
+			<td style="text-align: center;">Type C</td>
+			<td colspan="2" rowspan="1" style="text-align: center;">Type D</td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Immunisation sessions planned</p>
+			</td>
+			<td style="text-align: center;"><input id="n6H15xDCyPl-juKFvxptWqm-val" size="5" title="n6H15xDCyPl - Immunisation sessions planned - juKFvxptWqm - (Type A) - int" value="[ Immunisation sessions planned (Type A) ]" /></td>
+			<td style="text-align: center;"><input id="n6H15xDCyPl-fDh6u7JQCQY-val" size="5" title="n6H15xDCyPl - Immunisation sessions planned - fDh6u7JQCQY - (Type B) - int" value="[ Immunisation sessions planned (Type B) ]" /></td>
+			<td style="text-align: center;"><input id="n6H15xDCyPl-rpFD4FHGm1H-val" size="5" title="n6H15xDCyPl - Immunisation sessions planned - rpFD4FHGm1H - (Type C) - int" value="[ Immunisation sessions planned (Type C) ]" /></td>
+			<td colspan="2" rowspan="1" style="text-align: center;"><input id="n6H15xDCyPl-cKOW8tNSgiE-val" size="5" title="n6H15xDCyPl - Immunisation sessions planned - cKOW8tNSgiE - (Type D) - int" value="[ Immunisation sessions planned (Type D) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p><span style="line-height: 20.8px;">&nbsp;Immunisation sessions held</span></p>
+			</td>
+			<td style="text-align: center;"><input id="a53CgAVth8e-juKFvxptWqm-val" size="5" title="a53CgAVth8e - Immunisation sessions held - juKFvxptWqm - (Type A) - int" value="[ Immunisation sessions held (Type A) ]" /></td>
+			<td style="text-align: center;"><input id="a53CgAVth8e-fDh6u7JQCQY-val" size="5" title="a53CgAVth8e - Immunisation sessions held - fDh6u7JQCQY - (Type B) - int" value="[ Immunisation sessions held (Type B) ]" /></td>
+			<td style="text-align: center;"><input id="a53CgAVth8e-rpFD4FHGm1H-val" size="5" title="a53CgAVth8e - Immunisation sessions held - rpFD4FHGm1H - (Type C) - int" value="[ Immunisation sessions held (Type C) ]" /></td>
+			<td colspan="2" rowspan="1" style="text-align: center;"><input id="a53CgAVth8e-cKOW8tNSgiE-val" size="5" title="a53CgAVth8e - Immunisation sessions held - cKOW8tNSgiE - (Type D) - int" value="[ Immunisation sessions held (Type D) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Children attended the sessions</p>
+			</td>
+			<td style="text-align: center;"><input id="GkAsBlasjVY-juKFvxptWqm-val" size="5" title="GkAsBlasjVY - Children attending immunisation sessions - juKFvxptWqm - (Type A) - int" value="[ Children attending immunisation sessions (Type A) ]" /></td>
+			<td style="text-align: center;"><input id="GkAsBlasjVY-fDh6u7JQCQY-val" size="5" title="GkAsBlasjVY - Children attending immunisation sessions - fDh6u7JQCQY - (Type B) - int" value="[ Children attending immunisation sessions (Type B) ]" /></td>
+			<td style="text-align: center;"><input id="GkAsBlasjVY-rpFD4FHGm1H-val" size="5" title="GkAsBlasjVY - Children attending immunisation sessions - rpFD4FHGm1H - (Type C) - int" value="[ Children attending immunisation sessions (Type C) ]" /></td>
+			<td colspan="2" style="text-align: center;"><input id="GkAsBlasjVY-cKOW8tNSgiE-val" size="5" title="GkAsBlasjVY - Children attending immunisation sessions - cKOW8tNSgiE - (Type D) - int" value="[ Children attending immunisation sessions (Type D) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;ASHAs present in the sessions</p>
+			</td>
+			<td colspan="5" style="text-align: center;"><input id="w4EpRWQUWqR-wgLXMRheSyB-val" size="5" title="w4EpRWQUWqR - Immunisation sessions where ASHAs were present - wgLXMRheSyB - (default) - int" value="[ Immunisation sessions where ASHAs were present (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Anganwadi centres organised MCHN day</p>
+			</td>
+			<td colspan="5" style="text-align: center;"><input id="NpcyCQ73kqF-wgLXMRheSyB-val" size="5" title="NpcyCQ73kqF - Anganwadi centres organised MCHN day - wgLXMRheSyB - (default) - int" value="[ Anganwadi centres organised MCHN day (default) ]" /></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<div id="tab9" style="display: none;">
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width:700px;">
+	<tbody>
+		<tr>
+			<td colspan="3" style="text-align: center; background-color: rgb(204, 204, 204);">
+			<p><b>Morbidity Profile</b></p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3" style="text-align: center;">
+			<p><b>Vaccine preventable and other diseases (cases and deaths, 0-5 years)</b></p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;<b>Diseases</b></p>
+			</td>
+			<td style="text-align: center;"><strong>Cases</strong></td>
+			<td style="text-align: center;"><strong>Deaths</strong></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Diptheria</p>
+			</td>
+			<td style="text-align: center;">&nbsp;<input id="Que0zHz1FnV-wgLXMRheSyB-val" size="5" title="Que0zHz1FnV - Diphtheria cases (0-5 yrs) - wgLXMRheSyB - (default) - int" value="[ Diphtheria cases (0-5 yrs) (default) ]" /></td>
+			<td style="text-align: center;"><input id="GWy2IgFKCfb-wgLXMRheSyB-val" size="5" title="GWy2IgFKCfb - Diphtheria deaths (0-5 yrs) - wgLXMRheSyB - (default) - int" value="[ Diphtheria deaths (0-5 yrs) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Pertussis</p>
+			</td>
+			<td style="text-align: center;"><input id="JhhsLabWEiN-wgLXMRheSyB-val" size="5" title="JhhsLabWEiN - Pertussis cases (0-5 yrs) - wgLXMRheSyB - (default) - int" value="[ Pertussis cases (0-5 yrs) (default) ]" /></td>
+			<td style="text-align: center;"><input id="aPMyry5sLNH-wgLXMRheSyB-val" size="5" title="aPMyry5sLNH - Pertussis deaths (0-5 yrs) - wgLXMRheSyB - (default) - int" value="[ Pertussis deaths (0-5 yrs) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Tetanus (neonatal)</p>
+			</td>
+			<td style="text-align: center;"><input id="dNoaEUbclSD-wgLXMRheSyB-val" size="5" title="dNoaEUbclSD - Neonatal Tetanus cases (0-5 yrs) - wgLXMRheSyB - (default) - int" value="[ Neonatal Tetanus cases (0-5 yrs) (default) ]" /></td>
+			<td style="text-align: center;"><input id="Pmirp3oTFaC-wgLXMRheSyB-val" size="5" title="Pmirp3oTFaC - Neonatal Tetanus deaths (0-5 yrs) - wgLXMRheSyB - (default) - int" value="[ Neonatal Tetanus deaths (0-5 yrs) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Tetanus (others)</p>
+			</td>
+			<td style="text-align: center;"><input id="V0qsiLKjNTv-wgLXMRheSyB-val" size="5" title="V0qsiLKjNTv - Tetanus (others) cases (0-5 yrs) - wgLXMRheSyB - (default) - int" value="[ Tetanus (others) cases (0-5 yrs) (default) ]" /></td>
+			<td style="text-align: center;"><input id="dDQAGuim7gq-wgLXMRheSyB-val" size="5" title="dDQAGuim7gq - Tetanus (others) deaths (0-5 yrs) - wgLXMRheSyB - (default) - int" value="[ Tetanus (others) deaths (0-5 yrs) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;AFP cases</p>
+			</td>
+			<td style="text-align: center;"><input id="Mt3cvsdDiLr-wgLXMRheSyB-val" size="5" title="Mt3cvsdDiLr - Acute Flaccid Paralysis (AFP) cases (0-5 yrs) - wgLXMRheSyB - (default) - int" value="[ Acute Flaccid Paralysis (AFP) cases (0-5 yrs) (default) ]" /></td>
+			<td style="text-align: center;"><input id="X5Znbd10myS-wgLXMRheSyB-val" size="5" title="X5Znbd10myS - Acute Flaccid Paralysis (AFP) deaths (0-5 yrs) - wgLXMRheSyB - (default) - int" value="[ Acute Flaccid Paralysis (AFP) deaths (0-5 yrs) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Measles</p>
+			</td>
+			<td style="text-align: center;"><input id="uFZ2HNFTooW-wgLXMRheSyB-val" size="5" title="uFZ2HNFTooW - Measles cases (0-5 yrs) - wgLXMRheSyB - (default) - int" value="[ Measles cases (0-5 yrs) (default) ]" /></td>
+			<td style="text-align: center;"><input id="FXFJ3oVm3iW-wgLXMRheSyB-val" size="5" title="FXFJ3oVm3iW - Measles deaths (0-5 yrs) - wgLXMRheSyB - (default) - int" value="[ Measles deaths (0-5 yrs) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Diarrhoea and dehydration</p>
+			</td>
+			<td style="text-align: center;"><input id="vT2DijWDcVL-wgLXMRheSyB-val" size="5" title="vT2DijWDcVL - Diarrhoea and Dehydration cases (0-5 yrs) - wgLXMRheSyB - (default) - int" value="[ Diarrhoea and Dehydration cases (0-5 yrs) (default) ]" /></td>
+			<td style="text-align: center;"><input id="sU0BvtXQ3WZ-wgLXMRheSyB-val" size="5" title="sU0BvtXQ3WZ - Diarrhoea and Dehydration deaths (0-5 yrs) - wgLXMRheSyB - (default) - int" value="[ Diarrhoea and Dehydration deaths (0-5 yrs) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Malaria</p>
+			</td>
+			<td style="text-align: center;"><input id="vhEx1Gqpes2-wgLXMRheSyB-val" size="5" title="vhEx1Gqpes2 - Malaria cases (0-5 yrs) - wgLXMRheSyB - (default) - int" value="[ Malaria cases (0-5 yrs) (default) ]" /></td>
+			<td style="text-align: center;"><input id="MJituxRCqh7-wgLXMRheSyB-val" size="5" title="MJituxRCqh7 - Malaria deaths (0-5 yrs) - wgLXMRheSyB - (default) - int" value="[ Malaria deaths (0-5 yrs) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Malnutrition cases (only grade 3 and 4)</p>
+			</td>
+			<td style="text-align: center;"><input id="gQme8Y3RGft-wgLXMRheSyB-val" size="5" title="gQme8Y3RGft - Malnutrition cases (0-5 yrs) (only grade 3 and 4 cases) - wgLXMRheSyB - (default) - int" value="[ Malnutrition cases (0-5 yrs) (only grade 3 and 4 cases) (default) ]" /></td>
+			<td style="text-align: center;"><input id="EWDBZ6rv9cl-wgLXMRheSyB-val" size="5" title="EWDBZ6rv9cl - Malnutrition deaths (0-5 yrs) (only grade 3 and 4 deaths) - wgLXMRheSyB - (default) - int" value="[ Malnutrition deaths (0-5 yrs) (only grade 3 and 4 deaths) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Newborns admitted due to Respiratory infections</p>
+			</td>
+			<td style="text-align: center;"><input id="yyIpGZgS3yL-wgLXMRheSyB-val" size="5" title="yyIpGZgS3yL - Sepsis cases (0-5 yrs) - wgLXMRheSyB - (default) - int" value="[ Sepsis cases (0-5 yrs) (default) ]" /></td>
+			<td style="text-align: center;"><input id="SrQXHXZiQHE-wgLXMRheSyB-val" size="5" title="SrQXHXZiQHE - Sepsis deaths (0-5 yrs) - wgLXMRheSyB - (default) - int" value="[ Sepsis deaths (0-5 yrs) (default) ]" /></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<div id="tab10" style="display: none;">
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width:700px;">
+	<tbody>
+		<tr>
+			<td colspan="2" style="text-align: center; background-color: rgb(204, 204, 204);">
+			<p><b>Blindness control programme</b></p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Patients operated for cataract</p>
+			</td>
+			<td style="text-align: center;"><input id="Lt9tvO2htFk-wgLXMRheSyB-val" size="5" title="Lt9tvO2htFk - Cataract operations - wgLXMRheSyB - (default) - int" value="[ Cataract operations (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Intraocular Lens(IOL) implantations</p>
+			</td>
+			<td style="text-align: center;"><input id="J4pAe4oAGEt-wgLXMRheSyB-val" size="5" title="J4pAe4oAGEt - Intraocular Lens (IOL) implantations - wgLXMRheSyB - (default) - int" value="[ Intraocular Lens (IOL) implantations (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;School children detected with Refractive errors</p>
+			</td>
+			<td style="text-align: center;"><input id="st0DeWL8YJ9-wgLXMRheSyB-val" size="5" title="st0DeWL8YJ9 - School children detected with refractive errors - wgLXMRheSyB - (default) - int" value="[ School children detected with refractive errors (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Children provided with free glasses</p>
+			</td>
+			<td style="text-align: center;"><input id="PEjtMAS0oic-wgLXMRheSyB-val" size="5" title="PEjtMAS0oic - Children provided with free glasses - wgLXMRheSyB - (default) - int" value="[ Children provided with free glasses (default) ]" /></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<div id="tab11" style="display: none;">
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="line-height: 1.6; width: 700px;">
+	<tbody>
+		<tr>
+			<td colspan="3" style="text-align: center; background-color: rgb(204, 204, 204);">
+			<p><b>Health facility services</b></p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3" style="text-align: center;">
+			<p><strong>&nbsp;Outpatient&nbsp;department (OPD)</strong></p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;OPD attendance</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="cva1dsjoeTp-wgLXMRheSyB-val" size="5" title="cva1dsjoeTp - OPD attendance - wgLXMRheSyB - (default) - int" value="[ OPD attendance (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;OPD attendance-BPL</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="zj3hJvft2JU-wgLXMRheSyB-val" size="5" title="zj3hJvft2JU - OPD attendance-BPL - wgLXMRheSyB - (default) - int" value="[ OPD attendance-BPL (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p style="text-align: center;">&nbsp;<strong>Inpatient department (IPD)</strong></p>
+			</td>
+		</tr>
+		<tr>
+			<td rowspan="2">
+			<p>&nbsp;Admissions</p>
+			</td>
+			<td>
+			<p style="text-align: center;">Male</p>
+			</td>
+			<td style="text-align: center;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Female</td>
+		</tr>
+		<tr>
+			<td>
+			<p style="text-align: center;"><input id="d2q5FWQv00D-HVIoxHVKOS3-val" size="5" title="d2q5FWQv00D - IPD admissions - HVIoxHVKOS3 - (Male) - int" value="[ IPD admissions (Male) ]" /></p>
+			</td>
+			<td style="text-align: center;"><input id="d2q5FWQv00D-nI90YWZ2Zaf-val" size="5" title="d2q5FWQv00D - IPD admissions - nI90YWZ2Zaf - (Female) - int" value="[ IPD admissions (Female) ]" /></td>
+		</tr>
+		<tr>
+			<td rowspan="2">&nbsp;Admissions-BPL</td>
+			<td>
+			<p style="text-align: center;">Male</p>
+			</td>
+			<td style="text-align: center;">Female</td>
+		</tr>
+		<tr>
+			<td>
+			<p style="text-align: center;"><input id="j8ZHdCDnvbh-HVIoxHVKOS3-val" size="5" title="j8ZHdCDnvbh - IPD admissions-BPL - HVIoxHVKOS3 - (Male) - int" value="[ IPD admissions-BPL (Male) ]" /></p>
+			</td>
+			<td style="text-align: center;"><input id="j8ZHdCDnvbh-nI90YWZ2Zaf-val" size="5" title="j8ZHdCDnvbh - IPD admissions-BPL - nI90YWZ2Zaf - (Female) - int" value="[ IPD admissions-BPL (Female) ]" /></td>
+		</tr>
+		<tr>
+			<td rowspan="2">&nbsp;IPD deaths</td>
+			<td>
+			<p style="text-align: center;">Male</p>
+			</td>
+			<td style="text-align: center;">Female</td>
+		</tr>
+		<tr>
+			<td>
+			<p style="text-align: center;"><input id="f8VWjslk58x-HVIoxHVKOS3-val" size="5" title="f8VWjslk58x - IPD deaths - HVIoxHVKOS3 - (Male) - int" value="[ IPD deaths (Male) ]" /></p>
+			</td>
+			<td style="text-align: center;"><input id="f8VWjslk58x-nI90YWZ2Zaf-val" size="5" title="f8VWjslk58x - IPD deaths - nI90YWZ2Zaf - (Female) - int" value="[ IPD deaths (Female) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;In-patient head count at midnight</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="QR02qG9a9YV-wgLXMRheSyB-val" size="5" title="QR02qG9a9YV - In-patient head count at midnight - wgLXMRheSyB - (default) - int" value="[ In-patient head count at midnight (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;SNCU available at the facility</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="mMVgQesE8y4-wgLXMRheSyB-val" size="5" title="mMVgQesE8y4 - Facility with a functional SNCU - wgLXMRheSyB - (default) - bool" value="[ Facility with a functional SNCU (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p style="text-align: center;">&nbsp;<strong>Operation theatre services</strong></p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;Operation major (General and spinal anaesthesia)</p>
+			</td>
+			<td style="text-align: center;"><input id="DwDJ2qwcRAD-wgLXMRheSyB-val" size="5" title="DwDJ2qwcRAD - Major operations (general and local anesthesia) - wgLXMRheSyB - (default) - int" value="[ Major operations (general and local anesthesia) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;Gynaecology- Hysterectomy surgeries&nbsp;</p>
+			</td>
+			<td style="text-align: center;"><input id="swMSLdXSduh-wgLXMRheSyB-val" size="5" title="swMSLdXSduh - Gynaecology-Hysterectomy surgeries - wgLXMRheSyB - (default) - int" value="[ Gynaecology-Hysterectomy surgeries (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;Operation minor (No or local anaesthesia)</p>
+			</td>
+			<td style="text-align: center;"><input id="Gk1Guk6jqH9-wgLXMRheSyB-val" size="5" title="Gk1Guk6jqH9 - Minor operations (local anesthesia or no anesthesia) - wgLXMRheSyB - (default) - int" value="[ Minor operations (local anesthesia or no anesthesia) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p style="text-align: center;"><strong>Other services</strong></p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;OPD attendance-AYUSH</p>
+			</td>
+			<td style="text-align: center;"><input id="mqnwNkockja-wgLXMRheSyB-val" size="5" title="mqnwNkockja - OPD attendance-AYUSH - wgLXMRheSyB - (default) - int" value="[ OPD attendance-AYUSH (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;OPD attendance-Dental</p>
+			</td>
+			<td style="text-align: center;"><input id="sW7kjqRGE6q-wgLXMRheSyB-val" size="5" title="sW7kjqRGE6q - OPD attendance-Dental - wgLXMRheSyB - (default) - int" value="[ OPD attendance-Dental (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;Adolescents (10-19 years) counselling&nbsp;services</p>
+			</td>
+			<td style="text-align: center;"><input id="u9d4aaOuAFJ-wgLXMRheSyB-val" size="5" title="u9d4aaOuAFJ - Adolescents (10-19 yrs)-consultation services - wgLXMRheSyB - (default) - int" value="[ Adolescents (10-19 yrs)-consultation services (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;If RKS exists at facility, number of RKS meetings held during the month</p>
+			</td>
+			<td style="text-align: center;"><input id="X3hOKWQ9lKb-wgLXMRheSyB-val" size="5" title="X3hOKWQ9lKb - RKS (Medical Relief Society) meetings held - wgLXMRheSyB - (default) - int" value="[ RKS (Medical Relief Society) meetings held (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;Ambulance services&nbsp;(Assured Referral Services) available</p>
+			</td>
+			<td style="text-align: center;"><input id="ic5wylb49Wz-wgLXMRheSyB-val" size="5" title="ic5wylb49Wz - Ambulance services (Assured Referral Services) available - wgLXMRheSyB - (default) - bool" value="[ Ambulance services (Assured Referral Services) available (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;<span style="line-height: 20.8px;">Ambulance services used for transporting patients</span></p>
+			</td>
+			<td style="text-align: center;"><input id="s04zK6DzQ4I-wgLXMRheSyB-val" size="5" title="s04zK6DzQ4I - Ambulance services used - wgLXMRheSyB - (default) - int" value="[ Ambulance services used (default) ]" /></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<div id="tab12" style="display: none;">
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="line-height: 1.6; width: 700px;">
+	<tbody>
+		<tr>
+			<td colspan="4" style="text-align: center; background-color: rgb(204, 204, 204);">
+			<p><b>Laboratory services</b></p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4" style="text-align: center;">
+			<p><b>Laboratory test details</b></p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;Hb tests conducted</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="vIc9BBmNJQ4-wgLXMRheSyB-val" size="5" title="vIc9BBmNJQ4 - Hb tests conducted - wgLXMRheSyB - (default) - int" value="[ Hb tests conducted (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<p>&nbsp;Cases with Hb&lt;7 mg/dl</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="WCi5zVvtIKO-wgLXMRheSyB-val" size="5" title="WCi5zVvtIKO - Cases having Hb&lt;7 mg/dl - wgLXMRheSyB - (default) - int" value="[ Cases having Hb&lt;7 mg/dl (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1" rowspan="3">
+			<p><strong>&nbsp;</strong>HIV tests conducted</p>
+			</td>
+			<td>
+			<p style="text-align: center;">&nbsp;Male</p>
+			</td>
+			<td colspan="2" style="text-align: center;"><input id="zOxFu14frjb-HVIoxHVKOS3-val" size="5" title="zOxFu14frjb - HIV tests - HVIoxHVKOS3 - (Male) - int" value="[ HIV tests (Male) ]" /></td>
+		</tr>
+		<tr>
+			<td rowspan="2">
+			<p style="text-align: center;">&nbsp;Female</p>
+			</td>
+			<td>
+			<p style="text-align: center;">&nbsp;ANC</p>
+			</td>
+			<td style="text-align: center;">Non-ANC</td>
+		</tr>
+		<tr>
+			<td>
+			<p style="text-align: center;"><input id="PKLdEUNln8O-wgLXMRheSyB-val" size="5" title="PKLdEUNln8O - ANC HIV tested - wgLXMRheSyB - (default) - int" value="[ ANC HIV tested (default) ]" /></p>
+			</td>
+			<td style="text-align: center;"><input id="zOxFu14frjb-nI90YWZ2Zaf-val" size="5" title="zOxFu14frjb - HIV tests - nI90YWZ2Zaf - (Female) - int" value="[ HIV tests (Female) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">&nbsp;Widal tests conducted</td>
+			<td colspan="2" style="text-align: center;">
+			<p><input id="IqzNVAvnE6r-wgLXMRheSyB-val" size="5" title="IqzNVAvnE6r - Widal tests conducted - wgLXMRheSyB - (default) - int" value="[ Widal tests conducted (default) ]" /></p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="1" rowspan="3">
+			<p>&nbsp;</p>
+
+			<p>&nbsp;VDRL tests conducted</p>
+			</td>
+			<td>
+			<p style="text-align: center;">&nbsp;Male</p>
+			</td>
+			<td colspan="2" rowspan="1" style="text-align: center;"><input id="lLIj7cej3g9-HVIoxHVKOS3-val" size="5" title="lLIj7cej3g9 - VDRL tests - HVIoxHVKOS3 - (Male) - int" value="[ VDRL tests (Male) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1" rowspan="2">
+			<p style="text-align: center;">&nbsp;Female</p>
+			</td>
+			<td style="text-align: center;">
+			<p>&nbsp;ANC</p>
+			</td>
+			<td style="text-align: center;">Non-ANC</td>
+		</tr>
+		<tr>
+			<td>
+			<p style="text-align: center;"><input id="xBNsf1i4AlZ-wgLXMRheSyB-val" size="5" title="xBNsf1i4AlZ - ANC VDRL tests - wgLXMRheSyB - (default) - int" value="[ ANC VDRL tests (default) ]" /></p>
+			</td>
+			<td style="text-align: center;"><input id="lLIj7cej3g9-nI90YWZ2Zaf-val" size="5" title="lLIj7cej3g9 - VDRL tests - nI90YWZ2Zaf - (Female) - int" value="[ VDRL tests (Female) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Operation minor (No or local anaesthesia)</p>
+			</td>
+			<td style="text-align: center;"><input id="Gk1Guk6jqH9-wgLXMRheSyB-val" size="5" title="Gk1Guk6jqH9 - Minor operations (local anesthesia or no anesthesia) - wgLXMRheSyB - (default) - int" value="[ Minor operations (local anesthesia or no anesthesia) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="4">
+			<p>&nbsp;Malaria tests</p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Blood smears examined&nbsp;</p>
+			</td>
+			<td style="text-align: center;"><input id="soYPEOqceFK-wgLXMRheSyB-val" size="5" title="soYPEOqceFK - RDT tests - wgLXMRheSyB - (default) - int" value="[ RDT tests (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Plasmodium vivax positive</p>
+			</td>
+			<td style="text-align: center;"><input id="SEX81tokHc3-wgLXMRheSyB-val" size="5" title="SEX81tokHc3 - Plasmodium vivax test positive - wgLXMRheSyB - (default) - int" value="[ Plasmodium vivax test positive (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;<span style="line-height: 20.8px;">Plasmodium falciparum&nbsp;positive</span></p>
+			</td>
+			<td style="text-align: center;"><input id="vHnmHgg459f-wgLXMRheSyB-val" size="5" title="vHnmHgg459f - Plasmodium falciparum test positive - wgLXMRheSyB - (default) - int" value="[ Plasmodium falciparum test positive (default) ]" /></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<div id="tab13" style="display: none;">
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="line-height: 1.6; width: 700px;">
+	<tbody>
+		<tr>
+			<td colspan="4" style="text-align: center; background-color: rgb(204, 204, 204);">
+			<p><b>Mortality details</b></p>
+			</td>
+		</tr>
+		<tr>
+			<td rowspan="2" style="text-align: center;">
+			<p><b>&nbsp; &nbsp; Cause of death &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></p>
+			</td>
+			<td rowspan="2" style="text-align: center;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <strong>Cases &nbsp; &nbsp; &nbsp;</strong> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</td>
+			<td colspan="2" rowspan="1" style="text-align: center;">
+			<p><b>Age Group</b></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: center;">
+			<p><strong>Within 1 week of birth</strong></p>
+			</td>
+			<td style="text-align: center;"><strong>1-4 weeks of birth</strong></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Sepsis</p>
+			</td>
+			<td style="text-align: center;"><input id="h9LjhPx5iuZ-wgLXMRheSyB-val" size="5" title="h9LjhPx5iuZ - Sepsis cases - wgLXMRheSyB - (default) - int" value="[ Sepsis cases (default) ]" /></td>
+			<td style="text-align: center;"><input id="VByexnel2ob-PHQw2fvqtCa-val" size="5" title="VByexnel2ob - Sepsis deaths - PHQw2fvqtCa - (&lt; 1 week) - int" value="[ Sepsis deaths (&lt; 1 week) ]" /></td>
+			<td style="text-align: center;"><input id="VByexnel2ob-nRXNn5wZ0Mn-val" size="5" title="VByexnel2ob - Sepsis deaths - nRXNn5wZ0Mn - (&lt; 4 weeks) - int" value="[ Sepsis deaths (&lt; 4 weeks) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Tetanus</p>
+			</td>
+			<td style="text-align: center;"><input id="idbKxRePTxr-wgLXMRheSyB-val" size="5" title="idbKxRePTxr - Tetanus (other) cases - wgLXMRheSyB - (default) - int" value="[ Tetanus (other) cases (default) ]" /></td>
+			<td style="text-align: center;"><input id="Ous7BWufXZQ-PHQw2fvqtCa-val" size="5" title="Ous7BWufXZQ - Tetanus (other) deaths - PHQw2fvqtCa - (&lt; 1 week) - int" value="[ Tetanus (other) deaths (&lt; 1 week) ]" /></td>
+			<td style="text-align: center;"><input id="Ous7BWufXZQ-nRXNn5wZ0Mn-val" size="5" title="Ous7BWufXZQ - Tetanus (other) deaths - nRXNn5wZ0Mn - (&lt; 4 weeks) - int" value="[ Tetanus (other) deaths (&lt; 4 weeks) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1">
+			<p>&nbsp;Asphyxia</p>
+			</td>
+			<td colspan="1" style="text-align: center;"><input id="yxCUwovjf5X-wgLXMRheSyB-val" size="5" title="yxCUwovjf5X - Asphyxia cases - wgLXMRheSyB - (default) - int" value="[ Asphyxia cases (default) ]" /></td>
+			<td style="text-align: center;"><input id="SCPY1Csl2M4-PHQw2fvqtCa-val" size="5" title="SCPY1Csl2M4 - Asphyxia deaths - PHQw2fvqtCa - (&lt; 1 week) - int" value="[ Asphyxia deaths (&lt; 1 week) ]" /></td>
+			<td style="text-align: center;"><input id="SCPY1Csl2M4-nRXNn5wZ0Mn-val" size="5" title="SCPY1Csl2M4 - Asphyxia deaths - nRXNn5wZ0Mn - (&lt; 4 weeks) - int" value="[ Asphyxia deaths (&lt; 4 weeks) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1">
+			<p>&nbsp;Low birth weight</p>
+			</td>
+			<td colspan="1" style="text-align: center;"><input id="aXeIuEyfSmC-wgLXMRheSyB-val" size="5" title="aXeIuEyfSmC - Low birth weight cases - wgLXMRheSyB - (default) - int" value="[ Low birth weight cases (default) ]" /></td>
+			<td style="text-align: center;"><input id="o8pb90sgtqJ-PHQw2fvqtCa-val" size="5" title="o8pb90sgtqJ - Low birth weight deaths - PHQw2fvqtCa - (&lt; 1 week) - int" value="[ Low birth weight deaths (&lt; 1 week) ]" /></td>
+			<td style="text-align: center;"><input id="o8pb90sgtqJ-nRXNn5wZ0Mn-val" size="5" title="o8pb90sgtqJ - Low birth weight deaths - nRXNn5wZ0Mn - (&lt; 4 weeks) - int" value="[ Low birth weight deaths (&lt; 4 weeks) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1">&nbsp;Others</td>
+			<td colspan="1" style="text-align: center;"><input id="XzxfY4tkvBF-wgLXMRheSyB-val" size="5" title="XzxfY4tkvBF - Other cases (1-4 weeks) - wgLXMRheSyB - (default) - int" value="[ Other cases (1-4 weeks) (default) ]" /></td>
+			<td>
+			<p style="text-align: center;"><input id="kUWZ4PNMY79-PHQw2fvqtCa-val" size="5" title="kUWZ4PNMY79 - Other deaths (infant) - PHQw2fvqtCa - (&lt; 1 week) - int" value="[ Other deaths (infant) (&lt; 1 week) ]" /></p>
+			</td>
+			<td style="text-align: center;"><input id="kUWZ4PNMY79-nRXNn5wZ0Mn-val" size="5" title="kUWZ4PNMY79 - Other deaths (infant) - nRXNn5wZ0Mn - (&lt; 4 weeks) - int" value="[ Other deaths (infant) (&lt; 4 weeks) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1" rowspan="2">
+			<p style="text-align: center;">&nbsp;<b style="line-height: 20.8px; text-align: center;">&nbsp;Cause of death &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></p>
+			</td>
+			<td colspan="1" rowspan="2" style="text-align: center;"><strong>Cases</strong></td>
+			<td colspan="2" rowspan="1">
+			<p style="text-align: center;"><b style="line-height: 20.8px; text-align: center;">Age Group</b></p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p style="text-align: center;"><strong>&nbsp;Less than 1 year</strong></p>
+			</td>
+			<td style="text-align: center;"><strong>1-5 years</strong></td>
+		</tr>
+		<tr>
+			<td colspan="1">
+			<p>&nbsp;Pneumonia</p>
+			</td>
+			<td colspan="1" style="text-align: center;"><input id="S3Aet9qeICy-wgLXMRheSyB-val" size="5" title="S3Aet9qeICy - Pneumonia cases - wgLXMRheSyB - (default) - int" value="[ Pneumonia cases (default) ]" /></td>
+			<td style="text-align: center;"><input id="TT3FVKMd4t1-BoNBe7wgqlx-val" size="5" title="TT3FVKMd4t1 - Pneumonia deaths - BoNBe7wgqlx - (&lt; 12 months) - int" value="[ Pneumonia deaths (&lt; 12 months) ]" /></td>
+			<td style="text-align: center;"><input id="TT3FVKMd4t1-cOrvbvlxHRr-val" size="5" title="TT3FVKMd4t1 - Pneumonia deaths - cOrvbvlxHRr - (1-5 years) - int" value="[ Pneumonia deaths (1-5 years) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1">
+			<p>&nbsp;Diarrhoea</p>
+			</td>
+			<td colspan="1" style="text-align: center;"><input id="OrrGuAiREC3-wgLXMRheSyB-val" size="5" title="OrrGuAiREC3 - Diarrhoea cases - wgLXMRheSyB - (default) - int" value="[ Diarrhoea cases (default) ]" /></td>
+			<td style="text-align: center;"><input id="sanQGaNKqz2-BoNBe7wgqlx-val" size="5" title="sanQGaNKqz2 - Diarrhoea deaths - BoNBe7wgqlx - (&lt; 12 months) - int" value="[ Diarrhoea deaths (&lt; 12 months) ]" /></td>
+			<td style="text-align: center;"><input id="sanQGaNKqz2-cOrvbvlxHRr-val" size="5" title="sanQGaNKqz2 - Diarrhoea deaths - cOrvbvlxHRr - (1-5 years) - int" value="[ Diarrhoea deaths (1-5 years) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1">
+			<p>&nbsp;Fever</p>
+			</td>
+			<td colspan="1" style="text-align: center;"><input id="X8YtngS1hWE-wgLXMRheSyB-val" size="5" title="X8YtngS1hWE - Fever cases - wgLXMRheSyB - (default) - int" value="[ Fever cases (default) ]" /></td>
+			<td style="text-align: center;"><input id="rRx4kiZLq3q-BoNBe7wgqlx-val" size="5" title="rRx4kiZLq3q - Fever deaths - BoNBe7wgqlx - (&lt; 12 months) - int" value="[ Fever deaths (&lt; 12 months) ]" /></td>
+			<td style="text-align: center;"><input id="rRx4kiZLq3q-cOrvbvlxHRr-val" size="5" title="rRx4kiZLq3q - Fever deaths - cOrvbvlxHRr - (1-5 years) - int" value="[ Fever deaths (1-5 years) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1">
+			<p>&nbsp;Measles</p>
+			</td>
+			<td colspan="1" style="text-align: center;"><input id="xj0SnmRn64l-wgLXMRheSyB-val" size="5" title="xj0SnmRn64l - Measles cases - wgLXMRheSyB - (default) - int" value="[ Measles cases (default) ]" /></td>
+			<td style="text-align: center;"><input id="xRDiSvjqOoR-BoNBe7wgqlx-val" size="5" title="xRDiSvjqOoR - Measles deaths - BoNBe7wgqlx - (&lt; 12 months) - int" value="[ Measles deaths (&lt; 12 months) ]" /></td>
+			<td style="text-align: center;"><input id="xRDiSvjqOoR-cOrvbvlxHRr-val" size="5" title="xRDiSvjqOoR - Measles deaths - cOrvbvlxHRr - (1-5 years) - int" value="[ Measles deaths (1-5 years) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1">
+			<p>&nbsp;Diphtheria</p>
+			</td>
+			<td colspan="1" style="text-align: center;"><input id="AyIGzbDtMSn-wgLXMRheSyB-val" size="5" title="AyIGzbDtMSn - Diphtheria cases - wgLXMRheSyB - (default) - int" value="[ Diphtheria cases (default) ]" /></td>
+			<td style="text-align: center;"><input id="mgTmjJmbEi7-BoNBe7wgqlx-val" size="5" title="mgTmjJmbEi7 - Diphtheria deaths - BoNBe7wgqlx - (&lt; 12 months) - int" value="[ Diphtheria deaths (&lt; 12 months) ]" /></td>
+			<td style="text-align: center;"><input id="mgTmjJmbEi7-cOrvbvlxHRr-val" size="5" title="mgTmjJmbEi7 - Diphtheria deaths - cOrvbvlxHRr - (1-5 years) - int" value="[ Diphtheria deaths (1-5 years) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1">
+			<p>&nbsp;Others</p>
+			</td>
+			<td colspan="1" style="text-align: center;"><input id="miJPIjS7eoW-wgLXMRheSyB-val" size="5" title="miJPIjS7eoW - Other cases - wgLXMRheSyB - (default) - int" value="[ Other cases (default) ]" /></td>
+			<td style="text-align: center;"><input id="DFSukNdeGuA-BoNBe7wgqlx-val" size="5" title="DFSukNdeGuA - Other deaths (child) - BoNBe7wgqlx - (&lt; 12 months) - int" value="[ Other deaths (child) (&lt; 12 months) ]" /></td>
+			<td style="text-align: center;"><input id="DFSukNdeGuA-cOrvbvlxHRr-val" size="5" title="DFSukNdeGuA - Other deaths (child) - cOrvbvlxHRr - (1-5 years) - int" value="[ Other deaths (child) (1-5 years) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1" rowspan="2">
+			<p style="text-align: center;">&nbsp;<b style="line-height: 20.8px; text-align: center;">&nbsp;Cause of death &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></p>
+			</td>
+			<td colspan="3" rowspan="1">
+			<p style="text-align: center;"><b style="line-height: 20.8px; text-align: center;">Age Group</b></p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="1">
+			<p style="text-align: center;">&nbsp;<strong>6-14 years</strong></p>
+			</td>
+			<td style="text-align: center;"><strong>15-55 years</strong></td>
+			<td style="text-align: center;"><strong>55 and above years</strong></td>
+		</tr>
+		<tr>
+			<td colspan="1">
+			<p>&nbsp;Diarrhoea</p>
+			</td>
+			<td colspan="1" style="text-align: center;"><input id="B8luNxKPUpg-QdWe1LRwDOR-val" size="5" title="B8luNxKPUpg - Diarrhoea deaths (adult) - QdWe1LRwDOR - (6-14 years) - int" value="[ Diarrhoea deaths (adult) (6-14 years) ]" /></td>
+			<td style="text-align: center;"><input id="B8luNxKPUpg-La2vhjJ9VSF-val" size="5" title="B8luNxKPUpg - Diarrhoea deaths (adult) - La2vhjJ9VSF - (15-55 years) - int" value="[ Diarrhoea deaths (adult) (15-55 years) ]" /></td>
+			<td style="text-align: center;"><input id="B8luNxKPUpg-KkVwOWWQPjk-val" size="5" title="B8luNxKPUpg - Diarrhoea deaths (adult) - KkVwOWWQPjk - (55 and above years) - int" value="[ Diarrhoea deaths (adult) (55 and above years) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1">
+			<p>&nbsp;Tuberculosis</p>
+			</td>
+			<td colspan="1" style="text-align: center;"><input id="ThmAzKh5mmy-QdWe1LRwDOR-val" size="5" title="ThmAzKh5mmy - Tuberculosis deaths - QdWe1LRwDOR - (6-14 years) - int" value="[ Tuberculosis deaths (6-14 years) ]" /></td>
+			<td style="text-align: center;"><input id="ThmAzKh5mmy-La2vhjJ9VSF-val" size="5" title="ThmAzKh5mmy - Tuberculosis deaths - La2vhjJ9VSF - (15-55 years) - int" value="[ Tuberculosis deaths (15-55 years) ]" /></td>
+			<td style="text-align: center;"><input id="ThmAzKh5mmy-KkVwOWWQPjk-val" size="5" title="ThmAzKh5mmy - Tuberculosis deaths - KkVwOWWQPjk - (55 and above years) - int" value="[ Tuberculosis deaths (55 and above years) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1">
+			<p>&nbsp;Respiratory diseases</p>
+			</td>
+			<td colspan="1" style="text-align: center;"><input id="YOFQSRi2RnX-QdWe1LRwDOR-val" size="5" title="YOFQSRi2RnX - Respiratory disease deaths - QdWe1LRwDOR - (6-14 years) - int" value="[ Respiratory disease deaths (6-14 years) ]" /></td>
+			<td style="text-align: center;"><input id="YOFQSRi2RnX-La2vhjJ9VSF-val" size="5" title="YOFQSRi2RnX - Respiratory disease deaths - La2vhjJ9VSF - (15-55 years) - int" value="[ Respiratory disease deaths (15-55 years) ]" /></td>
+			<td style="text-align: center;"><input id="YOFQSRi2RnX-KkVwOWWQPjk-val" size="5" title="YOFQSRi2RnX - Respiratory disease deaths - KkVwOWWQPjk - (55 and above years) - int" value="[ Respiratory disease deaths (55 and above years) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1">
+			<p>&nbsp;Malaria</p>
+			</td>
+			<td colspan="1" style="text-align: center;"><input id="N1ksQwmVgKX-QdWe1LRwDOR-val" size="5" title="N1ksQwmVgKX - Malaria deaths - QdWe1LRwDOR - (6-14 years) - int" value="[ Malaria deaths (6-14 years) ]" /></td>
+			<td style="text-align: center;"><input id="N1ksQwmVgKX-La2vhjJ9VSF-val" size="5" title="N1ksQwmVgKX - Malaria deaths - La2vhjJ9VSF - (15-55 years) - int" value="[ Malaria deaths (15-55 years) ]" /></td>
+			<td style="text-align: center;"><input id="N1ksQwmVgKX-KkVwOWWQPjk-val" size="5" title="N1ksQwmVgKX - Malaria deaths - KkVwOWWQPjk - (55 and above years) - int" value="[ Malaria deaths (55 and above years) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1">
+			<p>&nbsp;Other fever related</p>
+			</td>
+			<td colspan="1" style="text-align: center;"><input id="UHzgShCm7WB-QdWe1LRwDOR-val" size="5" title="UHzgShCm7WB - Fever deaths (adult) - QdWe1LRwDOR - (6-14 years) - int" value="[ Fever deaths (adult) (6-14 years) ]" /></td>
+			<td style="text-align: center;"><input id="UHzgShCm7WB-La2vhjJ9VSF-val" size="5" title="UHzgShCm7WB - Fever deaths (adult) - La2vhjJ9VSF - (15-55 years) - int" value="[ Fever deaths (adult) (15-55 years) ]" /></td>
+			<td style="text-align: center;"><input id="UHzgShCm7WB-KkVwOWWQPjk-val" size="5" title="UHzgShCm7WB - Fever deaths (adult) - KkVwOWWQPjk - (55 and above years) - int" value="[ Fever deaths (adult) (55 and above years) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1">
+			<p>&nbsp;HIV/AIDS</p>
+			</td>
+			<td colspan="1" style="text-align: center;"><input id="vntrsb2sC3R-QdWe1LRwDOR-val" size="5" title="vntrsb2sC3R - HIV/AIDS deaths - QdWe1LRwDOR - (6-14 years) - int" value="[ HIV/AIDS deaths (6-14 years) ]" /></td>
+			<td style="text-align: center;"><input id="vntrsb2sC3R-La2vhjJ9VSF-val" size="5" title="vntrsb2sC3R - HIV/AIDS deaths - La2vhjJ9VSF - (15-55 years) - int" value="[ HIV/AIDS deaths (15-55 years) ]" /></td>
+			<td style="text-align: center;"><input id="vntrsb2sC3R-KkVwOWWQPjk-val" size="5" title="vntrsb2sC3R - HIV/AIDS deaths - KkVwOWWQPjk - (55 and above years) - int" value="[ HIV/AIDS deaths (55 and above years) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1">
+			<p>&nbsp;Heart/Hypertension</p>
+			</td>
+			<td colspan="1" style="text-align: center;"><input id="VkV3ft5NSed-QdWe1LRwDOR-val" size="5" title="VkV3ft5NSed - Heart diseases/Hypertension deaths - QdWe1LRwDOR - (6-14 years) - int" value="[ Heart diseases/Hypertension deaths (6-14 years) ]" /></td>
+			<td style="text-align: center;"><input id="VkV3ft5NSed-La2vhjJ9VSF-val" size="5" title="VkV3ft5NSed - Heart diseases/Hypertension deaths - La2vhjJ9VSF - (15-55 years) - int" value="[ Heart diseases/Hypertension deaths (15-55 years) ]" /></td>
+			<td style="text-align: center;"><input id="VkV3ft5NSed-KkVwOWWQPjk-val" size="5" title="VkV3ft5NSed - Heart diseases/Hypertension deaths - KkVwOWWQPjk - (55 and above years) - int" value="[ Heart diseases/Hypertension deaths (55 and above years) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1">
+			<p>&nbsp;Neurological&nbsp;diseases (including stroke)&nbsp;</p>
+			</td>
+			<td colspan="1" style="text-align: center;"><input id="YGIjqfdGAJk-QdWe1LRwDOR-val" size="5" title="YGIjqfdGAJk - Neurological diseases (including stroke) deaths - QdWe1LRwDOR - (6-14 years) - int" value="[ Neurological diseases (including stroke) deaths (6-14 years) ]" /></td>
+			<td style="text-align: center;"><input id="YGIjqfdGAJk-La2vhjJ9VSF-val" size="5" title="YGIjqfdGAJk - Neurological diseases (including stroke) deaths - La2vhjJ9VSF - (15-55 years) - int" value="[ Neurological diseases (including stroke) deaths (15-55 years) ]" /></td>
+			<td style="text-align: center;"><input id="YGIjqfdGAJk-KkVwOWWQPjk-val" size="5" title="YGIjqfdGAJk - Neurological diseases (including stroke) deaths - KkVwOWWQPjk - (55 and above years) - int" value="[ Neurological diseases (including stroke) deaths (55 and above years) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1">
+			<p>&nbsp;Trauma/Accident/Burn&nbsp;</p>
+			</td>
+			<td colspan="1" style="text-align: center;"><input id="DcYEITTKI4c-QdWe1LRwDOR-val" size="5" title="DcYEITTKI4c - Trauma/Accident/Burn deaths - QdWe1LRwDOR - (6-14 years) - int" value="[ Trauma/Accident/Burn deaths (6-14 years) ]" /></td>
+			<td style="text-align: center;"><input id="DcYEITTKI4c-La2vhjJ9VSF-val" size="5" title="DcYEITTKI4c - Trauma/Accident/Burn deaths - La2vhjJ9VSF - (15-55 years) - int" value="[ Trauma/Accident/Burn deaths (15-55 years) ]" /></td>
+			<td style="text-align: center;"><input id="DcYEITTKI4c-KkVwOWWQPjk-val" size="5" title="DcYEITTKI4c - Trauma/Accident/Burn deaths - KkVwOWWQPjk - (55 and above years) - int" value="[ Trauma/Accident/Burn deaths (55 and above years) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1">
+			<p>&nbsp;Suicide</p>
+			</td>
+			<td colspan="1" style="text-align: center;"><input id="kjE1pN6B0Nq-QdWe1LRwDOR-val" size="5" title="kjE1pN6B0Nq - Suicide deaths - QdWe1LRwDOR - (6-14 years) - int" value="[ Suicide deaths (6-14 years) ]" /></td>
+			<td style="text-align: center;"><input id="kjE1pN6B0Nq-La2vhjJ9VSF-val" size="5" title="kjE1pN6B0Nq - Suicide deaths - La2vhjJ9VSF - (15-55 years) - int" value="[ Suicide deaths (15-55 years) ]" /></td>
+			<td style="text-align: center;"><input id="kjE1pN6B0Nq-KkVwOWWQPjk-val" size="5" title="kjE1pN6B0Nq - Suicide deaths - KkVwOWWQPjk - (55 and above years) - int" value="[ Suicide deaths (55 and above years) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1">
+			<p>&nbsp;Animal sting and bites</p>
+			</td>
+			<td colspan="1" style="text-align: center;"><input id="U2cAFlDRtdV-QdWe1LRwDOR-val" size="5" title="U2cAFlDRtdV - Animal bites and sting deaths - QdWe1LRwDOR - (6-14 years) - int" value="[ Animal bites and sting deaths (6-14 years) ]" /></td>
+			<td style="text-align: center;"><input id="U2cAFlDRtdV-La2vhjJ9VSF-val" size="5" title="U2cAFlDRtdV - Animal bites and sting deaths - La2vhjJ9VSF - (15-55 years) - int" value="[ Animal bites and sting deaths (15-55 years) ]" /></td>
+			<td style="text-align: center;"><input id="U2cAFlDRtdV-KkVwOWWQPjk-val" size="5" title="U2cAFlDRtdV - Animal bites and sting deaths - KkVwOWWQPjk - (55 and above years) - int" value="[ Animal bites and sting deaths (55 and above years) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1">
+			<p>&nbsp;Known acute disease&nbsp; &nbsp;</p>
+			</td>
+			<td colspan="1" style="text-align: center;"><input id="aNBRsecHF9l-QdWe1LRwDOR-val" size="5" title="aNBRsecHF9l - Known acute disease deaths - QdWe1LRwDOR - (6-14 years) - int" value="[ Known acute disease deaths (6-14 years) ]" /></td>
+			<td style="text-align: center;"><input id="aNBRsecHF9l-La2vhjJ9VSF-val" size="5" title="aNBRsecHF9l - Known acute disease deaths - La2vhjJ9VSF - (15-55 years) - int" value="[ Known acute disease deaths (15-55 years) ]" /></td>
+			<td style="text-align: center;"><input id="aNBRsecHF9l-KkVwOWWQPjk-val" size="5" title="aNBRsecHF9l - Known acute disease deaths - KkVwOWWQPjk - (55 and above years) - int" value="[ Known acute disease deaths (55 and above years) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1">
+			<p>&nbsp;Known chronic&nbsp;disease&nbsp;</p>
+			</td>
+			<td colspan="1" style="text-align: center;"><input id="pj4Tw1aObxg-QdWe1LRwDOR-val" size="5" title="pj4Tw1aObxg - Known chronic disease deaths - QdWe1LRwDOR - (6-14 years) - int" value="[ Known chronic disease deaths (6-14 years) ]" /></td>
+			<td style="text-align: center;"><input id="pj4Tw1aObxg-La2vhjJ9VSF-val" size="5" title="pj4Tw1aObxg - Known chronic disease deaths - La2vhjJ9VSF - (15-55 years) - int" value="[ Known chronic disease deaths (15-55 years) ]" /></td>
+			<td style="text-align: center;"><input id="pj4Tw1aObxg-KkVwOWWQPjk-val" size="5" title="pj4Tw1aObxg - Known chronic disease deaths - KkVwOWWQPjk - (55 and above years) - int" value="[ Known chronic disease deaths (55 and above years) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1">
+			<p>&nbsp;Cause not known</p>
+			</td>
+			<td colspan="1" style="text-align: center;"><input id="xI7maSIlwk4-QdWe1LRwDOR-val" size="5" title="xI7maSIlwk4 - Cause not known deaths - QdWe1LRwDOR - (6-14 years) - int" value="[ Cause not known deaths (6-14 years) ]" /></td>
+			<td style="text-align: center;"><input id="xI7maSIlwk4-La2vhjJ9VSF-val" size="5" title="xI7maSIlwk4 - Cause not known deaths - La2vhjJ9VSF - (15-55 years) - int" value="[ Cause not known deaths (15-55 years) ]" /></td>
+			<td style="text-align: center;"><input id="xI7maSIlwk4-KkVwOWWQPjk-val" size="5" title="xI7maSIlwk4 - Cause not known deaths - KkVwOWWQPjk - (55 and above years) - int" value="[ Cause not known deaths (55 and above years) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1" rowspan="2">
+			<p>&nbsp;&nbsp;<b style="line-height: 20.8px; text-align: center;">Cause of death &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b></p>
+			</td>
+			<td colspan="3" rowspan="1" style="text-align: center;">
+			<p><b style="line-height: 20.8px; text-align: center;">Age Group</b></p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="1" style="text-align: center;">
+			<p>&nbsp;<strong>Less then 20 years</strong></p>
+			</td>
+			<td style="text-align: center;"><strong>20-35 years</strong></td>
+			<td style="text-align: center;"><strong>35 and above years</strong></td>
+		</tr>
+		<tr>
+			<td colspan="1">&nbsp;Abortion</td>
+			<td colspan="1" style="text-align: center;">
+			<p><input id="KPEWcA0kJ6w-u5o5VNdUoko-val" size="5" title="KPEWcA0kJ6w - Abortion deaths - u5o5VNdUoko - (&lt; 20 years) - int" value="[ Abortion deaths (&lt; 20 years) ]" /></p>
+			</td>
+			<td style="text-align: center;"><input id="KPEWcA0kJ6w-Sl961rq1AbU-val" size="5" title="KPEWcA0kJ6w - Abortion deaths - Sl961rq1AbU - (20-35 years) - int" value="[ Abortion deaths (20-35 years) ]" /></td>
+			<td style="text-align: center;"><input id="KPEWcA0kJ6w-LjXVNSBq6Dm-val" size="5" title="KPEWcA0kJ6w - Abortion deaths - LjXVNSBq6Dm - (35 and above years) - int" value="[ Abortion deaths (35 and above years) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1">&nbsp;Anaemia</td>
+			<td colspan="1" style="text-align: center;">
+			<p><input id="LMl3vWf7uuc-u5o5VNdUoko-val" size="5" title="LMl3vWf7uuc - Anaemia deaths - u5o5VNdUoko - (&lt; 20 years) - int" value="[ Anaemia deaths (&lt; 20 years) ]" /></p>
+			</td>
+			<td style="text-align: center;"><input id="LMl3vWf7uuc-Sl961rq1AbU-val" size="5" title="LMl3vWf7uuc - Anaemia deaths - Sl961rq1AbU - (20-35 years) - int" value="[ Anaemia deaths (20-35 years) ]" /></td>
+			<td style="text-align: center;"><input id="LMl3vWf7uuc-LjXVNSBq6Dm-val" size="5" title="LMl3vWf7uuc - Anaemia deaths - LjXVNSBq6Dm - (35 and above years) - int" value="[ Anaemia deaths (35 and above years) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1">&nbsp;Obstructed/prolonged labour</td>
+			<td colspan="1" style="text-align: center;">
+			<p><input id="nErIrAoZhrZ-u5o5VNdUoko-val" size="5" title="nErIrAoZhrZ - Obstructed/prolonged labour deaths - u5o5VNdUoko - (&lt; 20 years) - int" value="[ Obstructed/prolonged labour deaths (&lt; 20 years) ]" /></p>
+			</td>
+			<td style="text-align: center;"><input id="nErIrAoZhrZ-Sl961rq1AbU-val" size="5" title="nErIrAoZhrZ - Obstructed/prolonged labour deaths - Sl961rq1AbU - (20-35 years) - int" value="[ Obstructed/prolonged labour deaths (20-35 years) ]" /></td>
+			<td style="text-align: center;"><input id="nErIrAoZhrZ-LjXVNSBq6Dm-val" size="5" title="nErIrAoZhrZ - Obstructed/prolonged labour deaths - LjXVNSBq6Dm - (35 and above years) - int" value="[ Obstructed/prolonged labour deaths (35 and above years) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1">&nbsp;Severe hypertension/fits</td>
+			<td colspan="1" style="text-align: center;">
+			<p><input id="vJLwctO21bI-u5o5VNdUoko-val" size="5" title="vJLwctO21bI - Severe hypertension/fits deaths - u5o5VNdUoko - (&lt; 20 years) - int" value="[ Severe hypertension/fits deaths (&lt; 20 years) ]" /></p>
+			</td>
+			<td style="text-align: center;"><input id="vJLwctO21bI-Sl961rq1AbU-val" size="5" title="vJLwctO21bI - Severe hypertension/fits deaths - Sl961rq1AbU - (20-35 years) - int" value="[ Severe hypertension/fits deaths (20-35 years) ]" /></td>
+			<td style="text-align: center;"><input id="vJLwctO21bI-LjXVNSBq6Dm-val" size="5" title="vJLwctO21bI - Severe hypertension/fits deaths - LjXVNSBq6Dm - (35 and above years) - int" value="[ Severe hypertension/fits deaths (35 and above years) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1">&nbsp;Bleeding</td>
+			<td colspan="1" style="text-align: center;">
+			<p><input id="dCLWfkBANtM-u5o5VNdUoko-val" size="5" title="dCLWfkBANtM - Bleeding deaths - u5o5VNdUoko - (&lt; 20 years) - int" value="[ Bleeding deaths (&lt; 20 years) ]" /></p>
+			</td>
+			<td style="text-align: center;"><input id="dCLWfkBANtM-Sl961rq1AbU-val" size="5" title="dCLWfkBANtM - Bleeding deaths - Sl961rq1AbU - (20-35 years) - int" value="[ Bleeding deaths (20-35 years) ]" /></td>
+			<td style="text-align: center;"><input id="dCLWfkBANtM-LjXVNSBq6Dm-val" size="5" title="dCLWfkBANtM - Bleeding deaths - LjXVNSBq6Dm - (35 and above years) - int" value="[ Bleeding deaths (35 and above years) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1">
+			<p>&nbsp;High fever</p>
+			</td>
+			<td colspan="1" style="text-align: center;"><input id="E0WOI8c0nGq-u5o5VNdUoko-val" size="5" title="E0WOI8c0nGq - High fever deaths - u5o5VNdUoko - (&lt; 20 years) - int" value="[ High fever deaths (&lt; 20 years) ]" /></td>
+			<td style="text-align: center;"><input id="E0WOI8c0nGq-Sl961rq1AbU-val" size="5" title="E0WOI8c0nGq - High fever deaths - Sl961rq1AbU - (20-35 years) - int" value="[ High fever deaths (20-35 years) ]" /></td>
+			<td style="text-align: center;"><input id="E0WOI8c0nGq-LjXVNSBq6Dm-val" size="5" title="E0WOI8c0nGq - High fever deaths - LjXVNSBq6Dm - (35 and above years) - int" value="[ High fever deaths (35 and above years) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="1">
+			<p>&nbsp;Other causes&nbsp;(incl&nbsp;cause not known)</p>
+			</td>
+			<td colspan="1" style="text-align: center;"><input id="shs7yFgSRXG-u5o5VNdUoko-val" size="5" title="shs7yFgSRXG - Other causes (including cause not known) deaths - u5o5VNdUoko - (&lt; 20 years) - int" value="[ Other causes (including cause not known) deaths (&lt; 20 years) ]" /></td>
+			<td style="text-align: center;"><input id="shs7yFgSRXG-Sl961rq1AbU-val" size="5" title="shs7yFgSRXG - Other causes (including cause not known) deaths - Sl961rq1AbU - (20-35 years) - int" value="[ Other causes (including cause not known) deaths (20-35 years) ]" /></td>
+			<td style="text-align: center;"><input id="shs7yFgSRXG-LjXVNSBq6Dm-val" size="5" title="shs7yFgSRXG - Other causes (including cause not known) deaths - LjXVNSBq6Dm - (35 and above years) - int" value="[ Other causes (including cause not known) deaths (35 and above years) ]" /></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<div id="tab14" style="display: none;">
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="line-height: 1.6; width: 700px;">
+	<tbody>
+		<tr>
+			<td colspan="6" style="text-align: center; background-color: rgb(204, 204, 204);">
+			<p><b>Vaccine stock position (in doses)</b></p>
+			</td>
+		</tr>
+		<tr>
+			<td rowspan="1" style="text-align: center;">
+			<p><span style="font-size:10px;"><b>&nbsp; </b><span style="font-size:11px;">Vaccine</span> &nbsp; </span><b>&nbsp;</b></p>
+			</td>
+			<td rowspan="1">
+			<p style="text-align: center;"><span style="font-size:11px;"><span style="line-height: 20.8px; text-align: center;">Opening Balance &nbsp;&nbsp;</span></span></p>
+			</td>
+			<td rowspan="1" style="text-align: center;"><span style="font-size:11px;"><span style="line-height: 20.8px; text-align: center;">Stoc</span><span style="line-height: 20.8px; text-align: center;">k&nbsp;recevied</span><span style="line-height: 20.8px; text-align: center;">&nbsp;&nbsp;&nbsp;</span></span></td>
+			<td rowspan="1" style="text-align: center;"><span style="font-size:11px;">&nbsp;<span style="line-height: 20.8px; text-align: center;">Stock distributed</span></span></td>
+			<td rowspan="1" style="text-align: center;">
+			<p><span style="font-size:11px;"><span style="line-height: 20.8px; text-align: center;">Stock utilised</span></span></p>
+			</td>
+			<td rowspan="1" style="text-align: center;"><span style="font-size:11px;">Closing balance</span></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;DPT</p>
+			</td>
+			<td style="text-align: center;"><input id="eTFsrT4oiye-huNKTDmEP1m-val" size="5" title="eTFsrT4oiye - DPT stock - huNKTDmEP1m - (Opening balance) - int" value="[ DPT stock (Opening balance) ]" /></td>
+			<td style="text-align: center;"><input id="eTFsrT4oiye-QHcfGz2Z5v0-val" size="5" title="eTFsrT4oiye - DPT stock - QHcfGz2Z5v0 - (Stock received) - int" value="[ DPT stock (Stock received) ]" /></td>
+			<td style="text-align: center;"><input id="eTFsrT4oiye-FnXiI9BYjhx-val" size="5" title="eTFsrT4oiye - DPT stock - FnXiI9BYjhx - (Stock distributed) - int" value="[ DPT stock (Stock distributed) ]" /></td>
+			<td style="text-align: center;"><input id="eTFsrT4oiye-czF5qedqL1T-val" size="5" title="eTFsrT4oiye - DPT stock - czF5qedqL1T - (Stock utilised) - int" value="[ DPT stock (Stock utilised) ]" /></td>
+			<td style="text-align: center;"><input id="indicatorD9vnsXsmqLF" indicatorid="D9vnsXsmqLF" name="indicator" readonly="readonly" size="5" title="DPT stock" value="[ DPT stock ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;OPV</p>
+			</td>
+			<td style="text-align: center;"><input id="j5jbVdVsWkp-huNKTDmEP1m-val" size="5" title="j5jbVdVsWkp - OPV stock - huNKTDmEP1m - (Opening balance) - int" value="[ OPV stock (Opening balance) ]" /></td>
+			<td style="text-align: center;"><input id="j5jbVdVsWkp-QHcfGz2Z5v0-val" size="5" title="j5jbVdVsWkp - OPV stock - QHcfGz2Z5v0 - (Stock received) - int" value="[ OPV stock (Stock received) ]" /></td>
+			<td style="text-align: center;"><input id="j5jbVdVsWkp-FnXiI9BYjhx-val" size="5" title="j5jbVdVsWkp - OPV stock - FnXiI9BYjhx - (Stock distributed) - int" value="[ OPV stock (Stock distributed) ]" /></td>
+			<td style="text-align: center;"><input id="j5jbVdVsWkp-czF5qedqL1T-val" size="5" title="j5jbVdVsWkp - OPV stock - czF5qedqL1T - (Stock utilised) - int" value="[ OPV stock (Stock utilised) ]" /></td>
+			<td style="text-align: center;"><input id="indicatorvGPRfjiUZpj" indicatorid="vGPRfjiUZpj" name="indicator" readonly="readonly" size="5" title="OPV stock" value="[ OPV stock ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;TT</p>
+			</td>
+			<td style="text-align: center;"><input id="Qp5srzWsNEu-huNKTDmEP1m-val" size="5" title="Qp5srzWsNEu - TT stock - huNKTDmEP1m - (Opening balance) - int" value="[ TT stock (Opening balance) ]" /></td>
+			<td style="text-align: center;"><input id="Qp5srzWsNEu-QHcfGz2Z5v0-val" size="5" title="Qp5srzWsNEu - TT stock - QHcfGz2Z5v0 - (Stock received) - int" value="[ TT stock (Stock received) ]" /></td>
+			<td colspan="1" style="text-align: center;"><input id="Qp5srzWsNEu-FnXiI9BYjhx-val" size="5" title="Qp5srzWsNEu - TT stock - FnXiI9BYjhx - (Stock distributed) - int" value="[ TT stock (Stock distributed) ]" /></td>
+			<td style="text-align: center;"><input id="Qp5srzWsNEu-czF5qedqL1T-val" size="5" title="Qp5srzWsNEu - TT stock - czF5qedqL1T - (Stock utilised) - int" value="[ TT stock (Stock utilised) ]" /></td>
+			<td style="text-align: center;"><input id="indicatorOQuhOmQW2w2" indicatorid="OQuhOmQW2w2" name="indicator" readonly="readonly" size="5" title="TT stock" value="[ TT stock ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;BCG</p>
+			</td>
+			<td style="text-align: center;"><input id="F4PlLf7RufP-huNKTDmEP1m-val" size="5" title="F4PlLf7RufP - BCG stock - huNKTDmEP1m - (Opening balance) - int" value="[ BCG stock (Opening balance) ]" /></td>
+			<td style="text-align: center;"><input id="F4PlLf7RufP-QHcfGz2Z5v0-val" size="5" title="F4PlLf7RufP - BCG stock - QHcfGz2Z5v0 - (Stock received) - int" value="[ BCG stock (Stock received) ]" /></td>
+			<td colspan="1" style="text-align: center;"><input id="F4PlLf7RufP-FnXiI9BYjhx-val" size="5" title="F4PlLf7RufP - BCG stock - FnXiI9BYjhx - (Stock distributed) - int" value="[ BCG stock (Stock distributed) ]" /></td>
+			<td style="text-align: center;"><input id="F4PlLf7RufP-czF5qedqL1T-val" size="5" title="F4PlLf7RufP - BCG stock - czF5qedqL1T - (Stock utilised) - int" value="[ BCG stock (Stock utilised) ]" /></td>
+			<td style="text-align: center;"><input id="indicatorIAOP9SFwx9Q" indicatorid="IAOP9SFwx9Q" name="indicator" readonly="readonly" size="5" title="BCG stock" value="[ BCG stock ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Measles</p>
+			</td>
+			<td style="text-align: center;"><input id="lUD8oAHmMjn-huNKTDmEP1m-val" size="5" title="lUD8oAHmMjn - Measles stock - huNKTDmEP1m - (Opening balance) - int" value="[ Measles stock (Opening balance) ]" /></td>
+			<td style="text-align: center;"><input id="lUD8oAHmMjn-QHcfGz2Z5v0-val" size="5" title="lUD8oAHmMjn - Measles stock - QHcfGz2Z5v0 - (Stock received) - int" value="[ Measles stock (Stock received) ]" /></td>
+			<td colspan="1" style="text-align: center;"><input id="lUD8oAHmMjn-FnXiI9BYjhx-val" size="5" title="lUD8oAHmMjn - Measles stock - FnXiI9BYjhx - (Stock distributed) - int" value="[ Measles stock (Stock distributed) ]" /></td>
+			<td style="text-align: center;"><input id="lUD8oAHmMjn-czF5qedqL1T-val" size="5" title="lUD8oAHmMjn - Measles stock - czF5qedqL1T - (Stock utilised) - int" value="[ Measles stock (Stock utilised) ]" /></td>
+			<td style="text-align: center;"><input id="indicatorCYoAnPqdo1u" indicatorid="CYoAnPqdo1u" name="indicator" readonly="readonly" size="5" title="Measles stock" value="[ Measles stock ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Hep-B</p>
+			</td>
+			<td style="text-align: center;"><input id="dfUYU7Ubo49-huNKTDmEP1m-val" size="5" title="dfUYU7Ubo49 - Hepatitis B stock - huNKTDmEP1m - (Opening balance) - int" value="[ Hepatitis B stock (Opening balance) ]" /></td>
+			<td style="text-align: center;"><input id="dfUYU7Ubo49-QHcfGz2Z5v0-val" size="5" title="dfUYU7Ubo49 - Hepatitis B stock - QHcfGz2Z5v0 - (Stock received) - int" value="[ Hepatitis B stock (Stock received) ]" /></td>
+			<td colspan="1" style="text-align: center;"><input id="dfUYU7Ubo49-FnXiI9BYjhx-val" size="5" title="dfUYU7Ubo49 - Hepatitis B stock - FnXiI9BYjhx - (Stock distributed) - int" value="[ Hepatitis B stock (Stock distributed) ]" /></td>
+			<td style="text-align: center;"><input id="dfUYU7Ubo49-czF5qedqL1T-val" size="5" title="dfUYU7Ubo49 - Hepatitis B stock - czF5qedqL1T - (Stock utilised) - int" value="[ Hepatitis B stock (Stock utilised) ]" /></td>
+			<td style="text-align: center;"><input id="indicatorJ50QN7JYoNC" indicatorid="J50QN7JYoNC" name="indicator" readonly="readonly" size="5" title="Hepatitis B stock" value="[ Hepatitis B stock ]" /></td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="line-height: 1.6; width: 700px;">
+	<tbody>
+		<tr>
+			<td rowspan="1" style="text-align: center;">
+			<p><span style="font-size:11px;">Drug/Commodity</span></p>
+			</td>
+			<td rowspan="1">
+			<p style="text-align: center;"><span style="font-size:11px;"><span style="line-height: 20.8px; text-align: center;">Opening Balance &nbsp;&nbsp;</span></span></p>
+			</td>
+			<td rowspan="1" style="text-align: center;"><span style="font-size:11px;"><span style="line-height: 20.8px; text-align: center;">Stoc</span><span style="line-height: 20.8px; text-align: center;">k&nbsp;recevied</span><span style="line-height: 20.8px; text-align: center;">&nbsp;&nbsp;&nbsp;</span></span></td>
+			<td rowspan="1" style="text-align: center;">
+			<p><span style="font-size:11px;"><span style="line-height: 20.8px; text-align: center;">Stock utilised</span></span></p>
+			</td>
+			<td rowspan="1" style="text-align: center;"><span style="font-size:11px;">Closing balance</span></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Vitamin A solution</p>
+			</td>
+			<td style="text-align: center;"><input id="quSPEyMBKc8-k7AwEP9lRW4-val" size="5" title="quSPEyMBKc8 - Vitamin A solution (ml) stock - k7AwEP9lRW4 - (Opening balance) - int" value="[ Vitamin A solution (ml) stock (Opening balance) ]" /></td>
+			<td style="text-align: center;"><input id="quSPEyMBKc8-i5vlOm7cV3a-val" size="5" title="quSPEyMBKc8 - Vitamin A solution (ml) stock - i5vlOm7cV3a - (Stock received) - int" value="[ Vitamin A solution (ml) stock (Stock received) ]" /></td>
+			<td style="text-align: center;"><input id="quSPEyMBKc8-Oc7jBR0yX5L-val" size="5" title="quSPEyMBKc8 - Vitamin A solution (ml) stock - Oc7jBR0yX5L - (Stock utilised) - int" value="[ Vitamin A solution (ml) stock (Stock utilised) ]" /></td>
+			<td style="text-align: center;"><input id="indicatorIoe2sEy9Y45" indicatorid="Ioe2sEy9Y45" name="indicator" readonly="readonly" size="5" title="Vitamin A solution (ml) stock" value="[ Vitamin A solution (ml) stock ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;ORS packets</p>
+			</td>
+			<td style="text-align: center;"><input id="WIjaTl5ypx6-k7AwEP9lRW4-val" size="5" title="WIjaTl5ypx6 - ORS packets stock - k7AwEP9lRW4 - (Opening balance) - int" value="[ ORS packets stock (Opening balance) ]" /></td>
+			<td style="text-align: center;"><input id="WIjaTl5ypx6-i5vlOm7cV3a-val" size="5" title="WIjaTl5ypx6 - ORS packets stock - i5vlOm7cV3a - (Stock received) - int" value="[ ORS packets stock (Stock received) ]" /></td>
+			<td style="text-align: center;"><input id="WIjaTl5ypx6-Oc7jBR0yX5L-val" size="5" title="WIjaTl5ypx6 - ORS packets stock - Oc7jBR0yX5L - (Stock utilised) - int" value="[ ORS packets stock (Stock utilised) ]" /></td>
+			<td style="text-align: center;"><input id="indicatorGtOujkPVxR9" indicatorid="GtOujkPVxR9" name="indicator" readonly="readonly" size="5" title="ORS packets stock" value="[ ORS packets stock ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Vaccine carrier</p>
+			</td>
+			<td style="text-align: center;"><input id="dnB8UxCE5xz-k7AwEP9lRW4-val" size="5" title="dnB8UxCE5xz - Vaccine carrier stock - k7AwEP9lRW4 - (Opening balance) - int" value="[ Vaccine carrier stock (Opening balance) ]" /></td>
+			<td style="text-align: center;"><input id="dnB8UxCE5xz-i5vlOm7cV3a-val" size="5" title="dnB8UxCE5xz - Vaccine carrier stock - i5vlOm7cV3a - (Stock received) - int" value="[ Vaccine carrier stock (Stock received) ]" /></td>
+			<td style="text-align: center;"><input id="dnB8UxCE5xz-Oc7jBR0yX5L-val" size="5" title="dnB8UxCE5xz - Vaccine carrier stock - Oc7jBR0yX5L - (Stock utilised) - int" value="[ Vaccine carrier stock (Stock utilised) ]" /></td>
+			<td style="text-align: center;"><input id="indicatorssWvkVTaLCj" indicatorid="ssWvkVTaLCj" name="indicator" readonly="readonly" size="5" title="Vaccine carrier stock" value="[ Vaccine carrier stock ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="5">
+			<p>&nbsp;<strong>AD/Mixed syringes</strong></p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;0.1 ml</p>
+			</td>
+			<td style="text-align: center;"><input id="zi7feEyZUpd-k7AwEP9lRW4-val" size="5" title="zi7feEyZUpd - AD/Mixed syringe (0.1 ml) stock - k7AwEP9lRW4 - (Opening balance) - int" value="[ AD/Mixed syringe (0.1 ml) stock (Opening balance) ]" /></td>
+			<td style="text-align: center;"><input id="zi7feEyZUpd-i5vlOm7cV3a-val" size="5" title="zi7feEyZUpd - AD/Mixed syringe (0.1 ml) stock - i5vlOm7cV3a - (Stock received) - int" value="[ AD/Mixed syringe (0.1 ml) stock (Stock received) ]" /></td>
+			<td style="text-align: center;"><input id="zi7feEyZUpd-Oc7jBR0yX5L-val" size="5" title="zi7feEyZUpd - AD/Mixed syringe (0.1 ml) stock - Oc7jBR0yX5L - (Stock utilised) - int" value="[ AD/Mixed syringe (0.1 ml) stock (Stock utilised) ]" /></td>
+			<td style="text-align: center;"><input id="indicatorMaWfr2ilekn" indicatorid="MaWfr2ilekn" name="indicator" readonly="readonly" size="5" title="AD/Mixed syringe (0.1 ml) stock" value="[ AD/Mixed syringe (0.1 ml) stock ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;0.5 ml</p>
+			</td>
+			<td style="text-align: center;"><input id="P7ueiOmYFsN-k7AwEP9lRW4-val" size="5" title="P7ueiOmYFsN - AD/Mixed syringe (0.5 ml) stock - k7AwEP9lRW4 - (Opening balance) - int" value="[ AD/Mixed syringe (0.5 ml) stock (Opening balance) ]" /></td>
+			<td style="text-align: center;"><input id="P7ueiOmYFsN-i5vlOm7cV3a-val" size="5" title="P7ueiOmYFsN - AD/Mixed syringe (0.5 ml) stock - i5vlOm7cV3a - (Stock received) - int" value="[ AD/Mixed syringe (0.5 ml) stock (Stock received) ]" /></td>
+			<td style="text-align: center;"><input id="P7ueiOmYFsN-Oc7jBR0yX5L-val" size="5" title="P7ueiOmYFsN - AD/Mixed syringe (0.5 ml) stock - Oc7jBR0yX5L - (Stock utilised) - int" value="[ AD/Mixed syringe (0.5 ml) stock (Stock utilised) ]" /></td>
+			<td style="text-align: center;"><input id="indicatoriY0l4w9p6cJ" indicatorid="iY0l4w9p6cJ" name="indicator" readonly="readonly" size="5" title="AD/Mixed syringe (0.5 ml) stock" value="[ AD/Mixed syringe (0.5 ml) stock ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;5.0 ml</p>
+			</td>
+			<td style="text-align: center;"><input id="HpodPEVd4Ac-k7AwEP9lRW4-val" size="5" title="HpodPEVd4Ac - AD/Mixed syringe (5.0 ml) stock - k7AwEP9lRW4 - (Opening balance) - int" value="[ AD/Mixed syringe (5.0 ml) stock (Opening balance) ]" /></td>
+			<td style="text-align: center;"><input id="HpodPEVd4Ac-i5vlOm7cV3a-val" size="5" title="HpodPEVd4Ac - AD/Mixed syringe (5.0 ml) stock - i5vlOm7cV3a - (Stock received) - int" value="[ AD/Mixed syringe (5.0 ml) stock (Stock received) ]" /></td>
+			<td style="text-align: center;"><input id="HpodPEVd4Ac-Oc7jBR0yX5L-val" size="5" title="HpodPEVd4Ac - AD/Mixed syringe (5.0 ml) stock - Oc7jBR0yX5L - (Stock utilised) - int" value="[ AD/Mixed syringe (5.0 ml) stock (Stock utilised) ]" /></td>
+			<td style="text-align: center;"><input id="indicatorgHYQ3x8965G" indicatorid="gHYQ3x8965G" name="indicator" readonly="readonly" size="5" title="AD/Mixed syringe (5.0 ml) stock" value="[ AD/Mixed syringe (5.0 ml) stock ]" /></td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="line-height: 1.6; width: 700px;">
+	<tbody>
+		<tr>
+			<td rowspan="1" style="text-align: center;">
+			<p><span style="font-size:11px;">Drug/Commodity</span></p>
+			</td>
+			<td rowspan="1">
+			<p style="text-align: center;"><span style="font-size:11px;"><span style="line-height: 20.8px; text-align: center;">Opening Balance &nbsp;&nbsp;</span></span></p>
+			</td>
+			<td rowspan="1" style="text-align: center;"><span style="font-size:11px;"><span style="line-height: 20.8px; text-align: center;">Stoc</span><span style="line-height: 20.8px; text-align: center;">k&nbsp;recevied</span><span style="line-height: 20.8px; text-align: center;">&nbsp;&nbsp;&nbsp;</span></span></td>
+			<td rowspan="1" style="text-align: center;">
+			<p><span style="font-size:11px;"><span style="line-height: 20.8px; text-align: center;">Stock utilised</span></span></p>
+			</td>
+			<td rowspan="1" style="text-align: center;">
+			<p><span style="font-size:11px;">Closing balance &nbsp;</span></p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;IFA tablets (large)</p>
+			</td>
+			<td style="text-align: center;"><input id="quSPEyMBKc8-k7AwEP9lRW4-val" size="5" title="quSPEyMBKc8 - Vitamin A solution (ml) stock - k7AwEP9lRW4 - (Opening balance) - int" value="[ Vitamin A solution (ml) stock (Opening balance) ]" /></td>
+			<td style="text-align: center;"><input id="quSPEyMBKc8-i5vlOm7cV3a-val" size="5" title="quSPEyMBKc8 - Vitamin A solution (ml) stock - i5vlOm7cV3a - (Stock received) - int" value="[ Vitamin A solution (ml) stock (Stock received) ]" /></td>
+			<td style="text-align: center;"><input id="quSPEyMBKc8-Oc7jBR0yX5L-val" size="5" title="quSPEyMBKc8 - Vitamin A solution (ml) stock - Oc7jBR0yX5L - (Stock utilised) - int" value="[ Vitamin A solution (ml) stock (Stock utilised) ]" /></td>
+			<td style="text-align: center;"><input id="indicatorzPm4joXKycb" indicatorid="zPm4joXKycb" name="indicator" readonly="readonly" size="5" title="IFA tablets (large) stock" value="[ IFA tablets (large) stock ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;IFA tablets (small)</p>
+			</td>
+			<td style="text-align: center;"><input id="WIjaTl5ypx6-k7AwEP9lRW4-val" size="5" title="WIjaTl5ypx6 - ORS packets stock - k7AwEP9lRW4 - (Opening balance) - int" value="[ ORS packets stock (Opening balance) ]" /></td>
+			<td style="text-align: center;"><input id="WIjaTl5ypx6-i5vlOm7cV3a-val" size="5" title="WIjaTl5ypx6 - ORS packets stock - i5vlOm7cV3a - (Stock received) - int" value="[ ORS packets stock (Stock received) ]" /></td>
+			<td style="text-align: center;"><input id="WIjaTl5ypx6-Oc7jBR0yX5L-val" size="5" title="WIjaTl5ypx6 - ORS packets stock - Oc7jBR0yX5L - (Stock utilised) - int" value="[ ORS packets stock (Stock utilised) ]" /></td>
+			<td style="text-align: center;"><input id="indicatorM5Rr4ymwFm2" indicatorid="M5Rr4ymwFm2" name="indicator" readonly="readonly" size="5" title="IFA tablets (small) stock" value="[ IFA tablets (small) stock ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="5">
+			<p>&nbsp;<b>Contraception methods</b></p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;IUD (numbers)</p>
+			</td>
+			<td style="text-align: center;"><input id="zi7feEyZUpd-k7AwEP9lRW4-val" size="5" title="zi7feEyZUpd - AD/Mixed syringe (0.1 ml) stock - k7AwEP9lRW4 - (Opening balance) - int" value="[ AD/Mixed syringe (0.1 ml) stock (Opening balance) ]" /></td>
+			<td style="text-align: center;"><input id="zi7feEyZUpd-i5vlOm7cV3a-val" size="5" title="zi7feEyZUpd - AD/Mixed syringe (0.1 ml) stock - i5vlOm7cV3a - (Stock received) - int" value="[ AD/Mixed syringe (0.1 ml) stock (Stock received) ]" /></td>
+			<td style="text-align: center;"><input id="zi7feEyZUpd-Oc7jBR0yX5L-val" size="5" title="zi7feEyZUpd - AD/Mixed syringe (0.1 ml) stock - Oc7jBR0yX5L - (Stock utilised) - int" value="[ AD/Mixed syringe (0.1 ml) stock (Stock utilised) ]" /></td>
+			<td style="text-align: center;"><input id="indicatorOEnemSyVlxb" indicatorid="OEnemSyVlxb" name="indicator" readonly="readonly" size="5" title="IUD pieces stock" value="[ IUD pieces stock ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Condoms (numbers)</p>
+			</td>
+			<td style="text-align: center;"><input id="P7ueiOmYFsN-k7AwEP9lRW4-val" size="5" title="P7ueiOmYFsN - AD/Mixed syringe (0.5 ml) stock - k7AwEP9lRW4 - (Opening balance) - int" value="[ AD/Mixed syringe (0.5 ml) stock (Opening balance) ]" /></td>
+			<td style="text-align: center;"><input id="P7ueiOmYFsN-i5vlOm7cV3a-val" size="5" title="P7ueiOmYFsN - AD/Mixed syringe (0.5 ml) stock - i5vlOm7cV3a - (Stock received) - int" value="[ AD/Mixed syringe (0.5 ml) stock (Stock received) ]" /></td>
+			<td style="text-align: center;"><input id="P7ueiOmYFsN-Oc7jBR0yX5L-val" size="5" title="P7ueiOmYFsN - AD/Mixed syringe (0.5 ml) stock - Oc7jBR0yX5L - (Stock utilised) - int" value="[ AD/Mixed syringe (0.5 ml) stock (Stock utilised) ]" /></td>
+			<td style="text-align: center;"><input id="indicatorvcm89DRuDq4" indicatorid="vcm89DRuDq4" name="indicator" readonly="readonly" size="5" title="Condoms (number of pieces) stock" value="[ Condoms (number of pieces) stock ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Oral pills (packets)</p>
+			</td>
+			<td style="text-align: center;"><input id="HpodPEVd4Ac-k7AwEP9lRW4-val" size="5" title="HpodPEVd4Ac - AD/Mixed syringe (5.0 ml) stock - k7AwEP9lRW4 - (Opening balance) - int" value="[ AD/Mixed syringe (5.0 ml) stock (Opening balance) ]" /></td>
+			<td style="text-align: center;"><input id="HpodPEVd4Ac-i5vlOm7cV3a-val" size="5" title="HpodPEVd4Ac - AD/Mixed syringe (5.0 ml) stock - i5vlOm7cV3a - (Stock received) - int" value="[ AD/Mixed syringe (5.0 ml) stock (Stock received) ]" /></td>
+			<td style="text-align: center;"><input id="HpodPEVd4Ac-Oc7jBR0yX5L-val" size="5" title="HpodPEVd4Ac - AD/Mixed syringe (5.0 ml) stock - Oc7jBR0yX5L - (Stock utilised) - int" value="[ AD/Mixed syringe (5.0 ml) stock (Stock utilised) ]" /></td>
+			<td style="text-align: center;"><input id="indicatorXQGPUHJYGJh" indicatorid="XQGPUHJYGJh" name="indicator" readonly="readonly" size="5" title="Oral pills (number of packets) stock" value="[ Oral pills (number of packets) stock ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Emergency contraceptive pills (packets)</p>
+			</td>
+			<td style="text-align: center;"><input id="OJM6kzdcWEt-k7AwEP9lRW4-val" size="5" title="OJM6kzdcWEt - Emergency pills (number of packets) stock - k7AwEP9lRW4 - (Opening balance) - int" value="[ Emergency pills (number of packets) stock (Opening balance) ]" /></td>
+			<td style="text-align: center;"><input id="OJM6kzdcWEt-i5vlOm7cV3a-val" size="5" title="OJM6kzdcWEt - Emergency pills (number of packets) stock - i5vlOm7cV3a - (Stock received) - int" value="[ Emergency pills (number of packets) stock (Stock received) ]" /></td>
+			<td style="text-align: center;"><input id="OJM6kzdcWEt-Oc7jBR0yX5L-val" size="5" title="OJM6kzdcWEt - Emergency pills (number of packets) stock - Oc7jBR0yX5L - (Stock utilised) - int" value="[ Emergency pills (number of packets) stock (Stock utilised) ]" /></td>
+			<td style="text-align: center;"><input id="indicatorLN5pk1Y9ze2" indicatorid="LN5pk1Y9ze2" name="indicator" readonly="readonly" size="5" title="Emergency contraceptive pills stock" value="[ Emergency contraceptive pills stock ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Disposable delivery kits (DDK)</p>
+			</td>
+			<td style="text-align: center;"><input id="mVND69PNNZl-k7AwEP9lRW4-val" size="5" title="mVND69PNNZl - Disposable delivery kits (DDK) stock - k7AwEP9lRW4 - (Opening balance) - int" value="[ Disposable delivery kits (DDK) stock (Opening balance) ]" /></td>
+			<td style="text-align: center;"><input id="mVND69PNNZl-i5vlOm7cV3a-val" size="5" title="mVND69PNNZl - Disposable delivery kits (DDK) stock - i5vlOm7cV3a - (Stock received) - int" value="[ Disposable delivery kits (DDK) stock (Stock received) ]" /></td>
+			<td style="text-align: center;"><input id="mVND69PNNZl-Oc7jBR0yX5L-val" size="5" title="mVND69PNNZl - Disposable delivery kits (DDK) stock - Oc7jBR0yX5L - (Stock utilised) - int" value="[ Disposable delivery kits (DDK) stock (Stock utilised) ]" /></td>
+			<td style="text-align: center;"><input id="indicatorE7n3ydqFMCe" indicatorid="E7n3ydqFMCe" name="indicator" readonly="readonly" size="5" title="Disposable delivery kits (DDK) stock" value="[ Disposable delivery kits (DDK) stock ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Gloves (pairs)</p>
+			</td>
+			<td style="text-align: center;"><input id="oiCti2Z9QZk-k7AwEP9lRW4-val" size="5" title="oiCti2Z9QZk - Gloves (number of pairs) stock - k7AwEP9lRW4 - (Opening balance) - int" value="[ Gloves (number of pairs) stock (Opening balance) ]" /></td>
+			<td style="text-align: center;"><input id="oiCti2Z9QZk-i5vlOm7cV3a-val" size="5" title="oiCti2Z9QZk - Gloves (number of pairs) stock - i5vlOm7cV3a - (Stock received) - int" value="[ Gloves (number of pairs) stock (Stock received) ]" /></td>
+			<td style="text-align: center;"><input id="oiCti2Z9QZk-Oc7jBR0yX5L-val" size="5" title="oiCti2Z9QZk - Gloves (number of pairs) stock - Oc7jBR0yX5L - (Stock utilised) - int" value="[ Gloves (number of pairs) stock (Stock utilised) ]" /></td>
+			<td style="text-align: center;"><input id="indicatorj81CnxRiFl3" indicatorid="j81CnxRiFl3" name="indicator" readonly="readonly" size="5" title="Gloves stock" value="[ Gloves stock ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Oxytocin (vials)</p>
+			</td>
+			<td style="text-align: center;"><input id="kCgdFrWmqb3-k7AwEP9lRW4-val" size="5" title="kCgdFrWmqb3 - Oxytocin stock - k7AwEP9lRW4 - (Opening balance) - int" value="[ Oxytocin stock (Opening balance) ]" /></td>
+			<td style="text-align: center;"><input id="kCgdFrWmqb3-i5vlOm7cV3a-val" size="5" title="kCgdFrWmqb3 - Oxytocin stock - i5vlOm7cV3a - (Stock received) - int" value="[ Oxytocin stock (Stock received) ]" /></td>
+			<td style="text-align: center;"><input id="kCgdFrWmqb3-Oc7jBR0yX5L-val" size="5" title="kCgdFrWmqb3 - Oxytocin stock - Oc7jBR0yX5L - (Stock utilised) - int" value="[ Oxytocin stock (Stock utilised) ]" /></td>
+			<td style="text-align: center;"><input id="indicatorrsU5GSoF0HC" indicatorid="rsU5GSoF0HC" name="indicator" readonly="readonly" size="5" title="Oxytocin stock" value="[ Oxytocin stock ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Tab. Fluconazole (tablets)</p>
+			</td>
+			<td style="text-align: center;"><input id="W1vY41jNpzL-k7AwEP9lRW4-val" size="5" title="W1vY41jNpzL - Tab. Fluconazole stock - k7AwEP9lRW4 - (Opening balance) - int" value="[ Tab. Fluconazole stock (Opening balance) ]" /></td>
+			<td style="text-align: center;"><input id="W1vY41jNpzL-i5vlOm7cV3a-val" size="5" title="W1vY41jNpzL - Tab. Fluconazole stock - i5vlOm7cV3a - (Stock received) - int" value="[ Tab. Fluconazole stock (Stock received) ]" /></td>
+			<td style="text-align: center;"><input id="W1vY41jNpzL-Oc7jBR0yX5L-val" size="5" title="W1vY41jNpzL - Tab. Fluconazole stock - Oc7jBR0yX5L - (Stock utilised) - int" value="[ Tab. Fluconazole stock (Stock utilised) ]" /></td>
+			<td style="text-align: center;"><input id="indicatorvOauDd8yats" indicatorid="vOauDd8yats" name="indicator" readonly="readonly" size="5" title="Tab. Fluconazole stock" value="[ Tab. Fluconazole stock ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Blood transfusion sets (sets)</p>
+			</td>
+			<td style="text-align: center;"><input id="dYJ5Ze6fz58-k7AwEP9lRW4-val" size="5" title="dYJ5Ze6fz58 - Blood transfusion sets stock - k7AwEP9lRW4 - (Opening balance) - int" value="[ Blood transfusion sets stock (Opening balance) ]" /></td>
+			<td style="text-align: center;"><input id="dYJ5Ze6fz58-i5vlOm7cV3a-val" size="5" title="dYJ5Ze6fz58 - Blood transfusion sets stock - i5vlOm7cV3a - (Stock received) - int" value="[ Blood transfusion sets stock (Stock received) ]" /></td>
+			<td style="text-align: center;"><input id="dYJ5Ze6fz58-Oc7jBR0yX5L-val" size="5" title="dYJ5Ze6fz58 - Blood transfusion sets stock - Oc7jBR0yX5L - (Stock utilised) - int" value="[ Blood transfusion sets stock (Stock utilised) ]" /></td>
+			<td style="text-align: center;"><input id="indicatorNhj3dTkPCcx" indicatorid="Nhj3dTkPCcx" name="indicator" readonly="readonly" size="5" title="Blood transfusion sets stock" value="[ Blood transfusion sets stock ]" /></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<div id="tab15" style="display: none;">
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width:700px;">
+	<tbody>
+		<tr>
+			<td colspan="3" style="text-align: center; background-color: rgb(204, 204, 204);">
+			<p><b>Cold chain status</b></p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p><b>&nbsp;</b>Equipment</p>
+			</td>
+			<td style="text-align: center;">
+			<p>Available</p>
+			</td>
+			<td style="text-align: center;">Non-functional</td>
+		</tr>
+		<tr>
+			<td>&nbsp;ILR</td>
+			<td style="text-align: center;">
+			<p><input id="EKoupjfqhkW-wgLXMRheSyB-val" size="5" title="EKoupjfqhkW - Cold chain equipment-ILR available - wgLXMRheSyB - (default) - int" value="[ Cold chain equipment-ILR available (default) ]" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</p>
+			</td>
+			<td style="text-align: center;"><input id="Pb0Z8lXwj6m-wgLXMRheSyB-val" size="5" title="Pb0Z8lXwj6m - Cold chain equipment-ILR non-functional - wgLXMRheSyB - (default) - int" value="[ Cold chain equipment-ILR non-functional (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Deep freezer</p>
+			</td>
+			<td style="text-align: center;"><input id="Z58V7Z04au1-wgLXMRheSyB-val" size="5" title="Z58V7Z04au1 - Cold chain equipment-Deep freezer available - wgLXMRheSyB - (default) - int" value="[ Cold chain equipment-Deep freezer available (default) ]" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
+			<td style="text-align: center;"><input id="vMYi3j8orzv-wgLXMRheSyB-val" size="5" title="vMYi3j8orzv - Cold chain equipment-Deep freezer non-functional - wgLXMRheSyB - (default) - int" value="[ Cold chain equipment-Deep freezer non-functional (default) ]" /></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<div id="tab16" style="display: none;">
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="line-height: 1.6; width: 700px;">
+	<tbody>
+		<tr>
+			<td colspan="6" style="text-align: center; background-color: rgb(204, 204, 204);">
+			<p><b>IMNCI monthly activities</b></p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3" rowspan="2">
+			<p>&nbsp;IMNCI trained workers</p>
+			</td>
+			<td colspan="2" style="text-align: center;">
+			<p>ASHA facilitators</p>
+			</td>
+			<td style="text-align: center;"><input id="dS3RFLybs3F-wgLXMRheSyB-val" size="5" title="dS3RFLybs3F - IMNCI trained ASHA facilitators - wgLXMRheSyB - (default) - int" value="[ IMNCI trained ASHA facilitators (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="2" style="text-align: center;">
+			<p>Anganwadi workers</p>
+			</td>
+			<td style="text-align: center;"><input id="LT7oQ4GB2hT-wgLXMRheSyB-val" size="5" title="LT7oQ4GB2hT - IMNCI trained Anganwadi workers - wgLXMRheSyB - (default) - int" value="[ IMNCI trained Anganwadi workers (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="6">
+			<p style="text-align: center;">&nbsp;0-2 months cases</p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Cases followed up within 24 hours of birth</p>
+			</td>
+			<td colspan="3" rowspan="1" style="text-align: center;"><input id="cbbn0pwIiIc-wgLXMRheSyB-val" size="5" title="cbbn0pwIiIc - Newborns followed up within 24 hours of birth - wgLXMRheSyB - (default) - int" value="[ Newborns followed up within 24 hours of birth (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Cases&nbsp;followed up for the first time</p>
+			</td>
+			<td colspan="3" style="text-align: center;"><input id="sxWZlZfCeWx-wgLXMRheSyB-val" size="5" title="sxWZlZfCeWx - Cases followed up first time (0-2 months) - wgLXMRheSyB - (default) - int" value="[ Cases followed up first time (0-2 months) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Cases&nbsp;followed up again after first follow-up</p>
+			</td>
+			<td colspan="3" style="text-align: center;"><input id="mOGMSXN0FhR-wgLXMRheSyB-val" size="5" title="mOGMSXN0FhR - Cases followed up after first follow-up (0-2 months) - wgLXMRheSyB - (default) - int" value="[ Cases followed up after first follow-up (0-2 months) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Cases&nbsp;followed up 3 times in a week</p>
+			</td>
+			<td colspan="3" style="text-align: center;"><input id="OHMgcPMDnwO-wgLXMRheSyB-val" size="5" title="OHMgcPMDnwO - Cases followed up 3 times in week (0-2 months) - wgLXMRheSyB - (default) - int" value="[ Cases followed up 3 times in week (0-2 months) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Sick cases identified</p>
+			</td>
+			<td colspan="3" style="text-align: center;"><input id="UungT204HS7-wgLXMRheSyB-val" size="5" title="UungT204HS7 - Sick cases identified (0-2 months) - wgLXMRheSyB - (default) - int" value="[ Sick cases identified (0-2 months) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Institution&nbsp;</p>
+			</td>
+			<td style="text-align: center;">&nbsp;Referred cases</td>
+			<td style="text-align: center;">&nbsp;Treated in OPD</td>
+			<td style="text-align: center;">Admissions</td>
+			<td style="text-align: center;">Recovered cases</td>
+			<td style="text-align: center;">Deaths</td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp; PHC</p>
+			</td>
+			<td style="text-align: center;"><input id="jrgcr6l1LOi-XJQZpqVi5Mj-val" size="5" title="jrgcr6l1LOi - Cases referred (0-2 months) - XJQZpqVi5Mj - (PHC) - int" value="[ Cases referred (0-2 months) (PHC) ]" /></td>
+			<td style="text-align: center;"><input id="wxJiP8rKSwu-wgLXMRheSyB-val" size="5" title="wxJiP8rKSwu - Cases treated in OPD (0-2 months) - wgLXMRheSyB - (default) - int" value="[ Cases treated in OPD (0-2 months) (default) ]" /></td>
+			<td colspan="1" style="text-align: center;"><input id="MGjn7YIZp2d-wgLXMRheSyB-val" size="5" title="MGjn7YIZp2d - Cases admitted (0-2 months) - wgLXMRheSyB - (default) - int" value="[ Cases admitted (0-2 months) (default) ]" /></td>
+			<td style="text-align: center;"><input id="HDDPT8MnBSG-wgLXMRheSyB-val" size="5" title="HDDPT8MnBSG - Cases recovered (0-2 months) - wgLXMRheSyB - (default) - int" value="[ Cases recovered (0-2 months) (default) ]" /></td>
+			<td style="text-align: center;"><input id="jGoAA01arAo-wgLXMRheSyB-val" size="5" title="jGoAA01arAo - Deaths (0-2 months) - wgLXMRheSyB - (default) - int" value="[ Deaths (0-2 months) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp; CHC</p>
+			</td>
+			<td style="text-align: center;"><input id="jrgcr6l1LOi-rcL3TWklU6S-val" size="5" title="jrgcr6l1LOi - Cases referred (0-2 months) - rcL3TWklU6S - (CHC) - int" value="[ Cases referred (0-2 months) (CHC) ]" /></td>
+			<td colspan="4" rowspan="1" style="background-color: rgb(204, 204, 204);">&nbsp;</td>
+		</tr>
+		<tr>
+			<td>&nbsp;SDH/DH/MC</td>
+			<td>
+			<p style="text-align: center;"><input id="jrgcr6l1LOi-SPZCFIr59E9-val" size="5" title="jrgcr6l1LOi - Cases referred (0-2 months) - SPZCFIr59E9 - (SDH/DH/Medical college) - int" value="[ Cases referred (0-2 months) (SDH/DH/Medical college) ]" /></p>
+			</td>
+			<td colspan="4" style="background-color: rgb(204, 204, 204);">&nbsp;</td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Other institutions</p>
+			</td>
+			<td style="text-align: center;"><input id="jrgcr6l1LOi-UUJ6sLSqlJZ-val" size="5" title="jrgcr6l1LOi - Cases referred (0-2 months) - UUJ6sLSqlJZ - (Other institutions) - int" value="[ Cases referred (0-2 months) (Other institutions) ]" /></td>
+			<td colspan="4" style="background-color: rgb(204, 204, 204);">&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="6">
+			<p style="text-align: center;">&nbsp;2 months-5&nbsp;years cases</p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Cases&nbsp;followed up for the first time</p>
+			</td>
+			<td colspan="3" style="text-align: center;"><input id="uMhgKCDISBm-wgLXMRheSyB-val" size="5" title="uMhgKCDISBm - Cases followed up first time (2 months-5 years) - wgLXMRheSyB - (default) - int" value="[ Cases followed up first time (2 months-5 years) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Cases&nbsp;followed up again after first follow-up</p>
+			</td>
+			<td colspan="3" style="text-align: center;"><input id="ZKg7tlADz3g-wgLXMRheSyB-val" size="5" title="ZKg7tlADz3g - Cases followed up after first follow-up (2 months-5 years) - wgLXMRheSyB - (default) - int" value="[ Cases followed up after first follow-up (2 months-5 years) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+			<p>&nbsp;Sick cases identified</p>
+			</td>
+			<td colspan="3" style="text-align: center;"><input id="xbnT22cbKhN-wgLXMRheSyB-val" size="5" title="xbnT22cbKhN - Sick cases identified (2 months-5 years) - wgLXMRheSyB - (default) - int" value="[ Sick cases identified (2 months-5 years) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Institution&nbsp;</p>
+			</td>
+			<td style="text-align: center;">&nbsp;Referred cases</td>
+			<td style="text-align: center;">&nbsp;Treated in OPD</td>
+			<td style="text-align: center;">Admissions</td>
+			<td style="text-align: center;">Recovered cases</td>
+			<td style="text-align: center;">Deaths</td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp; PHC</p>
+			</td>
+			<td style="text-align: center;"><input id="gNGNRFrR5Ch-XJQZpqVi5Mj-val" size="5" title="gNGNRFrR5Ch - Cases referred (2 months-5 years) - XJQZpqVi5Mj - (PHC) - int" value="[ Cases referred (2 months-5 years) (PHC) ]" /></td>
+			<td style="text-align: center;"><input id="QgFF0Fm8AQf-wgLXMRheSyB-val" size="5" title="QgFF0Fm8AQf - Cases treated in OPD (2 months-5 years) - wgLXMRheSyB - (default) - int" value="[ Cases treated in OPD (2 months-5 years) (default) ]" /></td>
+			<td colspan="1" style="text-align: center;"><input id="eqhpFwCqDKo-wgLXMRheSyB-val" size="5" title="eqhpFwCqDKo - Cases admitted (2 months-5 years) - wgLXMRheSyB - (default) - int" value="[ Cases admitted (2 months-5 years) (default) ]" /></td>
+			<td style="text-align: center;"><input id="zPyH4BfVbdV-wgLXMRheSyB-val" size="5" title="zPyH4BfVbdV - Cases recovered (2 months-5 years) - wgLXMRheSyB - (default) - int" value="[ Cases recovered (2 months-5 years) (default) ]" /></td>
+			<td style="text-align: center;"><input id="sjYsUFm7Up7-wgLXMRheSyB-val" size="5" title="sjYsUFm7Up7 - Deaths (2 months-5 years) - wgLXMRheSyB - (default) - int" value="[ Deaths (2 months-5 years) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp; CHC</p>
+			</td>
+			<td style="text-align: center;"><input id="gNGNRFrR5Ch-rcL3TWklU6S-val" size="5" title="gNGNRFrR5Ch - Cases referred (2 months-5 years) - rcL3TWklU6S - (CHC) - int" value="[ Cases referred (2 months-5 years) (CHC) ]" /></td>
+			<td colspan="4" rowspan="1" style="background-color: rgb(204, 204, 204);">&nbsp;</td>
+		</tr>
+		<tr>
+			<td>&nbsp;SDH/DH/MC</td>
+			<td>
+			<p style="text-align: center;"><input id="gNGNRFrR5Ch-SPZCFIr59E9-val" size="5" title="gNGNRFrR5Ch - Cases referred (2 months-5 years) - SPZCFIr59E9 - (SDH/DH/Medical college) - int" value="[ Cases referred (2 months-5 years) (SDH/DH/Medical college) ]" /></p>
+			</td>
+			<td colspan="4" style="background-color: rgb(204, 204, 204);">&nbsp;</td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Other institutions</p>
+			</td>
+			<td style="text-align: center;"><input id="gNGNRFrR5Ch-UUJ6sLSqlJZ-val" size="5" title="gNGNRFrR5Ch - Cases referred (2 months-5 years) - UUJ6sLSqlJZ - (Other institutions) - int" value="[ Cases referred (2 months-5 years) (Other institutions) ]" /></td>
+			<td colspan="4" style="background-color: rgb(204, 204, 204);">&nbsp;</td>
+		</tr>
+		<tr>
+			<td>&nbsp;Newborn deaths (within 28 days of birth)</td>
+			<td colspan="5" rowspan="1">
+			<p style="text-align: center;"><input id="uFg3mamWmg6-wgLXMRheSyB-val" size="5" title="uFg3mamWmg6 - Newborn deaths within 28 days of birth - wgLXMRheSyB - (default) - int" value="[ Newborn deaths within 28 days of birth (default) ]" /></p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Deaths between 1 month- 1 year of birth</p>
+			</td>
+			<td colspan="5" style="text-align: center;"><input id="Gt4Hi82hh0I-wgLXMRheSyB-val" size="5" title="Gt4Hi82hh0I - Deaths (1 month-1 year of birth) - wgLXMRheSyB - (default) - int" value="[ Deaths (1 month-1 year of birth) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+			<p>&nbsp;Deaths between 1 year-5 years of birth</p>
+			</td>
+			<td colspan="5" style="text-align: center;"><input id="zpOIhADcWw0-wgLXMRheSyB-val" size="5" title="zpOIhADcWw0 - Deaths (1 year - 5 years of birth) - wgLXMRheSyB - (default) - int" value="[ Deaths (1 year - 5 years of birth) (default) ]" /></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+</div>
+</div>

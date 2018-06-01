@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+
+<HEAD>
+
+<TITLE> New Document </TITLE>
+
+<script type="text/javascript">
+
+ValueSaver();
+
+function ValueSaver()
+{
+alert("hahaah");
+    var  importEqpStatu = {
+		'equipmentId': "rDIkXrCLLHF",
+		'reportingDate': "2014-12-22",
+		'dateOfUpdation': "2014-12-22",
+		'status': "AwaitingRepair",
+		'description': "Update By import service"
+    };
+
+   
+        $.ajax( {
+            url: '127.0.0.1:8090/ccei_laos/api/importEqpStatus',
+            data: importEqpStatu,
+            dataType: 'json',
+            success: handleSuccess,
+            error: handleError
+        } );
+  
+    function handleSuccess()
+    {
+
+    }
+
+    function handleError( xhr, textStatus, errorThrown )
+    {
+    	if ( 409 == xhr.status ) // Invalid value or locked
+    	{
+    		markValue( fieldId, COLOR_RED );
+    		setHeaderMessage( xhr.responseText );
+    	}
+    	else // No connection
+    	{
+    		setHeaderMessage( i18n_offline_notification );
+    		
+    	}
+    }
+}
+
+
+</script>
+
+<BODY>
+
+</BODY>
+
+</HTML>
+

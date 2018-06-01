@@ -1,0 +1,617 @@
+<title></title>
+<style type="text/css">#tabs ul {
+    padding: 0px;
+    margin: 0px;
+    margin-left: 10px;
+    list-style-type: none;
+}
+
+#tabs ul li {
+    display: block;
+    clear: none;
+    float: left;
+    height: 24px;
+}
+
+.active {
+    background: #B8B6BA;
+}
+
+
+#tabs ul li a {
+    position: relative;
+    margin-top: 16px;
+    display: block;
+    margin-left: 6px;
+    line-height: 24px;
+    padding-left: 10px;
+    border-style: solid solid solid;
+    border-color: #CCC;
+    -moz-border-top-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    border-image: none;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    width: 130px;
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+#tabs ul li a:hover {
+    background: #F6F6F6;
+}
+
+#tabs #Content_Area {
+    padding: 0 15px;
+    clear:both;
+    overflow:hidden;
+    line-height:19px;
+    position: relative;
+    top: 20px;
+    z-index: 5;
+    height: 850px;
+    overflow: hidden;
+}
+p { padding-left: 15px; }
+</style>
+<script type="text/javascript">
+    function tab(tab) {
+        document.getElementById('tab1').style.display = 'none';
+        document.getElementById('tab2').style.display = 'none';
+        document.getElementById('tab3').style.display = 'none';
+        document.getElementById('tab4').style.display = 'none';
+        document.getElementById('tab5').style.display = 'none';
+        document.getElementById('a_tab1').setAttribute("class", "");
+        document.getElementById('a_tab2').setAttribute("class", "");
+        document.getElementById('a_tab3').setAttribute("class", "");
+        document.getElementById('a_tab4').setAttribute("class", "");
+        document.getElementById('a_tab5').setAttribute("class", "");
+        document.getElementById(tab).style.display = 'block';
+        document.getElementById('a_'+tab).setAttribute("class", "active");
+    }
+</script>
+<div id="tabs">
+<ul>
+	<li id="li_tab1" onclick="tab('tab1')"><a class="active" id="a_tab1">RH Consultation</a></li>
+	<li id="li_tab2" onclick="tab('tab2')"><a id="a_tab2">ANC</a></li>
+	<li id="li_tab3" onclick="tab('tab3')"><a id="a_tab3">Deliveries</a></li>
+	<li id="li_tab4" onclick="tab('tab4')"><a id="a_tab4">PNC</a></li>
+	<li id="li_tab5" onclick="tab('tab5')"><a id="a_tab5">FP&amp;GYN</a></li>
+</ul>
+
+<div dir="ltr" id="Content_Area">
+<div id="tab1">
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width: 300px;">
+	<tbody>
+		<tr>
+			<td colspan="2" style="text-align: center; background-color: rgb(51, 102, 0);"><strong><span style="font-size:16px;"><span style="color:#FFFFFF;">Reproductive Health Consultations<br />
+			???????? ????? ?????????</span></span></strong></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(197, 224, 179);">&nbsp;</td>
+			<td style="text-align: center; background-color: rgb(197, 224, 179);"><span style="color:#000000;"><strong>Number<br />
+			?????</strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Consultation under 19 yrs.<br />
+			??? ????????? ??? 19 ???.</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="PcvjIl7Y3wW-uZ82tLhzuQB-val" name="text" style="width: 45px;" tabindex="1" title="PcvjIl7Y3wW - Reproductive health consultation-RH - uZ82tLhzuQB - (&lt; 19 yrs.) - int" type="text" value="[ Reproductive health consultation-RH (&lt; 19 yrs.) ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Consultation 19 yrs. and above<br />
+			??? ??????????19??? ?? ????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="PcvjIl7Y3wW-BK0CqiLU5KM-val" name="" style="width: 45px;" tabindex="2" title="PcvjIl7Y3wW - Reproductive health consultation-RH - BK0CqiLU5KM - (= 19 yrs.) - int" type="text" value="[ Reproductive health consultation-RH (= 19 yrs.) ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Total RH consultations<br />
+			????? ??????????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><input dataelementid="PcvjIl7Y3wW" id="totalPcvjIl7Y3wW" name="total" readonly="readonly" style="width: 45px;" title="Reproductive health consultation-RH" type="text" value="[ Reproductive health consultation-RH ]" /></span></td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+</div>
+
+<div id="tab2" style="display: none;">
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width: 950px;">
+	<tbody>
+		<tr>
+			<td colspan="6" style="text-align: center; background-color: rgb(51, 102, 0);"><span style="font-size:16px;"><span style="color:#FFFFFF;">Ante-Natal Care Servises (ANC)<br />
+			????? ??????? ??? ???????</span></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(197, 224, 179);">&nbsp;</td>
+			<td style="text-align: center; background-color: rgb(197, 224, 179);"><span style="color:#000000;"><strong>Number<br />
+			?????</strong></span></td>
+			<td style="text-align: center; background-color: rgb(197, 224, 179);">&nbsp;</td>
+			<td style="text-align: center; background-color: rgb(197, 224, 179);"><span style="color:#000000;"><strong><span style="line-height: 20.79px;">Negative</span><br />
+			????</strong></span></td>
+			<td style="text-align: center; background-color: rgb(197, 224, 179);"><span style="color:#000000;"><strong><span style="line-height: 20.79px;">Positive</span><br />
+			??????</strong></span></td>
+			<td style="text-align: center; background-color: rgb(197, 224, 179);"><span style="color:#000000;"><strong><span style="line-height: 20.79px;">Total</span><br />
+			???????</strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Antenatal client 1st visit<br />
+			??? ?????? ??????? ??? ??????? ????? ??????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="SNA4NJtgamR-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="1" title="SNA4NJtgamR - Antenatal client 1st visit-ANC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Antenatal client 1st visit-ANC-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Pregnant women tested for Syphilis<br />
+			??? ?????? ??????? ????????? ????????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="ycDJdVc6d4h-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="11" title="ycDJdVc6d4h - Pregnant women tested for Syphilis, negative-ANC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Pregnant women tested for Syphilis, negative-ANC-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="A9tJ2k1X2zD-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="12" title="A9tJ2k1X2zD - Pregnant women tested for Syphilis, Positive-ANC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Pregnant women tested for Syphilis, Positive-ANC-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="indicatornvaBX3WYbLd" indicatorid="nvaBX3WYbLd" name="indicator" readonly="readonly" style="width: 45px;" title="Total Pregnant women tested for Syphilis-ANC-RH" type="text" value="[ Total Pregnant women tested for Syphilis-ANC-RH ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong><span style="line-height: 20.79px;">Antenatal client 2nd visit</span><br />
+			??? ?????? ??????? ??? ??????? ????? ???????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="K29NqFMMf9P-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="2" title="K29NqFMMf9P - Antenatal client 2nd visit-ANC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Antenatal client 2nd visit-ANC-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Pregnant women received voluntary counseling testing (VCT)<br />
+			??? ?????? ??????? ?????? ?? ????? ??? VCT</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="ZSLVpBqn6Bv-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="13" title="ZSLVpBqn6Bv - Pregnant women received voluntary counseling testing (VCT), negative-ANC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Pregnant women received voluntary counseling testing (VCT), negative-ANC-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="rRmQ0C946jG-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="14" title="rRmQ0C946jG - Pregnant women received voluntary counseling testing (VCT), positive-ANC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Pregnant women received voluntary counseling testing (VCT), positive-ANC-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="indicatorsPdwgIRkrQy" indicatorid="sPdwgIRkrQy" name="indicator" readonly="readonly" style="width: 45px;" title="Total Pregnant women received voluntary counseling testing (VCT)-ANC-RH" type="text" value="[ Total Pregnant women received voluntary counseling testing (VCT)-ANC-RH ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong><span style="line-height: 20.79px;">Antenatal client 3rd visit</span><br />
+			??? ?????? ??????? ??? ??????? ????? ???????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="g36a0euMXNU-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="3" title="g36a0euMXNU - Antenatal client 3rd visit-ANC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Antenatal client 3rd visit-ANC-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>ANC complications<br />
+			??????? ?? ??? ???????</strong></span></td>
+			<td colspan="3" rowspan="1" style="text-align: center; background-color: rgb(197, 224, 179);"><span style="color:#000000;"><strong>Number<br />
+			?????</strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong><span style="line-height: 20.79px;">Antenatal client 4th visit or more</span><br />
+			??? ?????? ??????? ??? ??????? ????? ??????? ?? ????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="ubzOWDYUawl-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="4" title="ubzOWDYUawl - Antenatal client 4th visit-ANC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Antenatal client 4th visit-ANC-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong><span style="line-height: 20.79px;">Anemia cases</span><br />
+			????? ??? ????</strong></span></td>
+			<td colspan="3" rowspan="1" style="text-align: center;"><span style="color:#000000;"><strong><input id="gkmitTPI52J-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="15" title="gkmitTPI52J - Complications-Anemia cases-ANC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Complications-Anemia cases-ANC-RH (default) ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Total antenatal visits<br />
+			????? ?????? ??????? ??? ???????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="indicatorhPRLOinylGi" indicatorid="hPRLOinylGi" name="indicator" readonly="readonly" style="width: 45px;" title="Total antenatal visits-ANC-RH" type="text" value="[ Total antenatal visits-ANC-RH ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong><span style="line-height: 20.79px;">Severe anemia cases</span><br />
+			????? ??? ???? ??????</strong></span></td>
+			<td colspan="3" rowspan="1" style="text-align: center;"><span style="color:#000000;"><strong><input id="vUos92R3J0W-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="16" title="vUos92R3J0W - Complications-Severe anemia cases-ANC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Complications-Severe anemia cases-ANC-RH (default) ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Antenatal client Tetanus Toxoid 1st dose<br />
+			??? ????????? ?????? ????? ?????? ?????? ?? ????? ??????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="FXHyLSAGEU6-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="6" title="FXHyLSAGEU6 - Antenatal client Tetanus Toxoid 1st dose-ANC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Antenatal client Tetanus Toxoid 1st dose-ANC-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong><span style="line-height: 20.79px;">Total Anemia cases</span><br />
+			????? ????? ??? ????</strong></span></td>
+			<td colspan="3" rowspan="1" style="text-align: center;"><span style="color:#000000;"><strong><input id="indicatorvTVU7yxyZMP" indicatorid="vTVU7yxyZMP" name="indicator" style="width: 45px;" title="Complications-Total Anemia cases-ANC-RH" type="text" value="[ Complications-Total Anemia cases-ANC-RH ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong><span style="line-height: 20.79px;">Antenatal client Tetanus Toxoid 2nd dose</span><br />
+			??? ????????? ?????? ????? ?????? ??????? ?? ????? ??????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="yAPhuT409Ex-zzJeOdPVu6C-val" style="width: 45px;" title="yAPhuT409Ex - Antenatal client Tetanus Toxoid 2nd dose-ANC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Antenatal client Tetanus Toxoid 2nd dose-ANC-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong><span style="line-height: 20.79px;">Hypertensive cases/pre-eclampsia</span><br />
+			????? ?????? ??? ????/???? ?????</strong></span></td>
+			<td colspan="3" rowspan="1" style="text-align: center;"><span style="color:#000000;"><strong><input id="E5FGW8dUrNM-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="17" title="E5FGW8dUrNM - Complications-Hypertensive/pre-eclampsia cases-ANC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Complications-Hypertensive/pre-eclampsia cases-ANC-RH (default) ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Total Tetanus Toxoid doses<br />
+			????? ??? ????? ?????? ???????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="indicatorSqD9Q21GsJL" indicatorid="SqD9Q21GsJL" name="indicator" readonly="readonly" style="width: 45px;" title="Total Tetanus Toxoid doses-ANC-RH" type="text" value="[ Total Tetanus Toxoid doses-ANC-RH ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong><span style="line-height: 20.79px;">Cases with hemorrhage &lt; 20 weeks</span><br />
+			????? ????? ??? ??????? 20</strong></span></td>
+			<td colspan="3" rowspan="1" style="text-align: center;"><span style="color:#000000;"><strong><input id="Sj1IaAToc1M-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="18" title="Sj1IaAToc1M - Complications-Cases with hemorrhage &lt; 20 weeks-ANC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Complications-Cases with hemorrhage &lt; 20 weeks-ANC-RH (default) ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Pregnant women (3rd trimester) received clean delivery kit<br />
+			??? ?????? ??????? ?? ????? ?????? ?? ????? ??????? ????? ?????? ??????? ???????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="UqD7OFmQs6P-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="8" title="UqD7OFmQs6P - Pregnant women (3rd trimester) received clean delivery kit-ANC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Pregnant women (3rd trimester) received clean delivery kit-ANC-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong style="line-height: 19px; text-align: center;"><span style="line-height: 20.79px;">Cases with hemorrhage &gt; 20 weeks</span><br />
+			????? ????? ??? ??????? 20</strong></span></td>
+			<td colspan="3" rowspan="1" style="text-align: center;"><span style="color:#000000;"><input id="LecThGJZILL-zzJeOdPVu6C-val" style="width: 45px;" title="LecThGJZILL - Complications-Cases with hemorrhage &gt; 20 weeks-ANC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Complications-Cases with hemorrhage &gt; 20 weeks-ANC-RH (default) ]" /></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Clients received IFA tablets<br />
+			??? ????????? ?????? ????? ???? ?????? ? ??? ???????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="Ed66a15Gi3d-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="9" title="Ed66a15Gi3d - Clients received IFA tablets-ANC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Clients received IFA tablets-ANC-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong style="line-height: 19px; text-align: center;"><span style="line-height: 20.79px;">Other complications</span><br />
+			????????? ??????</strong></span></td>
+			<td colspan="3" rowspan="1" style="text-align: center;"><span style="color:#000000;"><input id="WOzUSkiI9i8-zzJeOdPVu6C-val" style="width: 45px;" title="WOzUSkiI9i8 - Complications-Other complications-ANC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Complications-Other complications-ANC-RH (default) ]" /></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong><span style="line-height: 20.79px;">Referred cases</span><br />
+			??? ??????? ??????? ??? ????? ????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="nninIyU7lpa-zzJeOdPVu6C-val" style="width: 45px;" title="nninIyU7lpa - Referred cases-ANC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Referred cases-ANC-RH (default) ]" /></strong></span></td>
+			<td rowspan="1" style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong style="line-height: 19px; text-align: center;">Total complications<br />
+			????? ?????????</strong></span></td>
+			<td colspan="3" rowspan="1" style="text-align: center;"><span style="color:#000000;"><input id="indicatorrmMKxBiAy73" indicatorid="rmMKxBiAy73" name="indicator" readonly="readonly" style="width: 45px;" title="Total complications-ANC-RH" type="text" value="[ Total complications-ANC-RH ]" /></span></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<div id="tab3" style="display: none;">
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width: 800px;">
+	<tbody>
+		<tr>
+			<td colspan="5" style="text-align: center; background-color: rgb(51, 102, 0);"><span style="font-size:16px;"><span style="color:#FFFFFF;">Delivery Management<br />
+			????? ???????</span></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(197, 224, 179);">&nbsp;</td>
+			<td style="text-align: center; background-color: rgb(197, 224, 179);"><span style="color:#000000;"><strong>Number<br />
+			?????</strong></span></td>
+			<td colspan="2" rowspan="2" style="text-align: center; background-color: rgb(197, 224, 179);"><span style="color:#000000;"><strong>Complications identified during labor<br />
+			????????? ???? ??????</strong></span></td>
+			<td colspan="1" rowspan="2" style="text-align: center; background-color: rgb(197, 224, 179);"><span style="color:#000000;"><strong>Number<br />
+			?????</strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong><span style="line-height: 20.79px;">Normal delivery in facility by Skilled Birth Attendant (SBA)</span><br />
+			??? ???????? ???????? ??? ?????? ????? ? ??????? ?? ??? ??? ????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="lAGXLfKDej0-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="1" title="lAGXLfKDej0 - Normal delivery in facility by Skilled Birth Attendant (SBA)-Delivery-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Normal delivery in facility by Skilled Birth Attendant (SBA)-Delivery-RH (default) ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong><span style="line-height: 20.79px;">Normal delivery in facility by other than Skilled Birth Attendant</span><br />
+			??? ???????? ???????? ??? ?????? ????? ???? ???? ??? ????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="JABmrOFKRtd-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="2" title="JABmrOFKRtd - Normal delivery in facility by other than Skilled Birth Attendant-Delivery-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Normal delivery in facility by other than Skilled Birth Attendant-Delivery-RH (default) ]" /></strong></span></td>
+			<td colspan="1" rowspan="6" style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong><span style="line-height: 20.79px;">Maternal</span><br />
+			????????? ???????? ??????</strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Obstructed<br />
+			?????? ???????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="FjkMAJe5I06-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="14" title="FjkMAJe5I06 - Complications-Obstructed labor-Delivery-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Complications-Obstructed labor-Delivery-RH (default) ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong><span style="line-height: 20.79px;">Normal delivery in the community</span><br />
+			??? ???????? ??????? ?? ???????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="ncxUixANv9N-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="3" title="ncxUixANv9N - Normal delivery in the community-Delivery-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Normal delivery in the community-Delivery-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Hemorrhage<br />
+			?????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="NeFWfs4DLnn-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="15" title="NeFWfs4DLnn - Complications-Maternal Hemorrhage- Delivery-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Complications-Maternal Hemorrhage- Delivery-RH (default) ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Caesarian Section<br />
+			???????? ????????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="fLVZXggV65S-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="4" title="fLVZXggV65S - Caesarian Section-Delivery-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Caesarian Section-Delivery-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Infection<br />
+			???????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="a5NWhUJgmFi-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="16" title="a5NWhUJgmFi - Complications-Maternal Infection-Delivery-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Complications-Maternal Infection-Delivery-RH (default) ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Total Deliveries<br />
+			????? ????????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="indicatork7vdeADqcXP" indicatorid="k7vdeADqcXP" name="indicator" readonly="readonly" style="width: 45px;" title="Total Deliveries-Delivery-RH" type="text" value="[ Total Deliveries-Delivery-RH ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Eclampsia<br />
+			???????? ??????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="uP2VCrzJem8-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="17" title="uP2VCrzJem8 - Complication-Eclampsia-Delivery-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Complication-Eclampsia-Delivery-RH (default) ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Stillbirth<br />
+			?????? ???? ?????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="ekWHLmwJE7x-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="5" title="ekWHLmwJE7x - Stillbirth-Delivery-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Stillbirth-Delivery-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Other maternal complications<br />
+			????????? ???????? ??????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="xkXcYuQZpoR-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="18" title="xkXcYuQZpoR - Complications-Other Maternal complications-Delivery-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Complications-Other Maternal complications-Delivery-RH (default) ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Live birth<br />
+			???????? ?????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="m8NIQ6RREOK-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="6" title="m8NIQ6RREOK - Live birth-Delivery-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Live birth-Delivery-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Total maternal complications<br />
+			????? ????????? ????????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="indicatorXTqk3nKnRF3" indicatorid="XTqk3nKnRF3" name="indicator" style="width: 45px;" title="Complications-Total maternal complications-Delivery-RH" type="text" value="[ Complications-Total maternal complications-Delivery-RH ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Deliveries with less than 37 weeks of pregnancy<br />
+			(???????? ??? ??????? 37 ?? ????? (??????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="N3p9uhIS1lt-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="7" title="N3p9uhIS1lt - Deliveries with less than 37 weeks of pregnancy-Delivery-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Deliveries with less than 37 weeks of pregnancy-Delivery-RH (default) ]" /></strong></span></td>
+			<td colspan="1" rowspan="6" style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Neonatal<br />
+			????????</strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Hypothermia<br />
+			?????? ???????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="vLeWvACuMcm-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="19" title="vLeWvACuMcm - Complications-Neonatal Hypothermia-Delivery-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Complications-Neonatal Hypothermia-Delivery-RH (default) ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Low birth weight babies (&lt;2500 grams)<br />
+			(??????? ????? ????? ??? ???????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="zUQOGYRL2gw-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="8" title="zUQOGYRL2gw - Low birth weight babies (&lt;2500 grams)-Delivery-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Low birth weight babies (&lt;2500 grams)-Delivery-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Sepsis<br />
+			????? ????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="MZ7u5Uck3XB-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="20" title="MZ7u5Uck3XB - Complications-Neonatal Sepsis-Delivery-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Complications-Neonatal Sepsis-Delivery-RH (default) ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Babies Has skilled care during birth<br />
+			??????? ????? ????? ????? ???? ???????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="WdZDM5Iabb1-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="9" title="WdZDM5Iabb1 - Babies Has skilled care during birth-Delivery-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Babies Has skilled care during birth-Delivery-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Asphyxia<br />
+			????? ?????????-??????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="SURFOPSsK4h-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="21" title="SURFOPSsK4h - Complications-Neonatal Asphyxia-Delivery-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Complications-Neonatal Asphyxia-Delivery-RH (default) ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Babies born with congenital anomalies<br />
+			??????? ????????? ??????? ?????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="y5OWN6kA96O-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="10" title="y5OWN6kA96O - Babies born with congenital anomalies-Delivery-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Babies born with congenital anomalies-Delivery-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Other neonatal complications<br />
+			????????? ???????? ??????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="ALKVqW9bhwo-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="22" title="ALKVqW9bhwo - Complications-Other Neonatal complications-Delivery-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Complications-Other Neonatal complications-Delivery-RH (default) ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong><span style="line-height: 20.79px;">Number of abortion cases</span><br />
+			??? ????? ???????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="KoL8LZHpGwR-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="11" title="KoL8LZHpGwR - Abortion cases-Delivery-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Abortion cases-Delivery-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Total neonatal complications<br />
+			????? ????????? ????????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="indicatorCsZuuFt5g1Z" indicatorid="CsZuuFt5g1Z" name="indicator" style="width: 45px;" title="Complications-Total neonatal complications-Delivery-RH" type="text" value="[ Complications-Total neonatal complications-Delivery-RH ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong><span style="line-height: 20.79px;">Number of Post Abortion Care (PAC)</span><br />
+			??? ??????? ???? ???? ????? ??? ???????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="hcjtWAQt1DW-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="12" title="hcjtWAQt1DW - Post Abortion Care (PAC)-Delivery-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Post Abortion Care (PAC)-Delivery-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Total complications<br />
+			????? ????????? ???? ???????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="indicatorsi6P3tvdieo" indicatorid="si6P3tvdieo" name="indicator" readonly="readonly" style="width: 45px;" title="Total Complications-Delivery-RH" type="text" value="[ Total Complications-Delivery-RH ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Referred cases<br />
+			??? ??????? ??????? ??? ????? ????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="Xh3RsxKKjM6-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="13" title="Xh3RsxKKjM6 - Referred cases-Delivery-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Referred cases-Delivery-RH (default) ]" /></strong></span></td>
+			<td colspan="3" rowspan="1" style="text-align: center;">&nbsp;</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<div id="tab4" style="display: none;">
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width: 650px;">
+	<tbody>
+		<tr>
+			<td colspan="4" style="text-align: center; background-color: rgb(51, 102, 0);"><span style="color:#FFFFFF;"><span style="font-size:16px;">Post-Natal Care (PNC)<br />
+			????? ??????? ??? ???????</span></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(197, 224, 179);">&nbsp;</td>
+			<td style="text-align: center; background-color: rgb(197, 224, 179);"><span style="color:#000000;"><strong>Number<br />
+			?????</strong></span></td>
+			<td style="text-align: center; background-color: rgb(197, 224, 179);">&nbsp;</td>
+			<td style="text-align: center; background-color: rgb(197, 224, 179);"><span style="color:#000000;"><strong><span style="line-height: 20.79px;">Number</span><br />
+			?????</strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; white-space: nowrap; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>1st PNC visits within 72 hours of delivery<br />
+			??? ?????? ??????? ??? ??????? ?????? ???? 72 ???? ?? ???????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="utAl7yG0OiL-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="1" title="utAl7yG0OiL - 1st PNC visits within 72 hours of delivery-PNC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ 1st PNC visits within 72 hours of delivery-PNC-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Clients Stayed for 48 hours<br />
+			??????? ???? ???? ?? ?????? ???? ???? ?? 48 ????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="fpkwpf1Z8m4-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="10" title="fpkwpf1Z8m4 - Clients Stayed for 48 hours-PNC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Clients Stayed for 48 hours-PNC-RH (default) ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>1st PNC visits after 72 hours of delivery<br />
+			??? ?????? ??????? ??? ??????? ?????? ??? 72 ???? ?? ???????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="YwO0fUgMz1S-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="2" title="YwO0fUgMz1S - 1st PNC visits after 72 hours of delivery-PNC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ 1st PNC visits after 72 hours of delivery-PNC-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Vitamin A supplement<br />
+			??????? ???????? ?</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="SZwBNbFC7mY-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="11" title="SZwBNbFC7mY - Vitamin A supplement-PNC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Vitamin A supplement-PNC-RH (default) ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Total 1st PNC visits<br />
+			????? ?????? ??? ??????? ??????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="indicatorIePQzwAwwBf" indicatorid="IePQzwAwwBf" name="indicator" readonly="readonly" style="width: 45px;" title="Total 1st PNC visits-PNC-RH" type="text" value="[ Total 1st PNC visits-PNC-RH ]" /></strong></span></td>
+			<td style="text-align: center; white-space: nowrap; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Clients received IFA tablets<br />
+			??? ????????? ?????? ????? ???? ?????? ? ??? ???????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="rJVYcHTK5BY-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="12" title="rJVYcHTK5BY - Clients received IFA tablets-PNC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Clients received IFA tablets-PNC-RH (default) ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>2nd or more PNC visits<br />
+			??? ?????? ??????? ??? ??????? ??????? ?? ????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="v5ZDr3Jomnt-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="3" title="v5ZDr3Jomnt - 2nd or more PNC visits-PNC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ 2nd or more PNC visits-PNC-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Referred cases-Maternal<br />
+			??????? ???????-??????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="nfDH5KhQJYM-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="13" title="nfDH5KhQJYM - Referred cases-Maternal-PNC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Referred cases-Maternal-PNC-RH (default) ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Total PNC visits<br />
+			????? ?????? ??????? ??? ???????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="indicatorAiyWYuNkPHV" indicatorid="AiyWYuNkPHV" name="indicator" readonly="readonly" style="width: 45px;" title="Total PNC visits-PNC-RH" type="text" value="[ Total PNC visits-PNC-RH ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong><span style="line-height: 20.79px;">Referred cases-Neonates</span><br />
+			??????? ???????-??????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="exVmzLWgMmi-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="14" title="exVmzLWgMmi - Referred cases-Neonates-PNC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Referred cases-Neonates-PNC-RH (default) ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td colspan="2" rowspan="1" style="text-align: center;">&nbsp;</td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Total referred<br />
+			????? ??????? ???????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="indicatorKuaoBB1Yis8" indicatorid="KuaoBB1Yis8" name="indicator" readonly="readonly" style="width: 45px;" title="Total referred-PNC-RH" type="text" value="[ Total referred-PNC-RH ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td colspan="4" style="text-align: center;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(197, 224, 179);"><span style="color:#000000;"><strong><span style="line-height: 20.79px;">PNC complications- maternal</span><br />
+			??????? ??????? ??? ??????? ????????</strong></span></td>
+			<td style="text-align: center; background-color: rgb(197, 224, 179);">
+			<p><span style="color:#000000;"><strong>Number<br />
+			?????</strong></span></p>
+			</td>
+			<td style="text-align: center; background-color: rgb(197, 224, 179);"><span style="color:#000000;"><strong><span style="line-height: 20.79px;">PNC complications- neonates</span><br />
+			??????? ??????? ??? ??????? ????????</strong></span></td>
+			<td style="text-align: center; background-color: rgb(197, 224, 179);">
+			<p><span style="color:#000000;"><strong>Number<br />
+			?????</strong></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Anemia cases<br />
+			????? ??? ????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="VDC6ofybljX-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="4" title="VDC6ofybljX - Complications-Maternal Anemia cases-PNC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Complications-Maternal Anemia cases-PNC-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Fever<br />
+			???</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="kpAWtkXVNWV-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="15" title="kpAWtkXVNWV - Complications-Neonatal Fever-PNC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Complications-Neonatal Fever-PNC-RH (default) ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Severe Anemia cases<br />
+			??? ???? ??????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="VteQdZ5VfE2-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="5" title="VteQdZ5VfE2 - Complications-Maternal Severe Anemia cases-PNC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Complications-Maternal Severe Anemia cases-PNC-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Jaundice<br />
+			?????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="GNwQBRL2vpl-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="16" title="GNwQBRL2vpl - Complications-Neonatal Jaundice-PNC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Complications-Neonatal Jaundice-PNC-RH (default) ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Hypertensive cases<br />
+			????? ?????? ?????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="d4pTMbEZmZY-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="6" title="d4pTMbEZmZY - Complications-Maternal Hypertensive cases-PNC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Complications-Maternal Hypertensive cases-PNC-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Diarrhea<br />
+			?????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="ViciUq7Jht6-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="17" title="ViciUq7Jht6 - Complications-Neonatal Diarrhea-PNC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Complications-Neonatal Diarrhea-PNC-RH (default) ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Bleeding/Hemorrhage<br />
+			?????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="tew3e4ubUgt-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="7" title="tew3e4ubUgt - Complications-Maternal Bleeding/Hemorrhage-PNC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Complications-Maternal Bleeding/Hemorrhage-PNC-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Pneumonia<br />
+			??? ???</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="VxyXDZdz2cp-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="18" title="VxyXDZdz2cp - Complications-Neonatal Pneumonia-PNC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Complications-Neonatal Pneumonia-PNC-RH (default) ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Infections<br />
+			???????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="koM5GlXUFBc-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="8" title="koM5GlXUFBc - Complications-Maternal Infections-PNC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Complications-Maternal Infections-PNC-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Other complications<br />
+			??????? ????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="euUsdYjcbr8-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="19" title="euUsdYjcbr8 - Complications-Neonatal Other complications-PNC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Complications-Neonatal Other complications-PNC-RH (default) ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Other Complications<br />
+			??????? ????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="T22yoynQ0dr-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="9" title="T22yoynQ0dr - Complication-Maternal Other Complications-PNC-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Complication-Maternal Other Complications-PNC-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Total neonates complications<br />
+			????? ????????? ????????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="indicatorrUvViMIeTut" indicatorid="rUvViMIeTut" name="indicator" readonly="readonly" style="width: 45px;" title="Total Neonates complications-PNC-RH" type="text" value="[ Total Neonates complications-PNC-RH ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Total Maternal complication<br />
+			????? ????????? ????????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="indicatorOtUZqaTYhKs" indicatorid="OtUZqaTYhKs" name="indicator" readonly="readonly" style="width: 45px;" title="Total Maternal complication-PNC-RH" type="text" value="[ Total Maternal complication-PNC-RH ]" /></strong></span></td>
+			<td style="text-align: center; white-space: nowrap; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Total complications (Maternal and neonatal)<br />
+			????? ????????? ???????? ? ????????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="indicatorahtvnNYB58t" indicatorid="ahtvnNYB58t" name="indicator" readonly="readonly" style="width: 45px;" title="Total complications (Maternal and neonatal)-PNC-RH" type="text" value="[ Total complications (Maternal and neonatal)-PNC-RH ]" /></strong></span></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<div id="tab5" style="display: none;">
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width: 700px;">
+	<tbody>
+		<tr>
+			<td colspan="6" style="text-align: center; background-color: rgb(51, 102, 0);"><span style="color:#FFFFFF;"><span style="font-size:16px;"><span style="line-height: 20.79px;">Gynecological Services and&nbsp;Family planning</span><br />
+			??????? ???????? ? ????? ??????</span></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(197, 224, 179);"><span style="color:#000000;"><strong>Gynecological Services<br />
+			??????? ????????</strong></span></td>
+			<td style="text-align: center; background-color: rgb(197, 224, 179);"><span style="color:#000000;"><strong>Number<br />
+			?????</strong></span></td>
+			<td style="text-align: center; background-color: rgb(197, 224, 179);"><span style="color:#000000;"><strong>Family planning<br />
+			????? ??????</strong></span></td>
+			<td style="text-align: center; background-color: rgb(197, 224, 179);"><span style="color:#000000;"><strong>New cases<br />
+			????? ?????</strong></span></td>
+			<td style="text-align: center; background-color: rgb(197, 224, 179);"><span style="color:#000000;"><strong>Continuous<br />
+			??????</strong></span></td>
+			<td style="text-align: center; background-color: rgb(197, 224, 179);"><span style="color:#000000;"><strong>Total<br />
+			???????</strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Pelvic Inflammatory Disease (PID)<br />
+			????? ????????? ??????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="k0nmUunrz3i-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="1" title="k0nmUunrz3i - Pelvic Inflammatory Disease (PID)-GYN-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Pelvic Inflammatory Disease (PID)-GYN-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Combine Oral Contraceptives<br />
+			????? ????? ??????? ????????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="XhJK6MUW5xA-PLAgPSDzwQU-val" name="" style="width: 45px;" tabindex="8" title="XhJK6MUW5xA - Combine Oral Contraceptives-FP-RH - PLAgPSDzwQU - (New cases-FP) - int" type="text" value="[ Combine Oral Contraceptives-FP-RH (New cases-FP) ]" /></strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="XhJK6MUW5xA-AznD5LsV6hT-val" name="" style="width: 45px;" tabindex="9" title="XhJK6MUW5xA - Combine Oral Contraceptives-FP-RH - AznD5LsV6hT - (Continuous-FP) - int" type="text" value="[ Combine Oral Contraceptives-FP-RH (Continuous-FP) ]" /></strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input dataelementid="XhJK6MUW5xA" id="totalXhJK6MUW5xA" name="total" readonly="readonly" style="width: 45px;" title="Combine Oral Contraceptives-FP-RH" type="text" value="[ Combine Oral Contraceptives-FP-RH ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Sexually transmitted infections (STI)<br />
+			????????? ???????? ?????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="wxmk85nucY2-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="2" title="wxmk85nucY2 - Sexually transmitted infections (STI)-GYN-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Sexually transmitted infections (STI)-GYN-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Progesterone Only Pills<br />
+			???? ??????????? ???</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="b74ZNJhJUpH-PLAgPSDzwQU-val" name="" style="width: 45px;" tabindex="10" title="b74ZNJhJUpH - Progesterone Only Pills-FP-RH - PLAgPSDzwQU - (New cases-FP) - int" type="text" value="[ Progesterone Only Pills-FP-RH (New cases-FP) ]" /></strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="b74ZNJhJUpH-AznD5LsV6hT-val" name="" style="width: 45px;" tabindex="11" title="b74ZNJhJUpH - Progesterone Only Pills-FP-RH - AznD5LsV6hT - (Continuous-FP) - int" type="text" value="[ Progesterone Only Pills-FP-RH (Continuous-FP) ]" /></strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input dataelementid="b74ZNJhJUpH" id="totalb74ZNJhJUpH" name="total" readonly="readonly" style="width: 45px;" title="Progesterone Only Pills-FP-RH" type="text" value="[ Progesterone Only Pills-FP-RH ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Other reproductive tract infections (RTI)<br />
+			??????? ?????? ???????? ??????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="UeEMtKhFhm3-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="3" title="UeEMtKhFhm3 - Other reproductive tract infections (RTI)-GYN-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Other reproductive tract infections (RTI)-GYN-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>IUCDs<br />
+			??????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="u1H4UixwMfG-PLAgPSDzwQU-val" name="" style="width: 45px;" tabindex="12" title="u1H4UixwMfG - IUCDs-FP-RH - PLAgPSDzwQU - (New cases-FP) - int" type="text" value="[ IUCDs-FP-RH (New cases-FP) ]" /></strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="u1H4UixwMfG-AznD5LsV6hT-val" name="" style="width: 45px;" tabindex="13" title="u1H4UixwMfG - IUCDs-FP-RH - AznD5LsV6hT - (Continuous-FP) - int" type="text" value="[ IUCDs-FP-RH (Continuous-FP) ]" /></strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input dataelementid="u1H4UixwMfG" id="totalu1H4UixwMfG" name="total" readonly="readonly" style="width: 45px;" title="IUCDs-FP-RH" type="text" value="[ IUCDs-FP-RH ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Dysmenorrhea<br />
+			??? ?????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="QWn7Uau5KhZ-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="4" title="QWn7Uau5KhZ - Dysmenorrhea-GYN-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Dysmenorrhea-GYN-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Injectables<br />
+			?????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="NkfRdDkWDfd-PLAgPSDzwQU-val" name="" style="width: 45px;" tabindex="14" title="NkfRdDkWDfd - Injectables-FP-RH - PLAgPSDzwQU - (New cases-FP) - int" type="text" value="[ Injectables-FP-RH (New cases-FP) ]" /></strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="NkfRdDkWDfd-AznD5LsV6hT-val" name="" style="width: 45px;" tabindex="15" title="NkfRdDkWDfd - Injectables-FP-RH - AznD5LsV6hT - (Continuous-FP) - int" type="text" value="[ Injectables-FP-RH (Continuous-FP) ]" /></strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input dataelementid="NkfRdDkWDfd" id="totalNkfRdDkWDfd" name="total" readonly="readonly" style="width: 45px;" title="Injectables-FP-RH" type="text" value="[ Injectables-FP-RH ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Irregular PV bleeding<br />
+			???? ???? ???</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="H2KXseeHACu-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="5" title="H2KXseeHACu - Irregular PV bleeding-GYN-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Irregular PV bleeding-GYN-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Emergency Contraception<br />
+			????? ????? ?????????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="Ko4nsxAdTGk-PLAgPSDzwQU-val" name="" style="width: 45px;" tabindex="16" title="Ko4nsxAdTGk - Emergency Contraception-FP-RH - PLAgPSDzwQU - (New cases-FP) - int" type="text" value="[ Emergency Contraception-FP-RH (New cases-FP) ]" /></strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="Ko4nsxAdTGk-AznD5LsV6hT-val" name="" style="width: 45px;" tabindex="17" title="Ko4nsxAdTGk - Emergency Contraception-FP-RH - AznD5LsV6hT - (Continuous-FP) - int" type="text" value="[ Emergency Contraception-FP-RH (Continuous-FP) ]" /></strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input dataelementid="Ko4nsxAdTGk" id="totalKo4nsxAdTGk" name="total" readonly="readonly" style="width: 45px;" title="Emergency Contraception-FP-RH" type="text" value="[ Emergency Contraception-FP-RH ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Others Geynecological cases<br />
+			??????? ???????? ??????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="KrtHPTLIRlc-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="6" title="KrtHPTLIRlc - Others Gynecological cases-GYN-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Others Gynecological cases-GYN-RH (default) ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Condoms<br />
+			????????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="cGmXnROY8GG-PLAgPSDzwQU-val" name="" style="width: 45px;" tabindex="18" title="cGmXnROY8GG - Condoms-FP-RH - PLAgPSDzwQU - (New cases-FP) - int" type="text" value="[ Condoms-FP-RH (New cases-FP) ]" /></strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="cGmXnROY8GG-AznD5LsV6hT-val" name="" style="width: 45px;" tabindex="19" title="cGmXnROY8GG - Condoms-FP-RH - AznD5LsV6hT - (Continuous-FP) - int" type="text" value="[ Condoms-FP-RH (Continuous-FP) ]" /></strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input dataelementid="cGmXnROY8GG" id="totalcGmXnROY8GG" name="total" readonly="readonly" style="width: 45px;" title="Condoms-FP-RH" type="text" value="[ Condoms-FP-RH ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Total Gynecological cases<br />
+			????? ??????? ????????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="indicatorKHpVvYKhIID" indicatorid="KHpVvYKhIID" name="indicator" readonly="readonly" style="width: 45px;" title="Total Gynecological cases managed-GYN-RH" type="text" value="[ Total Gynecological cases managed-GYN-RH ]" /></strong></span></td>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Total<br />
+			???????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="indicatorgh8kBa7Rjys" indicatorid="gh8kBa7Rjys" name="indicator" readonly="readonly" style="width: 45px;" title="Total Family planning Clients new cases-FP-RH" type="text" value="[ Total Family planning Clients new cases-FP-RH ]" /></strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="indicatorpPQIcdN9hZw" indicatorid="pPQIcdN9hZw" name="indicator" readonly="readonly" style="width: 45px;" title="Total Family planning Clients contineous-FP-RH" type="text" value="[ Total Family planning Clients contineous-FP-RH ]" /></strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="indicatorNVUoyD470kX" indicatorid="NVUoyD470kX" name="indicator" readonly="readonly" style="width: 45px;" title="Total Family planning Clients-FP-RH" type="text" value="[ Total Family planning Clients-FP-RH ]" /></strong></span></td>
+		</tr>
+		<tr>
+			<td style="text-align: center; background-color: rgb(226, 239, 217);"><span style="color:#000000;"><strong>Referred cases for Gynecological reason<br />
+			????? ??????? ??????? ?????? ??????</strong></span></td>
+			<td style="text-align: center;"><span style="color:#000000;"><strong><input id="Pxxctzvs9Qx-zzJeOdPVu6C-val" name="" style="width: 45px;" tabindex="7" title="Pxxctzvs9Qx - Referred cases for Gynecological reason-GYN-RH - zzJeOdPVu6C - (default) - int" type="text" value="[ Referred cases for Gynecological reason-GYN-RH (default) ]" /></strong></span></td>
+			<td colspan="4" rowspan="1" style="text-align: center;">&nbsp;</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+</div>
+</div>

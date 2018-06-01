@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<script>
+function myFunction() 
+{
+    document.getElementById("demo").innerHTML = "hi";
+}
+
+function spanMessage( fieldId )
+{	
+	var openingBal = document.getElementById( fieldId ).value;
+	//var openingBal = $("#"+fieldId).val();
+	if(  openingBal == "" || openingBal == " " )
+	{
+		document.getElementById("demo").innerHTML = "";
+	}
+	else
+	{ 
+		var str = "Some thing enter in this filed!";
+		var result = str.fontcolor("red");
+		//var message = result.font("bold");
+		document.getElementById("demo").innerHTML = result.bold();
+	}
+	 
+}	
+
+
+
+</script>
+
+
+<body>
+
+<p id="demo" style="text-align: right;"></p>
+
+<td style="text-align: center;">
+	<input id="hJLWUI0d6OV-Fg2s9xBCSrk-val" onblur="javascript:spanMessage( 'hJLWUI0d6OV-Fg2s9xBCSrk-val' )"
+	size="10" title="" value="" />
+</td>
+
+
+
+<html>
+<head>
+    <script type="text/javascript">
+    function showInnerHtml(){
+        var contents=document.getElementById("formArea").innerHTML;
+        alert(contents);
+    }
+    </script>
+</head>
+<body>
+    <div id="formArea">
+        <form name="ipForm" >
+          UserName : <input type="text" name="userName"> 
+        </form>
+    </div>
+    <div> other contents.....   </div>
+    <div onclick="showInnerHtml()">Show InnerHTML</div>
+</body>
+</html>
+
+
+
+</body>
+</html> 

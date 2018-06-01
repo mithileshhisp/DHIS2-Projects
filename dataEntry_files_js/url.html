@@ -1,0 +1,33 @@
+<html> 
+<head> 
+<script type="text/javascript"> 
+function myfunction() 
+{
+	var today = new Date("2015-04-27");
+	var quarter = Math.floor((today.getMonth() + 3) / 3);
+	alert( quarter );
+	var n = document.getElementById("t1").value
+	document.getElementById("sa").innerHTML = "<a href=blah.html?name=" + n + ">Products</a>";
+  
+} 
+</script> 
+</head> 
+  
+<body> 
+<form> 
+<span id="sa">
+<a id="aa" href="#">test</a>
+
+
+
+</span>
+<input type="text" id="t1" /> 
+<input type="button"
+onclick="myfunction()"
+value="Click me"> 
+  
+</form> 
+  
+ 
+</body> 
+</html>

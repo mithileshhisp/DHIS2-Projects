@@ -1,0 +1,168 @@
+
+<HTML>
+
+<HEAD>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+	
+<SCRIPT language="javascript">
+$(function(){
+ 
+    // add multiple select / deselect functionality
+    $("#selectall").click(function () {
+          $('.case').attr('checked', this.checked);
+    });
+ 
+    // if all checkbox are selected, check the selectall checkbox
+    // and viceversa
+    $(".case").click(function(){
+ 
+        if($(".case").length == $(".case:checked").length) {
+            $("#selectall").attr("checked", "checked");
+        } else {
+            $("#selectall").removeAttr("checked");
+        }
+ 
+    });
+});
+
+$(document).ready(function () {
+        $("#ckbCheckAll").click(function () {
+            $(".checkBoxClass").attr('checked', this.checked);
+        });
+    });
+
+
+
+
+
+
+
+
+
+</SCRIPT>
+	
+	
+    <TITLE>Multiple Checkbox Select/Deselect - DEMO</TITLE>
+</HEAD>
+<BODY>
+    <H2>Multiple Checkbox Select/Deselect - DEMO</H2>
+<table border="1">
+<tr>
+    <th><input type="checkbox" id="selectall"/></th>
+    <th>Cell phone</th>
+    <th>Rating</th>
+</tr>
+<tr>
+    <td align="center"><input type="checkbox" class="case" name="case" value="1"/></td>
+    <td>BlackBerry Bold 9650</td>
+    <td>2/5</td>
+</tr>
+<tr>
+    <td align="center"><input type="checkbox" class="case" name="case" value="2"/></td>
+    <td>Samsung Galaxy</td>
+    <td>3.5/5</td>
+</tr>
+<tr>
+    <td align="center"><input type="checkbox" class="case" name="case" value="3"/></td>
+    <td>Droid X</td>
+    <td>4.5/5</td>
+</tr>
+<tr>
+    <td align="center"><input type="checkbox" class="case" name="case" value="4"/></td>
+    <td>HTC Desire</td>
+    <td>3/5</td>
+</tr>
+<tr>
+    <td align="center"><input type="checkbox" class="case" name="case" value="5"/></td>
+    <td>Apple iPhone 4</td>
+    <td>5/5</td>
+</tr>
+</table>
+ 
+ 
+ 
+ <input type="checkbox" id="ckbCheckAll" />
+    <p id="checkBoxes">
+        <input type="checkbox" class="checkBoxClass" id="Checkbox1" />
+        <br />
+        <input type="checkbox" class="checkBoxClass" id="Checkbox2" />
+        <br />
+        <input type="checkbox" class="checkBoxClass" id="Checkbox3" />
+        <br />
+        <input type="checkbox" class="checkBoxClass" id="Checkbox4" />
+        <br />
+        <input type="checkbox" class="checkBoxClass" id="Checkbox5" />
+        <br />
+    </p>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+</BODY>
+</HTML>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+<html>
+<script>
+$('#selectAll').click(function(e){
+    var table= $(e.target).closest('table');
+    $('td input:checkbox',table).attr('checked',e.target.checked);
+});
+
+</script>
+
+
+
+
+
+<body>
+<table>
+    <tr>
+        <th>
+            <input type="checkbox" id="selectAll" />
+        </th>
+        <th>
+            hi!
+        </th>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="1"/>
+        </td>
+        <td>
+            hi!
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="2"/>
+        </td>
+        <td>
+            hi!
+        </td>
+    </tr>
+</table>
+</body>
+</html>
+-->

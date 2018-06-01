@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <script src="js/jquery.min.js"></script>
+    <link rel ="stylesheet" href="css/bootstrap.min.css">
+    <script src="css/bootstrap.min.js"></script>
+    <script>    //Script Tag Starts
+
+   /* Declaration of GLobal Variables*/
+    var x, value, a,dsid,dename,deid,dsname,tempUrl,orguni,orgid,orgname,importedDataValueCount,updatedDataValueCount,ignoredDataValueCount,ou;
+        var map = [];
+        var ade="";
+        var selectedText,  selectedText_month,  selectedText_year;
+        var rootNodeName,orgUnitTagName;
+        var dataValue = {};
+        var dmap=[];
+        var dmaps=[];
+        var msg1=[];
+        var msg2=[];
+        var dataSetSource = [];
+        var dataelements=[];
+        var msg = "These MSTCcodes are not present in DHIS2 Application- ";
+        var des=[];
+        var mapDataValue = [];
+        var ouid = [];
+        var code=[];
+        var  name=[];
+        var  mstc=[];
+        var ds,de,ou;
+        var deMapping = {};
+        var  xmlde=[];
+        var homeURL= new String();
+        var baseURL = new String();
+
+  //Ready Function Starts
+        $(document).ready(function () {
+            jQuery.getJSON("manifest.webapp", function (json) {
+                homeURL = json.activities.dhis.href;
+                baseURL = json.activities.dhis.href + "/api";
+                orguni = baseURL+"/organisationUnits?fields=name,id,code&paging=false";
+//                tempUrl = baseURL+"/documents/RJOJ54bXDPl/data";
+                tempUrl = baseURL+"/documents/YcsHDb2ySyY/data";
+                console.log(tempUrl);
+                var dataset=baseURL+"/dataSets/tdTwLUxcQ8R?fields=id,name,organisationUnits[id,name],dataElements[id,name]";
+                ds= homeURL+"/dhis-web-maintenance-dataset/dataSet.action"
+                de= homeURL+"/dhis-web-maintenance-datadictionary/dataElement.action"
+                ou= homeURL+"/dhis-web-maintenance-organisationunit/organisationUnit.action"
+                var cat=baseURL+ "dataSets/tdTwLUxcQ8R?fields=id,name,organisationUnits[id,name],dataElements[id,name,categoryCombo[categoryOptionCombos[id,name]]]";
+                $.ajax({
+                    type: "GET",
+                    url: dataset,
+                    dataType: "xml",
+                    async: false,
+                    crossDomain: true,
+                    headers: {
+                    },
+                    success: function (xml) {
+                        $(xml).find('dataSet').each(function () {
+                            dsid = $(this).attr('id');
+                            dsname = $(this).attr('name');
+                            $(xml).find('dataElement').each(function ()
+                            {
+                                deid= $(this).attr('id');
+                                dename=$(this).attr('name');
+                                dataelements.push(deid);
+                                dmaps[dsid]=deid;
+                                console.log( dataelements);
+                            });
+                            $(xml).find('organisationUnit ').each(function () {
+                                orgid = $(this).attr('id');
+                                orgname = $(this).attr('name');
+                                dataSetSource.push(orgid );
+                                dmap[orgid]=dsid;         //map datasets according to the organisation units
+                                console.log( dataSetSource);
+                            });
+                        });
+                    }
+                });
+
+                $.ajax({
+                    type: "GET",
+                    url: orguni,
+                    dataType: "xml",
+                    async: false,
+                    crossDomain: true,
+                    headers: {
+                    },
+                    success: function (xml) {
+                        $(xml).find('organisationUnit ').each(function () {
+                            var uidoforg = $(this).attr('id');
+                            var nameoforg = $(this).attr('name');
+                            var codeoforg = $(this).attr('code');
+                            map[codeoforg] = uidoforg;
+                        });
+                    }
+                });
+            });
+            console.log(tempUrl);
+            console.log(baseURL);
+            console.log(homeURL);
+      
+
+        });
+    </script>
+
+    <script>
+
+        function prepareDataValueSet() {
+
+            deMapping = {
+
+                RBSK: {
+                    'dsUID': 'tdTwLUxcQ8R', rootNodeName: 'RBSK_GIS_Indicator', url: baseURL+"/documents/YcsHDb2ySyY/data",orgUnitTagName: 'MCTSCode', des: [
+                        {
+                            xmlid: "Childhood_Diseases_0_6_Female",
+                            dataElement: "oV163sbcJ0N",
+                            categoryOptionCombo: "Cmzbo9LD8pJ",
+                            value:"0"
+
+                        },
+                        {
+                            xmlid: "Childhood_Diseases_0_6_Male",
+                            dataElement: "oV163sbcJ0N",
+                            categoryOptionCombo: "PnAVAPG4yvb",
+                            value:"0"
+                        },
+                        {
+                            xmlid: "Childhood_Diseases_7_18_Female",
+                            dataElement: "cEPledgs7rd",
+                            categoryOptionCombo: "Cmzbo9LD8pJ",
+                            value:"0"
+                        },
+                        {
+                            xmlid: "Childhood_Diseases_7_18_Male",
+                            dataElement: "cEPledgs7rd",
+                            categoryOptionCombo: "PnAVAPG4yvb",
+                            value:"0"
+                        },
+                        {
+                            xmlid: "Deficiencies_0_6_Female",
+                            dataElement: "gKupqkIhW4n",
+                            categoryOptionCombo: "Cmzbo9LD8pJ",
+                            value:"0"
+                        },
+                        {
+                            xmlid: "Deficiencies_0_6_Male",
+                            dataElement: "gKupqkIhW4n",
+                            categoryOptionCombo: "PnAVAPG4yvb",
+                            value:"0"
+                        },
+                        {
+                            xmlid: "Deficiencies_7_18_Female",
+                            dataElement: "FuEnn0bLuoT",
+                            categoryOptionCombo: "Cmzbo9LD8pJ",
+                            value:"0"
+                        },
+                        {
+                            xmlid: "Deficiencies_7_18_Male",
+                            dataElement: "FuEnn0bLuoT",
+                            categoryOptionCombo: "PnAVAPG4yvb",
+                            value:"0"
+                        },
+                        {
+                            xmlid: "Developmental_dealy_and_disability_0_6_Female",
+                            dataElement: "v37HBq7C72j",
+                            categoryOptionCombo: "Cmzbo9LD8pJ",
+                            value:"0"
+                        },
+                        {
+                            xmlid: "Developmental_dealy_and_disability_0_6_Male",
+                            dataElement: "v37HBq7C72j",
+                            categoryOptionCombo: "PnAVAPG4yvb",
+                            value:"0"
+                        },
+                        {
+                            xmlid: "Developmental_dealy_and_disability_7_18_Female",
+                            dataElement: "S1WMlAKnF8Z",
+                            categoryOptionCombo: "Cmzbo9LD8pJ",
+                            value:"0"
+                        },
+                        {
+                            xmlid: "Developmental_dealy_and_disability_7_18_Male",
+                            dataElement: "S1WMlAKnF8Z",
+                            categoryOptionCombo: "PnAVAPG4yvb",
+                            value:"0"
+                        },
+                        {
+                            xmlid: "defect_at_birth_0_6_Female",
+                            dataElement: "JJO3utHjb3l",
+                            categoryOptionCombo: "Cmzbo9LD8pJ",
+                            value:"0"
+                        },
+                        {
+                            xmlid: "defect_at_birth_0_6_Male",
+                            dataElement: "JJO3utHjb3l",
+                            categoryOptionCombo: "PnAVAPG4yvb",
+                            value:"0"
+                        },
+                        {
+                            xmlid: "defect_at_birth_7_18_Female",
+                            dataElement: "qoVmtykHboz",
+                            categoryOptionCombo: "Cmzbo9LD8pJ",
+                            value:"0"
+                        },
+                        {
+                            xmlid: "defect_at_birth_7_18_Male",
+                            dataElement: "qoVmtykHboz",
+                            categoryOptionCombo: "PnAVAPG4yvb",
+                            value:"0"
+                        }
+                    ]
+                }
+
+            };
+            console.log("Url "+ deMapping[selectedText].url);
+            for (var k = 0; k < deMapping[selectedText].des.length;k++) {
+                for (var j = 0; j < dataelements.length; j++) {
+                    if (deMapping[selectedText].des[k].dataElement == dataelements[j]) {
+                        deMapping[selectedText].des[k].value =1;
+                        var vf=  deMapping[selectedText].des[k].value;
+                        msg1 += deMapping[selectedText].des[k].dataElement + ',';
+                    }
+
+                }
+
+                 if(deMapping[selectedText].des[k].value=="0")
+                {
+//                    console.log("UnMapped Data Elements: "+deMapping[selectedText].des[k].xmlid)
+
+                    ade +=deMapping[selectedText].des[k].xmlid + "<br>";
+                    document.getElementById("qwe4").innerHTML = "<b>"+"Data Elements for following tags not Found in DHIS2:"+"</b>" + "<br>" + ade +"<br>";
+                }
+        else
+                {
+
+                    document.getElementById("qwe4").innerHTML = "<b>"+"Data Elements for following tags not Found in DHIS2:"+"</b>"+"<br>"+ "None";
+                }
+
+            }
+
+            $.ajax({
+                type: "GET",
+                url: deMapping[selectedText].url,
+                dataType: "xml",
+                async: false,
+                crossDomain: true,
+                headers: {},
+                success: function (xml) {
+
+                    $(xml).find(deMapping[selectedText].rootNodeName).each(function () {
+                        var m0 = $(this).find(deMapping[selectedText].orgUnitTagName).text();
+                        mstc.push(m0);
+                        for (var k = 0; k < deMapping[selectedText].des.length; k++) {
+
+                            mapDataValue[m0 + ":" + deMapping[selectedText].des[k].xmlid] = $(this).find(deMapping[selectedText].des[k].xmlid).text();
+                        }
+                    });
+
+
+                }
+
+
+            });
+
+
+            var dataValueSet = {};
+            var dataValues = [];
+
+
+            for (var i = 0; i < mstc.length; i++) {
+
+                if (dmap[map[mstc[i]]] == undefined) {
+                    msg += mstc[i] + ',';
+                }
+
+                else if (dmap[map[mstc[i]]] != undefined) {
+
+
+                    var org = map[mstc[i]];
+                    for (var k = 0; k < deMapping[selectedText].des.length; k++) {
+
+                        if (deMapping[selectedText].des[k].value == 1) {
+                            dataValue = {};
+                            dataValue["orgUnit"] = org;
+                            dataValue["period"] = selectedText_year + selectedText_month;
+                            dataValue["dataElement"] = deMapping[selectedText].des[k].dataElement;
+                            dataValue["categoryOptionCombo"] = deMapping[selectedText].des[k].categoryOptionCombo;
+                            dataValue["value"] = mapDataValue[mstc[i] + ":" + deMapping[selectedText].des[k].xmlid];
+                            dataValues.push(dataValue);
+
+
+                            dataValueSet.dataValues = dataValues;
+
+                        }
+                    }
+                    console.log("Data: " +JSON.stringify(dataValueSet));
+                    $.ajax({
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        url: baseURL + '/dataValueSets',
+                        data: JSON.stringify(dataValueSet),
+                        dataType: 'json',
+                        type: 'post',
+                        async: false,
+                        success: returnSuccess,
+                        error: returnError
+
+                    });
+
+                    function returnSuccess(response) {
+
+                        importedDataValueCount = response.importCount.imported;
+                        updatedDataValueCount = response.importCount.updated;
+                        ignoredDataValueCount = response.importCount.ignored;
+
+
+                    }
+
+                    function returnError(xhr, textStatus, errorThrown) {
+                        $('#loading').hide();
+                        alert("inside error");
+                        $('#img').hide();
+
+                    }
+
+
+
+                }
+                $('#img').hide();
+
+            }
+
+
+
+            if(selectedText == "RBSK") {
+                document.getElementById("import").innerHTML = "<u>"+"Import Summary"+"<br>"+"</u>";
+
+                document.getElementById("myHeader").innerHTML ="Total Values Imported := " + importedDataValueCount + "<br>" + "Total Values Updated := " + updatedDataValueCount + "<br>";
+                document.getElementById("qwe").innerHTML = "<b>"+"Data Set not assigned for following MCTS Codes:"+"</b>" + "<br>" + msg;
+                document.getElementById("qwe2").innerHTML = "<b>"+"Organisation Units not found for following MCTS Codes:"+"</b>" + "<br>" + msg;
+
+                $('#abc').show();
+                $('#xyz').show();
+                $('#abcd').show();
+                $('#abce').show();
+                $('#abcef').show();
+                $('#abcdt').show();
+
+            }
+
+
+
+            document.getElementById('Submit').disabled = 'disabled';
+        }
+    </script>
+
+    <script>
+
+        $('button').click(function () {
+            $('.error').stop().fadeIn(400).delay(3000).fadeOut(400); //fade out after 3 seconds
+        });
+    </script>
+    <script type="text/javascript">
+        window.onload=function(){
+            populatedropdown( "monthdropdown", "yeardropdown")
+        }
+    </script>
+    <script type="text/javascript">
+        var monthtext=['Month','01','02','03','04','05','06','07','08','09','10','11','12'];
+        var yeartext=['Year','2015','2014','2013','2012','2011','2010','2009','2008','2007','2006','2005','2004','2003','2002','2001','2000'];
+        function populatedropdown( monthfield, yearfield){
+            var today=new Date();
+
+            var monthfield=document.getElementById(monthfield);
+            var yearfield=document.getElementById(yearfield);
+
+            for (var m=0; m<=12; m++)
+                monthfield.options[m]=new Option(monthtext[m], monthtext[m])
+// monthfield.options[today.getMonth()]=new Option(monthtext[today.getMonth()], monthtext[today.getMonth()], true, true) ;//select today's month
+
+            var thisyear=today.getFullYear();
+// yearfield.options[0]= Year;
+            for (var y=0; y<17; y++){
+
+//yearfield.options[y]=new Option(thisyear, thisyear);
+                yearfield.options[y]=new Option(yeartext[y], yeartext[y]);
+                thisyear-=1;
+            }
+// yearfield.options[0]=new Option(today.getFullYear(), today.getFullYear(), true, true); //select today's year
+        }
+    </script>
+
+</head>
+
+<style>
+    h2 {
+        text-align: center;
+    }
+    body {
+        background-color: lightskyblue;
+    }
+
+    #loading {
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        position: fixed;
+        display: block;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+        text-align: center;
+    }
+
+    #loading-image {
+        position: absolute;
+        top: 100px;
+        left: 240px;
+        z-index: 100;
+    }
+    .button {
+        position: absolute;
+        top: 50%;
+    }
+    .two {
+        border-style: solid;
+        border-color: darkslategrey;
+        background-color: aliceblue;
+        border-radius: 25px;
+        border-width: 12px;
+        margin-left:400px;
+        margin-top: 2%;
+        margin-right:350px;
+
+    }
+
+</style>
+<body>
+
+<form id="From1" method="post">
+    <div  style="display:table-cell; vertical-align:middle; text-align:center">
+        <img src="js/xmlimg.png"  style="width:180px; height:160px"; align="left">
+        <!--<img src="js/loading.gif" id="img" style="display:none" align="center"/>-->
+
+    </div>
+
+    <div class="two" id="content"style="display: block; padding: 15px"  >
+
+        <h2 ><b>Pull data from XML to DHIS2</b></h2>
+        <br>
+
+        <p style="font-size:150%;margin-left:30%; padding: 10px " > <b>Sources :</b>
+            <select id="drop" name="drop">
+                <option value="0">Select Source</option>
+                <option value="1">RBSK</option>
+                <option value="2">MIDRS</option>
+                <option value="3">ATM </option>
+                <option value="4">RT </option>
+            </select>
+            <script>
+
+                function abc() {
+                    document.location.reload();
+                    restartall();
+
+                }</script>
+
+            <script type="text/javascript">
+
+                function Fuction() {
+                    document.getElementById('btnSearch').disabled = 'disabled';
+                }
+                $(function () {
+                    $("#drop").change(function () {
+                        selectedText = $(this).find("option:selected").text();
+//                        $('#period').show();
+
+                        if(selectedText != "RBSK")
+                        {
+
+                            alert("Test available for RBSK only");
+
+                        }
+                        msg="";
+
+                    });
+
+
+                });
+                $(function () {
+                    $("#monthdropdown").change(function () {
+
+
+                        selectedText_month = $(this).find("option:selected").text();
+
+                        console.log("month is--" + selectedText_month);
+                    });
+                });
+                $(function () {
+                    $("#yeardropdown").change(function () {
+                        selectedText_year="Year";
+                        selectedText_year = $(this).find("option:selected").text();
+                        $('#Submit').show();
+                        console.log("year is--" + selectedText_year);
+
+                    });
+                });
+                if(selectedText_year!= undefined  && selectedText_month!= undefined &&selectedText!= undefined )
+                {
+                    alert("Hello");
+
+                }
+
+                console.log("period: "+selectedText_year+selectedText_month);
+
+            </script>
+
+        <p style="font-size:150%;margin-left:32%;  padding: 10px "><b>Period   :</b>
+        <form>
+            <form action="" name="someform">
+                <select id="monthdropdown"></select>
+                <select id="yeardropdown"></select>
+                <br> <br>
+                <button type="button" class="btn btn-primary btn-lg" style= " margin-left: 7%; width: 50%; "   id="Submit" name="Submit"  onclick="prepareDataValueSet()">SYNC
+                </button>
+
+            </form>
+
+        </form>
+
+
+
+        <script type="text/javascript">
+
+            $(document).ready(function() {
+                $("#loading").hide();
+                $('#abc').hide();
+                $('#xyz').hide();
+                $('#abc').hide();
+                $('#abcd').hide();
+                $('#abce').hide();
+                $('#abcef').hide();
+                $('#abcdt').hide();
+                $('#Submit').hide();
+                $( "#Submit" ).click(function() {
+                    $( "#content" ).animate({
+                        opacity: 0.50,
+                        left: "+=50",
+                        height: "toggle"
+                    }, 10, function() {
+                    });
+                });
+                $('#Submit').click(function () {
+                    $('#qwe').animate({
+
+                        'marginLeft': "-=20px" //moves left
+                    });
+                });
+
+                $('#Submit').click(function () {
+                    $('#myHeader').animate({
+
+                        'marginTop': "-=25px" //moves left
+                    });
+
+                });
+                $('#Submit').click(function () {
+                    $('#qwe4').animate({
+
+                        'marginLeft': "-=20px" //moves left
+                    });
+                });
+
+            });
+
+            function goToAction( tmp )
+            {
+                jQuery.getJSON("manifest.webapp", function (json) {
+
+                    var tempHomeUrl = json.activities.dhis.href;
+
+
+                    if( tmp == "dataSet" )
+                    {
+                        location.href=tempHomeUrl +'/dhis-web-maintenance-dataset/dataSet.action'
+                    }
+                    else if ( tmp == 'dataelement')
+                    {
+                        location.href=tempHomeUrl +'/dhis-web-maintenance-datadictionary/dataElement.action'
+                    }
+                    else if ( tmp == 'orgunit')
+                    {
+                        location.href=tempHomeUrl +'/dhis-web-maintenance-organisationunit/organisationUnit.action'
+                    }
+                })
+            }
+
+        </script>
+
+    </div>
+    <button type="button" class="btn btn-primary btn-lg"  id="abc" style=" text-align:center;margin-left:80%;margin-top: 2%; color: white" onclick="location.reload();">BACK</button>
+
+    <div class="two" id="xyz" >
+
+        <h5 id="import" align="center" style="margin-top: 1%; color: midnightblue;font-size: xx-large;font-family: cursive"><b><u></u></b></h5>
+
+        <h4 id="myHeader" align="center"  style="text-align:center; margin-top:7%;  color: darkgreen" ></h4>
+
+        <h4 id="qwe"  align="center" style=" text-align:center; margin-top:7%; color: crimson"> </h4>
+        <p> <a href  id="abcdt" style=" text-align:center;margin-left: 77%; color: black" onclick="goToAction( 'dataSet');">Assign DataSet</a>
+
+
+        <h4 id="qwe4"  align="center" style=" text-align:center; margin-top:7%; color: crimson"  ></h4>
+        <p><a href id="abce" style=" text-align:center;margin-left:75%; color: black" onclick="goToAction( 'dataelement');">Assign Data Elements</a>
+
+        <h4 id="qwe2" align="center"  style="text-align: center; margin-top:7%; color: crimson"   ></h4>
+        <p> <a href id="abcef" style=" text-align:center;margin-left:72%; color: black" onclick="goToAction( 'orgunit');">Go to Organisation Units</a>
+
+        <h4 id="qwe1" align="center"  style="text-align: center; margin-top:7%; color: crimson" ></h4>
+        <h4 id="qwe3"align="center"  style="text-align: center; margin-top:7%; color: crimson"  ></h4>
+
+    </div>
+
+</form>
+
+</body>
+</html>
