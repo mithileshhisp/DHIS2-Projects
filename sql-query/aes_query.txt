@@ -1,0 +1,74 @@
+UPDATE trackedentityattributevalue  SET value = REPLACE(value, 'B', '') where trackedentityattributeid= 126
+
+
+
+
+
+SELECT trackedentityinstanceid, trackedentityattributeid, created, lastupdated, 
+       value, encryptedvalue
+  FROM trackedentityattributevalue where trackedentityattributeid = 35830;
+
+
+select count(trackedentityinstanceid) as count,trackedentityattributeid,extract( date from created )
+
+
+SELECT teiav.value,org.organisationunitid,tei.created::date,count(tei.trackedentityinstanceid) As TOTAL
+from trackedentityinstance tei
+inner join trackedentityattributevalue teiav on tei.trackedentityinstanceid=teiav.trackedentityinstanceid
+inner join organisationunit org on teiav.value = org.name
+where teiav.trackedentityattributeid = 35830 and org.hierarchylevel = 6
+group by tei.trackedentityinstanceid,teiav.value,tei.created,org.organisationunitid;
+
+
+select * from organisationunit where 
+
+
+SELECT organisationunitid, uid, name, hierarchylevel, featuretype, coordinates FROM organisationunit 
+                		       WHERE hierarchylevel = 6 AND name = 'Desahi Deoria'
+
+
+
+SELECT trackedentityinstanceid, uid, code, created, lastupdated, inactive, 
+       representativeid, organisationunitid, trackedentityid
+  FROM trackedentityinstance;
+
+
+// count tei by attribute value
+SELECT teiav.value,tei.created::date,count(teiav.value) As TOTAL
+from trackedentityinstance tei
+inner join trackedentityattributevalue teiav on tei.trackedentityinstanceid=teiav.trackedentityinstanceid
+
+where teiav.trackedentityattributeid = 35830
+group by teiav.value, tei.created::date order by tei.created::date DESC;
+
+
+SELECT teiav.value,pi.programid,tei.created::date,count(teiav.value) As TOTAL
+from trackedentityinstance tei
+inner join trackedentityattributevalue teiav on tei.trackedentityinstanceid=teiav.trackedentityinstanceid
+inner join programinstance pi on pi.trackedentityinstanceid = tei.trackedentityinstanceid
+where teiav.trackedentityattributeid = 35830
+group by teiav.value, pi.programid,tei.created::date order by tei.created::date DESC;
+
+
+
+SELECT teiav.value,pi.programid,tei.created::date,count(teiav.value) As TOTAL
+from trackedentityinstance tei
+inner join trackedentityattributevalue teiav on tei.trackedentityinstanceid=teiav.trackedentityinstanceid
+inner join programinstance pi on pi.trackedentityinstanceid = tei.trackedentityinstanceid
+where teiav.trackedentityattributeid = 35830 and tei.created::date between '2017-01-01' AND '2017-12-31'
+group by teiav.value, pi.programid,tei.created::date order by tei.created::date DESC;
+
+
+// delete orgUnit which have no children
+
+select * from organisationunit where organisationunitid in (5398,5379,5333,5317,5377,5378,5335,5397,
+5392,2915,2916,2917,2918,2919,2920,2921,2922,5332,5405,5331,5319,5410,5347,5336,5348,5413,5384,
+5342,5380,5382,5407,5341,5403,5327,5408,5409,5412,5422,5420,5381,5386,5343,5400,5425,5346,5396,
+5423,5329,5320,5337,5338,5339,5340,5415,5359,5360,5361,5362,5363,5364,5365,5366,5367,5368,5369,
+5370,5371,5372,5373,5374,5375,5394,5391,5402,5324,5325,5328,5330,5406,5334,5399,5323,5419,5418,
+5376,5349,5350,5351,5352,5353,5354,5355,5356,5357,5358,5416,5414,5424,5385,
+5387,5390,5383,5322,5388,5389,
+5318,5326,5393,5321,5395,5404,5411,5401,5344,5345,5417,5421);
+
+
+="update optionvalue set name  = '"&C2&"' where name = '"&B2&"';"

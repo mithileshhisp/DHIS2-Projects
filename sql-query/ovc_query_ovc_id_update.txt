@@ -1,0 +1,4107 @@
+SELECT patientidentifierid, patientidentifiertypeid, patientid, identifier
+  FROM patientidentifier where patientid = 2623503;
+
+
+SELECT MAX(identifier) FROM patientidentifier INNER JOIN patient ON patient.patientid = patientidentifier.patientid 
+                WHERE patient.organisationunitid = 2465 AND patientidentifiertypeid = 1085;
+
+
+                
+SELECT MAX( identifier ) FROM patientidentifier 
+                WHERE  patientidentifiertypeid = 1085;
+"NYAMUS-O-0999"
+
+SELECT * FROM patientidentifier INNER JOIN patient ON patient.patientid = patientidentifier.patientid 
+                WHERE patient.organisationunitid = 2465 AND patientidentifiertypeid = 1085; 
+
+
+update patientidentifier
+ set  identifier =  
+case when patientidentifiertypeid=1085 and patientid =6282 then 'NYAMUS-O-0001'
+when patientidentifiertypeid=1085 and patientid =6307 then 'NYAMUS-O-0002'
+when patientidentifiertypeid=1085 and patientid =6357 then 'NYAMUS-O-0003'
+when patientidentifiertypeid=1085 and patientid =6386 then 'NYAMUS-O-0004'
+when patientidentifiertypeid=1085 and patientid =6493 then 'NYAMUS-O-0005'
+when patientidentifiertypeid=1085 and patientid =6597 then 'NYAMUS-O-0006'
+when patientidentifiertypeid=1085 and patientid =6627 then 'NYAMUS-O-0007'
+when patientidentifiertypeid=1085 and patientid =6657 then 'NYAMUS-O-0008'
+when patientidentifiertypeid=1085 and patientid =6688 then 'NYAMUS-O-0009'
+when patientidentifiertypeid=1085 and patientid =6744 then 'NYAMUS-O-0010'
+when patientidentifiertypeid=1085 and patientid =6773 then 'NYAMUS-O-0011'
+when patientidentifiertypeid=1085 and patientid =6811 then 'NYAMUS-O-0012'
+when patientidentifiertypeid=1085 and patientid =6865 then 'NYAMUS-O-0013'
+when patientidentifiertypeid=1085 and patientid =6919 then 'NYAMUS-O-0014'
+when patientidentifiertypeid=1085 and patientid =6951 then 'NYAMUS-O-0015'
+when patientidentifiertypeid=1085 and patientid =6969 then 'NYAMUS-O-0016'
+when patientidentifiertypeid=1085 and patientid =7022 then 'NYAMUS-O-0018'
+when patientidentifiertypeid=1085 and patientid =7034 then 'NYAMUS-O-0019'
+when patientidentifiertypeid=1085 and patientid =7046 then 'NYAMUS-O-0020'
+when patientidentifiertypeid=1085 and patientid =7058 then 'NYAMUS-O-0021'
+when patientidentifiertypeid=1085 and patientid =7080 then 'NYAMUS-O-0022'
+when patientidentifiertypeid=1085 and patientid =7095 then 'NYAMUS-O-0023'
+when patientidentifiertypeid=1085 and patientid =7111 then 'NYAMUS-O-0024'
+when patientidentifiertypeid=1085 and patientid =7128 then 'NYAMUS-O-0025'
+when patientidentifiertypeid=1085 and patientid =7147 then 'NYAMUS-O-0026'
+when patientidentifiertypeid=1085 and patientid =7159 then 'NYAMUS-O-0027'
+when patientidentifiertypeid=1085 and patientid =7171 then 'NYAMUS-O-0028'
+when patientidentifiertypeid=1085 and patientid =7183 then 'NYAMUS-O-0029'
+when patientidentifiertypeid=1085 and patientid =7195 then 'NYAMUS-O-0030'
+when patientidentifiertypeid=1085 and patientid =7207 then 'NYAMUS-O-0031'
+when patientidentifiertypeid=1085 and patientid =7219 then 'NYAMUS-O-0032'
+when patientidentifiertypeid=1085 and patientid =7245 then 'NYAMUS-O-0033'
+when patientidentifiertypeid=1085 and patientid =7271 then 'NYAMUS-O-0034'
+when patientidentifiertypeid=1085 and patientid =7290 then 'NYAMUS-O-0035'
+when patientidentifiertypeid=1085 and patientid =7316 then 'NYAMUS-O-0036'
+when patientidentifiertypeid=1085 and patientid =7375 then 'NYAMUS-O-0037'
+when patientidentifiertypeid=1085 and patientid =7508 then 'NYAMUS-O-0038'
+when patientidentifiertypeid=1085 and patientid =7543 then 'NYAMUS-O-0039'
+when patientidentifiertypeid=1085 and patientid =7555 then 'NYAMUS-O-0040'
+when patientidentifiertypeid=1085 and patientid =7583 then 'NYAMUS-O-0041'
+when patientidentifiertypeid=1085 and patientid =7618 then 'NYAMUS-O-0042'
+when patientidentifiertypeid=1085 and patientid =7643 then 'NYAMUS-O-0043'
+when patientidentifiertypeid=1085 and patientid =7694 then 'NYAMUS-O-0044'
+when patientidentifiertypeid=1085 and patientid =7722 then 'NYAMUS-O-0045'
+when patientidentifiertypeid=1085 and patientid =7731 then 'NYAMUS-O-0046'
+when patientidentifiertypeid=1085 and patientid =7787 then 'NYAMUS-O-0047'
+when patientidentifiertypeid=1085 and patientid =7796 then 'NYAMUS-O-0048'
+when patientidentifiertypeid=1085 and patientid =7853 then 'NYAMUS-O-0049'
+when patientidentifiertypeid=1085 and patientid =7861 then 'NYAMUS-O-0050'
+when patientidentifiertypeid=1085 and patientid =7899 then 'NYAMUS-O-0051'
+when patientidentifiertypeid=1085 and patientid =7917 then 'NYAMUS-O-0052'
+when patientidentifiertypeid=1085 and patientid =7934 then 'NYAMUS-O-0053'
+when patientidentifiertypeid=1085 and patientid =7960 then 'NYAMUS-O-0054'
+when patientidentifiertypeid=1085 and patientid =8010 then 'NYAMUS-O-0055'
+when patientidentifiertypeid=1085 and patientid =8017 then 'NYAMUS-O-0056'
+when patientidentifiertypeid=1085 and patientid =8034 then 'NYAMUS-O-0057'
+when patientidentifiertypeid=1085 and patientid =8068 then 'NYAMUS-O-0058'
+when patientidentifiertypeid=1085 and patientid =8105 then 'NYAMUS-O-0059'
+when patientidentifiertypeid=1085 and patientid =8120 then 'NYAMUS-O-0060'
+when patientidentifiertypeid=1085 and patientid =8130 then 'NYAMUS-O-0061'
+when patientidentifiertypeid=1085 and patientid =8137 then 'NYAMUS-O-0062'
+when patientidentifiertypeid=1085 and patientid =8185 then 'NYAMUS-O-0063'
+when patientidentifiertypeid=1085 and patientid =8197 then 'NYAMUS-O-0064'
+when patientidentifiertypeid=1085 and patientid =8204 then 'NYAMUS-O-0065'
+when patientidentifiertypeid=1085 and patientid =8222 then 'NYAMUS-O-0066'
+when patientidentifiertypeid=1085 and patientid =8238 then 'NYAMUS-O-0067'
+when patientidentifiertypeid=1085 and patientid =8288 then 'NYAMUS-O-0068'
+when patientidentifiertypeid=1085 and patientid =8325 then 'NYAMUS-O-0069'
+when patientidentifiertypeid=1085 and patientid =8373 then 'NYAMUS-O-0070'
+when patientidentifiertypeid=1085 and patientid =8396 then 'NYAMUS-O-0071'
+when patientidentifiertypeid=1085 and patientid =8430 then 'NYAMUS-O-0072'
+when patientidentifiertypeid=1085 and patientid =8460 then 'NYAMUS-O-0073'
+when patientidentifiertypeid=1085 and patientid =8488 then 'NYAMUS-O-0074'
+when patientidentifiertypeid=1085 and patientid =8497 then 'NYAMUS-O-0075'
+when patientidentifiertypeid=1085 and patientid =8505 then 'NYAMUS-O-0076'
+when patientidentifiertypeid=1085 and patientid =8537 then 'NYAMUS-O-0077'
+when patientidentifiertypeid=1085 and patientid =8543 then 'NYAMUS-O-0078'
+when patientidentifiertypeid=1085 and patientid =8559 then 'NYAMUS-O-0079'
+when patientidentifiertypeid=1085 and patientid =8584 then 'NYAMUS-O-0080'
+when patientidentifiertypeid=1085 and patientid =8594 then 'NYAMUS-O-0081'
+when patientidentifiertypeid=1085 and patientid =8601 then 'NYAMUS-O-0082'
+when patientidentifiertypeid=1085 and patientid =8624 then 'NYAMUS-O-0083'
+when patientidentifiertypeid=1085 and patientid =8642 then 'NYAMUS-O-0084'
+when patientidentifiertypeid=1085 and patientid =8668 then 'NYAMUS-O-0085'
+when patientidentifiertypeid=1085 and patientid =8705 then 'NYAMUS-O-0086'
+when patientidentifiertypeid=1085 and patientid =8719 then 'NYAMUS-O-0087'
+when patientidentifiertypeid=1085 and patientid =8736 then 'NYAMUS-O-0088'
+when patientidentifiertypeid=1085 and patientid =8743 then 'NYAMUS-O-0089'
+when patientidentifiertypeid=1085 and patientid =8760 then 'NYAMUS-O-0090'
+when patientidentifiertypeid=1085 and patientid =8768 then 'NYAMUS-O-0091'
+when patientidentifiertypeid=1085 and patientid =8775 then 'NYAMUS-O-0092'
+when patientidentifiertypeid=1085 and patientid =8794 then 'NYAMUS-O-0093'
+when patientidentifiertypeid=1085 and patientid =8804 then 'NYAMUS-O-0094'
+when patientidentifiertypeid=1085 and patientid =8820 then 'NYAMUS-O-0095'
+when patientidentifiertypeid=1085 and patientid =8833 then 'NYAMUS-O-0096'
+when patientidentifiertypeid=1085 and patientid =8844 then 'NYAMUS-O-0097'
+when patientidentifiertypeid=1085 and patientid =8855 then 'NYAMUS-O-0098'
+when patientidentifiertypeid=1085 and patientid =8869 then 'NYAMUS-O-0099'
+when patientidentifiertypeid=1085 and patientid =8881 then 'NYAMUS-O-0100'
+when patientidentifiertypeid=1085 and patientid =8893 then 'NYAMUS-O-0101'
+when patientidentifiertypeid=1085 and patientid =8900 then 'NYAMUS-O-0102'
+when patientidentifiertypeid=1085 and patientid =8917 then 'NYAMUS-O-0103'
+when patientidentifiertypeid=1085 and patientid =8924 then 'NYAMUS-O-0104'
+when patientidentifiertypeid=1085 and patientid =8941 then 'NYAMUS-O-0105'
+when patientidentifiertypeid=1085 and patientid =8951 then 'NYAMUS-O-0106'
+when patientidentifiertypeid=1085 and patientid =8965 then 'NYAMUS-O-0107'
+when patientidentifiertypeid=1085 and patientid =8973 then 'NYAMUS-O-0108'
+when patientidentifiertypeid=1085 and patientid =8990 then 'NYAMUS-O-0109'
+when patientidentifiertypeid=1085 and patientid =8999 then 'NYAMUS-O-0110'
+when patientidentifiertypeid=1085 and patientid =9010 then 'NYAMUS-O-0111'
+when patientidentifiertypeid=1085 and patientid =9028 then 'NYAMUS-O-0112'
+when patientidentifiertypeid=1085 and patientid =9035 then 'NYAMUS-O-0113'
+when patientidentifiertypeid=1085 and patientid =9044 then 'NYAMUS-O-0114'
+when patientidentifiertypeid=1085 and patientid =9069 then 'NYAMUS-O-0115'
+when patientidentifiertypeid=1085 and patientid =9078 then 'NYAMUS-O-0116'
+when patientidentifiertypeid=1085 and patientid =9094 then 'NYAMUS-O-0117'
+when patientidentifiertypeid=1085 and patientid =9113 then 'NYAMUS-O-0118'
+when patientidentifiertypeid=1085 and patientid =9148 then 'NYAMUS-O-0119'
+when patientidentifiertypeid=1085 and patientid =9155 then 'NYAMUS-O-0120'
+when patientidentifiertypeid=1085 and patientid =9163 then 'NYAMUS-O-0121'
+when patientidentifiertypeid=1085 and patientid =9182 then 'NYAMUS-O-0122'
+when patientidentifiertypeid=1085 and patientid =9193 then 'NYAMUS-O-0123'
+when patientidentifiertypeid=1085 and patientid =9200 then 'NYAMUS-O-0124'
+when patientidentifiertypeid=1085 and patientid =9218 then 'NYAMUS-O-0125'
+when patientidentifiertypeid=1085 and patientid =9232 then 'NYAMUS-O-0126'
+when patientidentifiertypeid=1085 and patientid =9240 then 'NYAMUS-O-0127'
+when patientidentifiertypeid=1085 and patientid =9250 then 'NYAMUS-O-0128'
+when patientidentifiertypeid=1085 and patientid =9268 then 'NYAMUS-O-0129'
+when patientidentifiertypeid=1085 and patientid =9275 then 'NYAMUS-O-0130'
+when patientidentifiertypeid=1085 and patientid =9289 then 'NYAMUS-O-0131'
+when patientidentifiertypeid=1085 and patientid =9306 then 'NYAMUS-O-0132'
+when patientidentifiertypeid=1085 and patientid =9313 then 'NYAMUS-O-0133'
+when patientidentifiertypeid=1085 and patientid =9322 then 'NYAMUS-O-0134'
+when patientidentifiertypeid=1085 and patientid =9338 then 'NYAMUS-O-0135'
+when patientidentifiertypeid=1085 and patientid =9352 then 'NYAMUS-O-0136'
+when patientidentifiertypeid=1085 and patientid =9369 then 'NYAMUS-O-0137'
+when patientidentifiertypeid=1085 and patientid =9379 then 'NYAMUS-O-0138'
+when patientidentifiertypeid=1085 and patientid =9395 then 'NYAMUS-O-0139'
+when patientidentifiertypeid=1085 and patientid =9411 then 'NYAMUS-O-0140'
+when patientidentifiertypeid=1085 and patientid =9419 then 'NYAMUS-O-0141'
+when patientidentifiertypeid=1085 and patientid =9440 then 'NYAMUS-O-0142'
+when patientidentifiertypeid=1085 and patientid =9457 then 'NYAMUS-O-0143'
+when patientidentifiertypeid=1085 and patientid =9464 then 'NYAMUS-O-0144'
+when patientidentifiertypeid=1085 and patientid =9481 then 'NYAMUS-O-0145'
+when patientidentifiertypeid=1085 and patientid =9488 then 'NYAMUS-O-0146'
+when patientidentifiertypeid=1085 and patientid =9502 then 'NYAMUS-O-0147'
+when patientidentifiertypeid=1085 and patientid =394596 then 'NYAMUS-O-0148'
+when patientidentifiertypeid=1085 and patientid =399972 then 'NYAMUS-O-0149'
+when patientidentifiertypeid=1085 and patientid =481108 then 'NYAMUS-O-0150'
+when patientidentifiertypeid=1085 and patientid =481302 then 'NYAMUS-O-0151'
+when patientidentifiertypeid=1085 and patientid =481683 then 'NYAMUS-O-0152'
+when patientidentifiertypeid=1085 and patientid =481872 then 'NYAMUS-O-0153'
+when patientidentifiertypeid=1085 and patientid =482199 then 'NYAMUS-O-0154'
+when patientidentifiertypeid=1085 and patientid =482449 then 'NYAMUS-O-0155'
+when patientidentifiertypeid=1085 and patientid =482751 then 'NYAMUS-O-0156'
+when patientidentifiertypeid=1085 and patientid =482975 then 'NYAMUS-O-0157'
+when patientidentifiertypeid=1085 and patientid =483162 then 'NYAMUS-O-0158'
+when patientidentifiertypeid=1085 and patientid =483774 then 'NYAMUS-O-0159'
+when patientidentifiertypeid=1085 and patientid =483982 then 'NYAMUS-O-0160'
+when patientidentifiertypeid=1085 and patientid =486819 then 'NYAMUS-O-0161'
+when patientidentifiertypeid=1085 and patientid =487060 then 'NYAMUS-O-0162'
+when patientidentifiertypeid=1085 and patientid =487570 then 'NYAMUS-O-0163'
+when patientidentifiertypeid=1085 and patientid =487787 then 'NYAMUS-O-0164'
+when patientidentifiertypeid=1085 and patientid =487366 then 'NYAMUS-O-0165'
+when patientidentifiertypeid=1085 and patientid =488033 then 'NYAMUS-O-0166'
+when patientidentifiertypeid=1085 and patientid =487899 then 'NYAMUS-O-0167'
+when patientidentifiertypeid=1085 and patientid =488246 then 'NYAMUS-O-0168'
+when patientidentifiertypeid=1085 and patientid =489394 then 'NYAMUS-O-0169'
+when patientidentifiertypeid=1085 and patientid =488951 then 'NYAMUS-O-0170'
+when patientidentifiertypeid=1085 and patientid =489147 then 'NYAMUS-O-0171'
+when patientidentifiertypeid=1085 and patientid =491824 then 'NYAMUS-O-0172'
+when patientidentifiertypeid=1085 and patientid =492228 then 'NYAMUS-O-0173'
+when patientidentifiertypeid=1085 and patientid =492532 then 'NYAMUS-O-0174'
+when patientidentifiertypeid=1085 and patientid =492947 then 'NYAMUS-O-0175'
+when patientidentifiertypeid=1085 and patientid =493545 then 'NYAMUS-O-0176'
+when patientidentifiertypeid=1085 and patientid =497556 then 'NYAMUS-O-0177'
+when patientidentifiertypeid=1085 and patientid =493810 then 'NYAMUS-O-0178'
+when patientidentifiertypeid=1085 and patientid =494362 then 'NYAMUS-O-0179'
+when patientidentifiertypeid=1085 and patientid =496585 then 'NYAMUS-O-0180'
+when patientidentifiertypeid=1085 and patientid =495315 then 'NYAMUS-O-0181'
+when patientidentifiertypeid=1085 and patientid =495605 then 'NYAMUS-O-0182'
+when patientidentifiertypeid=1085 and patientid =496003 then 'NYAMUS-O-0183'
+when patientidentifiertypeid=1085 and patientid =496181 then 'NYAMUS-O-0184'
+when patientidentifiertypeid=1085 and patientid =496445 then 'NYAMUS-O-0185'
+when patientidentifiertypeid=1085 and patientid =497039 then 'NYAMUS-O-0186'
+when patientidentifiertypeid=1085 and patientid =497075 then 'NYAMUS-O-0187'
+when patientidentifiertypeid=1085 and patientid =497313 then 'NYAMUS-O-0188'
+when patientidentifiertypeid=1085 and patientid =497464 then 'NYAMUS-O-0189'
+when patientidentifiertypeid=1085 and patientid =498720 then 'NYAMUS-O-0190'
+when patientidentifiertypeid=1085 and patientid =499150 then 'NYAMUS-O-0191'
+when patientidentifiertypeid=1085 and patientid =499528 then 'NYAMUS-O-0192'
+when patientidentifiertypeid=1085 and patientid =499799 then 'NYAMUS-O-0193'
+when patientidentifiertypeid=1085 and patientid =500295 then 'NYAMUS-O-0194'
+when patientidentifiertypeid=1085 and patientid =500359 then 'NYAMUS-O-0195'
+when patientidentifiertypeid=1085 and patientid =500568 then 'NYAMUS-O-0196'
+when patientidentifiertypeid=1085 and patientid =500724 then 'NYAMUS-O-0197'
+when patientidentifiertypeid=1085 and patientid =500801 then 'NYAMUS-O-0198'
+when patientidentifiertypeid=1085 and patientid =502523 then 'NYAMUS-O-0199'
+when patientidentifiertypeid=1085 and patientid =500925 then 'NYAMUS-O-0200'
+when patientidentifiertypeid=1085 and patientid =501276 then 'NYAMUS-O-0201'
+when patientidentifiertypeid=1085 and patientid =501143 then 'NYAMUS-O-0202'
+when patientidentifiertypeid=1085 and patientid =501307 then 'NYAMUS-O-0203'
+when patientidentifiertypeid=1085 and patientid =501434 then 'NYAMUS-O-0204'
+when patientidentifiertypeid=1085 and patientid =501454 then 'NYAMUS-O-0205'
+when patientidentifiertypeid=1085 and patientid =502255 then 'NYAMUS-O-0206'
+when patientidentifiertypeid=1085 and patientid =501750 then 'NYAMUS-O-0207'
+when patientidentifiertypeid=1085 and patientid =502053 then 'NYAMUS-O-0208'
+when patientidentifiertypeid=1085 and patientid =502060 then 'NYAMUS-O-0209'
+when patientidentifiertypeid=1085 and patientid =502347 then 'NYAMUS-O-0210'
+when patientidentifiertypeid=1085 and patientid =502819 then 'NYAMUS-O-0211'
+when patientidentifiertypeid=1085 and patientid =502874 then 'NYAMUS-O-0212'
+when patientidentifiertypeid=1085 and patientid =503143 then 'NYAMUS-O-0213'
+when patientidentifiertypeid=1085 and patientid =505071 then 'NYAMUS-O-0214'
+when patientidentifiertypeid=1085 and patientid =507784 then 'NYAMUS-O-0215'
+when patientidentifiertypeid=1085 and patientid =509393 then 'NYAMUS-O-0216'
+when patientidentifiertypeid=1085 and patientid =505391 then 'NYAMUS-O-0217'
+when patientidentifiertypeid=1085 and patientid =505412 then 'NYAMUS-O-0218'
+when patientidentifiertypeid=1085 and patientid =505520 then 'NYAMUS-O-0219'
+when patientidentifiertypeid=1085 and patientid =505625 then 'NYAMUS-O-0220'
+when patientidentifiertypeid=1085 and patientid =508351 then 'NYAMUS-O-0221'
+when patientidentifiertypeid=1085 and patientid =509430 then 'NYAMUS-O-0222'
+when patientidentifiertypeid=1085 and patientid =505787 then 'NYAMUS-O-0223'
+when patientidentifiertypeid=1085 and patientid =506207 then 'NYAMUS-O-0224'
+when patientidentifiertypeid=1085 and patientid =506575 then 'NYAMUS-O-0225'
+when patientidentifiertypeid=1085 and patientid =506709 then 'NYAMUS-O-0226'
+when patientidentifiertypeid=1085 and patientid =506851 then 'NYAMUS-O-0227'
+when patientidentifiertypeid=1085 and patientid =508315 then 'NYAMUS-O-0228'
+when patientidentifiertypeid=1085 and patientid =508438 then 'NYAMUS-O-0229'
+when patientidentifiertypeid=1085 and patientid =508655 then 'NYAMUS-O-0230'
+when patientidentifiertypeid=1085 and patientid =508684 then 'NYAMUS-O-0231'
+when patientidentifiertypeid=1085 and patientid =507053 then 'NYAMUS-O-0232'
+when patientidentifiertypeid=1085 and patientid =508241 then 'NYAMUS-O-0233'
+when patientidentifiertypeid=1085 and patientid =505883 then 'NYAMUS-O-0234'
+when patientidentifiertypeid=1085 and patientid =506024 then 'NYAMUS-O-0235'
+when patientidentifiertypeid=1085 and patientid =506069 then 'NYAMUS-O-0236'
+when patientidentifiertypeid=1085 and patientid =506239 then 'NYAMUS-O-0237'
+when patientidentifiertypeid=1085 and patientid =506565 then 'NYAMUS-O-0238'
+when patientidentifiertypeid=1085 and patientid =507164 then 'NYAMUS-O-0239'
+when patientidentifiertypeid=1085 and patientid =507279 then 'NYAMUS-O-0240'
+when patientidentifiertypeid=1085 and patientid =508010 then 'NYAMUS-O-0241'
+when patientidentifiertypeid=1085 and patientid =508039 then 'NYAMUS-O-0242'
+when patientidentifiertypeid=1085 and patientid =508057 then 'NYAMUS-O-0243'
+when patientidentifiertypeid=1085 and patientid =508141 then 'NYAMUS-O-0244'
+when patientidentifiertypeid=1085 and patientid =508147 then 'NYAMUS-O-0245'
+when patientidentifiertypeid=1085 and patientid =508423 then 'NYAMUS-O-0246'
+when patientidentifiertypeid=1085 and patientid =508547 then 'NYAMUS-O-0247'
+when patientidentifiertypeid=1085 and patientid =506273 then 'NYAMUS-O-0248'
+when patientidentifiertypeid=1085 and patientid =506425 then 'NYAMUS-O-0249'
+when patientidentifiertypeid=1085 and patientid =506505 then 'NYAMUS-O-0250'
+when patientidentifiertypeid=1085 and patientid =506689 then 'NYAMUS-O-0251'
+when patientidentifiertypeid=1085 and patientid =506756 then 'NYAMUS-O-0252'
+when patientidentifiertypeid=1085 and patientid =506948 then 'NYAMUS-O-0253'
+when patientidentifiertypeid=1085 and patientid =507320 then 'NYAMUS-O-0254'
+when patientidentifiertypeid=1085 and patientid =508199 then 'NYAMUS-O-0255'
+when patientidentifiertypeid=1085 and patientid =508844 then 'NYAMUS-O-0256'
+when patientidentifiertypeid=1085 and patientid =509022 then 'NYAMUS-O-0257'
+when patientidentifiertypeid=1085 and patientid =509031 then 'NYAMUS-O-0258'
+when patientidentifiertypeid=1085 and patientid =509138 then 'NYAMUS-O-0259'
+when patientidentifiertypeid=1085 and patientid =509195 then 'NYAMUS-O-0260'
+when patientidentifiertypeid=1085 and patientid =509201 then 'NYAMUS-O-0261'
+when patientidentifiertypeid=1085 and patientid =509814 then 'NYAMUS-O-0262'
+when patientidentifiertypeid=1085 and patientid =506926 then 'NYAMUS-O-0263'
+when patientidentifiertypeid=1085 and patientid =507115 then 'NYAMUS-O-0264'
+when patientidentifiertypeid=1085 and patientid =507194 then 'NYAMUS-O-0265'
+when patientidentifiertypeid=1085 and patientid =509605 then 'NYAMUS-O-0266'
+when patientidentifiertypeid=1085 and patientid =507648 then 'NYAMUS-O-0267'
+when patientidentifiertypeid=1085 and patientid =507888 then 'NYAMUS-O-0268'
+when patientidentifiertypeid=1085 and patientid =507910 then 'NYAMUS-O-0269'
+when patientidentifiertypeid=1085 and patientid =508263 then 'NYAMUS-O-0270'
+when patientidentifiertypeid=1085 and patientid =508409 then 'NYAMUS-O-0271'
+when patientidentifiertypeid=1085 and patientid =508507 then 'NYAMUS-O-0272'
+when patientidentifiertypeid=1085 and patientid =508702 then 'NYAMUS-O-0273'
+when patientidentifiertypeid=1085 and patientid =509236 then 'NYAMUS-O-0274'
+when patientidentifiertypeid=1085 and patientid =509555 then 'NYAMUS-O-0275'
+when patientidentifiertypeid=1085 and patientid =508900 then 'NYAMUS-O-0276'
+when patientidentifiertypeid=1085 and patientid =509040 then 'NYAMUS-O-0277'
+when patientidentifiertypeid=1085 and patientid =509745 then 'NYAMUS-O-0278'
+when patientidentifiertypeid=1085 and patientid =513411 then 'NYAMUS-O-0279'
+when patientidentifiertypeid=1085 and patientid =514000 then 'NYAMUS-O-0280'
+when patientidentifiertypeid=1085 and patientid =511243 then 'NYAMUS-O-0281'
+when patientidentifiertypeid=1085 and patientid =511547 then 'NYAMUS-O-0282'
+when patientidentifiertypeid=1085 and patientid =511614 then 'NYAMUS-O-0283'
+when patientidentifiertypeid=1085 and patientid =512025 then 'NYAMUS-O-0284'
+when patientidentifiertypeid=1085 and patientid =512158 then 'NYAMUS-O-0285'
+when patientidentifiertypeid=1085 and patientid =511320 then 'NYAMUS-O-0286'
+when patientidentifiertypeid=1085 and patientid =511685 then 'NYAMUS-O-0287'
+when patientidentifiertypeid=1085 and patientid =512729 then 'NYAMUS-O-0288'
+when patientidentifiertypeid=1085 and patientid =511401 then 'NYAMUS-O-0289'
+when patientidentifiertypeid=1085 and patientid =511471 then 'NYAMUS-O-0290'
+when patientidentifiertypeid=1085 and patientid =512897 then 'NYAMUS-O-0291'
+when patientidentifiertypeid=1085 and patientid =511636 then 'NYAMUS-O-0292'
+when patientidentifiertypeid=1085 and patientid =511983 then 'NYAMUS-O-0293'
+when patientidentifiertypeid=1085 and patientid =512817 then 'NYAMUS-O-0294'
+when patientidentifiertypeid=1085 and patientid =513296 then 'NYAMUS-O-0295'
+when patientidentifiertypeid=1085 and patientid =511758 then 'NYAMUS-O-0296'
+when patientidentifiertypeid=1085 and patientid =511793 then 'NYAMUS-O-0297'
+when patientidentifiertypeid=1085 and patientid =511887 then 'NYAMUS-O-0298'
+when patientidentifiertypeid=1085 and patientid =512257 then 'NYAMUS-O-0299'
+when patientidentifiertypeid=1085 and patientid =512342 then 'NYAMUS-O-0300'
+when patientidentifiertypeid=1085 and patientid =512626 then 'NYAMUS-O-0301'
+when patientidentifiertypeid=1085 and patientid =512636 then 'NYAMUS-O-0302'
+when patientidentifiertypeid=1085 and patientid =512711 then 'NYAMUS-O-0303'
+when patientidentifiertypeid=1085 and patientid =512778 then 'NYAMUS-O-0304'
+when patientidentifiertypeid=1085 and patientid =513196 then 'NYAMUS-O-0305'
+when patientidentifiertypeid=1085 and patientid =513249 then 'NYAMUS-O-0306'
+when patientidentifiertypeid=1085 and patientid =513336 then 'NYAMUS-O-0307'
+when patientidentifiertypeid=1085 and patientid =512983 then 'NYAMUS-O-0308'
+when patientidentifiertypeid=1085 and patientid =513106 then 'NYAMUS-O-0309'
+when patientidentifiertypeid=1085 and patientid =513144 then 'NYAMUS-O-0310'
+when patientidentifiertypeid=1085 and patientid =513401 then 'NYAMUS-O-0311'
+when patientidentifiertypeid=1085 and patientid =513517 then 'NYAMUS-O-0312'
+when patientidentifiertypeid=1085 and patientid =513717 then 'NYAMUS-O-0313'
+when patientidentifiertypeid=1085 and patientid =513738 then 'NYAMUS-O-0314'
+when patientidentifiertypeid=1085 and patientid =513579 then 'NYAMUS-O-0315'
+when patientidentifiertypeid=1085 and patientid =513624 then 'NYAMUS-O-0316'
+when patientidentifiertypeid=1085 and patientid =513670 then 'NYAMUS-O-0317'
+when patientidentifiertypeid=1085 and patientid =513786 then 'NYAMUS-O-0318'
+when patientidentifiertypeid=1085 and patientid =513808 then 'NYAMUS-O-0319'
+when patientidentifiertypeid=1085 and patientid =513867 then 'NYAMUS-O-0320'
+when patientidentifiertypeid=1085 and patientid =513947 then 'NYAMUS-O-0321'
+when patientidentifiertypeid=1085 and patientid =514092 then 'NYAMUS-O-0322'
+when patientidentifiertypeid=1085 and patientid =514886 then 'NYAMUS-O-0323'
+when patientidentifiertypeid=1085 and patientid =514932 then 'NYAMUS-O-0324'
+when patientidentifiertypeid=1085 and patientid =514973 then 'NYAMUS-O-0325'
+when patientidentifiertypeid=1085 and patientid =514992 then 'NYAMUS-O-0326'
+when patientidentifiertypeid=1085 and patientid =515029 then 'NYAMUS-O-0327'
+when patientidentifiertypeid=1085 and patientid =515081 then 'NYAMUS-O-0328'
+when patientidentifiertypeid=1085 and patientid =515097 then 'NYAMUS-O-0329'
+when patientidentifiertypeid=1085 and patientid =515122 then 'NYAMUS-O-0330'
+when patientidentifiertypeid=1085 and patientid =515144 then 'NYAMUS-O-0331'
+when patientidentifiertypeid=1085 and patientid =515174 then 'NYAMUS-O-0332'
+when patientidentifiertypeid=1085 and patientid =515204 then 'NYAMUS-O-0333'
+when patientidentifiertypeid=1085 and patientid =515249 then 'NYAMUS-O-0334'
+when patientidentifiertypeid=1085 and patientid =515301 then 'NYAMUS-O-0335'
+when patientidentifiertypeid=1085 and patientid =515410 then 'NYAMUS-O-0336'
+when patientidentifiertypeid=1085 and patientid =515482 then 'NYAMUS-O-0337'
+when patientidentifiertypeid=1085 and patientid =515577 then 'NYAMUS-O-0338'
+when patientidentifiertypeid=1085 and patientid =515616 then 'NYAMUS-O-0339'
+when patientidentifiertypeid=1085 and patientid =515983 then 'NYAMUS-O-0340'
+when patientidentifiertypeid=1085 and patientid =516016 then 'NYAMUS-O-0341'
+when patientidentifiertypeid=1085 and patientid =516025 then 'NYAMUS-O-0342'
+when patientidentifiertypeid=1085 and patientid =516066 then 'NYAMUS-O-0343'
+when patientidentifiertypeid=1085 and patientid =516103 then 'NYAMUS-O-0344'
+when patientidentifiertypeid=1085 and patientid =516113 then 'NYAMUS-O-0345'
+when patientidentifiertypeid=1085 and patientid =516153 then 'NYAMUS-O-0346'
+when patientidentifiertypeid=1085 and patientid =516163 then 'NYAMUS-O-0347'
+when patientidentifiertypeid=1085 and patientid =516193 then 'NYAMUS-O-0348'
+when patientidentifiertypeid=1085 and patientid =516212 then 'NYAMUS-O-0349'
+when patientidentifiertypeid=1085 and patientid =516259 then 'NYAMUS-O-0350'
+when patientidentifiertypeid=1085 and patientid =516225 then 'NYAMUS-O-0351'
+when patientidentifiertypeid=1085 and patientid =516270 then 'NYAMUS-O-0352'
+when patientidentifiertypeid=1085 and patientid =516292 then 'NYAMUS-O-0353'
+when patientidentifiertypeid=1085 and patientid =516302 then 'NYAMUS-O-0354'
+when patientidentifiertypeid=1085 and patientid =516324 then 'NYAMUS-O-0355'
+when patientidentifiertypeid=1085 and patientid =516699 then 'NYAMUS-O-0356'
+when patientidentifiertypeid=1085 and patientid =516331 then 'NYAMUS-O-0357'
+when patientidentifiertypeid=1085 and patientid =516362 then 'NYAMUS-O-0358'
+when patientidentifiertypeid=1085 and patientid =516377 then 'NYAMUS-O-0359'
+when patientidentifiertypeid=1085 and patientid =516408 then 'NYAMUS-O-0360'
+when patientidentifiertypeid=1085 and patientid =516429 then 'NYAMUS-O-0361'
+when patientidentifiertypeid=1085 and patientid =516463 then 'NYAMUS-O-0362'
+when patientidentifiertypeid=1085 and patientid =516483 then 'NYAMUS-O-0363'
+when patientidentifiertypeid=1085 and patientid =516510 then 'NYAMUS-O-0364'
+when patientidentifiertypeid=1085 and patientid =516542 then 'NYAMUS-O-0365'
+when patientidentifiertypeid=1085 and patientid =516581 then 'NYAMUS-O-0366'
+when patientidentifiertypeid=1085 and patientid =516606 then 'NYAMUS-O-0367'
+when patientidentifiertypeid=1085 and patientid =516626 then 'NYAMUS-O-0368'
+when patientidentifiertypeid=1085 and patientid =516647 then 'NYAMUS-O-0369'
+when patientidentifiertypeid=1085 and patientid =516673 then 'NYAMUS-O-0370'
+when patientidentifiertypeid=1085 and patientid =516740 then 'NYAMUS-O-0371'
+when patientidentifiertypeid=1085 and patientid =516747 then 'NYAMUS-O-0372'
+when patientidentifiertypeid=1085 and patientid =516794 then 'NYAMUS-O-0373'
+when patientidentifiertypeid=1085 and patientid =516824 then 'NYAMUS-O-0374'
+when patientidentifiertypeid=1085 and patientid =516831 then 'NYAMUS-O-0375'
+when patientidentifiertypeid=1085 and patientid =516858 then 'NYAMUS-O-0376'
+when patientidentifiertypeid=1085 and patientid =516885 then 'NYAMUS-O-0377'
+when patientidentifiertypeid=1085 and patientid =516707 then 'NYAMUS-O-0378'
+when patientidentifiertypeid=1085 and patientid =516865 then 'NYAMUS-O-0379'
+when patientidentifiertypeid=1085 and patientid =516934 then 'NYAMUS-O-0380'
+when patientidentifiertypeid=1085 and patientid =516774 then 'NYAMUS-O-0381'
+when patientidentifiertypeid=1085 and patientid =516892 then 'NYAMUS-O-0382'
+when patientidentifiertypeid=1085 and patientid =516920 then 'NYAMUS-O-0383'
+when patientidentifiertypeid=1085 and patientid =516954 then 'NYAMUS-O-0384'
+when patientidentifiertypeid=1085 and patientid =516967 then 'NYAMUS-O-0385'
+when patientidentifiertypeid=1085 and patientid =516986 then 'NYAMUS-O-0386'
+when patientidentifiertypeid=1085 and patientid =516994 then 'NYAMUS-O-0387'
+when patientidentifiertypeid=1085 and patientid =518211 then 'NYAMUS-O-0388'
+when patientidentifiertypeid=1085 and patientid =518332 then 'NYAMUS-O-0389'
+when patientidentifiertypeid=1085 and patientid =518441 then 'NYAMUS-O-0390'
+when patientidentifiertypeid=1085 and patientid =518532 then 'NYAMUS-O-0391'
+when patientidentifiertypeid=1085 and patientid =518856 then 'NYAMUS-O-0392'
+when patientidentifiertypeid=1085 and patientid =519040 then 'NYAMUS-O-0393'
+when patientidentifiertypeid=1085 and patientid =519531 then 'NYAMUS-O-0394'
+when patientidentifiertypeid=1085 and patientid =521874 then 'NYAMUS-O-0395'
+when patientidentifiertypeid=1085 and patientid =521896 then 'NYAMUS-O-0396'
+when patientidentifiertypeid=1085 and patientid =524691 then 'NYAMUS-O-0397'
+when patientidentifiertypeid=1085 and patientid =525663 then 'NYAMUS-O-0398'
+when patientidentifiertypeid=1085 and patientid =525787 then 'NYAMUS-O-0399'
+when patientidentifiertypeid=1085 and patientid =524181 then 'NYAMUS-O-0400'
+when patientidentifiertypeid=1085 and patientid =518581 then 'NYAMUS-O-0401'
+when patientidentifiertypeid=1085 and patientid =518639 then 'NYAMUS-O-0402'
+when patientidentifiertypeid=1085 and patientid =518758 then 'NYAMUS-O-0403'
+when patientidentifiertypeid=1085 and patientid =518773 then 'NYAMUS-O-0404'
+when patientidentifiertypeid=1085 and patientid =519080 then 'NYAMUS-O-0405'
+when patientidentifiertypeid=1085 and patientid =522277 then 'NYAMUS-O-0406'
+when patientidentifiertypeid=1085 and patientid =522415 then 'NYAMUS-O-0407'
+when patientidentifiertypeid=1085 and patientid =522736 then 'NYAMUS-O-0408'
+when patientidentifiertypeid=1085 and patientid =518929 then 'NYAMUS-O-0409'
+when patientidentifiertypeid=1085 and patientid =520665 then 'NYAMUS-O-0410'
+when patientidentifiertypeid=1085 and patientid =521106 then 'NYAMUS-O-0411'
+when patientidentifiertypeid=1085 and patientid =525800 then 'NYAMUS-O-0412'
+when patientidentifiertypeid=1085 and patientid =521755 then 'NYAMUS-O-0413'
+when patientidentifiertypeid=1085 and patientid =519270 then 'NYAMUS-O-0414'
+when patientidentifiertypeid=1085 and patientid =521390 then 'NYAMUS-O-0415'
+when patientidentifiertypeid=1085 and patientid =522289 then 'NYAMUS-O-0416'
+when patientidentifiertypeid=1085 and patientid =522572 then 'NYAMUS-O-0417'
+when patientidentifiertypeid=1085 and patientid =523216 then 'NYAMUS-O-0418'
+when patientidentifiertypeid=1085 and patientid =519218 then 'NYAMUS-O-0419'
+when patientidentifiertypeid=1085 and patientid =521609 then 'NYAMUS-O-0420'
+when patientidentifiertypeid=1085 and patientid =519729 then 'NYAMUS-O-0421'
+when patientidentifiertypeid=1085 and patientid =521283 then 'NYAMUS-O-0422'
+when patientidentifiertypeid=1085 and patientid =521296 then 'NYAMUS-O-0423'
+when patientidentifiertypeid=1085 and patientid =521500 then 'NYAMUS-O-0424'
+when patientidentifiertypeid=1085 and patientid =521649 then 'NYAMUS-O-0425'
+when patientidentifiertypeid=1085 and patientid =522034 then 'NYAMUS-O-0426'
+when patientidentifiertypeid=1085 and patientid =522040 then 'NYAMUS-O-0427'
+when patientidentifiertypeid=1085 and patientid =522165 then 'NYAMUS-O-0428'
+when patientidentifiertypeid=1085 and patientid =522697 then 'NYAMUS-O-0429'
+when patientidentifiertypeid=1085 and patientid =522903 then 'NYAMUS-O-0430'
+when patientidentifiertypeid=1085 and patientid =522998 then 'NYAMUS-O-0431'
+when patientidentifiertypeid=1085 and patientid =523110 then 'NYAMUS-O-0432'
+when patientidentifiertypeid=1085 and patientid =526309 then 'NYAMUS-O-0433'
+when patientidentifiertypeid=1085 and patientid =523231 then 'NYAMUS-O-0434'
+when patientidentifiertypeid=1085 and patientid =523335 then 'NYAMUS-O-0435'
+when patientidentifiertypeid=1085 and patientid =523411 then 'NYAMUS-O-0436'
+when patientidentifiertypeid=1085 and patientid =523442 then 'NYAMUS-O-0437'
+when patientidentifiertypeid=1085 and patientid =523548 then 'NYAMUS-O-0438'
+when patientidentifiertypeid=1085 and patientid =523848 then 'NYAMUS-O-0439'
+when patientidentifiertypeid=1085 and patientid =524074 then 'NYAMUS-O-0440'
+when patientidentifiertypeid=1085 and patientid =524452 then 'NYAMUS-O-0441'
+when patientidentifiertypeid=1085 and patientid =524829 then 'NYAMUS-O-0442'
+when patientidentifiertypeid=1085 and patientid =525075 then 'NYAMUS-O-0443'
+when patientidentifiertypeid=1085 and patientid =523665 then 'NYAMUS-O-0444'
+when patientidentifiertypeid=1085 and patientid =524316 then 'NYAMUS-O-0445'
+when patientidentifiertypeid=1085 and patientid =525397 then 'NYAMUS-O-0446'
+when patientidentifiertypeid=1085 and patientid =523817 then 'NYAMUS-O-0447'
+when patientidentifiertypeid=1085 and patientid =524587 then 'NYAMUS-O-0448'
+when patientidentifiertypeid=1085 and patientid =526071 then 'NYAMUS-O-0449'
+when patientidentifiertypeid=1085 and patientid =526191 then 'NYAMUS-O-0450'
+when patientidentifiertypeid=1085 and patientid =523954 then 'NYAMUS-O-0451'
+when patientidentifiertypeid=1085 and patientid =524017 then 'NYAMUS-O-0452'
+when patientidentifiertypeid=1085 and patientid =524850 then 'NYAMUS-O-0453'
+when patientidentifiertypeid=1085 and patientid =524960 then 'NYAMUS-O-0454'
+when patientidentifiertypeid=1085 and patientid =525020 then 'NYAMUS-O-0455'
+when patientidentifiertypeid=1085 and patientid =525207 then 'NYAMUS-O-0456'
+when patientidentifiertypeid=1085 and patientid =525919 then 'NYAMUS-O-0457'
+when patientidentifiertypeid=1085 and patientid =524306 then 'NYAMUS-O-0458'
+when patientidentifiertypeid=1085 and patientid =525367 then 'NYAMUS-O-0459'
+when patientidentifiertypeid=1085 and patientid =525516 then 'NYAMUS-O-0460'
+when patientidentifiertypeid=1085 and patientid =525708 then 'NYAMUS-O-0461'
+when patientidentifiertypeid=1085 and patientid =525940 then 'NYAMUS-O-0462'
+when patientidentifiertypeid=1085 and patientid =526129 then 'NYAMUS-O-0463'
+when patientidentifiertypeid=1085 and patientid =526388 then 'NYAMUS-O-0464'
+when patientidentifiertypeid=1085 and patientid =526457 then 'NYAMUS-O-0465'
+when patientidentifiertypeid=1085 and patientid =530539 then 'NYAMUS-O-0466'
+when patientidentifiertypeid=1085 and patientid =530881 then 'NYAMUS-O-0467'
+when patientidentifiertypeid=1085 and patientid =534342 then 'NYAMUS-O-0468'
+when patientidentifiertypeid=1085 and patientid =531510 then 'NYAMUS-O-0469'
+when patientidentifiertypeid=1085 and patientid =531663 then 'NYAMUS-O-0470'
+when patientidentifiertypeid=1085 and patientid =533399 then 'NYAMUS-O-0471'
+when patientidentifiertypeid=1085 and patientid =533614 then 'NYAMUS-O-0472'
+when patientidentifiertypeid=1085 and patientid =533749 then 'NYAMUS-O-0473'
+when patientidentifiertypeid=1085 and patientid =534200 then 'NYAMUS-O-0474'
+when patientidentifiertypeid=1085 and patientid =534460 then 'NYAMUS-O-0475'
+when patientidentifiertypeid=1085 and patientid =534616 then 'NYAMUS-O-0476'
+when patientidentifiertypeid=1085 and patientid =531202 then 'NYAMUS-O-0477'
+when patientidentifiertypeid=1085 and patientid =531755 then 'NYAMUS-O-0478'
+when patientidentifiertypeid=1085 and patientid =533214 then 'NYAMUS-O-0479'
+when patientidentifiertypeid=1085 and patientid =533596 then 'NYAMUS-O-0480'
+when patientidentifiertypeid=1085 and patientid =533020 then 'NYAMUS-O-0481'
+when patientidentifiertypeid=1085 and patientid =533499 then 'NYAMUS-O-0482'
+when patientidentifiertypeid=1085 and patientid =533887 then 'NYAMUS-O-0483'
+when patientidentifiertypeid=1085 and patientid =533975 then 'NYAMUS-O-0484'
+when patientidentifiertypeid=1085 and patientid =534071 then 'NYAMUS-O-0485'
+when patientidentifiertypeid=1085 and patientid =535837 then 'NYAMUS-O-0486'
+when patientidentifiertypeid=1085 and patientid =533142 then 'NYAMUS-O-0487'
+when patientidentifiertypeid=1085 and patientid =533317 then 'NYAMUS-O-0488'
+when patientidentifiertypeid=1085 and patientid =533335 then 'NYAMUS-O-0489'
+when patientidentifiertypeid=1085 and patientid =533447 then 'NYAMUS-O-0490'
+when patientidentifiertypeid=1085 and patientid =533852 then 'NYAMUS-O-0491'
+when patientidentifiertypeid=1085 and patientid =534038 then 'NYAMUS-O-0492'
+when patientidentifiertypeid=1085 and patientid =534311 then 'NYAMUS-O-0493'
+when patientidentifiertypeid=1085 and patientid =534431 then 'NYAMUS-O-0494'
+when patientidentifiertypeid=1085 and patientid =534560 then 'NYAMUS-O-0495'
+when patientidentifiertypeid=1085 and patientid =535613 then 'NYAMUS-O-0496'
+when patientidentifiertypeid=1085 and patientid =535948 then 'NYAMUS-O-0497'
+when patientidentifiertypeid=1085 and patientid =536187 then 'NYAMUS-O-0498'
+when patientidentifiertypeid=1085 and patientid =538196 then 'NYAMUS-O-0499'
+when patientidentifiertypeid=1085 and patientid =539552 then 'NYAMUS-O-0500'
+when patientidentifiertypeid=1085 and patientid =539578 then 'NYAMUS-O-0501'
+when patientidentifiertypeid=1085 and patientid =535787 then 'NYAMUS-O-0502'
+when patientidentifiertypeid=1085 and patientid =536128 then 'NYAMUS-O-0503'
+when patientidentifiertypeid=1085 and patientid =536348 then 'NYAMUS-O-0504'
+when patientidentifiertypeid=1085 and patientid =536360 then 'NYAMUS-O-0505'
+when patientidentifiertypeid=1085 and patientid =536786 then 'NYAMUS-O-0506'
+when patientidentifiertypeid=1085 and patientid =537189 then 'NYAMUS-O-0507'
+when patientidentifiertypeid=1085 and patientid =537237 then 'NYAMUS-O-0508'
+when patientidentifiertypeid=1085 and patientid =537685 then 'NYAMUS-O-0509'
+when patientidentifiertypeid=1085 and patientid =537854 then 'NYAMUS-O-0510'
+when patientidentifiertypeid=1085 and patientid =537921 then 'NYAMUS-O-0511'
+when patientidentifiertypeid=1085 and patientid =538048 then 'NYAMUS-O-0512'
+when patientidentifiertypeid=1085 and patientid =538252 then 'NYAMUS-O-0513'
+when patientidentifiertypeid=1085 and patientid =538456 then 'NYAMUS-O-0514'
+when patientidentifiertypeid=1085 and patientid =539214 then 'NYAMUS-O-0515'
+when patientidentifiertypeid=1085 and patientid =539389 then 'NYAMUS-O-0516'
+when patientidentifiertypeid=1085 and patientid =539527 then 'NYAMUS-O-0517'
+when patientidentifiertypeid=1085 and patientid =539538 then 'NYAMUS-O-0518'
+when patientidentifiertypeid=1085 and patientid =539608 then 'NYAMUS-O-0519'
+when patientidentifiertypeid=1085 and patientid =536492 then 'NYAMUS-O-0520'
+when patientidentifiertypeid=1085 and patientid =536550 then 'NYAMUS-O-0521'
+when patientidentifiertypeid=1085 and patientid =536644 then 'NYAMUS-O-0522'
+when patientidentifiertypeid=1085 and patientid =536800 then 'NYAMUS-O-0523'
+when patientidentifiertypeid=1085 and patientid =537004 then 'NYAMUS-O-0524'
+when patientidentifiertypeid=1085 and patientid =537040 then 'NYAMUS-O-0525'
+when patientidentifiertypeid=1085 and patientid =537374 then 'NYAMUS-O-0526'
+when patientidentifiertypeid=1085 and patientid =537393 then 'NYAMUS-O-0527'
+when patientidentifiertypeid=1085 and patientid =537506 then 'NYAMUS-O-0528'
+when patientidentifiertypeid=1085 and patientid =538389 then 'NYAMUS-O-0529'
+when patientidentifiertypeid=1085 and patientid =538526 then 'NYAMUS-O-0530'
+when patientidentifiertypeid=1085 and patientid =538657 then 'NYAMUS-O-0531'
+when patientidentifiertypeid=1085 and patientid =539177 then 'NYAMUS-O-0532'
+when patientidentifiertypeid=1085 and patientid =539249 then 'NYAMUS-O-0533'
+when patientidentifiertypeid=1085 and patientid =539348 then 'NYAMUS-O-0534'
+when patientidentifiertypeid=1085 and patientid =537518 then 'NYAMUS-O-0535'
+when patientidentifiertypeid=1085 and patientid =537725 then 'NYAMUS-O-0536'
+when patientidentifiertypeid=1085 and patientid =537806 then 'NYAMUS-O-0537'
+when patientidentifiertypeid=1085 and patientid =537989 then 'NYAMUS-O-0538'
+when patientidentifiertypeid=1085 and patientid =538110 then 'NYAMUS-O-0539'
+when patientidentifiertypeid=1085 and patientid =538124 then 'NYAMUS-O-0540'
+when patientidentifiertypeid=1085 and patientid =538183 then 'NYAMUS-O-0541'
+when patientidentifiertypeid=1085 and patientid =538320 then 'NYAMUS-O-0542'
+when patientidentifiertypeid=1085 and patientid =538596 then 'NYAMUS-O-0543'
+when patientidentifiertypeid=1085 and patientid =538715 then 'NYAMUS-O-0544'
+when patientidentifiertypeid=1085 and patientid =538776 then 'NYAMUS-O-0545'
+when patientidentifiertypeid=1085 and patientid =539005 then 'NYAMUS-O-0546'
+when patientidentifiertypeid=1085 and patientid =539013 then 'NYAMUS-O-0547'
+when patientidentifiertypeid=1085 and patientid =539029 then 'NYAMUS-O-0548'
+when patientidentifiertypeid=1085 and patientid =539039 then 'NYAMUS-O-0549'
+when patientidentifiertypeid=1085 and patientid =539054 then 'NYAMUS-O-0550'
+when patientidentifiertypeid=1085 and patientid =539127 then 'NYAMUS-O-0551'
+when patientidentifiertypeid=1085 and patientid =539146 then 'NYAMUS-O-0552'
+when patientidentifiertypeid=1085 and patientid =539155 then 'NYAMUS-O-0553'
+when patientidentifiertypeid=1085 and patientid =539184 then 'NYAMUS-O-0554'
+when patientidentifiertypeid=1085 and patientid =539204 then 'NYAMUS-O-0555'
+when patientidentifiertypeid=1085 and patientid =539238 then 'NYAMUS-O-0556'
+when patientidentifiertypeid=1085 and patientid =539272 then 'NYAMUS-O-0557'
+when patientidentifiertypeid=1085 and patientid =539279 then 'NYAMUS-O-0558'
+when patientidentifiertypeid=1085 and patientid =539311 then 'NYAMUS-O-0559'
+when patientidentifiertypeid=1085 and patientid =539322 then 'NYAMUS-O-0560'
+when patientidentifiertypeid=1085 and patientid =539376 then 'NYAMUS-O-0561'
+when patientidentifiertypeid=1085 and patientid =539424 then 'NYAMUS-O-0562'
+when patientidentifiertypeid=1085 and patientid =539437 then 'NYAMUS-O-0563'
+when patientidentifiertypeid=1085 and patientid =539459 then 'NYAMUS-O-0564'
+when patientidentifiertypeid=1085 and patientid =539468 then 'NYAMUS-O-0565'
+when patientidentifiertypeid=1085 and patientid =539489 then 'NYAMUS-O-0566'
+when patientidentifiertypeid=1085 and patientid =539501 then 'NYAMUS-O-0567'
+when patientidentifiertypeid=1085 and patientid =539514 then 'NYAMUS-O-0568'
+when patientidentifiertypeid=1085 and patientid =539560 then 'NYAMUS-O-0569'
+when patientidentifiertypeid=1085 and patientid =539569 then 'NYAMUS-O-0570'
+when patientidentifiertypeid=1085 and patientid =539599 then 'NYAMUS-O-0571'
+when patientidentifiertypeid=1085 and patientid =539625 then 'NYAMUS-O-0572'
+when patientidentifiertypeid=1085 and patientid =539633 then 'NYAMUS-O-0573'
+when patientidentifiertypeid=1085 and patientid =539653 then 'NYAMUS-O-0574'
+when patientidentifiertypeid=1085 and patientid =539671 then 'NYAMUS-O-0575'
+when patientidentifiertypeid=1085 and patientid =539688 then 'NYAMUS-O-0576'
+when patientidentifiertypeid=1085 and patientid =539749 then 'NYAMUS-O-0577'
+when patientidentifiertypeid=1085 and patientid =539761 then 'NYAMUS-O-0578'
+when patientidentifiertypeid=1085 and patientid =539783 then 'NYAMUS-O-0579'
+when patientidentifiertypeid=1085 and patientid =539806 then 'NYAMUS-O-0580'
+when patientidentifiertypeid=1085 and patientid =539830 then 'NYAMUS-O-0581'
+when patientidentifiertypeid=1085 and patientid =539842 then 'NYAMUS-O-0582'
+when patientidentifiertypeid=1085 and patientid =539850 then 'NYAMUS-O-0583'
+when patientidentifiertypeid=1085 and patientid =539863 then 'NYAMUS-O-0584'
+when patientidentifiertypeid=1085 and patientid =539870 then 'NYAMUS-O-0585'
+when patientidentifiertypeid=1085 and patientid =539889 then 'NYAMUS-O-0586'
+when patientidentifiertypeid=1085 and patientid =539896 then 'NYAMUS-O-0587'
+when patientidentifiertypeid=1085 and patientid =539914 then 'NYAMUS-O-0588'
+when patientidentifiertypeid=1085 and patientid =539922 then 'NYAMUS-O-0589'
+when patientidentifiertypeid=1085 and patientid =539943 then 'NYAMUS-O-0590'
+when patientidentifiertypeid=1085 and patientid =539961 then 'NYAMUS-O-0591'
+when patientidentifiertypeid=1085 and patientid =539976 then 'NYAMUS-O-0592'
+when patientidentifiertypeid=1085 and patientid =539997 then 'NYAMUS-O-0593'
+when patientidentifiertypeid=1085 and patientid =540007 then 'NYAMUS-O-0594'
+when patientidentifiertypeid=1085 and patientid =540060 then 'NYAMUS-O-0595'
+when patientidentifiertypeid=1085 and patientid =540068 then 'NYAMUS-O-0596'
+when patientidentifiertypeid=1085 and patientid =540033 then 'NYAMUS-O-0597'
+when patientidentifiertypeid=1085 and patientid =540040 then 'NYAMUS-O-0598'
+when patientidentifiertypeid=1085 and patientid =540285 then 'NYAMUS-O-0599'
+when patientidentifiertypeid=1085 and patientid =540405 then 'NYAMUS-O-0600'
+when patientidentifiertypeid=1085 and patientid =540296 then 'NYAMUS-O-0601'
+when patientidentifiertypeid=1085 and patientid =540313 then 'NYAMUS-O-0602'
+when patientidentifiertypeid=1085 and patientid =540325 then 'NYAMUS-O-0603'
+when patientidentifiertypeid=1085 and patientid =540337 then 'NYAMUS-O-0604'
+when patientidentifiertypeid=1085 and patientid =540348 then 'NYAMUS-O-0605'
+when patientidentifiertypeid=1085 and patientid =540364 then 'NYAMUS-O-0606'
+when patientidentifiertypeid=1085 and patientid =540377 then 'NYAMUS-O-0607'
+when patientidentifiertypeid=1085 and patientid =540392 then 'NYAMUS-O-0608'
+when patientidentifiertypeid=1085 and patientid =540414 then 'NYAMUS-O-0609'
+when patientidentifiertypeid=1085 and patientid =540431 then 'NYAMUS-O-0610'
+when patientidentifiertypeid=1085 and patientid =540467 then 'NYAMUS-O-0611'
+when patientidentifiertypeid=1085 and patientid =540493 then 'NYAMUS-O-0612'
+when patientidentifiertypeid=1085 and patientid =540513 then 'NYAMUS-O-0613'
+when patientidentifiertypeid=1085 and patientid =540543 then 'NYAMUS-O-0614'
+when patientidentifiertypeid=1085 and patientid =542612 then 'NYAMUS-O-0615'
+when patientidentifiertypeid=1085 and patientid =544409 then 'NYAMUS-O-0616'
+when patientidentifiertypeid=1085 and patientid =545634 then 'NYAMUS-O-0617'
+when patientidentifiertypeid=1085 and patientid =547377 then 'NYAMUS-O-0618'
+when patientidentifiertypeid=1085 and patientid =547724 then 'NYAMUS-O-0619'
+when patientidentifiertypeid=1085 and patientid =548912 then 'NYAMUS-O-0620'
+when patientidentifiertypeid=1085 and patientid =549518 then 'NYAMUS-O-0621'
+when patientidentifiertypeid=1085 and patientid =541782 then 'NYAMUS-O-0622'
+when patientidentifiertypeid=1085 and patientid =541985 then 'NYAMUS-O-0623'
+when patientidentifiertypeid=1085 and patientid =542165 then 'NYAMUS-O-0624'
+when patientidentifiertypeid=1085 and patientid =542362 then 'NYAMUS-O-0625'
+when patientidentifiertypeid=1085 and patientid =542709 then 'NYAMUS-O-0626'
+when patientidentifiertypeid=1085 and patientid =542795 then 'NYAMUS-O-0627'
+when patientidentifiertypeid=1085 and patientid =542845 then 'NYAMUS-O-0628'
+when patientidentifiertypeid=1085 and patientid =543002 then 'NYAMUS-O-0629'
+when patientidentifiertypeid=1085 and patientid =543053 then 'NYAMUS-O-0630'
+when patientidentifiertypeid=1085 and patientid =543178 then 'NYAMUS-O-0631'
+when patientidentifiertypeid=1085 and patientid =543191 then 'NYAMUS-O-0632'
+when patientidentifiertypeid=1085 and patientid =543428 then 'NYAMUS-O-0633'
+when patientidentifiertypeid=1085 and patientid =543441 then 'NYAMUS-O-0634'
+when patientidentifiertypeid=1085 and patientid =543458 then 'NYAMUS-O-0635'
+when patientidentifiertypeid=1085 and patientid =546995 then 'NYAMUS-O-0636'
+when patientidentifiertypeid=1085 and patientid =544190 then 'NYAMUS-O-0637'
+when patientidentifiertypeid=1085 and patientid =544576 then 'NYAMUS-O-0638'
+when patientidentifiertypeid=1085 and patientid =544831 then 'NYAMUS-O-0639'
+when patientidentifiertypeid=1085 and patientid =543889 then 'NYAMUS-O-0640'
+when patientidentifiertypeid=1085 and patientid =546632 then 'NYAMUS-O-0641'
+when patientidentifiertypeid=1085 and patientid =547158 then 'NYAMUS-O-0642'
+when patientidentifiertypeid=1085 and patientid =543700 then 'NYAMUS-O-0643'
+when patientidentifiertypeid=1085 and patientid =545909 then 'NYAMUS-O-0644'
+when patientidentifiertypeid=1085 and patientid =545937 then 'NYAMUS-O-0645'
+when patientidentifiertypeid=1085 and patientid =546872 then 'NYAMUS-O-0646'
+when patientidentifiertypeid=1085 and patientid =544077 then 'NYAMUS-O-0647'
+when patientidentifiertypeid=1085 and patientid =544165 then 'NYAMUS-O-0648'
+when patientidentifiertypeid=1085 and patientid =544296 then 'NYAMUS-O-0649'
+when patientidentifiertypeid=1085 and patientid =543829 then 'NYAMUS-O-0650'
+when patientidentifiertypeid=1085 and patientid =544335 then 'NYAMUS-O-0651'
+when patientidentifiertypeid=1085 and patientid =544932 then 'NYAMUS-O-0652'
+when patientidentifiertypeid=1085 and patientid =545096 then 'NYAMUS-O-0653'
+when patientidentifiertypeid=1085 and patientid =548884 then 'NYAMUS-O-0654'
+when patientidentifiertypeid=1085 and patientid =548987 then 'NYAMUS-O-0655'
+when patientidentifiertypeid=1085 and patientid =549914 then 'NYAMUS-O-0656'
+when patientidentifiertypeid=1085 and patientid =543930 then 'NYAMUS-O-0657'
+when patientidentifiertypeid=1085 and patientid =544098 then 'NYAMUS-O-0658'
+when patientidentifiertypeid=1085 and patientid =544641 then 'NYAMUS-O-0659'
+when patientidentifiertypeid=1085 and patientid =544704 then 'NYAMUS-O-0660'
+when patientidentifiertypeid=1085 and patientid =545823 then 'NYAMUS-O-0661'
+when patientidentifiertypeid=1085 and patientid =547560 then 'NYAMUS-O-0662'
+when patientidentifiertypeid=1085 and patientid =548164 then 'NYAMUS-O-0663'
+when patientidentifiertypeid=1085 and patientid =549120 then 'NYAMUS-O-0664'
+when patientidentifiertypeid=1085 and patientid =549480 then 'NYAMUS-O-0665'
+when patientidentifiertypeid=1085 and patientid =546954 then 'NYAMUS-O-0666'
+when patientidentifiertypeid=1085 and patientid =544446 then 'NYAMUS-O-0667'
+when patientidentifiertypeid=1085 and patientid =549827 then 'NYAMUS-O-0668'
+when patientidentifiertypeid=1085 and patientid =553057 then 'NYAMUS-O-0669'
+when patientidentifiertypeid=1085 and patientid =553552 then 'NYAMUS-O-0670'
+when patientidentifiertypeid=1085 and patientid =544842 then 'NYAMUS-O-0671'
+when patientidentifiertypeid=1085 and patientid =545265 then 'NYAMUS-O-0672'
+when patientidentifiertypeid=1085 and patientid =545462 then 'NYAMUS-O-0673'
+when patientidentifiertypeid=1085 and patientid =550445 then 'NYAMUS-O-0674'
+when patientidentifiertypeid=1085 and patientid =545038 then 'NYAMUS-O-0675'
+when patientidentifiertypeid=1085 and patientid =545176 then 'NYAMUS-O-0676'
+when patientidentifiertypeid=1085 and patientid =545320 then 'NYAMUS-O-0677'
+when patientidentifiertypeid=1085 and patientid =545425 then 'NYAMUS-O-0678'
+when patientidentifiertypeid=1085 and patientid =546771 then 'NYAMUS-O-0679'
+when patientidentifiertypeid=1085 and patientid =547604 then 'NYAMUS-O-0680'
+when patientidentifiertypeid=1085 and patientid =548368 then 'NYAMUS-O-0681'
+when patientidentifiertypeid=1085 and patientid =548918 then 'NYAMUS-O-0682'
+when patientidentifiertypeid=1085 and patientid =545448 then 'NYAMUS-O-0683'
+when patientidentifiertypeid=1085 and patientid =545492 then 'NYAMUS-O-0684'
+when patientidentifiertypeid=1085 and patientid =545667 then 'NYAMUS-O-0685'
+when patientidentifiertypeid=1085 and patientid =545813 then 'NYAMUS-O-0686'
+when patientidentifiertypeid=1085 and patientid =545991 then 'NYAMUS-O-0687'
+when patientidentifiertypeid=1085 and patientid =546138 then 'NYAMUS-O-0688'
+when patientidentifiertypeid=1085 and patientid =546276 then 'NYAMUS-O-0689'
+when patientidentifiertypeid=1085 and patientid =546410 then 'NYAMUS-O-0690'
+when patientidentifiertypeid=1085 and patientid =546520 then 'NYAMUS-O-0691'
+when patientidentifiertypeid=1085 and patientid =546691 then 'NYAMUS-O-0692'
+when patientidentifiertypeid=1085 and patientid =547122 then 'NYAMUS-O-0693'
+when patientidentifiertypeid=1085 and patientid =547168 then 'NYAMUS-O-0694'
+when patientidentifiertypeid=1085 and patientid =547496 then 'NYAMUS-O-0695'
+when patientidentifiertypeid=1085 and patientid =547686 then 'NYAMUS-O-0696'
+when patientidentifiertypeid=1085 and patientid =547787 then 'NYAMUS-O-0697'
+when patientidentifiertypeid=1085 and patientid =547833 then 'NYAMUS-O-0698'
+when patientidentifiertypeid=1085 and patientid =548439 then 'NYAMUS-O-0699'
+when patientidentifiertypeid=1085 and patientid =547962 then 'NYAMUS-O-0700'
+when patientidentifiertypeid=1085 and patientid =547992 then 'NYAMUS-O-0701'
+when patientidentifiertypeid=1085 and patientid =549401 then 'NYAMUS-O-0702'
+when patientidentifiertypeid=1085 and patientid =549494 then 'NYAMUS-O-0703'
+when patientidentifiertypeid=1085 and patientid =549711 then 'NYAMUS-O-0704'
+when patientidentifiertypeid=1085 and patientid =548011 then 'NYAMUS-O-0705'
+when patientidentifiertypeid=1085 and patientid =548106 then 'NYAMUS-O-0706'
+when patientidentifiertypeid=1085 and patientid =550234 then 'NYAMUS-O-0707'
+when patientidentifiertypeid=1085 and patientid =548171 then 'NYAMUS-O-0708'
+when patientidentifiertypeid=1085 and patientid =549129 then 'NYAMUS-O-0709'
+when patientidentifiertypeid=1085 and patientid =549612 then 'NYAMUS-O-0710'
+when patientidentifiertypeid=1085 and patientid =549996 then 'NYAMUS-O-0711'
+when patientidentifiertypeid=1085 and patientid =548334 then 'NYAMUS-O-0712'
+when patientidentifiertypeid=1085 and patientid =550355 then 'NYAMUS-O-0713'
+when patientidentifiertypeid=1085 and patientid =550365 then 'NYAMUS-O-0714'
+when patientidentifiertypeid=1085 and patientid =550545 then 'NYAMUS-O-0715'
+when patientidentifiertypeid=1085 and patientid =548413 then 'NYAMUS-O-0716'
+when patientidentifiertypeid=1085 and patientid =549814 then 'NYAMUS-O-0717'
+when patientidentifiertypeid=1085 and patientid =548768 then 'NYAMUS-O-0718'
+when patientidentifiertypeid=1085 and patientid =548872 then 'NYAMUS-O-0719'
+when patientidentifiertypeid=1085 and patientid =549333 then 'NYAMUS-O-0720'
+when patientidentifiertypeid=1085 and patientid =549740 then 'NYAMUS-O-0721'
+when patientidentifiertypeid=1085 and patientid =549219 then 'NYAMUS-O-0722'
+when patientidentifiertypeid=1085 and patientid =549285 then 'NYAMUS-O-0723'
+when patientidentifiertypeid=1085 and patientid =550132 then 'NYAMUS-O-0724'
+when patientidentifiertypeid=1085 and patientid =549319 then 'NYAMUS-O-0725'
+when patientidentifiertypeid=1085 and patientid =549593 then 'NYAMUS-O-0726'
+when patientidentifiertypeid=1085 and patientid =549765 then 'NYAMUS-O-0727'
+when patientidentifiertypeid=1085 and patientid =550015 then 'NYAMUS-O-0728'
+when patientidentifiertypeid=1085 and patientid =550117 then 'NYAMUS-O-0729'
+when patientidentifiertypeid=1085 and patientid =550210 then 'NYAMUS-O-0730'
+when patientidentifiertypeid=1085 and patientid =550289 then 'NYAMUS-O-0731'
+when patientidentifiertypeid=1085 and patientid =550371 then 'NYAMUS-O-0732'
+when patientidentifiertypeid=1085 and patientid =550500 then 'NYAMUS-O-0733'
+when patientidentifiertypeid=1085 and patientid =551457 then 'NYAMUS-O-0734'
+when patientidentifiertypeid=1085 and patientid =551486 then 'NYAMUS-O-0735'
+when patientidentifiertypeid=1085 and patientid =551552 then 'NYAMUS-O-0736'
+when patientidentifiertypeid=1085 and patientid =551630 then 'NYAMUS-O-0737'
+when patientidentifiertypeid=1085 and patientid =551661 then 'NYAMUS-O-0738'
+when patientidentifiertypeid=1085 and patientid =551668 then 'NYAMUS-O-0739'
+when patientidentifiertypeid=1085 and patientid =551701 then 'NYAMUS-O-0740'
+when patientidentifiertypeid=1085 and patientid =551713 then 'NYAMUS-O-0741'
+when patientidentifiertypeid=1085 and patientid =551740 then 'NYAMUS-O-0742'
+when patientidentifiertypeid=1085 and patientid =551759 then 'NYAMUS-O-0743'
+when patientidentifiertypeid=1085 and patientid =551792 then 'NYAMUS-O-0744'
+when patientidentifiertypeid=1085 and patientid =551840 then 'NYAMUS-O-0745'
+when patientidentifiertypeid=1085 and patientid =551861 then 'NYAMUS-O-0746'
+when patientidentifiertypeid=1085 and patientid =551885 then 'NYAMUS-O-0747'
+when patientidentifiertypeid=1085 and patientid =551905 then 'NYAMUS-O-0748'
+when patientidentifiertypeid=1085 and patientid =551923 then 'NYAMUS-O-0749'
+when patientidentifiertypeid=1085 and patientid =551982 then 'NYAMUS-O-0750'
+when patientidentifiertypeid=1085 and patientid =552019 then 'NYAMUS-O-0751'
+when patientidentifiertypeid=1085 and patientid =552103 then 'NYAMUS-O-0752'
+when patientidentifiertypeid=1085 and patientid =552553 then 'NYAMUS-O-0753'
+when patientidentifiertypeid=1085 and patientid =552183 then 'NYAMUS-O-0754'
+when patientidentifiertypeid=1085 and patientid =552640 then 'NYAMUS-O-0755'
+when patientidentifiertypeid=1085 and patientid =552680 then 'NYAMUS-O-0756'
+when patientidentifiertypeid=1085 and patientid =552737 then 'NYAMUS-O-0757'
+when patientidentifiertypeid=1085 and patientid =552238 then 'NYAMUS-O-0758'
+when patientidentifiertypeid=1085 and patientid =552269 then 'NYAMUS-O-0759'
+when patientidentifiertypeid=1085 and patientid =553245 then 'NYAMUS-O-0760'
+when patientidentifiertypeid=1085 and patientid =553334 then 'NYAMUS-O-0761'
+when patientidentifiertypeid=1085 and patientid =552378 then 'NYAMUS-O-0762'
+when patientidentifiertypeid=1085 and patientid =552703 then 'NYAMUS-O-0763'
+when patientidentifiertypeid=1085 and patientid =552488 then 'NYAMUS-O-0764'
+when patientidentifiertypeid=1085 and patientid =552755 then 'NYAMUS-O-0765'
+when patientidentifiertypeid=1085 and patientid =552821 then 'NYAMUS-O-0766'
+when patientidentifiertypeid=1085 and patientid =552879 then 'NYAMUS-O-0767'
+when patientidentifiertypeid=1085 and patientid =552948 then 'NYAMUS-O-0768'
+when patientidentifiertypeid=1085 and patientid =553007 then 'NYAMUS-O-0769'
+when patientidentifiertypeid=1085 and patientid =553103 then 'NYAMUS-O-0770'
+when patientidentifiertypeid=1085 and patientid =553845 then 'NYAMUS-O-0771'
+when patientidentifiertypeid=1085 and patientid =554089 then 'NYAMUS-O-0772'
+when patientidentifiertypeid=1085 and patientid =554149 then 'NYAMUS-O-0773'
+when patientidentifiertypeid=1085 and patientid =554497 then 'NYAMUS-O-0774'
+when patientidentifiertypeid=1085 and patientid =554545 then 'NYAMUS-O-0775'
+when patientidentifiertypeid=1085 and patientid =553291 then 'NYAMUS-O-0776'
+when patientidentifiertypeid=1085 and patientid =553441 then 'NYAMUS-O-0777'
+when patientidentifiertypeid=1085 and patientid =553733 then 'NYAMUS-O-0778'
+when patientidentifiertypeid=1085 and patientid =553891 then 'NYAMUS-O-0779'
+when patientidentifiertypeid=1085 and patientid =553954 then 'NYAMUS-O-0780'
+when patientidentifiertypeid=1085 and patientid =554011 then 'NYAMUS-O-0781'
+when patientidentifiertypeid=1085 and patientid =554202 then 'NYAMUS-O-0782'
+when patientidentifiertypeid=1085 and patientid =554264 then 'NYAMUS-O-0783'
+when patientidentifiertypeid=1085 and patientid =554332 then 'NYAMUS-O-0784'
+when patientidentifiertypeid=1085 and patientid =554444 then 'NYAMUS-O-0785'
+when patientidentifiertypeid=1085 and patientid =554625 then 'NYAMUS-O-0786'
+when patientidentifiertypeid=1085 and patientid =554647 then 'NYAMUS-O-0787'
+when patientidentifiertypeid=1085 and patientid =555131 then 'NYAMUS-O-0788'
+when patientidentifiertypeid=1085 and patientid =554615 then 'NYAMUS-O-0789'
+when patientidentifiertypeid=1085 and patientid =554697 then 'NYAMUS-O-0790'
+when patientidentifiertypeid=1085 and patientid =554711 then 'NYAMUS-O-0791'
+when patientidentifiertypeid=1085 and patientid =554725 then 'NYAMUS-O-0792'
+when patientidentifiertypeid=1085 and patientid =554731 then 'NYAMUS-O-0793'
+when patientidentifiertypeid=1085 and patientid =554749 then 'NYAMUS-O-0794'
+when patientidentifiertypeid=1085 and patientid =554830 then 'NYAMUS-O-0795'
+when patientidentifiertypeid=1085 and patientid =555004 then 'NYAMUS-O-0796'
+when patientidentifiertypeid=1085 and patientid =555225 then 'NYAMUS-O-0797'
+when patientidentifiertypeid=1085 and patientid =557527 then 'NYAMUS-O-0798'
+when patientidentifiertypeid=1085 and patientid =558387 then 'NYAMUS-O-0799'
+when patientidentifiertypeid=1085 and patientid =561067 then 'NYAMUS-O-0800'
+when patientidentifiertypeid=1085 and patientid =563765 then 'NYAMUS-O-0801'
+when patientidentifiertypeid=1085 and patientid =555268 then 'NYAMUS-O-0802'
+when patientidentifiertypeid=1085 and patientid =555293 then 'NYAMUS-O-0803'
+when patientidentifiertypeid=1085 and patientid =555343 then 'NYAMUS-O-0804'
+when patientidentifiertypeid=1085 and patientid =555402 then 'NYAMUS-O-0805'
+when patientidentifiertypeid=1085 and patientid =555433 then 'NYAMUS-O-0806'
+when patientidentifiertypeid=1085 and patientid =555703 then 'NYAMUS-O-0807'
+when patientidentifiertypeid=1085 and patientid =555779 then 'NYAMUS-O-0808'
+when patientidentifiertypeid=1085 and patientid =555838 then 'NYAMUS-O-0809'
+when patientidentifiertypeid=1085 and patientid =555899 then 'NYAMUS-O-0810'
+when patientidentifiertypeid=1085 and patientid =555962 then 'NYAMUS-O-0811'
+when patientidentifiertypeid=1085 and patientid =556005 then 'NYAMUS-O-0812'
+when patientidentifiertypeid=1085 and patientid =556095 then 'NYAMUS-O-0813'
+when patientidentifiertypeid=1085 and patientid =556122 then 'NYAMUS-O-0814'
+when patientidentifiertypeid=1085 and patientid =556191 then 'NYAMUS-O-0815'
+when patientidentifiertypeid=1085 and patientid =556306 then 'NYAMUS-O-0816'
+when patientidentifiertypeid=1085 and patientid =556322 then 'NYAMUS-O-0817'
+when patientidentifiertypeid=1085 and patientid =556430 then 'NYAMUS-O-0818'
+when patientidentifiertypeid=1085 and patientid =559279 then 'NYAMUS-O-0819'
+when patientidentifiertypeid=1085 and patientid =562155 then 'NYAMUS-O-0820'
+when patientidentifiertypeid=1085 and patientid =562299 then 'NYAMUS-O-0821'
+when patientidentifiertypeid=1085 and patientid =563955 then 'NYAMUS-O-0822'
+when patientidentifiertypeid=1085 and patientid =557435 then 'NYAMUS-O-0823'
+when patientidentifiertypeid=1085 and patientid =558497 then 'NYAMUS-O-0824'
+when patientidentifiertypeid=1085 and patientid =556625 then 'NYAMUS-O-0825'
+when patientidentifiertypeid=1085 and patientid =558562 then 'NYAMUS-O-0826'
+when patientidentifiertypeid=1085 and patientid =558792 then 'NYAMUS-O-0827'
+when patientidentifiertypeid=1085 and patientid =557795 then 'NYAMUS-O-0828'
+when patientidentifiertypeid=1085 and patientid =560521 then 'NYAMUS-O-0829'
+when patientidentifiertypeid=1085 and patientid =556784 then 'NYAMUS-O-0830'
+when patientidentifiertypeid=1085 and patientid =561198 then 'NYAMUS-O-0831'
+when patientidentifiertypeid=1085 and patientid =562871 then 'NYAMUS-O-0832'
+when patientidentifiertypeid=1085 and patientid =556886 then 'NYAMUS-O-0833'
+when patientidentifiertypeid=1085 and patientid =557866 then 'NYAMUS-O-0834'
+when patientidentifiertypeid=1085 and patientid =558926 then 'NYAMUS-O-0835'
+when patientidentifiertypeid=1085 and patientid =557058 then 'NYAMUS-O-0836'
+when patientidentifiertypeid=1085 and patientid =557259 then 'NYAMUS-O-0837'
+when patientidentifiertypeid=1085 and patientid =558146 then 'NYAMUS-O-0838'
+when patientidentifiertypeid=1085 and patientid =558488 then 'NYAMUS-O-0839'
+when patientidentifiertypeid=1085 and patientid =558589 then 'NYAMUS-O-0840'
+when patientidentifiertypeid=1085 and patientid =559599 then 'NYAMUS-O-0841'
+when patientidentifiertypeid=1085 and patientid =559746 then 'NYAMUS-O-0842'
+when patientidentifiertypeid=1085 and patientid =557395 then 'NYAMUS-O-0843'
+when patientidentifiertypeid=1085 and patientid =557615 then 'NYAMUS-O-0844'
+when patientidentifiertypeid=1085 and patientid =557634 then 'NYAMUS-O-0845'
+when patientidentifiertypeid=1085 and patientid =557759 then 'NYAMUS-O-0846'
+when patientidentifiertypeid=1085 and patientid =557961 then 'NYAMUS-O-0847'
+when patientidentifiertypeid=1085 and patientid =558685 then 'NYAMUS-O-0848'
+when patientidentifiertypeid=1085 and patientid =557998 then 'NYAMUS-O-0849'
+when patientidentifiertypeid=1085 and patientid =558700 then 'NYAMUS-O-0850'
+when patientidentifiertypeid=1085 and patientid =558354 then 'NYAMUS-O-0851'
+when patientidentifiertypeid=1085 and patientid =558818 then 'NYAMUS-O-0852'
+when patientidentifiertypeid=1085 and patientid =559245 then 'NYAMUS-O-0853'
+when patientidentifiertypeid=1085 and patientid =558908 then 'NYAMUS-O-0854'
+when patientidentifiertypeid=1085 and patientid =559029 then 'NYAMUS-O-0855'
+when patientidentifiertypeid=1085 and patientid =559633 then 'NYAMUS-O-0856'
+when patientidentifiertypeid=1085 and patientid =559920 then 'NYAMUS-O-0857'
+when patientidentifiertypeid=1085 and patientid =559041 then 'NYAMUS-O-0858'
+when patientidentifiertypeid=1085 and patientid =559150 then 'NYAMUS-O-0859'
+when patientidentifiertypeid=1085 and patientid =559356 then 'NYAMUS-O-0860'
+when patientidentifiertypeid=1085 and patientid =559470 then 'NYAMUS-O-0861'
+when patientidentifiertypeid=1085 and patientid =559506 then 'NYAMUS-O-0862'
+when patientidentifiertypeid=1085 and patientid =559782 then 'NYAMUS-O-0863'
+when patientidentifiertypeid=1085 and patientid =560072 then 'NYAMUS-O-0864'
+when patientidentifiertypeid=1085 and patientid =560144 then 'NYAMUS-O-0865'
+when patientidentifiertypeid=1085 and patientid =560351 then 'NYAMUS-O-0866'
+when patientidentifiertypeid=1085 and patientid =560414 then 'NYAMUS-O-0867'
+when patientidentifiertypeid=1085 and patientid =560497 then 'NYAMUS-O-0868'
+when patientidentifiertypeid=1085 and patientid =560690 then 'NYAMUS-O-0869'
+when patientidentifiertypeid=1085 and patientid =560717 then 'NYAMUS-O-0870'
+when patientidentifiertypeid=1085 and patientid =561731 then 'NYAMUS-O-0871'
+when patientidentifiertypeid=1085 and patientid =562613 then 'NYAMUS-O-0872'
+when patientidentifiertypeid=1085 and patientid =563075 then 'NYAMUS-O-0873'
+when patientidentifiertypeid=1085 and patientid =563569 then 'NYAMUS-O-0874'
+when patientidentifiertypeid=1085 and patientid =562588 then 'NYAMUS-O-0875'
+when patientidentifiertypeid=1085 and patientid =563056 then 'NYAMUS-O-0876'
+when patientidentifiertypeid=1085 and patientid =560856 then 'NYAMUS-O-0877'
+when patientidentifiertypeid=1085 and patientid =561326 then 'NYAMUS-O-0878'
+when patientidentifiertypeid=1085 and patientid =564420 then 'NYAMUS-O-0879'
+when patientidentifiertypeid=1085 and patientid =561034 then 'NYAMUS-O-0880'
+when patientidentifiertypeid=1085 and patientid =561608 then 'NYAMUS-O-0881'
+when patientidentifiertypeid=1085 and patientid =561829 then 'NYAMUS-O-0882'
+when patientidentifiertypeid=1085 and patientid =562432 then 'NYAMUS-O-0883'
+when patientidentifiertypeid=1085 and patientid =563015 then 'NYAMUS-O-0884'
+when patientidentifiertypeid=1085 and patientid =562037 then 'NYAMUS-O-0885'
+when patientidentifiertypeid=1085 and patientid =562364 then 'NYAMUS-O-0886'
+when patientidentifiertypeid=1085 and patientid =562767 then 'NYAMUS-O-0887'
+when patientidentifiertypeid=1085 and patientid =561457 then 'NYAMUS-O-0888'
+when patientidentifiertypeid=1085 and patientid =563157 then 'NYAMUS-O-0889'
+when patientidentifiertypeid=1085 and patientid =563981 then 'NYAMUS-O-0890'
+when patientidentifiertypeid=1085 and patientid =562177 then 'NYAMUS-O-0891'
+when patientidentifiertypeid=1085 and patientid =562778 then 'NYAMUS-O-0892'
+when patientidentifiertypeid=1085 and patientid =562905 then 'NYAMUS-O-0893'
+when patientidentifiertypeid=1085 and patientid =562974 then 'NYAMUS-O-0894'
+when patientidentifiertypeid=1085 and patientid =563246 then 'NYAMUS-O-0895'
+when patientidentifiertypeid=1085 and patientid =563486 then 'NYAMUS-O-0896'
+when patientidentifiertypeid=1085 and patientid =564229 then 'NYAMUS-O-0897'
+when patientidentifiertypeid=1085 and patientid =565588 then 'NYAMUS-O-0898'
+when patientidentifiertypeid=1085 and patientid =565703 then 'NYAMUS-O-0899'
+when patientidentifiertypeid=1085 and patientid =565771 then 'NYAMUS-O-0900'
+when patientidentifiertypeid=1085 and patientid =565824 then 'NYAMUS-O-0901'
+when patientidentifiertypeid=1085 and patientid =565951 then 'NYAMUS-O-0902'
+when patientidentifiertypeid=1085 and patientid =565987 then 'NYAMUS-O-0903'
+when patientidentifiertypeid=1085 and patientid =566500 then 'NYAMUS-O-0904'
+when patientidentifiertypeid=1085 and patientid =566169 then 'NYAMUS-O-0905'
+when patientidentifiertypeid=1085 and patientid =569196 then 'NYAMUS-O-0906'
+when patientidentifiertypeid=1085 and patientid =568093 then 'NYAMUS-O-0907'
+when patientidentifiertypeid=1085 and patientid =566343 then 'NYAMUS-O-0908'
+when patientidentifiertypeid=1085 and patientid =568596 then 'NYAMUS-O-0909'
+when patientidentifiertypeid=1085 and patientid =569264 then 'NYAMUS-O-0910'
+when patientidentifiertypeid=1085 and patientid =569686 then 'NYAMUS-O-0911'
+when patientidentifiertypeid=1085 and patientid =566443 then 'NYAMUS-O-0912'
+when patientidentifiertypeid=1085 and patientid =569079 then 'NYAMUS-O-0913'
+when patientidentifiertypeid=1085 and patientid =567290 then 'NYAMUS-O-0914'
+when patientidentifiertypeid=1085 and patientid =567358 then 'NYAMUS-O-0915'
+when patientidentifiertypeid=1085 and patientid =567507 then 'NYAMUS-O-0916'
+when patientidentifiertypeid=1085 and patientid =567669 then 'NYAMUS-O-0917'
+when patientidentifiertypeid=1085 and patientid =568212 then 'NYAMUS-O-0918'
+when patientidentifiertypeid=1085 and patientid =567953 then 'NYAMUS-O-0919'
+when patientidentifiertypeid=1085 and patientid =568726 then 'NYAMUS-O-0920'
+when patientidentifiertypeid=1085 and patientid =568837 then 'NYAMUS-O-0921'
+when patientidentifiertypeid=1085 and patientid =568959 then 'NYAMUS-O-0922'
+when patientidentifiertypeid=1085 and patientid =569678 then 'NYAMUS-O-0923'
+when patientidentifiertypeid=1085 and patientid =569694 then 'NYAMUS-O-0924'
+when patientidentifiertypeid=1085 and patientid =569703 then 'NYAMUS-O-0925'
+when patientidentifiertypeid=1085 and patientid =569715 then 'NYAMUS-O-0926'
+when patientidentifiertypeid=1085 and patientid =569729 then 'NYAMUS-O-0927'
+when patientidentifiertypeid=1085 and patientid =569739 then 'NYAMUS-O-0928'
+when patientidentifiertypeid=1085 and patientid =569752 then 'NYAMUS-O-0929'
+when patientidentifiertypeid=1085 and patientid =569768 then 'NYAMUS-O-0930'
+when patientidentifiertypeid=1085 and patientid =569792 then 'NYAMUS-O-0931'
+when patientidentifiertypeid=1085 and patientid =569814 then 'NYAMUS-O-0932'
+when patientidentifiertypeid=1085 and patientid =569840 then 'NYAMUS-O-0933'
+when patientidentifiertypeid=1085 and patientid =569860 then 'NYAMUS-O-0934'
+when patientidentifiertypeid=1085 and patientid =570591 then 'NYAMUS-O-0935'
+when patientidentifiertypeid=1085 and patientid =570655 then 'NYAMUS-O-0936'
+when patientidentifiertypeid=1085 and patientid =570686 then 'NYAMUS-O-0937'
+when patientidentifiertypeid=1085 and patientid =570704 then 'NYAMUS-O-0938'
+when patientidentifiertypeid=1085 and patientid =570766 then 'NYAMUS-O-0939'
+when patientidentifiertypeid=1085 and patientid =570778 then 'NYAMUS-O-0940'
+when patientidentifiertypeid=1085 and patientid =570838 then 'NYAMUS-O-0941'
+when patientidentifiertypeid=1085 and patientid =570869 then 'NYAMUS-O-0942'
+when patientidentifiertypeid=1085 and patientid =570894 then 'NYAMUS-O-0943'
+when patientidentifiertypeid=1085 and patientid =571014 then 'NYAMUS-O-0944'
+when patientidentifiertypeid=1085 and patientid =571025 then 'NYAMUS-O-0945'
+when patientidentifiertypeid=1085 and patientid =571160 then 'NYAMUS-O-0946'
+when patientidentifiertypeid=1085 and patientid =571166 then 'NYAMUS-O-0947'
+when patientidentifiertypeid=1085 and patientid =571207 then 'NYAMUS-O-0948'
+when patientidentifiertypeid=1085 and patientid =571320 then 'NYAMUS-O-0949'
+when patientidentifiertypeid=1085 and patientid =571360 then 'NYAMUS-O-0950'
+when patientidentifiertypeid=1085 and patientid =571469 then 'NYAMUS-O-0951'
+when patientidentifiertypeid=1085 and patientid =571535 then 'NYAMUS-O-0952'
+when patientidentifiertypeid=1085 and patientid =571622 then 'NYAMUS-O-0953'
+when patientidentifiertypeid=1085 and patientid =574002 then 'NYAMUS-O-0954'
+when patientidentifiertypeid=1085 and patientid =571693 then 'NYAMUS-O-0955'
+when patientidentifiertypeid=1085 and patientid =572133 then 'NYAMUS-O-0956'
+when patientidentifiertypeid=1085 and patientid =575713 then 'NYAMUS-O-0957'
+when patientidentifiertypeid=1085 and patientid =575066 then 'NYAMUS-O-0958'
+when patientidentifiertypeid=1085 and patientid =575548 then 'NYAMUS-O-0959'
+when patientidentifiertypeid=1085 and patientid =574159 then 'NYAMUS-O-0960'
+when patientidentifiertypeid=1085 and patientid =574998 then 'NYAMUS-O-0961'
+when patientidentifiertypeid=1085 and patientid =578570 then 'NYAMUS-O-0962'
+when patientidentifiertypeid=1085 and patientid =578875 then 'NYAMUS-O-0963'
+when patientidentifiertypeid=1085 and patientid =571794 then 'NYAMUS-O-0964'
+when patientidentifiertypeid=1085 and patientid =571851 then 'NYAMUS-O-0965'
+when patientidentifiertypeid=1085 and patientid =572571 then 'NYAMUS-O-0966'
+when patientidentifiertypeid=1085 and patientid =571891 then 'NYAMUS-O-0967'
+when patientidentifiertypeid=1085 and patientid =572406 then 'NYAMUS-O-0968'
+when patientidentifiertypeid=1085 and patientid =572926 then 'NYAMUS-O-0969'
+when patientidentifiertypeid=1085 and patientid =574444 then 'NYAMUS-O-0970'
+when patientidentifiertypeid=1085 and patientid =571982 then 'NYAMUS-O-0971'
+when patientidentifiertypeid=1085 and patientid =572007 then 'NYAMUS-O-0972'
+when patientidentifiertypeid=1085 and patientid =572603 then 'NYAMUS-O-0973'
+when patientidentifiertypeid=1085 and patientid =574390 then 'NYAMUS-O-0974'
+when patientidentifiertypeid=1085 and patientid =572022 then 'NYAMUS-O-0975'
+when patientidentifiertypeid=1085 and patientid =572117 then 'NYAMUS-O-0976'
+when patientidentifiertypeid=1085 and patientid =572145 then 'NYAMUS-O-0977'
+when patientidentifiertypeid=1085 and patientid =573722 then 'NYAMUS-O-0978'
+when patientidentifiertypeid=1085 and patientid =572255 then 'NYAMUS-O-0979'
+when patientidentifiertypeid=1085 and patientid =572281 then 'NYAMUS-O-0980'
+when patientidentifiertypeid=1085 and patientid =572760 then 'NYAMUS-O-0981'
+when patientidentifiertypeid=1085 and patientid =574078 then 'NYAMUS-O-0982'
+when patientidentifiertypeid=1085 and patientid =572430 then 'NYAMUS-O-0983'
+when patientidentifiertypeid=1085 and patientid =573606 then 'NYAMUS-O-0984'
+when patientidentifiertypeid=1085 and patientid =574235 then 'NYAMUS-O-0985'
+when patientidentifiertypeid=1085 and patientid =572951 then 'NYAMUS-O-0986'
+when patientidentifiertypeid=1085 and patientid =575148 then 'NYAMUS-O-0987'
+when patientidentifiertypeid=1085 and patientid =575492 then 'NYAMUS-O-0988'
+when patientidentifiertypeid=1085 and patientid =572639 then 'NYAMUS-O-0989'
+when patientidentifiertypeid=1085 and patientid =572785 then 'NYAMUS-O-0990'
+when patientidentifiertypeid=1085 and patientid =572794 then 'NYAMUS-O-0991'
+when patientidentifiertypeid=1085 and patientid =573233 then 'NYAMUS-O-0992'
+when patientidentifiertypeid=1085 and patientid =573219 then 'NYAMUS-O-0993'
+when patientidentifiertypeid=1085 and patientid =573541 then 'NYAMUS-O-0994'
+when patientidentifiertypeid=1085 and patientid =573786 then 'NYAMUS-O-0995'
+when patientidentifiertypeid=1085 and patientid =574680 then 'NYAMUS-O-0996'
+when patientidentifiertypeid=1085 and patientid =574541 then 'NYAMUS-O-0997'
+when patientidentifiertypeid=1085 and patientid =574716 then 'NYAMUS-O-0998'
+when patientidentifiertypeid=1085 and patientid =574869 then 'NYAMUS-O-0999'
+when patientidentifiertypeid=1085 and patientid =575210 then 'NYAMUS-O-1000'
+when patientidentifiertypeid=1085 and patientid =575427 then 'NYAMUS-O-1001'
+when patientidentifiertypeid=1085 and patientid =575819 then 'NYAMUS-O-1002'
+when patientidentifiertypeid=1085 and patientid =575972 then 'NYAMUS-O-1003'
+when patientidentifiertypeid=1085 and patientid =576032 then 'NYAMUS-O-1004'
+when patientidentifiertypeid=1085 and patientid =576370 then 'NYAMUS-O-1005'
+when patientidentifiertypeid=1085 and patientid =576636 then 'NYAMUS-O-1006'
+when patientidentifiertypeid=1085 and patientid =578143 then 'NYAMUS-O-1007'
+when patientidentifiertypeid=1085 and patientid =578345 then 'NYAMUS-O-1008'
+when patientidentifiertypeid=1085 and patientid =578552 then 'NYAMUS-O-1009'
+when patientidentifiertypeid=1085 and patientid =586406 then 'NYAMUS-O-1010'
+when patientidentifiertypeid=1085 and patientid =591630 then 'NYAMUS-O-1011'
+when patientidentifiertypeid=1085 and patientid =577908 then 'NYAMUS-O-1012'
+when patientidentifiertypeid=1085 and patientid =579171 then 'NYAMUS-O-1013'
+when patientidentifiertypeid=1085 and patientid =578191 then 'NYAMUS-O-1014'
+when patientidentifiertypeid=1085 and patientid =578745 then 'NYAMUS-O-1015'
+when patientidentifiertypeid=1085 and patientid =579586 then 'NYAMUS-O-1016'
+when patientidentifiertypeid=1085 and patientid =578994 then 'NYAMUS-O-1017'
+when patientidentifiertypeid=1085 and patientid =579285 then 'NYAMUS-O-1018'
+when patientidentifiertypeid=1085 and patientid =579928 then 'NYAMUS-O-1019'
+when patientidentifiertypeid=1085 and patientid =579535 then 'NYAMUS-O-1020'
+when patientidentifiertypeid=1085 and patientid =579771 then 'NYAMUS-O-1021'
+when patientidentifiertypeid=1085 and patientid =587112 then 'NYAMUS-O-1022'
+when patientidentifiertypeid=1085 and patientid =592104 then 'NYAMUS-O-1023'
+when patientidentifiertypeid=1085 and patientid =588170 then 'NYAMUS-O-1024'
+when patientidentifiertypeid=1085 and patientid =586105 then 'NYAMUS-O-1025'
+when patientidentifiertypeid=1085 and patientid =587135 then 'NYAMUS-O-1026'
+when patientidentifiertypeid=1085 and patientid =587453 then 'NYAMUS-O-1027'
+when patientidentifiertypeid=1085 and patientid =586261 then 'NYAMUS-O-1028'
+when patientidentifiertypeid=1085 and patientid =589744 then 'NYAMUS-O-1029'
+when patientidentifiertypeid=1085 and patientid =590720 then 'NYAMUS-O-1030'
+when patientidentifiertypeid=1085 and patientid =585870 then 'NYAMUS-O-1031'
+when patientidentifiertypeid=1085 and patientid =586218 then 'NYAMUS-O-1032'
+when patientidentifiertypeid=1085 and patientid =586544 then 'NYAMUS-O-1033'
+when patientidentifiertypeid=1085 and patientid =587334 then 'NYAMUS-O-1034'
+when patientidentifiertypeid=1085 and patientid =591341 then 'NYAMUS-O-1035'
+when patientidentifiertypeid=1085 and patientid =586032 then 'NYAMUS-O-1036'
+when patientidentifiertypeid=1085 and patientid =587554 then 'NYAMUS-O-1037'
+when patientidentifiertypeid=1085 and patientid =587844 then 'NYAMUS-O-1038'
+when patientidentifiertypeid=1085 and patientid =588019 then 'NYAMUS-O-1039'
+when patientidentifiertypeid=1085 and patientid =590222 then 'NYAMUS-O-1040'
+when patientidentifiertypeid=1085 and patientid =590598 then 'NYAMUS-O-1041'
+when patientidentifiertypeid=1085 and patientid =590984 then 'NYAMUS-O-1042'
+when patientidentifiertypeid=1085 and patientid =592798 then 'NYAMUS-O-1043'
+when patientidentifiertypeid=1085 and patientid =586571 then 'NYAMUS-O-1044'
+when patientidentifiertypeid=1085 and patientid =586686 then 'NYAMUS-O-1045'
+when patientidentifiertypeid=1085 and patientid =586768 then 'NYAMUS-O-1046'
+when patientidentifiertypeid=1085 and patientid =586897 then 'NYAMUS-O-1047'
+when patientidentifiertypeid=1085 and patientid =587296 then 'NYAMUS-O-1048'
+when patientidentifiertypeid=1085 and patientid =587649 then 'NYAMUS-O-1049'
+when patientidentifiertypeid=1085 and patientid =587821 then 'NYAMUS-O-1050'
+when patientidentifiertypeid=1085 and patientid =589878 then 'NYAMUS-O-1051'
+when patientidentifiertypeid=1085 and patientid =592648 then 'NYAMUS-O-1052'
+when patientidentifiertypeid=1085 and patientid =590405 then 'NYAMUS-O-1053'
+when patientidentifiertypeid=1085 and patientid =590045 then 'NYAMUS-O-1054'
+when patientidentifiertypeid=1085 and patientid =592517 then 'NYAMUS-O-1055'
+when patientidentifiertypeid=1085 and patientid =590238 then 'NYAMUS-O-1056'
+when patientidentifiertypeid=1085 and patientid =591254 then 'NYAMUS-O-1057'
+when patientidentifiertypeid=1085 and patientid =591515 then 'NYAMUS-O-1058'
+when patientidentifiertypeid=1085 and patientid =591835 then 'NYAMUS-O-1059'
+when patientidentifiertypeid=1085 and patientid =592401 then 'NYAMUS-O-1060'
+when patientidentifiertypeid=1085 and patientid =590809 then 'NYAMUS-O-1061'
+when patientidentifiertypeid=1085 and patientid =591925 then 'NYAMUS-O-1062'
+when patientidentifiertypeid=1085 and patientid =592203 then 'NYAMUS-O-1063'
+when patientidentifiertypeid=1085 and patientid =592247 then 'NYAMUS-O-1064'
+when patientidentifiertypeid=1085 and patientid =591801 then 'NYAMUS-O-1065'
+when patientidentifiertypeid=1085 and patientid =591194 then 'NYAMUS-O-1066'
+when patientidentifiertypeid=1085 and patientid =591473 then 'NYAMUS-O-1067'
+when patientidentifiertypeid=1085 and patientid =592548 then 'NYAMUS-O-1068'
+when patientidentifiertypeid=1085 and patientid =592708 then 'NYAMUS-O-1069'
+when patientidentifiertypeid=1085 and patientid =601886 then 'NYAMUS-O-1070'
+when patientidentifiertypeid=1085 and patientid =601956 then 'NYAMUS-O-1071'
+when patientidentifiertypeid=1085 and patientid =601965 then 'NYAMUS-O-1072'
+when patientidentifiertypeid=1085 and patientid =602100 then 'NYAMUS-O-1073'
+when patientidentifiertypeid=1085 and patientid =602180 then 'NYAMUS-O-1074'
+when patientidentifiertypeid=1085 and patientid =602362 then 'NYAMUS-O-1075'
+when patientidentifiertypeid=1085 and patientid =602463 then 'NYAMUS-O-1076'
+when patientidentifiertypeid=1085 and patientid =602724 then 'NYAMUS-O-1077'
+when patientidentifiertypeid=1085 and patientid =603338 then 'NYAMUS-O-1078'
+when patientidentifiertypeid=1085 and patientid =603864 then 'NYAMUS-O-1079'
+when patientidentifiertypeid=1085 and patientid =603870 then 'NYAMUS-O-1080'
+when patientidentifiertypeid=1085 and patientid =603896 then 'NYAMUS-O-1081'
+when patientidentifiertypeid=1085 and patientid =604602 then 'NYAMUS-O-1082'
+when patientidentifiertypeid=1085 and patientid =605968 then 'NYAMUS-O-1083'
+when patientidentifiertypeid=1085 and patientid =606012 then 'NYAMUS-O-1084'
+when patientidentifiertypeid=1085 and patientid =606323 then 'NYAMUS-O-1085'
+when patientidentifiertypeid=1085 and patientid =603602 then 'NYAMUS-O-1086'
+when patientidentifiertypeid=1085 and patientid =604325 then 'NYAMUS-O-1087'
+when patientidentifiertypeid=1085 and patientid =605218 then 'NYAMUS-O-1088'
+when patientidentifiertypeid=1085 and patientid =605805 then 'NYAMUS-O-1089'
+when patientidentifiertypeid=1085 and patientid =607379 then 'NYAMUS-O-1090'
+when patientidentifiertypeid=1085 and patientid =603734 then 'NYAMUS-O-1091'
+when patientidentifiertypeid=1085 and patientid =604078 then 'NYAMUS-O-1092'
+when patientidentifiertypeid=1085 and patientid =604137 then 'NYAMUS-O-1093'
+when patientidentifiertypeid=1085 and patientid =605712 then 'NYAMUS-O-1094'
+when patientidentifiertypeid=1085 and patientid =606489 then 'NYAMUS-O-1095'
+when patientidentifiertypeid=1085 and patientid =607246 then 'NYAMUS-O-1096'
+when patientidentifiertypeid=1085 and patientid =604250 then 'NYAMUS-O-1097'
+when patientidentifiertypeid=1085 and patientid =604394 then 'NYAMUS-O-1098'
+when patientidentifiertypeid=1085 and patientid =604414 then 'NYAMUS-O-1099'
+when patientidentifiertypeid=1085 and patientid =604471 then 'NYAMUS-O-1100'
+when patientidentifiertypeid=1085 and patientid =604528 then 'NYAMUS-O-1101'
+when patientidentifiertypeid=1085 and patientid =604555 then 'NYAMUS-O-1102'
+when patientidentifiertypeid=1085 and patientid =604618 then 'NYAMUS-O-1103'
+when patientidentifiertypeid=1085 and patientid =604630 then 'NYAMUS-O-1104'
+when patientidentifiertypeid=1085 and patientid =604690 then 'NYAMUS-O-1105'
+when patientidentifiertypeid=1085 and patientid =604790 then 'NYAMUS-O-1106'
+when patientidentifiertypeid=1085 and patientid =604800 then 'NYAMUS-O-1107'
+when patientidentifiertypeid=1085 and patientid =604806 then 'NYAMUS-O-1108'
+when patientidentifiertypeid=1085 and patientid =604860 then 'NYAMUS-O-1109'
+when patientidentifiertypeid=1085 and patientid =604913 then 'NYAMUS-O-1110'
+when patientidentifiertypeid=1085 and patientid =604920 then 'NYAMUS-O-1111'
+when patientidentifiertypeid=1085 and patientid =605003 then 'NYAMUS-O-1112'
+when patientidentifiertypeid=1085 and patientid =605105 then 'NYAMUS-O-1113'
+when patientidentifiertypeid=1085 and patientid =605247 then 'NYAMUS-O-1114'
+when patientidentifiertypeid=1085 and patientid =605272 then 'NYAMUS-O-1115'
+when patientidentifiertypeid=1085 and patientid =605451 then 'NYAMUS-O-1116'
+when patientidentifiertypeid=1085 and patientid =605515 then 'NYAMUS-O-1117'
+when patientidentifiertypeid=1085 and patientid =605618 then 'NYAMUS-O-1118'
+when patientidentifiertypeid=1085 and patientid =605630 then 'NYAMUS-O-1119'
+when patientidentifiertypeid=1085 and patientid =605903 then 'NYAMUS-O-1120'
+when patientidentifiertypeid=1085 and patientid =606175 then 'NYAMUS-O-1121'
+when patientidentifiertypeid=1085 and patientid =606736 then 'NYAMUS-O-1122'
+when patientidentifiertypeid=1085 and patientid =606779 then 'NYAMUS-O-1123'
+when patientidentifiertypeid=1085 and patientid =607342 then 'NYAMUS-O-1124'
+when patientidentifiertypeid=1085 and patientid =607676 then 'NYAMUS-O-1125'
+when patientidentifiertypeid=1085 and patientid =608016 then 'NYAMUS-O-1126'
+when patientidentifiertypeid=1085 and patientid =608134 then 'NYAMUS-O-1127'
+when patientidentifiertypeid=1085 and patientid =608809 then 'NYAMUS-O-1128'
+when patientidentifiertypeid=1085 and patientid =605361 then 'NYAMUS-O-1129'
+when patientidentifiertypeid=1085 and patientid =605781 then 'NYAMUS-O-1130'
+when patientidentifiertypeid=1085 and patientid =605850 then 'NYAMUS-O-1131'
+when patientidentifiertypeid=1085 and patientid =606066 then 'NYAMUS-O-1132'
+when patientidentifiertypeid=1085 and patientid =606077 then 'NYAMUS-O-1133'
+when patientidentifiertypeid=1085 and patientid =606110 then 'NYAMUS-O-1134'
+when patientidentifiertypeid=1085 and patientid =606197 then 'NYAMUS-O-1135'
+when patientidentifiertypeid=1085 and patientid =606262 then 'NYAMUS-O-1136'
+when patientidentifiertypeid=1085 and patientid =606348 then 'NYAMUS-O-1137'
+when patientidentifiertypeid=1085 and patientid =606464 then 'NYAMUS-O-1138'
+when patientidentifiertypeid=1085 and patientid =606522 then 'NYAMUS-O-1139'
+when patientidentifiertypeid=1085 and patientid =606613 then 'NYAMUS-O-1140'
+when patientidentifiertypeid=1085 and patientid =606660 then 'NYAMUS-O-1141'
+when patientidentifiertypeid=1085 and patientid =606821 then 'NYAMUS-O-1142'
+when patientidentifiertypeid=1085 and patientid =606837 then 'NYAMUS-O-1143'
+when patientidentifiertypeid=1085 and patientid =606880 then 'NYAMUS-O-1144'
+when patientidentifiertypeid=1085 and patientid =606984 then 'NYAMUS-O-1145'
+when patientidentifiertypeid=1085 and patientid =606997 then 'NYAMUS-O-1146'
+when patientidentifiertypeid=1085 and patientid =607094 then 'NYAMUS-O-1147'
+when patientidentifiertypeid=1085 and patientid =607265 then 'NYAMUS-O-1148'
+when patientidentifiertypeid=1085 and patientid =607460 then 'NYAMUS-O-1149'
+when patientidentifiertypeid=1085 and patientid =607467 then 'NYAMUS-O-1150'
+when patientidentifiertypeid=1085 and patientid =607494 then 'NYAMUS-O-1151'
+when patientidentifiertypeid=1085 and patientid =607573 then 'NYAMUS-O-1152'
+when patientidentifiertypeid=1085 and patientid =607603 then 'NYAMUS-O-1153'
+when patientidentifiertypeid=1085 and patientid =607627 then 'NYAMUS-O-1154'
+when patientidentifiertypeid=1085 and patientid =607721 then 'NYAMUS-O-1155'
+when patientidentifiertypeid=1085 and patientid =607733 then 'NYAMUS-O-1156'
+when patientidentifiertypeid=1085 and patientid =607828 then 'NYAMUS-O-1157'
+when patientidentifiertypeid=1085 and patientid =608046 then 'NYAMUS-O-1158'
+when patientidentifiertypeid=1085 and patientid =608273 then 'NYAMUS-O-1159'
+when patientidentifiertypeid=1085 and patientid =608283 then 'NYAMUS-O-1160'
+when patientidentifiertypeid=1085 and patientid =608313 then 'NYAMUS-O-1161'
+when patientidentifiertypeid=1085 and patientid =609879 then 'NYAMUS-O-1162'
+when patientidentifiertypeid=1085 and patientid =609898 then 'NYAMUS-O-1163'
+when patientidentifiertypeid=1085 and patientid =609966 then 'NYAMUS-O-1164'
+when patientidentifiertypeid=1085 and patientid =610175 then 'NYAMUS-O-1165'
+when patientidentifiertypeid=1085 and patientid =607871 then 'NYAMUS-O-1166'
+when patientidentifiertypeid=1085 and patientid =607910 then 'NYAMUS-O-1167'
+when patientidentifiertypeid=1085 and patientid =607954 then 'NYAMUS-O-1168'
+when patientidentifiertypeid=1085 and patientid =608116 then 'NYAMUS-O-1169'
+when patientidentifiertypeid=1085 and patientid =608470 then 'NYAMUS-O-1170'
+when patientidentifiertypeid=1085 and patientid =608569 then 'NYAMUS-O-1171'
+when patientidentifiertypeid=1085 and patientid =609778 then 'NYAMUS-O-1172'
+when patientidentifiertypeid=1085 and patientid =610072 then 'NYAMUS-O-1173'
+when patientidentifiertypeid=1085 and patientid =608009 then 'NYAMUS-O-1174'
+when patientidentifiertypeid=1085 and patientid =608151 then 'NYAMUS-O-1175'
+when patientidentifiertypeid=1085 and patientid =608183 then 'NYAMUS-O-1176'
+when patientidentifiertypeid=1085 and patientid =608224 then 'NYAMUS-O-1177'
+when patientidentifiertypeid=1085 and patientid =608280 then 'NYAMUS-O-1178'
+when patientidentifiertypeid=1085 and patientid =608385 then 'NYAMUS-O-1179'
+when patientidentifiertypeid=1085 and patientid =608669 then 'NYAMUS-O-1180'
+when patientidentifiertypeid=1085 and patientid =608393 then 'NYAMUS-O-1181'
+when patientidentifiertypeid=1085 and patientid =608405 then 'NYAMUS-O-1182'
+when patientidentifiertypeid=1085 and patientid =608445 then 'NYAMUS-O-1183'
+when patientidentifiertypeid=1085 and patientid =608505 then 'NYAMUS-O-1184'
+when patientidentifiertypeid=1085 and patientid =608525 then 'NYAMUS-O-1185'
+when patientidentifiertypeid=1085 and patientid =608547 then 'NYAMUS-O-1186'
+when patientidentifiertypeid=1085 and patientid =608650 then 'NYAMUS-O-1187'
+when patientidentifiertypeid=1085 and patientid =608721 then 'NYAMUS-O-1188'
+when patientidentifiertypeid=1085 and patientid =609740 then 'NYAMUS-O-1189'
+when patientidentifiertypeid=1085 and patientid =609754 then 'NYAMUS-O-1190'
+when patientidentifiertypeid=1085 and patientid =609799 then 'NYAMUS-O-1191'
+when patientidentifiertypeid=1085 and patientid =609811 then 'NYAMUS-O-1192'
+when patientidentifiertypeid=1085 and patientid =609818 then 'NYAMUS-O-1193'
+when patientidentifiertypeid=1085 and patientid =609839 then 'NYAMUS-O-1194'
+when patientidentifiertypeid=1085 and patientid =609859 then 'NYAMUS-O-1195'
+when patientidentifiertypeid=1085 and patientid =609868 then 'NYAMUS-O-1196'
+when patientidentifiertypeid=1085 and patientid =609916 then 'NYAMUS-O-1197'
+when patientidentifiertypeid=1085 and patientid =609939 then 'NYAMUS-O-1198'
+when patientidentifiertypeid=1085 and patientid =609950 then 'NYAMUS-O-1199'
+when patientidentifiertypeid=1085 and patientid =609973 then 'NYAMUS-O-1200'
+when patientidentifiertypeid=1085 and patientid =610005 then 'NYAMUS-O-1201'
+when patientidentifiertypeid=1085 and patientid =610011 then 'NYAMUS-O-1202'
+when patientidentifiertypeid=1085 and patientid =610041 then 'NYAMUS-O-1203'
+when patientidentifiertypeid=1085 and patientid =610048 then 'NYAMUS-O-1204'
+when patientidentifiertypeid=1085 and patientid =610081 then 'NYAMUS-O-1205'
+when patientidentifiertypeid=1085 and patientid =610101 then 'NYAMUS-O-1206'
+when patientidentifiertypeid=1085 and patientid =610117 then 'NYAMUS-O-1207'
+when patientidentifiertypeid=1085 and patientid =610138 then 'NYAMUS-O-1208'
+when patientidentifiertypeid=1085 and patientid =610167 then 'NYAMUS-O-1209'
+when patientidentifiertypeid=1085 and patientid =610195 then 'NYAMUS-O-1210'
+when patientidentifiertypeid=1085 and patientid =610203 then 'NYAMUS-O-1211'
+when patientidentifiertypeid=1085 and patientid =610223 then 'NYAMUS-O-1212'
+when patientidentifiertypeid=1085 and patientid =610229 then 'NYAMUS-O-1213'
+when patientidentifiertypeid=1085 and patientid =610329 then 'NYAMUS-O-1214'
+when patientidentifiertypeid=1085 and patientid =610340 then 'NYAMUS-O-1215'
+when patientidentifiertypeid=1085 and patientid =610352 then 'NYAMUS-O-1216'
+when patientidentifiertypeid=1085 and patientid =610359 then 'NYAMUS-O-1217'
+when patientidentifiertypeid=1085 and patientid =610375 then 'NYAMUS-O-1218'
+when patientidentifiertypeid=1085 and patientid =610381 then 'NYAMUS-O-1219'
+when patientidentifiertypeid=1085 and patientid =610397 then 'NYAMUS-O-1220'
+when patientidentifiertypeid=1085 and patientid =610404 then 'NYAMUS-O-1221'
+when patientidentifiertypeid=1085 and patientid =610418 then 'NYAMUS-O-1222'
+when patientidentifiertypeid=1085 and patientid =610436 then 'NYAMUS-O-1223'
+when patientidentifiertypeid=1085 and patientid =610455 then 'NYAMUS-O-1224'
+when patientidentifiertypeid=1085 and patientid =610463 then 'NYAMUS-O-1225'
+when patientidentifiertypeid=1085 and patientid =610488 then 'NYAMUS-O-1226'
+when patientidentifiertypeid=1085 and patientid =610506 then 'NYAMUS-O-1227'
+when patientidentifiertypeid=1085 and patientid =610522 then 'NYAMUS-O-1228'
+when patientidentifiertypeid=1085 and patientid =610549 then 'NYAMUS-O-1229'
+when patientidentifiertypeid=1085 and patientid =610594 then 'NYAMUS-O-1230'
+when patientidentifiertypeid=1085 and patientid =610628 then 'NYAMUS-O-1231'
+when patientidentifiertypeid=1085 and patientid =610657 then 'NYAMUS-O-1232'
+when patientidentifiertypeid=1085 and patientid =610674 then 'NYAMUS-O-1233'
+when patientidentifiertypeid=1085 and patientid =610721 then 'NYAMUS-O-1234'
+when patientidentifiertypeid=1085 and patientid =610761 then 'NYAMUS-O-1235'
+when patientidentifiertypeid=1085 and patientid =611573 then 'NYAMUS-O-1236'
+when patientidentifiertypeid=1085 and patientid =611684 then 'NYAMUS-O-1237'
+when patientidentifiertypeid=1085 and patientid =610905 then 'NYAMUS-O-1238'
+when patientidentifiertypeid=1085 and patientid =610978 then 'NYAMUS-O-1239'
+when patientidentifiertypeid=1085 and patientid =611127 then 'NYAMUS-O-1240'
+when patientidentifiertypeid=1085 and patientid =611207 then 'NYAMUS-O-1241'
+when patientidentifiertypeid=1085 and patientid =611309 then 'NYAMUS-O-1242'
+when patientidentifiertypeid=1085 and patientid =611424 then 'NYAMUS-O-1243'
+when patientidentifiertypeid=1085 and patientid =611460 then 'NYAMUS-O-1244'
+when patientidentifiertypeid=1085 and patientid =611507 then 'NYAMUS-O-1245'
+when patientidentifiertypeid=1085 and patientid =611626 then 'NYAMUS-O-1246'
+when patientidentifiertypeid=1085 and patientid =611757 then 'NYAMUS-O-1247'
+when patientidentifiertypeid=1085 and patientid =611840 then 'NYAMUS-O-1248'
+when patientidentifiertypeid=1085 and patientid =611920 then 'NYAMUS-O-1249'
+when patientidentifiertypeid=1085 and patientid =612128 then 'NYAMUS-O-1250'
+when patientidentifiertypeid=1085 and patientid =612207 then 'NYAMUS-O-1251'
+when patientidentifiertypeid=1085 and patientid =612608 then 'NYAMUS-O-1252'
+when patientidentifiertypeid=1085 and patientid =612761 then 'NYAMUS-O-1253'
+when patientidentifiertypeid=1085 and patientid =612962 then 'NYAMUS-O-1254'
+when patientidentifiertypeid=1085 and patientid =613073 then 'NYAMUS-O-1255'
+when patientidentifiertypeid=1085 and patientid =611933 then 'NYAMUS-O-1256'
+when patientidentifiertypeid=1085 and patientid =611980 then 'NYAMUS-O-1257'
+when patientidentifiertypeid=1085 and patientid =612001 then 'NYAMUS-O-1258'
+when patientidentifiertypeid=1085 and patientid =612084 then 'NYAMUS-O-1259'
+when patientidentifiertypeid=1085 and patientid =612155 then 'NYAMUS-O-1260'
+when patientidentifiertypeid=1085 and patientid =612278 then 'NYAMUS-O-1261'
+when patientidentifiertypeid=1085 and patientid =612318 then 'NYAMUS-O-1262'
+when patientidentifiertypeid=1085 and patientid =612400 then 'NYAMUS-O-1263'
+when patientidentifiertypeid=1085 and patientid =612463 then 'NYAMUS-O-1264'
+when patientidentifiertypeid=1085 and patientid =612477 then 'NYAMUS-O-1265'
+when patientidentifiertypeid=1085 and patientid =612499 then 'NYAMUS-O-1266'
+when patientidentifiertypeid=1085 and patientid =612572 then 'NYAMUS-O-1267'
+when patientidentifiertypeid=1085 and patientid =612655 then 'NYAMUS-O-1268'
+when patientidentifiertypeid=1085 and patientid =612701 then 'NYAMUS-O-1269'
+when patientidentifiertypeid=1085 and patientid =612783 then 'NYAMUS-O-1270'
+when patientidentifiertypeid=1085 and patientid =612867 then 'NYAMUS-O-1271'
+when patientidentifiertypeid=1085 and patientid =613023 then 'NYAMUS-O-1272'
+when patientidentifiertypeid=1085 and patientid =613204 then 'NYAMUS-O-1273'
+when patientidentifiertypeid=1085 and patientid =613255 then 'NYAMUS-O-1274'
+when patientidentifiertypeid=1085 and patientid =613335 then 'NYAMUS-O-1275'
+when patientidentifiertypeid=1085 and patientid =613342 then 'NYAMUS-O-1276'
+when patientidentifiertypeid=1085 and patientid =613375 then 'NYAMUS-O-1277'
+when patientidentifiertypeid=1085 and patientid =613492 then 'NYAMUS-O-1278'
+when patientidentifiertypeid=1085 and patientid =613574 then 'NYAMUS-O-1279'
+when patientidentifiertypeid=1085 and patientid =613584 then 'NYAMUS-O-1280'
+when patientidentifiertypeid=1085 and patientid =613724 then 'NYAMUS-O-1281'
+when patientidentifiertypeid=1085 and patientid =613754 then 'NYAMUS-O-1282'
+when patientidentifiertypeid=1085 and patientid =613942 then 'NYAMUS-O-1283'
+when patientidentifiertypeid=1085 and patientid =613953 then 'NYAMUS-O-1284'
+when patientidentifiertypeid=1085 and patientid =613964 then 'NYAMUS-O-1285'
+when patientidentifiertypeid=1085 and patientid =613993 then 'NYAMUS-O-1286'
+when patientidentifiertypeid=1085 and patientid =614115 then 'NYAMUS-O-1287'
+when patientidentifiertypeid=1085 and patientid =614131 then 'NYAMUS-O-1288'
+when patientidentifiertypeid=1085 and patientid =614161 then 'NYAMUS-O-1289'
+when patientidentifiertypeid=1085 and patientid =614173 then 'NYAMUS-O-1290'
+when patientidentifiertypeid=1085 and patientid =614198 then 'NYAMUS-O-1291'
+when patientidentifiertypeid=1085 and patientid =614272 then 'NYAMUS-O-1292'
+when patientidentifiertypeid=1085 and patientid =614316 then 'NYAMUS-O-1293'
+when patientidentifiertypeid=1085 and patientid =614320 then 'NYAMUS-O-1294'
+when patientidentifiertypeid=1085 and patientid =614358 then 'NYAMUS-O-1295'
+when patientidentifiertypeid=1085 and patientid =614390 then 'NYAMUS-O-1296'
+when patientidentifiertypeid=1085 and patientid =614474 then 'NYAMUS-O-1297'
+when patientidentifiertypeid=1085 and patientid =614518 then 'NYAMUS-O-1298'
+when patientidentifiertypeid=1085 and patientid =614536 then 'NYAMUS-O-1299'
+when patientidentifiertypeid=1085 and patientid =614544 then 'NYAMUS-O-1300'
+when patientidentifiertypeid=1085 and patientid =614615 then 'NYAMUS-O-1301'
+when patientidentifiertypeid=1085 and patientid =614693 then 'NYAMUS-O-1302'
+when patientidentifiertypeid=1085 and patientid =614700 then 'NYAMUS-O-1303'
+when patientidentifiertypeid=1085 and patientid =614791 then 'NYAMUS-O-1304'
+when patientidentifiertypeid=1085 and patientid =614827 then 'NYAMUS-O-1305'
+when patientidentifiertypeid=1085 and patientid =614849 then 'NYAMUS-O-1306'
+when patientidentifiertypeid=1085 and patientid =614920 then 'NYAMUS-O-1307'
+when patientidentifiertypeid=1085 and patientid =614946 then 'NYAMUS-O-1308'
+when patientidentifiertypeid=1085 and patientid =615022 then 'NYAMUS-O-1309'
+when patientidentifiertypeid=1085 and patientid =615036 then 'NYAMUS-O-1310'
+when patientidentifiertypeid=1085 and patientid =615117 then 'NYAMUS-O-1311'
+when patientidentifiertypeid=1085 and patientid =615302 then 'NYAMUS-O-1312'
+when patientidentifiertypeid=1085 and patientid =615316 then 'NYAMUS-O-1313'
+when patientidentifiertypeid=1085 and patientid =615467 then 'NYAMUS-O-1314'
+when patientidentifiertypeid=1085 and patientid =615477 then 'NYAMUS-O-1315'
+when patientidentifiertypeid=1085 and patientid =615498 then 'NYAMUS-O-1316'
+when patientidentifiertypeid=1085 and patientid =617379 then 'NYAMUS-O-1317'
+when patientidentifiertypeid=1085 and patientid =617618 then 'NYAMUS-O-1318'
+when patientidentifiertypeid=1085 and patientid =618051 then 'NYAMUS-O-1319'
+when patientidentifiertypeid=1085 and patientid =616693 then 'NYAMUS-O-1320'
+when patientidentifiertypeid=1085 and patientid =617237 then 'NYAMUS-O-1321'
+when patientidentifiertypeid=1085 and patientid =615679 then 'NYAMUS-O-1322'
+when patientidentifiertypeid=1085 and patientid =615693 then 'NYAMUS-O-1323'
+when patientidentifiertypeid=1085 and patientid =618483 then 'NYAMUS-O-1324'
+when patientidentifiertypeid=1085 and patientid =616145 then 'NYAMUS-O-1325'
+when patientidentifiertypeid=1085 and patientid =616228 then 'NYAMUS-O-1326'
+when patientidentifiertypeid=1085 and patientid =616367 then 'NYAMUS-O-1327'
+when patientidentifiertypeid=1085 and patientid =616523 then 'NYAMUS-O-1328'
+when patientidentifiertypeid=1085 and patientid =616662 then 'NYAMUS-O-1329'
+when patientidentifiertypeid=1085 and patientid =616738 then 'NYAMUS-O-1330'
+when patientidentifiertypeid=1085 and patientid =616809 then 'NYAMUS-O-1331'
+when patientidentifiertypeid=1085 and patientid =616858 then 'NYAMUS-O-1332'
+when patientidentifiertypeid=1085 and patientid =616894 then 'NYAMUS-O-1333'
+when patientidentifiertypeid=1085 and patientid =616918 then 'NYAMUS-O-1334'
+when patientidentifiertypeid=1085 and patientid =616975 then 'NYAMUS-O-1335'
+when patientidentifiertypeid=1085 and patientid =616986 then 'NYAMUS-O-1336'
+when patientidentifiertypeid=1085 and patientid =617038 then 'NYAMUS-O-1337'
+when patientidentifiertypeid=1085 and patientid =617173 then 'NYAMUS-O-1338'
+when patientidentifiertypeid=1085 and patientid =617264 then 'NYAMUS-O-1339'
+when patientidentifiertypeid=1085 and patientid =617292 then 'NYAMUS-O-1340'
+when patientidentifiertypeid=1085 and patientid =617355 then 'NYAMUS-O-1341'
+when patientidentifiertypeid=1085 and patientid =617415 then 'NYAMUS-O-1342'
+when patientidentifiertypeid=1085 and patientid =617515 then 'NYAMUS-O-1343'
+when patientidentifiertypeid=1085 and patientid =617531 then 'NYAMUS-O-1344'
+when patientidentifiertypeid=1085 and patientid =617551 then 'NYAMUS-O-1345'
+when patientidentifiertypeid=1085 and patientid =617656 then 'NYAMUS-O-1346'
+when patientidentifiertypeid=1085 and patientid =617747 then 'NYAMUS-O-1347'
+when patientidentifiertypeid=1085 and patientid =617773 then 'NYAMUS-O-1348'
+when patientidentifiertypeid=1085 and patientid =617781 then 'NYAMUS-O-1349'
+when patientidentifiertypeid=1085 and patientid =617882 then 'NYAMUS-O-1350'
+when patientidentifiertypeid=1085 and patientid =618167 then 'NYAMUS-O-1351'
+when patientidentifiertypeid=1085 and patientid =618511 then 'NYAMUS-O-1352'
+when patientidentifiertypeid=1085 and patientid =618737 then 'NYAMUS-O-1353'
+when patientidentifiertypeid=1085 and patientid =619279 then 'NYAMUS-O-1354'
+when patientidentifiertypeid=1085 and patientid =619680 then 'NYAMUS-O-1355'
+when patientidentifiertypeid=1085 and patientid =618174 then 'NYAMUS-O-1356'
+when patientidentifiertypeid=1085 and patientid =619093 then 'NYAMUS-O-1357'
+when patientidentifiertypeid=1085 and patientid =617908 then 'NYAMUS-O-1358'
+when patientidentifiertypeid=1085 and patientid =618045 then 'NYAMUS-O-1359'
+when patientidentifiertypeid=1085 and patientid =618118 then 'NYAMUS-O-1360'
+when patientidentifiertypeid=1085 and patientid =618378 then 'NYAMUS-O-1361'
+when patientidentifiertypeid=1085 and patientid =618841 then 'NYAMUS-O-1362'
+when patientidentifiertypeid=1085 and patientid =618204 then 'NYAMUS-O-1363'
+when patientidentifiertypeid=1085 and patientid =618262 then 'NYAMUS-O-1364'
+when patientidentifiertypeid=1085 and patientid =618324 then 'NYAMUS-O-1365'
+when patientidentifiertypeid=1085 and patientid =618580 then 'NYAMUS-O-1366'
+when patientidentifiertypeid=1085 and patientid =618858 then 'NYAMUS-O-1367'
+when patientidentifiertypeid=1085 and patientid =619803 then 'NYAMUS-O-1368'
+when patientidentifiertypeid=1085 and patientid =618911 then 'NYAMUS-O-1369'
+when patientidentifiertypeid=1085 and patientid =619137 then 'NYAMUS-O-1370'
+when patientidentifiertypeid=1085 and patientid =619219 then 'NYAMUS-O-1371'
+when patientidentifiertypeid=1085 and patientid =619464 then 'NYAMUS-O-1372'
+when patientidentifiertypeid=1085 and patientid =619646 then 'NYAMUS-O-1373'
+when patientidentifiertypeid=1085 and patientid =619977 then 'NYAMUS-O-1374'
+when patientidentifiertypeid=1085 and patientid =620135 then 'NYAMUS-O-1375'
+when patientidentifiertypeid=1085 and patientid =622324 then 'NYAMUS-O-1376'
+when patientidentifiertypeid=1085 and patientid =622382 then 'NYAMUS-O-1377'
+when patientidentifiertypeid=1085 and patientid =622479 then 'NYAMUS-O-1378'
+when patientidentifiertypeid=1085 and patientid =622500 then 'NYAMUS-O-1379'
+when patientidentifiertypeid=1085 and patientid =622602 then 'NYAMUS-O-1380'
+when patientidentifiertypeid=1085 and patientid =622666 then 'NYAMUS-O-1381'
+when patientidentifiertypeid=1085 and patientid =622731 then 'NYAMUS-O-1382'
+when patientidentifiertypeid=1085 and patientid =622780 then 'NYAMUS-O-1383'
+when patientidentifiertypeid=1085 and patientid =622881 then 'NYAMUS-O-1384'
+when patientidentifiertypeid=1085 and patientid =622899 then 'NYAMUS-O-1385'
+when patientidentifiertypeid=1085 and patientid =623067 then 'NYAMUS-O-1386'
+when patientidentifiertypeid=1085 and patientid =623078 then 'NYAMUS-O-1387'
+when patientidentifiertypeid=1085 and patientid =623145 then 'NYAMUS-O-1388'
+when patientidentifiertypeid=1085 and patientid =623204 then 'NYAMUS-O-1389'
+when patientidentifiertypeid=1085 and patientid =623308 then 'NYAMUS-O-1390'
+when patientidentifiertypeid=1085 and patientid =623416 then 'NYAMUS-O-1391'
+when patientidentifiertypeid=1085 and patientid =623488 then 'NYAMUS-O-1392'
+when patientidentifiertypeid=1085 and patientid =624073 then 'NYAMUS-O-1393'
+when patientidentifiertypeid=1085 and patientid =626891 then 'NYAMUS-O-1394'
+when patientidentifiertypeid=1085 and patientid =623866 then 'NYAMUS-O-1395'
+when patientidentifiertypeid=1085 and patientid =624353 then 'NYAMUS-O-1396'
+when patientidentifiertypeid=1085 and patientid =623548 then 'NYAMUS-O-1397'
+when patientidentifiertypeid=1085 and patientid =623637 then 'NYAMUS-O-1398'
+when patientidentifiertypeid=1085 and patientid =623680 then 'NYAMUS-O-1399'
+when patientidentifiertypeid=1085 and patientid =624169 then 'NYAMUS-O-1400'
+when patientidentifiertypeid=1085 and patientid =625034 then 'NYAMUS-O-1401'
+when patientidentifiertypeid=1085 and patientid =623753 then 'NYAMUS-O-1402'
+when patientidentifiertypeid=1085 and patientid =623771 then 'NYAMUS-O-1403'
+when patientidentifiertypeid=1085 and patientid =624517 then 'NYAMUS-O-1404'
+when patientidentifiertypeid=1085 and patientid =624724 then 'NYAMUS-O-1405'
+when patientidentifiertypeid=1085 and patientid =626051 then 'NYAMUS-O-1406'
+when patientidentifiertypeid=1085 and patientid =628203 then 'NYAMUS-O-1407'
+when patientidentifiertypeid=1085 and patientid =630484 then 'NYAMUS-O-1408'
+when patientidentifiertypeid=1085 and patientid =632414 then 'NYAMUS-O-1409'
+when patientidentifiertypeid=1085 and patientid =623885 then 'NYAMUS-O-1410'
+when patientidentifiertypeid=1085 and patientid =627397 then 'NYAMUS-O-1411'
+when patientidentifiertypeid=1085 and patientid =628868 then 'NYAMUS-O-1412'
+when patientidentifiertypeid=1085 and patientid =630792 then 'NYAMUS-O-1413'
+when patientidentifiertypeid=1085 and patientid =623990 then 'NYAMUS-O-1414'
+when patientidentifiertypeid=1085 and patientid =624028 then 'NYAMUS-O-1415'
+when patientidentifiertypeid=1085 and patientid =626553 then 'NYAMUS-O-1416'
+when patientidentifiertypeid=1085 and patientid =627818 then 'NYAMUS-O-1417'
+when patientidentifiertypeid=1085 and patientid =627849 then 'NYAMUS-O-1418'
+when patientidentifiertypeid=1085 and patientid =628310 then 'NYAMUS-O-1419'
+when patientidentifiertypeid=1085 and patientid =630007 then 'NYAMUS-O-1420'
+when patientidentifiertypeid=1085 and patientid =630065 then 'NYAMUS-O-1421'
+when patientidentifiertypeid=1085 and patientid =624107 then 'NYAMUS-O-1422'
+when patientidentifiertypeid=1085 and patientid =625980 then 'NYAMUS-O-1423'
+when patientidentifiertypeid=1085 and patientid =626480 then 'NYAMUS-O-1424'
+when patientidentifiertypeid=1085 and patientid =626583 then 'NYAMUS-O-1425'
+when patientidentifiertypeid=1085 and patientid =630247 then 'NYAMUS-O-1426'
+when patientidentifiertypeid=1085 and patientid =625711 then 'NYAMUS-O-1427'
+when patientidentifiertypeid=1085 and patientid =627012 then 'NYAMUS-O-1428'
+when patientidentifiertypeid=1085 and patientid =628353 then 'NYAMUS-O-1429'
+when patientidentifiertypeid=1085 and patientid =631434 then 'NYAMUS-O-1430'
+when patientidentifiertypeid=1085 and patientid =624291 then 'NYAMUS-O-1431'
+when patientidentifiertypeid=1085 and patientid =624476 then 'NYAMUS-O-1432'
+when patientidentifiertypeid=1085 and patientid =624490 then 'NYAMUS-O-1433'
+when patientidentifiertypeid=1085 and patientid =624903 then 'NYAMUS-O-1434'
+when patientidentifiertypeid=1085 and patientid =625167 then 'NYAMUS-O-1435'
+when patientidentifiertypeid=1085 and patientid =625212 then 'NYAMUS-O-1436'
+when patientidentifiertypeid=1085 and patientid =626427 then 'NYAMUS-O-1437'
+when patientidentifiertypeid=1085 and patientid =627176 then 'NYAMUS-O-1438'
+when patientidentifiertypeid=1085 and patientid =627346 then 'NYAMUS-O-1439'
+when patientidentifiertypeid=1085 and patientid =631013 then 'NYAMUS-O-1440'
+when patientidentifiertypeid=1085 and patientid =624579 then 'NYAMUS-O-1441'
+when patientidentifiertypeid=1085 and patientid =627546 then 'NYAMUS-O-1442'
+when patientidentifiertypeid=1085 and patientid =627880 then 'NYAMUS-O-1443'
+when patientidentifiertypeid=1085 and patientid =629982 then 'NYAMUS-O-1444'
+when patientidentifiertypeid=1085 and patientid =631614 then 'NYAMUS-O-1445'
+when patientidentifiertypeid=1085 and patientid =624698 then 'NYAMUS-O-1446'
+when patientidentifiertypeid=1085 and patientid =625272 then 'NYAMUS-O-1447'
+when patientidentifiertypeid=1085 and patientid =626325 then 'NYAMUS-O-1448'
+when patientidentifiertypeid=1085 and patientid =626698 then 'NYAMUS-O-1449'
+when patientidentifiertypeid=1085 and patientid =627502 then 'NYAMUS-O-1450'
+when patientidentifiertypeid=1085 and patientid =629811 then 'NYAMUS-O-1451'
+when patientidentifiertypeid=1085 and patientid =631789 then 'NYAMUS-O-1452'
+when patientidentifiertypeid=1085 and patientid =624877 then 'NYAMUS-O-1453'
+when patientidentifiertypeid=1085 and patientid =625054 then 'NYAMUS-O-1454'
+when patientidentifiertypeid=1085 and patientid =625298 then 'NYAMUS-O-1455'
+when patientidentifiertypeid=1085 and patientid =625436 then 'NYAMUS-O-1456'
+when patientidentifiertypeid=1085 and patientid =625574 then 'NYAMUS-O-1457'
+when patientidentifiertypeid=1085 and patientid =625589 then 'NYAMUS-O-1458'
+when patientidentifiertypeid=1085 and patientid =625964 then 'NYAMUS-O-1459'
+when patientidentifiertypeid=1085 and patientid =626133 then 'NYAMUS-O-1460'
+when patientidentifiertypeid=1085 and patientid =626179 then 'NYAMUS-O-1461'
+when patientidentifiertypeid=1085 and patientid =626817 then 'NYAMUS-O-1462'
+when patientidentifiertypeid=1085 and patientid =627020 then 'NYAMUS-O-1463'
+when patientidentifiertypeid=1085 and patientid =627062 then 'NYAMUS-O-1464'
+when patientidentifiertypeid=1085 and patientid =627162 then 'NYAMUS-O-1465'
+when patientidentifiertypeid=1085 and patientid =627270 then 'NYAMUS-O-1466'
+when patientidentifiertypeid=1085 and patientid =627287 then 'NYAMUS-O-1467'
+when patientidentifiertypeid=1085 and patientid =627587 then 'NYAMUS-O-1468'
+when patientidentifiertypeid=1085 and patientid =627659 then 'NYAMUS-O-1469'
+when patientidentifiertypeid=1085 and patientid =627781 then 'NYAMUS-O-1470'
+when patientidentifiertypeid=1085 and patientid =627839 then 'NYAMUS-O-1471'
+when patientidentifiertypeid=1085 and patientid =627925 then 'NYAMUS-O-1472'
+when patientidentifiertypeid=1085 and patientid =627988 then 'NYAMUS-O-1473'
+when patientidentifiertypeid=1085 and patientid =628003 then 'NYAMUS-O-1474'
+when patientidentifiertypeid=1085 and patientid =629550 then 'NYAMUS-O-1475'
+when patientidentifiertypeid=1085 and patientid =631948 then 'NYAMUS-O-1476'
+when patientidentifiertypeid=1085 and patientid =628104 then 'NYAMUS-O-1477'
+when patientidentifiertypeid=1085 and patientid =628163 then 'NYAMUS-O-1478'
+when patientidentifiertypeid=1085 and patientid =629767 then 'NYAMUS-O-1479'
+when patientidentifiertypeid=1085 and patientid =632226 then 'NYAMUS-O-1480'
+when patientidentifiertypeid=1085 and patientid =628453 then 'NYAMUS-O-1481'
+when patientidentifiertypeid=1085 and patientid =628466 then 'NYAMUS-O-1482'
+when patientidentifiertypeid=1085 and patientid =630195 then 'NYAMUS-O-1483'
+when patientidentifiertypeid=1085 and patientid =630234 then 'NYAMUS-O-1484'
+when patientidentifiertypeid=1085 and patientid =628625 then 'NYAMUS-O-1485'
+when patientidentifiertypeid=1085 and patientid =628684 then 'NYAMUS-O-1486'
+when patientidentifiertypeid=1085 and patientid =628710 then 'NYAMUS-O-1487'
+when patientidentifiertypeid=1085 and patientid =630305 then 'NYAMUS-O-1488'
+when patientidentifiertypeid=1085 and patientid =631278 then 'NYAMUS-O-1489'
+when patientidentifiertypeid=1085 and patientid =629032 then 'NYAMUS-O-1490'
+when patientidentifiertypeid=1085 and patientid =630999 then 'NYAMUS-O-1491'
+when patientidentifiertypeid=1085 and patientid =632144 then 'NYAMUS-O-1492'
+when patientidentifiertypeid=1085 and patientid =629302 then 'NYAMUS-O-1493'
+when patientidentifiertypeid=1085 and patientid =629345 then 'NYAMUS-O-1494'
+when patientidentifiertypeid=1085 and patientid =629532 then 'NYAMUS-O-1495'
+when patientidentifiertypeid=1085 and patientid =631199 then 'NYAMUS-O-1496'
+when patientidentifiertypeid=1085 and patientid =631645 then 'NYAMUS-O-1497'
+when patientidentifiertypeid=1085 and patientid =631677 then 'NYAMUS-O-1498'
+when patientidentifiertypeid=1085 and patientid =629683 then 'NYAMUS-O-1499'
+when patientidentifiertypeid=1085 and patientid =632238 then 'NYAMUS-O-1500'
+when patientidentifiertypeid=1085 and patientid =629939 then 'NYAMUS-O-1501'
+when patientidentifiertypeid=1085 and patientid =631591 then 'NYAMUS-O-1502'
+when patientidentifiertypeid=1085 and patientid =631939 then 'NYAMUS-O-1503'
+when patientidentifiertypeid=1085 and patientid =631982 then 'NYAMUS-O-1504'
+when patientidentifiertypeid=1085 and patientid =630429 then 'NYAMUS-O-1505'
+when patientidentifiertypeid=1085 and patientid =630505 then 'NYAMUS-O-1506'
+when patientidentifiertypeid=1085 and patientid =630684 then 'NYAMUS-O-1507'
+when patientidentifiertypeid=1085 and patientid =630712 then 'NYAMUS-O-1508'
+when patientidentifiertypeid=1085 and patientid =630726 then 'NYAMUS-O-1509'
+when patientidentifiertypeid=1085 and patientid =631051 then 'NYAMUS-O-1510'
+when patientidentifiertypeid=1085 and patientid =631232 then 'NYAMUS-O-1511'
+when patientidentifiertypeid=1085 and patientid =631353 then 'NYAMUS-O-1512'
+when patientidentifiertypeid=1085 and patientid =631386 then 'NYAMUS-O-1513'
+when patientidentifiertypeid=1085 and patientid =631490 then 'NYAMUS-O-1514'
+when patientidentifiertypeid=1085 and patientid =631730 then 'NYAMUS-O-1515'
+when patientidentifiertypeid=1085 and patientid =631778 then 'NYAMUS-O-1516'
+when patientidentifiertypeid=1085 and patientid =631827 then 'NYAMUS-O-1517'
+when patientidentifiertypeid=1085 and patientid =631997 then 'NYAMUS-O-1518'
+when patientidentifiertypeid=1085 and patientid =632097 then 'NYAMUS-O-1519'
+when patientidentifiertypeid=1085 and patientid =632117 then 'NYAMUS-O-1520'
+when patientidentifiertypeid=1085 and patientid =632168 then 'NYAMUS-O-1521'
+when patientidentifiertypeid=1085 and patientid =632297 then 'NYAMUS-O-1522'
+when patientidentifiertypeid=1085 and patientid =632304 then 'NYAMUS-O-1523'
+when patientidentifiertypeid=1085 and patientid =632340 then 'NYAMUS-O-1524'
+when patientidentifiertypeid=1085 and patientid =634077 then 'NYAMUS-O-1525'
+when patientidentifiertypeid=1085 and patientid =634093 then 'NYAMUS-O-1526'
+when patientidentifiertypeid=1085 and patientid =634155 then 'NYAMUS-O-1527'
+when patientidentifiertypeid=1085 and patientid =634184 then 'NYAMUS-O-1528'
+when patientidentifiertypeid=1085 and patientid =634214 then 'NYAMUS-O-1529'
+when patientidentifiertypeid=1085 and patientid =634278 then 'NYAMUS-O-1530'
+when patientidentifiertypeid=1085 and patientid =634296 then 'NYAMUS-O-1531'
+when patientidentifiertypeid=1085 and patientid =634336 then 'NYAMUS-O-1532'
+when patientidentifiertypeid=1085 and patientid =634347 then 'NYAMUS-O-1533'
+when patientidentifiertypeid=1085 and patientid =634366 then 'NYAMUS-O-1534'
+when patientidentifiertypeid=1085 and patientid =634389 then 'NYAMUS-O-1535'
+when patientidentifiertypeid=1085 and patientid =634398 then 'NYAMUS-O-1536'
+when patientidentifiertypeid=1085 and patientid =634424 then 'NYAMUS-O-1537'
+when patientidentifiertypeid=1085 and patientid =634445 then 'NYAMUS-O-1538'
+when patientidentifiertypeid=1085 and patientid =634464 then 'NYAMUS-O-1539'
+when patientidentifiertypeid=1085 and patientid =634496 then 'NYAMUS-O-1540'
+when patientidentifiertypeid=1085 and patientid =634506 then 'NYAMUS-O-1541'
+when patientidentifiertypeid=1085 and patientid =634544 then 'NYAMUS-O-1542'
+when patientidentifiertypeid=1085 and patientid =634556 then 'NYAMUS-O-1543'
+when patientidentifiertypeid=1085 and patientid =634585 then 'NYAMUS-O-1544'
+when patientidentifiertypeid=1085 and patientid =634603 then 'NYAMUS-O-1545'
+when patientidentifiertypeid=1085 and patientid =634633 then 'NYAMUS-O-1546'
+when patientidentifiertypeid=1085 and patientid =634662 then 'NYAMUS-O-1547'
+when patientidentifiertypeid=1085 and patientid =634687 then 'NYAMUS-O-1548'
+when patientidentifiertypeid=1085 and patientid =634833 then 'NYAMUS-O-1549'
+when patientidentifiertypeid=1085 and patientid =634912 then 'NYAMUS-O-1550'
+when patientidentifiertypeid=1085 and patientid =634967 then 'NYAMUS-O-1551'
+when patientidentifiertypeid=1085 and patientid =634979 then 'NYAMUS-O-1552'
+when patientidentifiertypeid=1085 and patientid =634997 then 'NYAMUS-O-1553'
+when patientidentifiertypeid=1085 and patientid =635076 then 'NYAMUS-O-1554'
+when patientidentifiertypeid=1085 and patientid =635087 then 'NYAMUS-O-1555'
+when patientidentifiertypeid=1085 and patientid =635119 then 'NYAMUS-O-1556'
+when patientidentifiertypeid=1085 and patientid =635346 then 'NYAMUS-O-1557'
+when patientidentifiertypeid=1085 and patientid =638683 then 'NYAMUS-O-1558'
+when patientidentifiertypeid=1085 and patientid =635983 then 'NYAMUS-O-1559'
+when patientidentifiertypeid=1085 and patientid =636247 then 'NYAMUS-O-1560'
+when patientidentifiertypeid=1085 and patientid =638505 then 'NYAMUS-O-1561'
+when patientidentifiertypeid=1085 and patientid =638672 then 'NYAMUS-O-1562'
+when patientidentifiertypeid=1085 and patientid =638993 then 'NYAMUS-O-1563'
+when patientidentifiertypeid=1085 and patientid =635157 then 'NYAMUS-O-1564'
+when patientidentifiertypeid=1085 and patientid =637564 then 'NYAMUS-O-1565'
+when patientidentifiertypeid=1085 and patientid =638833 then 'NYAMUS-O-1566'
+when patientidentifiertypeid=1085 and patientid =639575 then 'NYAMUS-O-1567'
+when patientidentifiertypeid=1085 and patientid =639767 then 'NYAMUS-O-1568'
+when patientidentifiertypeid=1085 and patientid =639824 then 'NYAMUS-O-1569'
+when patientidentifiertypeid=1085 and patientid =640339 then 'NYAMUS-O-1570'
+when patientidentifiertypeid=1085 and patientid =635265 then 'NYAMUS-O-1571'
+when patientidentifiertypeid=1085 and patientid =637834 then 'NYAMUS-O-1572'
+when patientidentifiertypeid=1085 and patientid =635247 then 'NYAMUS-O-1573'
+when patientidentifiertypeid=1085 and patientid =635258 then 'NYAMUS-O-1574'
+when patientidentifiertypeid=1085 and patientid =635376 then 'NYAMUS-O-1575'
+when patientidentifiertypeid=1085 and patientid =635392 then 'NYAMUS-O-1576'
+when patientidentifiertypeid=1085 and patientid =635437 then 'NYAMUS-O-1577'
+when patientidentifiertypeid=1085 and patientid =635522 then 'NYAMUS-O-1578'
+when patientidentifiertypeid=1085 and patientid =635581 then 'NYAMUS-O-1579'
+when patientidentifiertypeid=1085 and patientid =635628 then 'NYAMUS-O-1580'
+when patientidentifiertypeid=1085 and patientid =635653 then 'NYAMUS-O-1581'
+when patientidentifiertypeid=1085 and patientid =635700 then 'NYAMUS-O-1582'
+when patientidentifiertypeid=1085 and patientid =635786 then 'NYAMUS-O-1583'
+when patientidentifiertypeid=1085 and patientid =636787 then 'NYAMUS-O-1584'
+when patientidentifiertypeid=1085 and patientid =637725 then 'NYAMUS-O-1585'
+when patientidentifiertypeid=1085 and patientid =637810 then 'NYAMUS-O-1586'
+when patientidentifiertypeid=1085 and patientid =638172 then 'NYAMUS-O-1587'
+when patientidentifiertypeid=1085 and patientid =638246 then 'NYAMUS-O-1588'
+when patientidentifiertypeid=1085 and patientid =638745 then 'NYAMUS-O-1589'
+when patientidentifiertypeid=1085 and patientid =635771 then 'NYAMUS-O-1590'
+when patientidentifiertypeid=1085 and patientid =636144 then 'NYAMUS-O-1591'
+when patientidentifiertypeid=1085 and patientid =637054 then 'NYAMUS-O-1592'
+when patientidentifiertypeid=1085 and patientid =637367 then 'NYAMUS-O-1593'
+when patientidentifiertypeid=1085 and patientid =636607 then 'NYAMUS-O-1594'
+when patientidentifiertypeid=1085 and patientid =637768 then 'NYAMUS-O-1595'
+when patientidentifiertypeid=1085 and patientid =638845 then 'NYAMUS-O-1596'
+when patientidentifiertypeid=1085 and patientid =640815 then 'NYAMUS-O-1597'
+when patientidentifiertypeid=1085 and patientid =637468 then 'NYAMUS-O-1598'
+when patientidentifiertypeid=1085 and patientid =636648 then 'NYAMUS-O-1599'
+when patientidentifiertypeid=1085 and patientid =638423 then 'NYAMUS-O-1600'
+when patientidentifiertypeid=1085 and patientid =638898 then 'NYAMUS-O-1601'
+when patientidentifiertypeid=1085 and patientid =639321 then 'NYAMUS-O-1602'
+when patientidentifiertypeid=1085 and patientid =641632 then 'NYAMUS-O-1603'
+when patientidentifiertypeid=1085 and patientid =642012 then 'NYAMUS-O-1604'
+when patientidentifiertypeid=1085 and patientid =637910 then 'NYAMUS-O-1605'
+when patientidentifiertypeid=1085 and patientid =637210 then 'NYAMUS-O-1606'
+when patientidentifiertypeid=1085 and patientid =637878 then 'NYAMUS-O-1607'
+when patientidentifiertypeid=1085 and patientid =638071 then 'NYAMUS-O-1608'
+when patientidentifiertypeid=1085 and patientid =638095 then 'NYAMUS-O-1609'
+when patientidentifiertypeid=1085 and patientid =638126 then 'NYAMUS-O-1610'
+when patientidentifiertypeid=1085 and patientid =638270 then 'NYAMUS-O-1611'
+when patientidentifiertypeid=1085 and patientid =638327 then 'NYAMUS-O-1612'
+when patientidentifiertypeid=1085 and patientid =638513 then 'NYAMUS-O-1613'
+when patientidentifiertypeid=1085 and patientid =638605 then 'NYAMUS-O-1614'
+when patientidentifiertypeid=1085 and patientid =639034 then 'NYAMUS-O-1615'
+when patientidentifiertypeid=1085 and patientid =639120 then 'NYAMUS-O-1616'
+when patientidentifiertypeid=1085 and patientid =639171 then 'NYAMUS-O-1617'
+when patientidentifiertypeid=1085 and patientid =639194 then 'NYAMUS-O-1618'
+when patientidentifiertypeid=1085 and patientid =639347 then 'NYAMUS-O-1619'
+when patientidentifiertypeid=1085 and patientid =639376 then 'NYAMUS-O-1620'
+when patientidentifiertypeid=1085 and patientid =639439 then 'NYAMUS-O-1621'
+when patientidentifiertypeid=1085 and patientid =639536 then 'NYAMUS-O-1622'
+when patientidentifiertypeid=1085 and patientid =639612 then 'NYAMUS-O-1623'
+when patientidentifiertypeid=1085 and patientid =639667 then 'NYAMUS-O-1624'
+when patientidentifiertypeid=1085 and patientid =639810 then 'NYAMUS-O-1625'
+when patientidentifiertypeid=1085 and patientid =639688 then 'NYAMUS-O-1626'
+when patientidentifiertypeid=1085 and patientid =639749 then 'NYAMUS-O-1627'
+when patientidentifiertypeid=1085 and patientid =639894 then 'NYAMUS-O-1628'
+when patientidentifiertypeid=1085 and patientid =639952 then 'NYAMUS-O-1629'
+when patientidentifiertypeid=1085 and patientid =640006 then 'NYAMUS-O-1630'
+when patientidentifiertypeid=1085 and patientid =641049 then 'NYAMUS-O-1631'
+when patientidentifiertypeid=1085 and patientid =640260 then 'NYAMUS-O-1632'
+when patientidentifiertypeid=1085 and patientid =640646 then 'NYAMUS-O-1633'
+when patientidentifiertypeid=1085 and patientid =640762 then 'NYAMUS-O-1634'
+when patientidentifiertypeid=1085 and patientid =640907 then 'NYAMUS-O-1635'
+when patientidentifiertypeid=1085 and patientid =641004 then 'NYAMUS-O-1636'
+when patientidentifiertypeid=1085 and patientid =641037 then 'NYAMUS-O-1637'
+when patientidentifiertypeid=1085 and patientid =643765 then 'NYAMUS-O-1638'
+when patientidentifiertypeid=1085 and patientid =641079 then 'NYAMUS-O-1639'
+when patientidentifiertypeid=1085 and patientid =641186 then 'NYAMUS-O-1640'
+when patientidentifiertypeid=1085 and patientid =641201 then 'NYAMUS-O-1641'
+when patientidentifiertypeid=1085 and patientid =641218 then 'NYAMUS-O-1642'
+when patientidentifiertypeid=1085 and patientid =641268 then 'NYAMUS-O-1643'
+when patientidentifiertypeid=1085 and patientid =641313 then 'NYAMUS-O-1644'
+when patientidentifiertypeid=1085 and patientid =641381 then 'NYAMUS-O-1645'
+when patientidentifiertypeid=1085 and patientid =641394 then 'NYAMUS-O-1646'
+when patientidentifiertypeid=1085 and patientid =641476 then 'NYAMUS-O-1647'
+when patientidentifiertypeid=1085 and patientid =641509 then 'NYAMUS-O-1648'
+when patientidentifiertypeid=1085 and patientid =641521 then 'NYAMUS-O-1649'
+when patientidentifiertypeid=1085 and patientid =641592 then 'NYAMUS-O-1650'
+when patientidentifiertypeid=1085 and patientid =641832 then 'NYAMUS-O-1651'
+when patientidentifiertypeid=1085 and patientid =641847 then 'NYAMUS-O-1652'
+when patientidentifiertypeid=1085 and patientid =641961 then 'NYAMUS-O-1653'
+when patientidentifiertypeid=1085 and patientid =641991 then 'NYAMUS-O-1654'
+when patientidentifiertypeid=1085 and patientid =642031 then 'NYAMUS-O-1655'
+when patientidentifiertypeid=1085 and patientid =642416 then 'NYAMUS-O-1656'
+when patientidentifiertypeid=1085 and patientid =642497 then 'NYAMUS-O-1657'
+when patientidentifiertypeid=1085 and patientid =642507 then 'NYAMUS-O-1658'
+when patientidentifiertypeid=1085 and patientid =642728 then 'NYAMUS-O-1659'
+when patientidentifiertypeid=1085 and patientid =642990 then 'NYAMUS-O-1660'
+when patientidentifiertypeid=1085 and patientid =643190 then 'NYAMUS-O-1661'
+when patientidentifiertypeid=1085 and patientid =643503 then 'NYAMUS-O-1662'
+when patientidentifiertypeid=1085 and patientid =644069 then 'NYAMUS-O-1663'
+when patientidentifiertypeid=1085 and patientid =644252 then 'NYAMUS-O-1664'
+when patientidentifiertypeid=1085 and patientid =644347 then 'NYAMUS-O-1665'
+when patientidentifiertypeid=1085 and patientid =645557 then 'NYAMUS-O-1666'
+when patientidentifiertypeid=1085 and patientid =646762 then 'NYAMUS-O-1667'
+when patientidentifiertypeid=1085 and patientid =642096 then 'NYAMUS-O-1668'
+when patientidentifiertypeid=1085 and patientid =642204 then 'NYAMUS-O-1669'
+when patientidentifiertypeid=1085 and patientid =642217 then 'NYAMUS-O-1670'
+when patientidentifiertypeid=1085 and patientid =642278 then 'NYAMUS-O-1671'
+when patientidentifiertypeid=1085 and patientid =642351 then 'NYAMUS-O-1672'
+when patientidentifiertypeid=1085 and patientid =642374 then 'NYAMUS-O-1673'
+when patientidentifiertypeid=1085 and patientid =642385 then 'NYAMUS-O-1674'
+when patientidentifiertypeid=1085 and patientid =642614 then 'NYAMUS-O-1675'
+when patientidentifiertypeid=1085 and patientid =642683 then 'NYAMUS-O-1676'
+when patientidentifiertypeid=1085 and patientid =642699 then 'NYAMUS-O-1677'
+when patientidentifiertypeid=1085 and patientid =642834 then 'NYAMUS-O-1678'
+when patientidentifiertypeid=1085 and patientid =642845 then 'NYAMUS-O-1679'
+when patientidentifiertypeid=1085 and patientid =642909 then 'NYAMUS-O-1680'
+when patientidentifiertypeid=1085 and patientid =642940 then 'NYAMUS-O-1681'
+when patientidentifiertypeid=1085 and patientid =642965 then 'NYAMUS-O-1682'
+when patientidentifiertypeid=1085 and patientid =643150 then 'NYAMUS-O-1683'
+when patientidentifiertypeid=1085 and patientid =643159 then 'NYAMUS-O-1684'
+when patientidentifiertypeid=1085 and patientid =643272 then 'NYAMUS-O-1685'
+when patientidentifiertypeid=1085 and patientid =643289 then 'NYAMUS-O-1686'
+when patientidentifiertypeid=1085 and patientid =643317 then 'NYAMUS-O-1687'
+when patientidentifiertypeid=1085 and patientid =643395 then 'NYAMUS-O-1688'
+when patientidentifiertypeid=1085 and patientid =643406 then 'NYAMUS-O-1689'
+when patientidentifiertypeid=1085 and patientid =643450 then 'NYAMUS-O-1690'
+when patientidentifiertypeid=1085 and patientid =643520 then 'NYAMUS-O-1691'
+when patientidentifiertypeid=1085 and patientid =643591 then 'NYAMUS-O-1692'
+when patientidentifiertypeid=1085 and patientid =643615 then 'NYAMUS-O-1693'
+when patientidentifiertypeid=1085 and patientid =643687 then 'NYAMUS-O-1694'
+when patientidentifiertypeid=1085 and patientid =643774 then 'NYAMUS-O-1695'
+when patientidentifiertypeid=1085 and patientid =643847 then 'NYAMUS-O-1696'
+when patientidentifiertypeid=1085 and patientid =643922 then 'NYAMUS-O-1697'
+when patientidentifiertypeid=1085 and patientid =643977 then 'NYAMUS-O-1698'
+when patientidentifiertypeid=1085 and patientid =644118 then 'NYAMUS-O-1699'
+when patientidentifiertypeid=1085 and patientid =644185 then 'NYAMUS-O-1700'
+when patientidentifiertypeid=1085 and patientid =644384 then 'NYAMUS-O-1701'
+when patientidentifiertypeid=1085 and patientid =644432 then 'NYAMUS-O-1702'
+when patientidentifiertypeid=1085 and patientid =644480 then 'NYAMUS-O-1703'
+when patientidentifiertypeid=1085 and patientid =645083 then 'NYAMUS-O-1704'
+when patientidentifiertypeid=1085 and patientid =646601 then 'NYAMUS-O-1705'
+when patientidentifiertypeid=1085 and patientid =645214 then 'NYAMUS-O-1706'
+when patientidentifiertypeid=1085 and patientid =645289 then 'NYAMUS-O-1707'
+when patientidentifiertypeid=1085 and patientid =645617 then 'NYAMUS-O-1708'
+when patientidentifiertypeid=1085 and patientid =645840 then 'NYAMUS-O-1709'
+when patientidentifiertypeid=1085 and patientid =646683 then 'NYAMUS-O-1710'
+when patientidentifiertypeid=1085 and patientid =647870 then 'NYAMUS-O-1711'
+when patientidentifiertypeid=1085 and patientid =648295 then 'NYAMUS-O-1712'
+when patientidentifiertypeid=1085 and patientid =650465 then 'NYAMUS-O-1713'
+when patientidentifiertypeid=1085 and patientid =651088 then 'NYAMUS-O-1714'
+when patientidentifiertypeid=1085 and patientid =653197 then 'NYAMUS-O-1715'
+when patientidentifiertypeid=1085 and patientid =654982 then 'NYAMUS-O-1716'
+when patientidentifiertypeid=1085 and patientid =645393 then 'NYAMUS-O-1717'
+when patientidentifiertypeid=1085 and patientid =645719 then 'NYAMUS-O-1718'
+when patientidentifiertypeid=1085 and patientid =648237 then 'NYAMUS-O-1719'
+when patientidentifiertypeid=1085 and patientid =646303 then 'NYAMUS-O-1720'
+when patientidentifiertypeid=1085 and patientid =648048 then 'NYAMUS-O-1721'
+when patientidentifiertypeid=1085 and patientid =648897 then 'NYAMUS-O-1722'
+when patientidentifiertypeid=1085 and patientid =650629 then 'NYAMUS-O-1723'
+when patientidentifiertypeid=1085 and patientid =651628 then 'NYAMUS-O-1724'
+when patientidentifiertypeid=1085 and patientid =645235 then 'NYAMUS-O-1725'
+when patientidentifiertypeid=1085 and patientid =645863 then 'NYAMUS-O-1726'
+when patientidentifiertypeid=1085 and patientid =645269 then 'NYAMUS-O-1727'
+when patientidentifiertypeid=1085 and patientid =645428 then 'NYAMUS-O-1728'
+when patientidentifiertypeid=1085 and patientid =645444 then 'NYAMUS-O-1729'
+when patientidentifiertypeid=1085 and patientid =645467 then 'NYAMUS-O-1730'
+when patientidentifiertypeid=1085 and patientid =645488 then 'NYAMUS-O-1731'
+when patientidentifiertypeid=1085 and patientid =645525 then 'NYAMUS-O-1732'
+when patientidentifiertypeid=1085 and patientid =645693 then 'NYAMUS-O-1733'
+when patientidentifiertypeid=1085 and patientid =646068 then 'NYAMUS-O-1734'
+when patientidentifiertypeid=1085 and patientid =646229 then 'NYAMUS-O-1735'
+when patientidentifiertypeid=1085 and patientid =646340 then 'NYAMUS-O-1736'
+when patientidentifiertypeid=1085 and patientid =646450 then 'NYAMUS-O-1737'
+when patientidentifiertypeid=1085 and patientid =647851 then 'NYAMUS-O-1738'
+when patientidentifiertypeid=1085 and patientid =647907 then 'NYAMUS-O-1739'
+when patientidentifiertypeid=1085 and patientid =648284 then 'NYAMUS-O-1740'
+when patientidentifiertypeid=1085 and patientid =649012 then 'NYAMUS-O-1741'
+when patientidentifiertypeid=1085 and patientid =650837 then 'NYAMUS-O-1742'
+when patientidentifiertypeid=1085 and patientid =651310 then 'NYAMUS-O-1743'
+when patientidentifiertypeid=1085 and patientid =652348 then 'NYAMUS-O-1744'
+when patientidentifiertypeid=1085 and patientid =653170 then 'NYAMUS-O-1745'
+when patientidentifiertypeid=1085 and patientid =653787 then 'NYAMUS-O-1746'
+when patientidentifiertypeid=1085 and patientid =654708 then 'NYAMUS-O-1747'
+when patientidentifiertypeid=1085 and patientid =645885 then 'NYAMUS-O-1748'
+when patientidentifiertypeid=1085 and patientid =646004 then 'NYAMUS-O-1749'
+when patientidentifiertypeid=1085 and patientid =646022 then 'NYAMUS-O-1750'
+when patientidentifiertypeid=1085 and patientid =646038 then 'NYAMUS-O-1751'
+when patientidentifiertypeid=1085 and patientid =646076 then 'NYAMUS-O-1752'
+when patientidentifiertypeid=1085 and patientid =646381 then 'NYAMUS-O-1753'
+when patientidentifiertypeid=1085 and patientid =646439 then 'NYAMUS-O-1754'
+when patientidentifiertypeid=1085 and patientid =647673 then 'NYAMUS-O-1755'
+when patientidentifiertypeid=1085 and patientid =646504 then 'NYAMUS-O-1756'
+when patientidentifiertypeid=1085 and patientid =646547 then 'NYAMUS-O-1757'
+when patientidentifiertypeid=1085 and patientid =646839 then 'NYAMUS-O-1758'
+when patientidentifiertypeid=1085 and patientid =646892 then 'NYAMUS-O-1759'
+when patientidentifiertypeid=1085 and patientid =647723 then 'NYAMUS-O-1760'
+when patientidentifiertypeid=1085 and patientid =647791 then 'NYAMUS-O-1761'
+when patientidentifiertypeid=1085 and patientid =647943 then 'NYAMUS-O-1762'
+when patientidentifiertypeid=1085 and patientid =649556 then 'NYAMUS-O-1763'
+when patientidentifiertypeid=1085 and patientid =650237 then 'NYAMUS-O-1764'
+when patientidentifiertypeid=1085 and patientid =650281 then 'NYAMUS-O-1765'
+when patientidentifiertypeid=1085 and patientid =650311 then 'NYAMUS-O-1766'
+when patientidentifiertypeid=1085 and patientid =652460 then 'NYAMUS-O-1767'
+when patientidentifiertypeid=1085 and patientid =646640 then 'NYAMUS-O-1768'
+when patientidentifiertypeid=1085 and patientid =646907 then 'NYAMUS-O-1769'
+when patientidentifiertypeid=1085 and patientid =647831 then 'NYAMUS-O-1770'
+when patientidentifiertypeid=1085 and patientid =649631 then 'NYAMUS-O-1771'
+when patientidentifiertypeid=1085 and patientid =647894 then 'NYAMUS-O-1772'
+when patientidentifiertypeid=1085 and patientid =647965 then 'NYAMUS-O-1773'
+when patientidentifiertypeid=1085 and patientid =648003 then 'NYAMUS-O-1774'
+when patientidentifiertypeid=1085 and patientid =648013 then 'NYAMUS-O-1775'
+when patientidentifiertypeid=1085 and patientid =648065 then 'NYAMUS-O-1776'
+when patientidentifiertypeid=1085 and patientid =648079 then 'NYAMUS-O-1777'
+when patientidentifiertypeid=1085 and patientid =648087 then 'NYAMUS-O-1778'
+when patientidentifiertypeid=1085 and patientid =648125 then 'NYAMUS-O-1779'
+when patientidentifiertypeid=1085 and patientid =648141 then 'NYAMUS-O-1780'
+when patientidentifiertypeid=1085 and patientid =648183 then 'NYAMUS-O-1781'
+when patientidentifiertypeid=1085 and patientid =648197 then 'NYAMUS-O-1782'
+when patientidentifiertypeid=1085 and patientid =648269 then 'NYAMUS-O-1783'
+when patientidentifiertypeid=1085 and patientid =648748 then 'NYAMUS-O-1784'
+when patientidentifiertypeid=1085 and patientid =649060 then 'NYAMUS-O-1785'
+when patientidentifiertypeid=1085 and patientid =649222 then 'NYAMUS-O-1786'
+when patientidentifiertypeid=1085 and patientid =649248 then 'NYAMUS-O-1787'
+when patientidentifiertypeid=1085 and patientid =649396 then 'NYAMUS-O-1788'
+when patientidentifiertypeid=1085 and patientid =649452 then 'NYAMUS-O-1789'
+when patientidentifiertypeid=1085 and patientid =649474 then 'NYAMUS-O-1790'
+when patientidentifiertypeid=1085 and patientid =649608 then 'NYAMUS-O-1791'
+when patientidentifiertypeid=1085 and patientid =649662 then 'NYAMUS-O-1792'
+when patientidentifiertypeid=1085 and patientid =649832 then 'NYAMUS-O-1793'
+when patientidentifiertypeid=1085 and patientid =649960 then 'NYAMUS-O-1794'
+when patientidentifiertypeid=1085 and patientid =650213 then 'NYAMUS-O-1795'
+when patientidentifiertypeid=1085 and patientid =650342 then 'NYAMUS-O-1796'
+when patientidentifiertypeid=1085 and patientid =650425 then 'NYAMUS-O-1797'
+when patientidentifiertypeid=1085 and patientid =651652 then 'NYAMUS-O-1798'
+when patientidentifiertypeid=1085 and patientid =654934 then 'NYAMUS-O-1799'
+when patientidentifiertypeid=1085 and patientid =650534 then 'NYAMUS-O-1800'
+when patientidentifiertypeid=1085 and patientid =650566 then 'NYAMUS-O-1801'
+when patientidentifiertypeid=1085 and patientid =650830 then 'NYAMUS-O-1802'
+when patientidentifiertypeid=1085 and patientid =651878 then 'NYAMUS-O-1803'
+when patientidentifiertypeid=1085 and patientid =650645 then 'NYAMUS-O-1804'
+when patientidentifiertypeid=1085 and patientid =652078 then 'NYAMUS-O-1805'
+when patientidentifiertypeid=1085 and patientid =650708 then 'NYAMUS-O-1806'
+when patientidentifiertypeid=1085 and patientid =650874 then 'NYAMUS-O-1807'
+when patientidentifiertypeid=1085 and patientid =651116 then 'NYAMUS-O-1808'
+when patientidentifiertypeid=1085 and patientid =651281 then 'NYAMUS-O-1809'
+when patientidentifiertypeid=1085 and patientid =655788 then 'NYAMUS-O-1810'
+when patientidentifiertypeid=1085 and patientid =651960 then 'NYAMUS-O-1811'
+when patientidentifiertypeid=1085 and patientid =652539 then 'NYAMUS-O-1812'
+when patientidentifiertypeid=1085 and patientid =653525 then 'NYAMUS-O-1813'
+when patientidentifiertypeid=1085 and patientid =653863 then 'NYAMUS-O-1814'
+when patientidentifiertypeid=1085 and patientid =655915 then 'NYAMUS-O-1815'
+when patientidentifiertypeid=1085 and patientid =651206 then 'NYAMUS-O-1816'
+when patientidentifiertypeid=1085 and patientid =653543 then 'NYAMUS-O-1817'
+when patientidentifiertypeid=1085 and patientid =653554 then 'NYAMUS-O-1818'
+when patientidentifiertypeid=1085 and patientid =654510 then 'NYAMUS-O-1819'
+when patientidentifiertypeid=1085 and patientid =651264 then 'NYAMUS-O-1820'
+when patientidentifiertypeid=1085 and patientid =653660 then 'NYAMUS-O-1821'
+when patientidentifiertypeid=1085 and patientid =655220 then 'NYAMUS-O-1822'
+when patientidentifiertypeid=1085 and patientid =651455 then 'NYAMUS-O-1823'
+when patientidentifiertypeid=1085 and patientid =651500 then 'NYAMUS-O-1824'
+when patientidentifiertypeid=1085 and patientid =652151 then 'NYAMUS-O-1825'
+when patientidentifiertypeid=1085 and patientid =653056 then 'NYAMUS-O-1826'
+when patientidentifiertypeid=1085 and patientid =653744 then 'NYAMUS-O-1827'
+when patientidentifiertypeid=1085 and patientid =653913 then 'NYAMUS-O-1828'
+when patientidentifiertypeid=1085 and patientid =654165 then 'NYAMUS-O-1829'
+when patientidentifiertypeid=1085 and patientid =654675 then 'NYAMUS-O-1830'
+when patientidentifiertypeid=1085 and patientid =655031 then 'NYAMUS-O-1831'
+when patientidentifiertypeid=1085 and patientid =655274 then 'NYAMUS-O-1832'
+when patientidentifiertypeid=1085 and patientid =653647 then 'NYAMUS-O-1833'
+when patientidentifiertypeid=1085 and patientid =659141 then 'NYAMUS-O-1834'
+when patientidentifiertypeid=1085 and patientid =653256 then 'NYAMUS-O-1835'
+when patientidentifiertypeid=1085 and patientid =652177 then 'NYAMUS-O-1836'
+when patientidentifiertypeid=1085 and patientid =652674 then 'NYAMUS-O-1837'
+when patientidentifiertypeid=1085 and patientid =652834 then 'NYAMUS-O-1838'
+when patientidentifiertypeid=1085 and patientid =657873 then 'NYAMUS-O-1839'
+when patientidentifiertypeid=1085 and patientid =652279 then 'NYAMUS-O-1840'
+when patientidentifiertypeid=1085 and patientid =652421 then 'NYAMUS-O-1841'
+when patientidentifiertypeid=1085 and patientid =654433 then 'NYAMUS-O-1842'
+when patientidentifiertypeid=1085 and patientid =656682 then 'NYAMUS-O-1843'
+when patientidentifiertypeid=1085 and patientid =652873 then 'NYAMUS-O-1844'
+when patientidentifiertypeid=1085 and patientid =652883 then 'NYAMUS-O-1845'
+when patientidentifiertypeid=1085 and patientid =652927 then 'NYAMUS-O-1846'
+when patientidentifiertypeid=1085 and patientid =653323 then 'NYAMUS-O-1847'
+when patientidentifiertypeid=1085 and patientid =653948 then 'NYAMUS-O-1848'
+when patientidentifiertypeid=1085 and patientid =654348 then 'NYAMUS-O-1849'
+when patientidentifiertypeid=1085 and patientid =654475 then 'NYAMUS-O-1850'
+when patientidentifiertypeid=1085 and patientid =654568 then 'NYAMUS-O-1851'
+when patientidentifiertypeid=1085 and patientid =654731 then 'NYAMUS-O-1852'
+when patientidentifiertypeid=1085 and patientid =654804 then 'NYAMUS-O-1853'
+when patientidentifiertypeid=1085 and patientid =654842 then 'NYAMUS-O-1854'
+when patientidentifiertypeid=1085 and patientid =654898 then 'NYAMUS-O-1855'
+when patientidentifiertypeid=1085 and patientid =655062 then 'NYAMUS-O-1856'
+when patientidentifiertypeid=1085 and patientid =655100 then 'NYAMUS-O-1857'
+when patientidentifiertypeid=1085 and patientid =655204 then 'NYAMUS-O-1858'
+when patientidentifiertypeid=1085 and patientid =655348 then 'NYAMUS-O-1859'
+when patientidentifiertypeid=1085 and patientid =655379 then 'NYAMUS-O-1860'
+when patientidentifiertypeid=1085 and patientid =655456 then 'NYAMUS-O-1861'
+when patientidentifiertypeid=1085 and patientid =655527 then 'NYAMUS-O-1862'
+when patientidentifiertypeid=1085 and patientid =655569 then 'NYAMUS-O-1863'
+when patientidentifiertypeid=1085 and patientid =655592 then 'NYAMUS-O-1864'
+when patientidentifiertypeid=1085 and patientid =655695 then 'NYAMUS-O-1865'
+when patientidentifiertypeid=1085 and patientid =656043 then 'NYAMUS-O-1866'
+when patientidentifiertypeid=1085 and patientid =656076 then 'NYAMUS-O-1867'
+when patientidentifiertypeid=1085 and patientid =656446 then 'NYAMUS-O-1868'
+when patientidentifiertypeid=1085 and patientid =656601 then 'NYAMUS-O-1869'
+when patientidentifiertypeid=1085 and patientid =657187 then 'NYAMUS-O-1870'
+when patientidentifiertypeid=1085 and patientid =656940 then 'NYAMUS-O-1871'
+when patientidentifiertypeid=1085 and patientid =657037 then 'NYAMUS-O-1872'
+when patientidentifiertypeid=1085 and patientid =657180 then 'NYAMUS-O-1873'
+when patientidentifiertypeid=1085 and patientid =658180 then 'NYAMUS-O-1874'
+when patientidentifiertypeid=1085 and patientid =657299 then 'NYAMUS-O-1875'
+when patientidentifiertypeid=1085 and patientid =657806 then 'NYAMUS-O-1876'
+when patientidentifiertypeid=1085 and patientid =657817 then 'NYAMUS-O-1877'
+when patientidentifiertypeid=1085 and patientid =658329 then 'NYAMUS-O-1878'
+when patientidentifiertypeid=1085 and patientid =657439 then 'NYAMUS-O-1879'
+when patientidentifiertypeid=1085 and patientid =657567 then 'NYAMUS-O-1880'
+when patientidentifiertypeid=1085 and patientid =657618 then 'NYAMUS-O-1881'
+when patientidentifiertypeid=1085 and patientid =657684 then 'NYAMUS-O-1882'
+when patientidentifiertypeid=1085 and patientid =657720 then 'NYAMUS-O-1883'
+when patientidentifiertypeid=1085 and patientid =658169 then 'NYAMUS-O-1884'
+when patientidentifiertypeid=1085 and patientid =658358 then 'NYAMUS-O-1885'
+when patientidentifiertypeid=1085 and patientid =658024 then 'NYAMUS-O-1886'
+when patientidentifiertypeid=1085 and patientid =658066 then 'NYAMUS-O-1887'
+when patientidentifiertypeid=1085 and patientid =658274 then 'NYAMUS-O-1888'
+when patientidentifiertypeid=1085 and patientid =658991 then 'NYAMUS-O-1889'
+when patientidentifiertypeid=1085 and patientid =659550 then 'NYAMUS-O-1890'
+when patientidentifiertypeid=1085 and patientid =658105 then 'NYAMUS-O-1891'
+when patientidentifiertypeid=1085 and patientid =659305 then 'NYAMUS-O-1892'
+when patientidentifiertypeid=1085 and patientid =659435 then 'NYAMUS-O-1893'
+when patientidentifiertypeid=1085 and patientid =658452 then 'NYAMUS-O-1894'
+when patientidentifiertypeid=1085 and patientid =659216 then 'NYAMUS-O-1895'
+when patientidentifiertypeid=1085 and patientid =658489 then 'NYAMUS-O-1896'
+when patientidentifiertypeid=1085 and patientid =658577 then 'NYAMUS-O-1897'
+when patientidentifiertypeid=1085 and patientid =658674 then 'NYAMUS-O-1898'
+when patientidentifiertypeid=1085 and patientid =658687 then 'NYAMUS-O-1899'
+when patientidentifiertypeid=1085 and patientid =659108 then 'NYAMUS-O-1900'
+when patientidentifiertypeid=1085 and patientid =658972 then 'NYAMUS-O-1901'
+when patientidentifiertypeid=1085 and patientid =662927 then 'NYAMUS-O-1902'
+when patientidentifiertypeid=1085 and patientid =663019 then 'NYAMUS-O-1903'
+when patientidentifiertypeid=1085 and patientid =663130 then 'NYAMUS-O-1904'
+when patientidentifiertypeid=1085 and patientid =663150 then 'NYAMUS-O-1905'
+when patientidentifiertypeid=1085 and patientid =663497 then 'NYAMUS-O-1906'
+when patientidentifiertypeid=1085 and patientid =680437 then 'NYAMUS-O-1907'
+when patientidentifiertypeid=1085 and patientid =680575 then 'NYAMUS-O-1908'
+when patientidentifiertypeid=1085 and patientid =680675 then 'NYAMUS-O-1909'
+when patientidentifiertypeid=1085 and patientid =684722 then 'NYAMUS-O-1910'
+when patientidentifiertypeid=1085 and patientid =683277 then 'NYAMUS-O-1911'
+when patientidentifiertypeid=1085 and patientid =685219 then 'NYAMUS-O-1912'
+when patientidentifiertypeid=1085 and patientid =683809 then 'NYAMUS-O-1913'
+when patientidentifiertypeid=1085 and patientid =685123 then 'NYAMUS-O-1914'
+when patientidentifiertypeid=1085 and patientid =685393 then 'NYAMUS-O-1915'
+when patientidentifiertypeid=1085 and patientid =683570 then 'NYAMUS-O-1916'
+when patientidentifiertypeid=1085 and patientid =685313 then 'NYAMUS-O-1917'
+when patientidentifiertypeid=1085 and patientid =685991 then 'NYAMUS-O-1918'
+when patientidentifiertypeid=1085 and patientid =685788 then 'NYAMUS-O-1919'
+when patientidentifiertypeid=1085 and patientid =686262 then 'NYAMUS-O-1920'
+when patientidentifiertypeid=1085 and patientid =685002 then 'NYAMUS-O-1921'
+when patientidentifiertypeid=1085 and patientid =685697 then 'NYAMUS-O-1922'
+when patientidentifiertypeid=1085 and patientid =683923 then 'NYAMUS-O-1923'
+when patientidentifiertypeid=1085 and patientid =684069 then 'NYAMUS-O-1924'
+when patientidentifiertypeid=1085 and patientid =684192 then 'NYAMUS-O-1925'
+when patientidentifiertypeid=1085 and patientid =685894 then 'NYAMUS-O-1926'
+when patientidentifiertypeid=1085 and patientid =686084 then 'NYAMUS-O-1927'
+when patientidentifiertypeid=1085 and patientid =686349 then 'NYAMUS-O-1928'
+when patientidentifiertypeid=1085 and patientid =686537 then 'NYAMUS-O-1929'
+when patientidentifiertypeid=1085 and patientid =684865 then 'NYAMUS-O-1930'
+when patientidentifiertypeid=1085 and patientid =684529 then 'NYAMUS-O-1931'
+when patientidentifiertypeid=1085 and patientid =686433 then 'NYAMUS-O-1932'
+when patientidentifiertypeid=1085 and patientid =685489 then 'NYAMUS-O-1933'
+when patientidentifiertypeid=1085 and patientid =685595 then 'NYAMUS-O-1934'
+when patientidentifiertypeid=1085 and patientid =687356 then 'NYAMUS-O-1935'
+when patientidentifiertypeid=1085 and patientid =686181 then 'NYAMUS-O-1936'
+when patientidentifiertypeid=1085 and patientid =686633 then 'NYAMUS-O-1937'
+when patientidentifiertypeid=1085 and patientid =686734 then 'NYAMUS-O-1938'
+when patientidentifiertypeid=1085 and patientid =687245 then 'NYAMUS-O-1939'
+when patientidentifiertypeid=1085 and patientid =687687 then 'NYAMUS-O-1940'
+when patientidentifiertypeid=1085 and patientid =691449 then 'NYAMUS-O-1941'
+when patientidentifiertypeid=1085 and patientid =691865 then 'NYAMUS-O-1942'
+when patientidentifiertypeid=1085 and patientid =691895 then 'NYAMUS-O-1943'
+when patientidentifiertypeid=1085 and patientid =691997 then 'NYAMUS-O-1944'
+when patientidentifiertypeid=1085 and patientid =692091 then 'NYAMUS-O-1945'
+when patientidentifiertypeid=1085 and patientid =692176 then 'NYAMUS-O-1946'
+when patientidentifiertypeid=1085 and patientid =692291 then 'NYAMUS-O-1947'
+when patientidentifiertypeid=1085 and patientid =692369 then 'NYAMUS-O-1948'
+when patientidentifiertypeid=1085 and patientid =692466 then 'NYAMUS-O-1949'
+when patientidentifiertypeid=1085 and patientid =692481 then 'NYAMUS-O-1950'
+when patientidentifiertypeid=1085 and patientid =692577 then 'NYAMUS-O-1951'
+when patientidentifiertypeid=1085 and patientid =692698 then 'NYAMUS-O-1952'
+when patientidentifiertypeid=1085 and patientid =692793 then 'NYAMUS-O-1953'
+when patientidentifiertypeid=1085 and patientid =692832 then 'NYAMUS-O-1954'
+when patientidentifiertypeid=1085 and patientid =692882 then 'NYAMUS-O-1955'
+when patientidentifiertypeid=1085 and patientid =692889 then 'NYAMUS-O-1956'
+when patientidentifiertypeid=1085 and patientid =693044 then 'NYAMUS-O-1957'
+when patientidentifiertypeid=1085 and patientid =693199 then 'NYAMUS-O-1958'
+when patientidentifiertypeid=1085 and patientid =693232 then 'NYAMUS-O-1959'
+when patientidentifiertypeid=1085 and patientid =693386 then 'NYAMUS-O-1960'
+when patientidentifiertypeid=1085 and patientid =693549 then 'NYAMUS-O-1961'
+when patientidentifiertypeid=1085 and patientid =693649 then 'NYAMUS-O-1962'
+when patientidentifiertypeid=1085 and patientid =693737 then 'NYAMUS-O-1963'
+when patientidentifiertypeid=1085 and patientid =693831 then 'NYAMUS-O-1964'
+when patientidentifiertypeid=1085 and patientid =693928 then 'NYAMUS-O-1965'
+when patientidentifiertypeid=1085 and patientid =694063 then 'NYAMUS-O-1966'
+when patientidentifiertypeid=1085 and patientid =694149 then 'NYAMUS-O-1967'
+when patientidentifiertypeid=1085 and patientid =694235 then 'NYAMUS-O-1968'
+when patientidentifiertypeid=1085 and patientid =694342 then 'NYAMUS-O-1969'
+when patientidentifiertypeid=1085 and patientid =694403 then 'NYAMUS-O-1970'
+when patientidentifiertypeid=1085 and patientid =694435 then 'NYAMUS-O-1971'
+when patientidentifiertypeid=1085 and patientid =694580 then 'NYAMUS-O-1972'
+when patientidentifiertypeid=1085 and patientid =694672 then 'NYAMUS-O-1973'
+when patientidentifiertypeid=1085 and patientid =694805 then 'NYAMUS-O-1974'
+when patientidentifiertypeid=1085 and patientid =694929 then 'NYAMUS-O-1975'
+when patientidentifiertypeid=1085 and patientid =694950 then 'NYAMUS-O-1976'
+when patientidentifiertypeid=1085 and patientid =695481 then 'NYAMUS-O-1977'
+when patientidentifiertypeid=1085 and patientid =695640 then 'NYAMUS-O-1978'
+when patientidentifiertypeid=1085 and patientid =695710 then 'NYAMUS-O-1979'
+when patientidentifiertypeid=1085 and patientid =696036 then 'NYAMUS-O-1980'
+when patientidentifiertypeid=1085 and patientid =696117 then 'NYAMUS-O-1981'
+when patientidentifiertypeid=1085 and patientid =696187 then 'NYAMUS-O-1982'
+when patientidentifiertypeid=1085 and patientid =696557 then 'NYAMUS-O-1983'
+when patientidentifiertypeid=1085 and patientid =696281 then 'NYAMUS-O-1984'
+when patientidentifiertypeid=1085 and patientid =696367 then 'NYAMUS-O-1985'
+when patientidentifiertypeid=1085 and patientid =696457 then 'NYAMUS-O-1986'
+when patientidentifiertypeid=1085 and patientid =696642 then 'NYAMUS-O-1987'
+when patientidentifiertypeid=1085 and patientid =696725 then 'NYAMUS-O-1988'
+when patientidentifiertypeid=1085 and patientid =696826 then 'NYAMUS-O-1989'
+when patientidentifiertypeid=1085 and patientid =696897 then 'NYAMUS-O-1990'
+when patientidentifiertypeid=1085 and patientid =697005 then 'NYAMUS-O-1991'
+when patientidentifiertypeid=1085 and patientid =697109 then 'NYAMUS-O-1992'
+when patientidentifiertypeid=1085 and patientid =705319 then 'NYAMUS-O-1993'
+when patientidentifiertypeid=1085 and patientid =705647 then 'NYAMUS-O-1994'
+when patientidentifiertypeid=1085 and patientid =705846 then 'NYAMUS-O-1995'
+when patientidentifiertypeid=1085 and patientid =705970 then 'NYAMUS-O-1996'
+when patientidentifiertypeid=1085 and patientid =706098 then 'NYAMUS-O-1997'
+when patientidentifiertypeid=1085 and patientid =706259 then 'NYAMUS-O-1998'
+when patientidentifiertypeid=1085 and patientid =706398 then 'NYAMUS-O-1999'
+when patientidentifiertypeid=1085 and patientid =706548 then 'NYAMUS-O-2000'
+when patientidentifiertypeid=1085 and patientid =706710 then 'NYAMUS-O-2001'
+when patientidentifiertypeid=1085 and patientid =706844 then 'NYAMUS-O-2002'
+when patientidentifiertypeid=1085 and patientid =706946 then 'NYAMUS-O-2003'
+when patientidentifiertypeid=1085 and patientid =707043 then 'NYAMUS-O-2004'
+when patientidentifiertypeid=1085 and patientid =707189 then 'NYAMUS-O-2005'
+when patientidentifiertypeid=1085 and patientid =707319 then 'NYAMUS-O-2006'
+when patientidentifiertypeid=1085 and patientid =707465 then 'NYAMUS-O-2007'
+when patientidentifiertypeid=1085 and patientid =707576 then 'NYAMUS-O-2008'
+when patientidentifiertypeid=1085 and patientid =707705 then 'NYAMUS-O-2009'
+when patientidentifiertypeid=1085 and patientid =707813 then 'NYAMUS-O-2010'
+when patientidentifiertypeid=1085 and patientid =707914 then 'NYAMUS-O-2011'
+when patientidentifiertypeid=1085 and patientid =707996 then 'NYAMUS-O-2012'
+when patientidentifiertypeid=1085 and patientid =708061 then 'NYAMUS-O-2013'
+when patientidentifiertypeid=1085 and patientid =748546 then 'NYAMUS-O-2014'
+when patientidentifiertypeid=1085 and patientid =748716 then 'NYAMUS-O-2015'
+when patientidentifiertypeid=1085 and patientid =756614 then 'NYAMUS-O-2016'
+when patientidentifiertypeid=1085 and patientid =838095 then 'NYAMUS-O-2017'
+when patientidentifiertypeid=1085 and patientid =1385571 then 'NYAMUS-O-2018'
+when patientidentifiertypeid=1085 and patientid =1632499 then 'NYAMUS-O-2019'
+when patientidentifiertypeid=1085 and patientid =1632868 then 'NYAMUS-O-2020'
+when patientidentifiertypeid=1085 and patientid =1668534 then 'NYAMUS-O-2021'
+when patientidentifiertypeid=1085 and patientid =1792172 then 'NYAMUS-O-2022'
+when patientidentifiertypeid=1085 and patientid =1792364 then 'NYAMUS-O-2023'
+when patientidentifiertypeid=1085 and patientid =2169678 then 'NYAMUS-O-2024'
+when patientidentifiertypeid=1085 and patientid =2577818 then 'NYAMUS-O-2025'
+when patientidentifiertypeid=1085 and patientid =2577899 then 'NYAMUS-O-2026'
+when patientidentifiertypeid=1085 and patientid =2577954 then 'NYAMUS-O-2027'
+when patientidentifiertypeid=1085 and patientid =2582286 then 'NYAMUS-O-2028'
+when patientidentifiertypeid=1085 and patientid =2582481 then 'NYAMUS-O-2029'
+when patientidentifiertypeid=1085 and patientid =2582720 then 'NYAMUS-O-2030'
+when patientidentifiertypeid=1085 and patientid =2582859 then 'NYAMUS-O-2031'
+when patientidentifiertypeid=1085 and patientid =2583295 then 'NYAMUS-O-2032'
+when patientidentifiertypeid=1085 and patientid =2600617 then 'NYAMUS-O-2033'
+when patientidentifiertypeid=1085 and patientid =2600646 then 'NYAMUS-O-2034'
+when patientidentifiertypeid=1085 and patientid =2600695 then 'NYAMUS-O-2035'
+when patientidentifiertypeid=1085 and patientid =2608972 then 'NYAMUS-O-2036'
+when patientidentifiertypeid=1085 and patientid =2609421 then 'NYAMUS-O-2037'
+when patientidentifiertypeid=1085 and patientid =2609586 then 'NYAMUS-O-2038'
+when patientidentifiertypeid=1085 and patientid =2623503 then 'NYAMUS-O-2039'
+when patientidentifiertypeid=1085 and patientid =575692 then 'NYAMUS-O-2040'
+when patientidentifiertypeid=1085 and patientid =2623495 then 'NYAMUS-O-2041'
+end 
+where 
+patientid in (
+6282	,
+6307	,
+6357	,
+6386	,
+6493	,
+6597	,
+6627	,
+6657	,
+6688	,
+6744	,
+6773	,
+6811	,
+6865	,
+6919	,
+6951	,
+6969	,
+7022	,
+7034	,
+7046	,
+7058	,
+7080	,
+7095	,
+7111	,
+7128	,
+7147	,
+7159	,
+7171	,
+7183	,
+7195	,
+7207	,
+7219	,
+7245	,
+7271	,
+7290	,
+7316	,
+7375	,
+7508	,
+7543	,
+7555	,
+7583	,
+7618	,
+7643	,
+7694	,
+7722	,
+7731	,
+7787	,
+7796	,
+7853	,
+7861	,
+7899	,
+7917	,
+7934	,
+7960	,
+8010	,
+8017	,
+8034	,
+8068	,
+8105	,
+8120	,
+8130	,
+8137	,
+8185	,
+8197	,
+8204	,
+8222	,
+8238	,
+8288	,
+8325	,
+8373	,
+8396	,
+8430	,
+8460	,
+8488	,
+8497	,
+8505	,
+8537	,
+8543	,
+8559	,
+8584	,
+8594	,
+8601	,
+8624	,
+8642	,
+8668	,
+8705	,
+8719	,
+8736	,
+8743	,
+8760	,
+8768	,
+8775	,
+8794	,
+8804	,
+8820	,
+8833	,
+8844	,
+8855	,
+8869	,
+8881	,
+8893	,
+8900	,
+8917	,
+8924	,
+8941	,
+8951	,
+8965	,
+8973	,
+8990	,
+8999	,
+9010	,
+9028	,
+9035	,
+9044	,
+9069	,
+9078	,
+9094	,
+9113	,
+9148	,
+9155	,
+9163	,
+9182	,
+9193	,
+9200	,
+9218	,
+9232	,
+9240	,
+9250	,
+9268	,
+9275	,
+9289	,
+9306	,
+9313	,
+9322	,
+9338	,
+9352	,
+9369	,
+9379	,
+9395	,
+9411	,
+9419	,
+9440	,
+9457	,
+9464	,
+9481	,
+9488	,
+9502	,
+394596	,
+399972	,
+481108	,
+481302	,
+481683	,
+481872	,
+482199	,
+482449	,
+482751	,
+482975	,
+483162	,
+483774	,
+483982	,
+486819	,
+487060	,
+487570	,
+487787	,
+487366	,
+488033	,
+487899	,
+488246	,
+489394	,
+488951	,
+489147	,
+491824	,
+492228	,
+492532	,
+492947	,
+493545	,
+497556	,
+493810	,
+494362	,
+496585	,
+495315	,
+495605	,
+496003	,
+496181	,
+496445	,
+497039	,
+497075	,
+497313	,
+497464	,
+498720	,
+499150	,
+499528	,
+499799	,
+500295	,
+500359	,
+500568	,
+500724	,
+500801	,
+502523	,
+500925	,
+501276	,
+501143	,
+501307	,
+501434	,
+501454	,
+502255	,
+501750	,
+502053	,
+502060	,
+502347	,
+502819	,
+502874	,
+503143	,
+505071	,
+507784	,
+509393	,
+505391	,
+505412	,
+505520	,
+505625	,
+508351	,
+509430	,
+505787	,
+506207	,
+506575	,
+506709	,
+506851	,
+508315	,
+508438	,
+508655	,
+508684	,
+507053	,
+508241	,
+505883	,
+506024	,
+506069	,
+506239	,
+506565	,
+507164	,
+507279	,
+508010	,
+508039	,
+508057	,
+508141	,
+508147	,
+508423	,
+508547	,
+506273	,
+506425	,
+506505	,
+506689	,
+506756	,
+506948	,
+507320	,
+508199	,
+508844	,
+509022	,
+509031	,
+509138	,
+509195	,
+509201	,
+509814	,
+506926	,
+507115	,
+507194	,
+509605	,
+507648	,
+507888	,
+507910	,
+508263	,
+508409	,
+508507	,
+508702	,
+509236	,
+509555	,
+508900	,
+509040	,
+509745	,
+513411	,
+514000	,
+511243	,
+511547	,
+511614	,
+512025	,
+512158	,
+511320	,
+511685	,
+512729	,
+511401	,
+511471	,
+512897	,
+511636	,
+511983	,
+512817	,
+513296	,
+511758	,
+511793	,
+511887	,
+512257	,
+512342	,
+512626	,
+512636	,
+512711	,
+512778	,
+513196	,
+513249	,
+513336	,
+512983	,
+513106	,
+513144	,
+513401	,
+513517	,
+513717	,
+513738	,
+513579	,
+513624	,
+513670	,
+513786	,
+513808	,
+513867	,
+513947	,
+514092	,
+514886	,
+514932	,
+514973	,
+514992	,
+515029	,
+515081	,
+515097	,
+515122	,
+515144	,
+515174	,
+515204	,
+515249	,
+515301	,
+515410	,
+515482	,
+515577	,
+515616	,
+515983	,
+516016	,
+516025	,
+516066	,
+516103	,
+516113	,
+516153	,
+516163	,
+516193	,
+516212	,
+516259	,
+516225	,
+516270	,
+516292	,
+516302	,
+516324	,
+516699	,
+516331	,
+516362	,
+516377	,
+516408	,
+516429	,
+516463	,
+516483	,
+516510	,
+516542	,
+516581	,
+516606	,
+516626	,
+516647	,
+516673	,
+516740	,
+516747	,
+516794	,
+516824	,
+516831	,
+516858	,
+516885	,
+516707	,
+516865	,
+516934	,
+516774	,
+516892	,
+516920	,
+516954	,
+516967	,
+516986	,
+516994	,
+518211	,
+518332	,
+518441	,
+518532	,
+518856	,
+519040	,
+519531	,
+521874	,
+521896	,
+524691	,
+525663	,
+525787	,
+524181	,
+518581	,
+518639	,
+518758	,
+518773	,
+519080	,
+522277	,
+522415	,
+522736	,
+518929	,
+520665	,
+521106	,
+525800	,
+521755	,
+519270	,
+521390	,
+522289	,
+522572	,
+523216	,
+519218	,
+521609	,
+519729	,
+521283	,
+521296	,
+521500	,
+521649	,
+522034	,
+522040	,
+522165	,
+522697	,
+522903	,
+522998	,
+523110	,
+526309	,
+523231	,
+523335	,
+523411	,
+523442	,
+523548	,
+523848	,
+524074	,
+524452	,
+524829	,
+525075	,
+523665	,
+524316	,
+525397	,
+523817	,
+524587	,
+526071	,
+526191	,
+523954	,
+524017	,
+524850	,
+524960	,
+525020	,
+525207	,
+525919	,
+524306	,
+525367	,
+525516	,
+525708	,
+525940	,
+526129	,
+526388	,
+526457	,
+530539	,
+530881	,
+534342	,
+531510	,
+531663	,
+533399	,
+533614	,
+533749	,
+534200	,
+534460	,
+534616	,
+531202	,
+531755	,
+533214	,
+533596	,
+533020	,
+533499	,
+533887	,
+533975	,
+534071	,
+535837	,
+533142	,
+533317	,
+533335	,
+533447	,
+533852	,
+534038	,
+534311	,
+534431	,
+534560	,
+535613	,
+535948	,
+536187	,
+538196	,
+539552	,
+539578	,
+535787	,
+536128	,
+536348	,
+536360	,
+536786	,
+537189	,
+537237	,
+537685	,
+537854	,
+537921	,
+538048	,
+538252	,
+538456	,
+539214	,
+539389	,
+539527	,
+539538	,
+539608	,
+536492	,
+536550	,
+536644	,
+536800	,
+537004	,
+537040	,
+537374	,
+537393	,
+537506	,
+538389	,
+538526	,
+538657	,
+539177	,
+539249	,
+539348	,
+537518	,
+537725	,
+537806	,
+537989	,
+538110	,
+538124	,
+538183	,
+538320	,
+538596	,
+538715	,
+538776	,
+539005	,
+539013	,
+539029	,
+539039	,
+539054	,
+539127	,
+539146	,
+539155	,
+539184	,
+539204	,
+539238	,
+539272	,
+539279	,
+539311	,
+539322	,
+539376	,
+539424	,
+539437	,
+539459	,
+539468	,
+539489	,
+539501	,
+539514	,
+539560	,
+539569	,
+539599	,
+539625	,
+539633	,
+539653	,
+539671	,
+539688	,
+539749	,
+539761	,
+539783	,
+539806	,
+539830	,
+539842	,
+539850	,
+539863	,
+539870	,
+539889	,
+539896	,
+539914	,
+539922	,
+539943	,
+539961	,
+539976	,
+539997	,
+540007	,
+540060	,
+540068	,
+540033	,
+540040	,
+540285	,
+540405	,
+540296	,
+540313	,
+540325	,
+540337	,
+540348	,
+540364	,
+540377	,
+540392	,
+540414	,
+540431	,
+540467	,
+540493	,
+540513	,
+540543	,
+542612	,
+544409	,
+545634	,
+547377	,
+547724	,
+548912	,
+549518	,
+541782	,
+541985	,
+542165	,
+542362	,
+542709	,
+542795	,
+542845	,
+543002	,
+543053	,
+543178	,
+543191	,
+543428	,
+543441	,
+543458	,
+546995	,
+544190	,
+544576	,
+544831	,
+543889	,
+546632	,
+547158	,
+543700	,
+545909	,
+545937	,
+546872	,
+544077	,
+544165	,
+544296	,
+543829	,
+544335	,
+544932	,
+545096	,
+548884	,
+548987	,
+549914	,
+543930	,
+544098	,
+544641	,
+544704	,
+545823	,
+547560	,
+548164	,
+549120	,
+549480	,
+546954	,
+544446	,
+549827	,
+553057	,
+553552	,
+544842	,
+545265	,
+545462	,
+550445	,
+545038	,
+545176	,
+545320	,
+545425	,
+546771	,
+547604	,
+548368	,
+548918	,
+545448	,
+545492	,
+545667	,
+545813	,
+545991	,
+546138	,
+546276	,
+546410	,
+546520	,
+546691	,
+547122	,
+547168	,
+547496	,
+547686	,
+547787	,
+547833	,
+548439	,
+547962	,
+547992	,
+549401	,
+549494	,
+549711	,
+548011	,
+548106	,
+550234	,
+548171	,
+549129	,
+549612	,
+549996	,
+548334	,
+550355	,
+550365	,
+550545	,
+548413	,
+549814	,
+548768	,
+548872	,
+549333	,
+549740	,
+549219	,
+549285	,
+550132	,
+549319	,
+549593	,
+549765	,
+550015	,
+550117	,
+550210	,
+550289	,
+550371	,
+550500	,
+551457	,
+551486	,
+551552	,
+551630	,
+551661	,
+551668	,
+551701	,
+551713	,
+551740	,
+551759	,
+551792	,
+551840	,
+551861	,
+551885	,
+551905	,
+551923	,
+551982	,
+552019	,
+552103	,
+552553	,
+552183	,
+552640	,
+552680	,
+552737	,
+552238	,
+552269	,
+553245	,
+553334	,
+552378	,
+552703	,
+552488	,
+552755	,
+552821	,
+552879	,
+552948	,
+553007	,
+553103	,
+553845	,
+554089	,
+554149	,
+554497	,
+554545	,
+553291	,
+553441	,
+553733	,
+553891	,
+553954	,
+554011	,
+554202	,
+554264	,
+554332	,
+554444	,
+554625	,
+554647	,
+555131	,
+554615	,
+554697	,
+554711	,
+554725	,
+554731	,
+554749	,
+554830	,
+555004	,
+555225	,
+557527	,
+558387	,
+561067	,
+563765	,
+555268	,
+555293	,
+555343	,
+555402	,
+555433	,
+555703	,
+555779	,
+555838	,
+555899	,
+555962	,
+556005	,
+556095	,
+556122	,
+556191	,
+556306	,
+556322	,
+556430	,
+559279	,
+562155	,
+562299	,
+563955	,
+557435	,
+558497	,
+556625	,
+558562	,
+558792	,
+557795	,
+560521	,
+556784	,
+561198	,
+562871	,
+556886	,
+557866	,
+558926	,
+557058	,
+557259	,
+558146	,
+558488	,
+558589	,
+559599	,
+559746	,
+557395	,
+557615	,
+557634	,
+557759	,
+557961	,
+558685	,
+557998	,
+558700	,
+558354	,
+558818	,
+559245	,
+558908	,
+559029	,
+559633	,
+559920	,
+559041	,
+559150	,
+559356	,
+559470	,
+559506	,
+559782	,
+560072	,
+560144	,
+560351	,
+560414	,
+560497	,
+560690	,
+560717	,
+561731	,
+562613	,
+563075	,
+563569	,
+562588	,
+563056	,
+560856	,
+561326	,
+564420	,
+561034	,
+561608	,
+561829	,
+562432	,
+563015	,
+562037	,
+562364	,
+562767	,
+561457	,
+563157	,
+563981	,
+562177	,
+562778	,
+562905	,
+562974	,
+563246	,
+563486	,
+564229	,
+565588	,
+565703	,
+565771	,
+565824	,
+565951	,
+565987	,
+566500	,
+566169	,
+569196	,
+568093	,
+566343	,
+568596	,
+569264	,
+569686	,
+566443	,
+569079	,
+567290	,
+567358	,
+567507	,
+567669	,
+568212	,
+567953	,
+568726	,
+568837	,
+568959	,
+569678	,
+569694	,
+569703	,
+569715	,
+569729	,
+569739	,
+569752	,
+569768	,
+569792	,
+569814	,
+569840	,
+569860	,
+570591	,
+570655	,
+570686	,
+570704	,
+570766	,
+570778	,
+570838	,
+570869	,
+570894	,
+571014	,
+571025	,
+571160	,
+571166	,
+571207	,
+571320	,
+571360	,
+571469	,
+571535	,
+571622	,
+574002	,
+571693	,
+572133	,
+575713	,
+575066	,
+575548	,
+574159	,
+574998	,
+578570	,
+578875	,
+571794	,
+571851	,
+572571	,
+571891	,
+572406	,
+572926	,
+574444	,
+571982	,
+572007	,
+572603	,
+574390	,
+572022	,
+572117	,
+572145	,
+573722	,
+572255	,
+572281	,
+572760	,
+574078	,
+572430	,
+573606	,
+574235	,
+572951	,
+575148	,
+575492	,
+572639	,
+572785	,
+572794	,
+573233	,
+573219	,
+573541	,
+573786	,
+574680	,
+574541	,
+574716	,
+574869	,
+575210	,
+575427	,
+575819	,
+575972	,
+576032	,
+576370	,
+576636	,
+578143	,
+578345	,
+578552	,
+586406	,
+591630	,
+577908	,
+579171	,
+578191	,
+578745	,
+579586	,
+578994	,
+579285	,
+579928	,
+579535	,
+579771	,
+587112	,
+592104	,
+588170	,
+586105	,
+587135	,
+587453	,
+586261	,
+589744	,
+590720	,
+585870	,
+586218	,
+586544	,
+587334	,
+591341	,
+586032	,
+587554	,
+587844	,
+588019	,
+590222	,
+590598	,
+590984	,
+592798	,
+586571	,
+586686	,
+586768	,
+586897	,
+587296	,
+587649	,
+587821	,
+589878	,
+592648	,
+590405	,
+590045	,
+592517	,
+590238	,
+591254	,
+591515	,
+591835	,
+592401	,
+590809	,
+591925	,
+592203	,
+592247	,
+591801	,
+591194	,
+591473	,
+592548	,
+592708	,
+601886	,
+601956	,
+601965	,
+602100	,
+602180	,
+602362	,
+602463	,
+602724	,
+603338	,
+603864	,
+603870	,
+603896	,
+604602	,
+605968	,
+606012	,
+606323	,
+603602	,
+604325	,
+605218	,
+605805	,
+607379	,
+603734	,
+604078	,
+604137	,
+605712	,
+606489	,
+607246	,
+604250	,
+604394	,
+604414	,
+604471	,
+604528	,
+604555	,
+604618	,
+604630	,
+604690	,
+604790	,
+604800	,
+604806	,
+604860	,
+604913	,
+604920	,
+605003	,
+605105	,
+605247	,
+605272	,
+605451	,
+605515	,
+605618	,
+605630	,
+605903	,
+606175	,
+606736	,
+606779	,
+607342	,
+607676	,
+608016	,
+608134	,
+608809	,
+605361	,
+605781	,
+605850	,
+606066	,
+606077	,
+606110	,
+606197	,
+606262	,
+606348	,
+606464	,
+606522	,
+606613	,
+606660	,
+606821	,
+606837	,
+606880	,
+606984	,
+606997	,
+607094	,
+607265	,
+607460	,
+607467	,
+607494	,
+607573	,
+607603	,
+607627	,
+607721	,
+607733	,
+607828	,
+608046	,
+608273	,
+608283	,
+608313	,
+609879	,
+609898	,
+609966	,
+610175	,
+607871	,
+607910	,
+607954	,
+608116	,
+608470	,
+608569	,
+609778	,
+610072	,
+608009	,
+608151	,
+608183	,
+608224	,
+608280	,
+608385	,
+608669	,
+608393	,
+608405	,
+608445	,
+608505	,
+608525	,
+608547	,
+608650	,
+608721	,
+609740	,
+609754	,
+609799	,
+609811	,
+609818	,
+609839	,
+609859	,
+609868	,
+609916	,
+609939	,
+609950	,
+609973	,
+610005	,
+610011	,
+610041	,
+610048	,
+610081	,
+610101	,
+610117	,
+610138	,
+610167	,
+610195	,
+610203	,
+610223	,
+610229	,
+610329	,
+610340	,
+610352	,
+610359	,
+610375	,
+610381	,
+610397	,
+610404	,
+610418	,
+610436	,
+610455	,
+610463	,
+610488	,
+610506	,
+610522	,
+610549	,
+610594	,
+610628	,
+610657	,
+610674	,
+610721	,
+610761	,
+611573	,
+611684	,
+610905	,
+610978	,
+611127	,
+611207	,
+611309	,
+611424	,
+611460	,
+611507	,
+611626	,
+611757	,
+611840	,
+611920	,
+612128	,
+612207	,
+612608	,
+612761	,
+612962	,
+613073	,
+611933	,
+611980	,
+612001	,
+612084	,
+612155	,
+612278	,
+612318	,
+612400	,
+612463	,
+612477	,
+612499	,
+612572	,
+612655	,
+612701	,
+612783	,
+612867	,
+613023	,
+613204	,
+613255	,
+613335	,
+613342	,
+613375	,
+613492	,
+613574	,
+613584	,
+613724	,
+613754	,
+613942	,
+613953	,
+613964	,
+613993	,
+614115	,
+614131	,
+614161	,
+614173	,
+614198	,
+614272	,
+614316	,
+614320	,
+614358	,
+614390	,
+614474	,
+614518	,
+614536	,
+614544	,
+614615	,
+614693	,
+614700	,
+614791	,
+614827	,
+614849	,
+614920	,
+614946	,
+615022	,
+615036	,
+615117	,
+615302	,
+615316	,
+615467	,
+615477	,
+615498	,
+617379	,
+617618	,
+618051	,
+616693	,
+617237	,
+615679	,
+615693	,
+618483	,
+616145	,
+616228	,
+616367	,
+616523	,
+616662	,
+616738	,
+616809	,
+616858	,
+616894	,
+616918	,
+616975	,
+616986	,
+617038	,
+617173	,
+617264	,
+617292	,
+617355	,
+617415	,
+617515	,
+617531	,
+617551	,
+617656	,
+617747	,
+617773	,
+617781	,
+617882	,
+618167	,
+618511	,
+618737	,
+619279	,
+619680	,
+618174	,
+619093	,
+617908	,
+618045	,
+618118	,
+618378	,
+618841	,
+618204	,
+618262	,
+618324	,
+618580	,
+618858	,
+619803	,
+618911	,
+619137	,
+619219	,
+619464	,
+619646	,
+619977	,
+620135	,
+622324	,
+622382	,
+622479	,
+622500	,
+622602	,
+622666	,
+622731	,
+622780	,
+622881	,
+622899	,
+623067	,
+623078	,
+623145	,
+623204	,
+623308	,
+623416	,
+623488	,
+624073	,
+626891	,
+623866	,
+624353	,
+623548	,
+623637	,
+623680	,
+624169	,
+625034	,
+623753	,
+623771	,
+624517	,
+624724	,
+626051	,
+628203	,
+630484	,
+632414	,
+623885	,
+627397	,
+628868	,
+630792	,
+623990	,
+624028	,
+626553	,
+627818	,
+627849	,
+628310	,
+630007	,
+630065	,
+624107	,
+625980	,
+626480	,
+626583	,
+630247	,
+625711	,
+627012	,
+628353	,
+631434	,
+624291	,
+624476	,
+624490	,
+624903	,
+625167	,
+625212	,
+626427	,
+627176	,
+627346	,
+631013	,
+624579	,
+627546	,
+627880	,
+629982	,
+631614	,
+624698	,
+625272	,
+626325	,
+626698	,
+627502	,
+629811	,
+631789	,
+624877	,
+625054	,
+625298	,
+625436	,
+625574	,
+625589	,
+625964	,
+626133	,
+626179	,
+626817	,
+627020	,
+627062	,
+627162	,
+627270	,
+627287	,
+627587	,
+627659	,
+627781	,
+627839	,
+627925	,
+627988	,
+628003	,
+629550	,
+631948	,
+628104	,
+628163	,
+629767	,
+632226	,
+628453	,
+628466	,
+630195	,
+630234	,
+628625	,
+628684	,
+628710	,
+630305	,
+631278	,
+629032	,
+630999	,
+632144	,
+629302	,
+629345	,
+629532	,
+631199	,
+631645	,
+631677	,
+629683	,
+632238	,
+629939	,
+631591	,
+631939	,
+631982	,
+630429	,
+630505	,
+630684	,
+630712	,
+630726	,
+631051	,
+631232	,
+631353	,
+631386	,
+631490	,
+631730	,
+631778	,
+631827	,
+631997	,
+632097	,
+632117	,
+632168	,
+632297	,
+632304	,
+632340	,
+634077	,
+634093	,
+634155	,
+634184	,
+634214	,
+634278	,
+634296	,
+634336	,
+634347	,
+634366	,
+634389	,
+634398	,
+634424	,
+634445	,
+634464	,
+634496	,
+634506	,
+634544	,
+634556	,
+634585	,
+634603	,
+634633	,
+634662	,
+634687	,
+634833	,
+634912	,
+634967	,
+634979	,
+634997	,
+635076	,
+635087	,
+635119	,
+635346	,
+638683	,
+635983	,
+636247	,
+638505	,
+638672	,
+638993	,
+635157	,
+637564	,
+638833	,
+639575	,
+639767	,
+639824	,
+640339	,
+635265	,
+637834	,
+635247	,
+635258	,
+635376	,
+635392	,
+635437	,
+635522	,
+635581	,
+635628	,
+635653	,
+635700	,
+635786	,
+636787	,
+637725	,
+637810	,
+638172	,
+638246	,
+638745	,
+635771	,
+636144	,
+637054	,
+637367	,
+636607	,
+637768	,
+638845	,
+640815	,
+637468	,
+636648	,
+638423	,
+638898	,
+639321	,
+641632	,
+642012	,
+637910	,
+637210	,
+637878	,
+638071	,
+638095	,
+638126	,
+638270	,
+638327	,
+638513	,
+638605	,
+639034	,
+639120	,
+639171	,
+639194	,
+639347	,
+639376	,
+639439	,
+639536	,
+639612	,
+639667	,
+639810	,
+639688	,
+639749	,
+639894	,
+639952	,
+640006	,
+641049	,
+640260	,
+640646	,
+640762	,
+640907	,
+641004	,
+641037	,
+643765	,
+641079	,
+641186	,
+641201	,
+641218	,
+641268	,
+641313	,
+641381	,
+641394	,
+641476	,
+641509	,
+641521	,
+641592	,
+641832	,
+641847	,
+641961	,
+641991	,
+642031	,
+642416	,
+642497	,
+642507	,
+642728	,
+642990	,
+643190	,
+643503	,
+644069	,
+644252	,
+644347	,
+645557	,
+646762	,
+642096	,
+642204	,
+642217	,
+642278	,
+642351	,
+642374	,
+642385	,
+642614	,
+642683	,
+642699	,
+642834	,
+642845	,
+642909	,
+642940	,
+642965	,
+643150	,
+643159	,
+643272	,
+643289	,
+643317	,
+643395	,
+643406	,
+643450	,
+643520	,
+643591	,
+643615	,
+643687	,
+643774	,
+643847	,
+643922	,
+643977	,
+644118	,
+644185	,
+644384	,
+644432	,
+644480	,
+645083	,
+646601	,
+645214	,
+645289	,
+645617	,
+645840	,
+646683	,
+647870	,
+648295	,
+650465	,
+651088	,
+653197	,
+654982	,
+645393	,
+645719	,
+648237	,
+646303	,
+648048	,
+648897	,
+650629	,
+651628	,
+645235	,
+645863	,
+645269	,
+645428	,
+645444	,
+645467	,
+645488	,
+645525	,
+645693	,
+646068	,
+646229	,
+646340	,
+646450	,
+647851	,
+647907	,
+648284	,
+649012	,
+650837	,
+651310	,
+652348	,
+653170	,
+653787	,
+654708	,
+645885	,
+646004	,
+646022	,
+646038	,
+646076	,
+646381	,
+646439	,
+647673	,
+646504	,
+646547	,
+646839	,
+646892	,
+647723	,
+647791	,
+647943	,
+649556	,
+650237	,
+650281	,
+650311	,
+652460	,
+646640	,
+646907	,
+647831	,
+649631	,
+647894	,
+647965	,
+648003	,
+648013	,
+648065	,
+648079	,
+648087	,
+648125	,
+648141	,
+648183	,
+648197	,
+648269	,
+648748	,
+649060	,
+649222	,
+649248	,
+649396	,
+649452	,
+649474	,
+649608	,
+649662	,
+649832	,
+649960	,
+650213	,
+650342	,
+650425	,
+651652	,
+654934	,
+650534	,
+650566	,
+650830	,
+651878	,
+650645	,
+652078	,
+650708	,
+650874	,
+651116	,
+651281	,
+655788	,
+651960	,
+652539	,
+653525	,
+653863	,
+655915	,
+651206	,
+653543	,
+653554	,
+654510	,
+651264	,
+653660	,
+655220	,
+651455	,
+651500	,
+652151	,
+653056	,
+653744	,
+653913	,
+654165	,
+654675	,
+655031	,
+655274	,
+653647	,
+659141	,
+653256	,
+652177	,
+652674	,
+652834	,
+657873	,
+652279	,
+652421	,
+654433	,
+656682	,
+652873	,
+652883	,
+652927	,
+653323	,
+653948	,
+654348	,
+654475	,
+654568	,
+654731	,
+654804	,
+654842	,
+654898	,
+655062	,
+655100	,
+655204	,
+655348	,
+655379	,
+655456	,
+655527	,
+655569	,
+655592	,
+655695	,
+656043	,
+656076	,
+656446	,
+656601	,
+657187	,
+656940	,
+657037	,
+657180	,
+658180	,
+657299	,
+657806	,
+657817	,
+658329	,
+657439	,
+657567	,
+657618	,
+657684	,
+657720	,
+658169	,
+658358	,
+658024	,
+658066	,
+658274	,
+658991	,
+659550	,
+658105	,
+659305	,
+659435	,
+658452	,
+659216	,
+658489	,
+658577	,
+658674	,
+658687	,
+659108	,
+658972	,
+662927	,
+663019	,
+663130	,
+663150	,
+663497	,
+680437	,
+680575	,
+680675	,
+684722	,
+683277	,
+685219	,
+683809	,
+685123	,
+685393	,
+683570	,
+685313	,
+685991	,
+685788	,
+686262	,
+685002	,
+685697	,
+683923	,
+684069	,
+684192	,
+685894	,
+686084	,
+686349	,
+686537	,
+684865	,
+684529	,
+686433	,
+685489	,
+685595	,
+687356	,
+686181	,
+686633	,
+686734	,
+687245	,
+687687	,
+691449	,
+691865	,
+691895	,
+691997	,
+692091	,
+692176	,
+692291	,
+692369	,
+692466	,
+692481	,
+692577	,
+692698	,
+692793	,
+692832	,
+692882	,
+692889	,
+693044	,
+693199	,
+693232	,
+693386	,
+693549	,
+693649	,
+693737	,
+693831	,
+693928	,
+694063	,
+694149	,
+694235	,
+694342	,
+694403	,
+694435	,
+694580	,
+694672	,
+694805	,
+694929	,
+694950	,
+695481	,
+695640	,
+695710	,
+696036	,
+696117	,
+696187	,
+696557	,
+696281	,
+696367	,
+696457	,
+696642	,
+696725	,
+696826	,
+696897	,
+697005	,
+697109	,
+705319	,
+705647	,
+705846	,
+705970	,
+706098	,
+706259	,
+706398	,
+706548	,
+706710	,
+706844	,
+706946	,
+707043	,
+707189	,
+707319	,
+707465	,
+707576	,
+707705	,
+707813	,
+707914	,
+707996	,
+708061	,
+748546	,
+748716	,
+756614	,
+838095	,
+1385571	,
+1632499	,
+1632868	,
+1668534	,
+1792172	,
+1792364	,
+2169678	,
+2577818	,
+2577899	,
+2577954	,
+2582286	,
+2582481	,
+2582720	,
+2582859	,
+2583295	,
+2600617	,
+2600646	,
+2600695	,
+2608972	,
+2609421	,
+2609586	,
+2623503	,
+575692	,
+2623495	
+)
+AND patientidentifiertypeid = 1085;
+
+
+                   

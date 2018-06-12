@@ -1,0 +1,101 @@
+select * from  trackedentityinstance where uid = 'zqYcaH6ZP2d'
+
+
+SELECT trackedentityinstanceid, trackedentityattributeid, value, created, 
+       lastupdated, encryptedvalue, storedby
+  FROM trackedentityattributevalue where trackedentityattributeid = 2618;
+
+
+select * FROM trackedentityattributevalue where trackedentityattributeid = 2618 and value = 'true';
+
+select * FROM trackedentityattributevalue where trackedentityattributeid = 2618 and value = 'false';
+
+
+select * from trackedentityattributevalue where trackedentityattributeid = 2617 and trackedentityinstanceid in (
+2748,
+3926,
+4430,
+4828,
+5064,
+5103,
+5576,
+6068,
+7072,
+4743);
+
+select length(value) from trackedentityattributevalue where trackedentityattributeid = 2617 and trackedentityinstanceid in (
+2748,
+3926,
+4430,
+4828,
+5064,
+5103,
+5576,
+6068,
+7072,
+4743);
+
+
+select * from trackedentityattributevalue where trackedentityattributeid in( 2617,2618) and trackedentityinstanceid in (27784);
+
+SELECT psi.programstageinstanceid,psi.programstageid, pi.trackedentityinstanceid, psi.organisationunitid, psi.duedate::date, psi.status FROM programstageinstance psi
+INNER JOIN programinstance pi ON  pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+where psi.programstageid = 2537 and psi.status = 'SCHEDULE' and teav.trackedentityattributeid = 2618 and teav.value = 'true';
+
+SELECT psi.programstageinstanceid,psi.programstageid, pi.trackedentityinstanceid, psi.organisationunitid,tedv.value, psi.duedate::date, psi.status FROM programstageinstance psi
+INNER JOIN programinstance pi ON  pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentitydatavalue tedv  ON  tedv.programstageinstanceid = psi.programstageinstanceid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+where psi.programstageid = 2485  and tedv.dataelementid = 2378 and teav.trackedentityattributeid = 2618 and teav.value = 'true';
+
+
+SELECT  pi.trackedentityinstanceid, psi.organisationunitid,tedv.value FROM programstageinstance psi
+INNER JOIN programinstance pi ON  pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentitydatavalue tedv  ON  tedv.programstageinstanceid = psi.programstageinstanceid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+where psi.programstageid = 2454  and tedv.dataelementid = 2341 and teav.trackedentityattributeid = 2618 and teav.value = 'true';
+
+
+SELECT psi.programstageinstanceid,psi.programstageid, pi.trackedentityinstanceid, psi.organisationunitid, tedv.dataelementid,tedv.value,psi.executiondate::date, psi.status FROM programstageinstance psi
+INNER JOIN programinstance pi ON  pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentitydatavalue tedv  ON  tedv.programstageinstanceid = psi.programstageinstanceid
+
+where psi.programstageid = 2537 and tedv.dataelementid = 5001 and pi.trackedentityinstanceid = 27784 order by psi.executiondate::date desc;
+
+SELECT psi.programstageinstanceid,psi.programstageid, pi.trackedentityinstanceid, psi.organisationunitid, tedv.dataelementid,tedv.value,psi.executiondate::date, psi.status FROM programstageinstance psi
+INNER JOIN programinstance pi ON  pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentitydatavalue tedv  ON  tedv.programstageinstanceid = psi.programstageinstanceid
+where psi.programstageid = 2537 and tedv.dataelementid = 5001 and pi.trackedentityinstanceid = 10057 order by psi.executiondate::date desc;
+
+SELECT psi.programstageinstanceid,psi.programstageid, pi.trackedentityinstanceid, psi.organisationunitid, tedv.dataelementid,tedv.value,psi.lastupdated::date, psi.status FROM programstageinstance psi
+INNER JOIN programinstance pi ON  pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentitydatavalue tedv  ON  tedv.programstageinstanceid = psi.programstageinstanceid
+where psi.programstageid = 2537 and tedv.dataelementid = 2397 and pi.trackedentityinstanceid = 27793 order by psi.lastupdated desc;
+
+
+SELECT psi.programstageinstanceid,psi.programstageid, pi.trackedentityinstanceid, psi.organisationunitid, psi.duedate::date, psi.status FROM programstageinstance psi
+INNER JOIN programinstance pi ON  pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+where psi.programstageid = 2577 and psi.status = 'SCHEDULE' and teav.trackedentityattributeid = 2618 and teav.value = 'true';
+
+
+
+SELECT psi.programstageinstanceid,psi.programstageid, pi.trackedentityinstanceid, psi.organisationunitid, tedv.dataelementid,tedv.value,psi.lastupdated::date, psi.status FROM programstageinstance psi
+INNER JOIN programinstance pi ON  pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentitydatavalue tedv  ON  tedv.programstageinstanceid = psi.programstageinstanceid
+where psi.programstageid = 9682 and tedv.dataelementid = 3896 and pi.trackedentityinstanceid = 10799 order by psi.lastupdated desc;
+
+
+SELECT psi.programstageinstanceid,psi.programstageid, pi.trackedentityinstanceid, psi.organisationunitid, tedv.dataelementid,tedv.value,psi.lastupdated::date, psi.status FROM programstageinstance psi
+INNER JOIN programinstance pi ON  pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentitydatavalue tedv  ON  tedv.programstageinstanceid = psi.programstageinstanceid
+where psi.programstageid = 2577 and tedv.dataelementid = 10398 and pi.trackedentityinstanceid = 27784 order by psi.lastupdated desc;
+
+
+
+38239
+51756
+36814
+
+

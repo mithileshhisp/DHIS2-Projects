@@ -1,0 +1,405 @@
+  * SELECT dataelementid, periodid, sourceid, value, 
+       storedby, lastupdated
+    FROM datavalue where dataelementid in ( SELECT dataelementid FROM dataelementgroupmembers where dataelementgroupid  = 50) and  CAST(value AS numeric) > 0 order by lastupdated desc;   
+  
+  *SELECT dataelementid, periodid, sourceid, categoryoptioncomboid, value, 
+       storedby, lastupdated, comment, followup, attributeoptioncomboid, 
+       created
+  FROM datavalue where dataelementid in ( SELECT dataelementid FROM dataelementgroupmembers where dataelementgroupid  = 50);
+    
+    
+    SELECT userinfoid,surname, firstname, phonenumber from userinfo where userinfoid IN ( SELECT userid FROM usergroupmembers where usergroupid = 91451);
+
+
+
+SELECT dataelementid, periodid, sourceid, categoryoptioncomboid, value, 
+       storedby, lastupdated, comment, followup, attributeoptioncomboid, 
+       created
+  FROM datavalue;
+
+SELECT dataelementid, periodid, sourceid, value, 
+            storedby, lastupdated
+            FROM datavalue where dataelementid in ( SELECT dataelementid FROM dataelementgroupmembers where dataelementgroupid  = 50) and periodid = 447985 order by lastupdated desc;
+
+SELECT dataelementid, categoryoptioncomboid, periodid, sourceid, value, 
+            storedby, lastupdated
+            FROM datavalue where dataelementid in ( SELECT dataelementid FROM dataelementgroupmembers where dataelementgroupid  = 50)  order by lastupdated ASC;  
+
+SELECT dataelementid, categoryoptioncomboid, periodid, sourceid, value, 
+            storedby, lastupdated
+            FROM datavalue where dataelementid in ( SELECT dataelementid FROM dataelementgroupmembers where dataelementgroupid  = 50) 
+            and date(lastupdated) = '2015-10-20'
+             order by lastupdated ASC;  
+
+
+
+SELECT * from dataelement where dataelementid = 7141;  
+
+SELECT categorycomboid, categoryid, sort_order
+  FROM categorycombos_categories;
+
+
+SELECT categoryid, categoryoptionid, sort_order
+  FROM categories_categoryoptions;
+
+
+SELECT categoryoptionid, uid, code, created, lastupdated, name, shortname, 
+       startdate, enddate, userid, publicaccess
+  FROM dataelementcategoryoption;
+
+
+// category option id with name
+SELECT  dataelement.dataelementid,dataelement.name, categories_categoryoptions.categoryoptionid, dataelementcategoryoption.name from dataelement
+INNER JOIN categorycombos_categories ON categorycombos_categories.categorycomboid = dataelement.categorycomboid
+INNER JOIN categories_categoryoptions ON categories_categoryoptions.categoryid = categorycombos_categories.categoryid
+INNER JOIN dataelementcategoryoption ON dataelementcategoryoption.categoryoptionid = categories_categoryoptions.categoryoptionid
+order by dataelement.dataelementid
+
+
+SELECT dataelementid, categoryoptioncomboid, periodid, sourceid, value, 
+            storedby, lastupdated
+            FROM datavalue where dataelementid in ( SELECT dataelementid FROM dataelementgroupmembers where dataelementgroupid  = 50) 
+            and date(lastupdated) = '2015-10-21'
+             order by lastupdated ASC;  
+
+SELECT  dataelement.dataelementid,dataelement.name, categories_categoryoptions.categoryoptionid, dataelementcategoryoption.name from dataelement
+INNER JOIN categorycombos_categories ON categorycombos_categories.categorycomboid = dataelement.categorycomboid
+INNER JOIN categories_categoryoptions ON categories_categoryoptions.categoryid = categorycombos_categories.categoryid
+INNER JOIN dataelementcategoryoption ON dataelementcategoryoption.categoryoptionid = categories_categoryoptions.categoryoptionid
+order by dataelement.dataelementid   
+
+
+SELECT  datavalue.periodid, datavalue.sourceid, organisationunit.parentid FROM datavalue 
+INNER JOIN organisationunit ON organisationunit.organisationunitid = datavalue.sourceid
+where dataelementid in ( SELECT dataelementid FROM dataelementgroupmembers where dataelementgroupid  = 50) 
+and date(datavalue.lastupdated) = '2015-10-21' 
+
+
+SELECT  periodid, sourceid
+            FROM datavalue where dataelementid in ( SELECT dataelementid FROM dataelementgroupmembers where dataelementgroupid  = 50) 
+            and date(lastupdated) = '2015-10-21'
+
+
+
+
+SELECT sourceid
+            FROM datavalue where dataelementid in ( SELECT dataelementid FROM dataelementgroupmembers where dataelementgroupid  = 50) 
+            and date(lastupdated) = '2015-10-21'
+
+
+SELECT userinfoid,surname, firstname, phonenumber from userinfo where userinfoid IN ( SELECT userid FROM usergroupmembers where usergroupid = 91451);   
+
+
+select dist,name,organisationunitid,string_agg(ph,',') ph from 
+(
+select dist,name,asd.organisationunitid,ph 
+from
+(
+SELECT ou1.name AS dist,ou.name,os.idlevel3, ou.organisationunitid
+FROM organisationunit ou
+INNER JOIN _orgunitstructure os ON ou.organisationunitid=os.organisationunitid
+INNER JOIN organisationunit ou1 ON os.idlevel3=ou1.organisationunitid
+WHERE os.organisationunitid IN ( 10176,10181)
+)asd
+left join 
+(
+select um.organisationunitid,u.phonenumber ph
+from userinfo u
+inner join usermembership um on u.userinfoid=um.userinfoid
+where phonenumber is  not null
+and phonenumber not like ''
+)asd1
+on (asd.organisationunitid=asd1.organisationunitid or asd.idlevel3=asd1.organisationunitid)
+group by dist,name,asd.organisationunitid,ph
+)fin
+group by dist,name,organisationunitid; 
+
+
+
+SELECT  datavalue.dataelementid, dataelement.name, datavalue.periodid, datavalue.sourceid, datavalue.value,dataelementcategoryoption.name, organisationunit.name,period.startdate FROM datavalue
+INNER JOIN period ON period.periodid = datavalue.periodid
+INNER JOIN organisationunit ON organisationunit.organisationunitid = datavalue.sourceid
+INNER JOIN dataelement ON dataelement.dataelementid = datavalue.dataelementid
+inner join dataelementcategoryoption on dataelementcategoryoption.categoryoptionid=datavalue.categoryoptioncomboid
+
+where datavalue.dataelementid in ( SELECT dataelementid FROM dataelementgroupmembers where dataelementgroupid  = 50 ) 
+and date(datavalue.lastupdated) = '2015-10-21' and CAST(value AS NUMERIC) > 0  
+
+
+
+SELECT  datavalue.dataelementid, dataelement.name, datavalue.periodid, datavalue.sourceid, datavalue.value,dataelementcategoryoption.name, organisationunit.name,period.startdate FROM datavalue
+INNER JOIN period ON period.periodid = datavalue.periodid
+INNER JOIN organisationunit ON organisationunit.organisationunitid = datavalue.sourceid
+INNER JOIN dataelement ON dataelement.dataelementid = datavalue.dataelementid
+INNER JOIN dataelementcategoryoption on dataelementcategoryoption.categoryoptionid=datavalue.categoryoptioncomboid
+INNER JOIN dataelementgroupmembers on dataelementgroupmembers.dataelementid = datavalue.dataelementid
+where dataelementgroupmembers.dataelementgroupid  = 50 and date(datavalue.lastupdated) = '2015-10-21' and CAST(value AS NUMERIC) > 0
+
+SELECT  dataelement.name, dataelementcategoryoption.name, period.startdate, organisationunit.name,datavalue.value, datavalue.storedby FROM datavalue
+INNER JOIN period ON period.periodid = datavalue.periodid
+INNER JOIN organisationunit ON organisationunit.organisationunitid = datavalue.sourceid
+INNER JOIN dataelement ON dataelement.dataelementid = datavalue.dataelementid
+INNER JOIN dataelementcategoryoption on dataelementcategoryoption.categoryoptionid=datavalue.categoryoptioncomboid
+INNER JOIN dataelementgroupmembers on dataelementgroupmembers.dataelementid = datavalue.dataelementid
+where dataelementgroupmembers.dataelementgroupid  = 50 and date(datavalue.lastupdated) = '2015-10-21' and CAST(value AS NUMERIC) > 0
+
+// Query Include Maternal Death
+
+SELECT  datavalue.dataelementid,datavalue.periodid,datavalue.sourceid, dataelement.name, datavalue.categoryoptioncomboid,dataelementcategoryoption.name, period.startdate, organisationunit.name,datavalue.value, datavalue.storedby FROM datavalue
+INNER JOIN period ON period.periodid = datavalue.periodid
+INNER JOIN organisationunit ON organisationunit.organisationunitid = datavalue.sourceid
+INNER JOIN dataelement ON dataelement.dataelementid = datavalue.dataelementid
+INNER JOIN dataelementcategoryoption on dataelementcategoryoption.categoryoptionid=datavalue.categoryoptioncomboid
+INNER JOIN dataelementgroupmembers on dataelementgroupmembers.dataelementid = datavalue.dataelementid
+where  dataelementgroupmembers.dataelementgroupid  = 50 and date(datavalue.lastupdated) = '2015-10-30' and CAST(value AS NUMERIC) > 0 order by dataelement.dataelementid
+
+delete from datavalue where dataelementid in ( 527,524,525,531,532,533,534,538,539,543,544 ) and date( lastupdated) = '2015-10-30' ;
+
+//
+
+
+SELECT userinfo.userinfoid, userinfo,surname, userinfo.firstname, userinfo.phonenumber, usermembership.organisationunitid from userinfo 
+INNER JOIN usermembership ON usermembership.userinfoid = userinfo.userinfoid
+where usermembership.organisationunitid = 10176;  
+
+
+select dist,name,organisationunitid,string_agg(ph,',') ph from 
+(
+select dist,name,asd.organisationunitid,ph 
+from
+(
+SELECT ou1.name AS dist,ou.name,os.idlevel3, ou.organisationunitid
+FROM organisationunit ou
+INNER JOIN _orgunitstructure os ON ou.organisationunitid=os.organisationunitid
+INNER JOIN organisationunit ou1 ON os.idlevel3=ou1.organisationunitid
+WHERE os.organisationunitid IN ( 10176,10181,9541)
+)asd
+left join 
+(
+select um.organisationunitid,u.phonenumber ph
+from userinfo u
+inner join usermembership um on u.userinfoid=um.userinfoid
+where phonenumber is  not null
+and phonenumber not like ''
+)asd1
+on (asd.organisationunitid=asd1.organisationunitid or asd.idlevel3=asd1.organisationunitid)
+group by dist,name,asd.organisationunitid,ph
+)fin
+group by dist,name,organisationunitid;                          
+                   
+
+
+// 29/10/2015
+select dist,name,organisationunitid,string_agg(ph,',') ph, sname,fname  from 
+(
+select dist,name,asd.organisationunitid,ph , sname,fname 
+from
+(
+SELECT ou1.name AS dist,ou.name,os.idlevel3, ou.organisationunitid
+FROM organisationunit ou
+INNER JOIN _orgunitstructure os ON ou.organisationunitid=os.organisationunitid
+INNER JOIN organisationunit ou1 ON os.idlevel3=ou1.organisationunitid
+WHERE os.organisationunitid IN ( 10176,10181,9541)
+)asd
+left join 
+(
+select um.organisationunitid,u.phonenumber ph,u.surname sname, u.firstname fname
+from userinfo u
+inner join usermembership um on u.userinfoid=um.userinfoid
+where phonenumber is  not null
+and phonenumber not like ''
+)asd1
+on (asd.organisationunitid=asd1.organisationunitid or asd.idlevel3=asd1.organisationunitid)
+group by dist,name,asd.organisationunitid,ph,sname,fname
+)fin
+group by dist,name,organisationunitid,sname,fname ;
+
+
+
+// for Non Reporting Facility
+
+select ou.organisationunitid, ou.name, ou.uid, ds.name ,p.startdate, count(value) entered, (count(value) * 100)/129,  dv.storedby from datavalue dv 
+inner join datasetmembers dsm on dv.dataelementid = dsm.dataelementid
+inner join dataset ds on ds.datasetid = dsm.datasetid
+inner join organisationunit ou on dv.sourceid = ou.organisationunitid 
+inner join period p on dv.periodid = p.periodid 
+where dsm.datasetid in ( 91455,91467) and  p.startdate = '2015-04-01' group by ou.organisationunitid,ou.uid,ou.name, ds.name, p.startdate, dv.storedby;
+
+// for dataSet List
+
+SELECT ds.datasetid, d.name, count(ds.sourceid) from datasetsource ds
+INNER JOIN dataset d ON d.datasetid = ds.datasetid
+group by ds.datasetid,d.name having count(ds.datasetid) > 0 order by ds.datasetid;
+
+SELECT ds.datasetid ,count(ds.sourceid) from datasetsource ds
+group by ds.datasetid having count(ds.datasetid) > 0 order by datasetid;
+
+SELECT sourceid from datasetsource where datasetid = 91455 order by sourceid;
+
+SELECT datasetid, name from  dataset
+
+
+select dv.sourceid from datavalue dv 
+inner join datasetmembers dsm on dv.dataelementid = dsm.dataelementid
+where dsm.datasetid in ( 91455 ) and  dv.periodid = 447985 group by dv.sourceid having count(value) > 0;
+
+SELECT sourceid from datasetsource where datasetid = 91455 and sourceid not in ( 
+select dv.sourceid from datavalue dv 
+inner join datasetmembers dsm on dv.dataelementid = dsm.dataelementid
+where dsm.datasetid in ( 91455 ) and  dv.periodid = 447985 group by dv.sourceid having count(value) > 0)order by sourceid;  
+
+
+
+SELECT dist,name,organisationunitid,string_agg(ph,',') ph from 
+            (
+            select dist,name,asd.organisationunitid,ph 
+            from
+            (
+            SELECT ou1.name AS dist,ou.name,os.idlevel3, ou.organisationunitid
+            FROM organisationunit ou
+            INNER JOIN _orgunitstructure os ON ou.organisationunitid=os.organisationunitid
+            INNER JOIN organisationunit ou1 ON os.idlevel3=ou1.organisationunitid
+            WHERE os.organisationunitid IN ( 9541 )
+            )asd
+            left join 
+            (
+            select um.organisationunitid,u.phonenumber ph
+            from userinfo u
+            inner join usermembership um on u.userinfoid=um.userinfoid
+            where phonenumber is  not null
+            and phonenumber not like ''
+            )asd1
+            on (asd.organisationunitid=asd1.organisationunitid or asd.idlevel3=asd1.organisationunitid)
+            group by dist,name,asd.organisationunitid,ph
+            )fin
+            group by dist,name,organisationunitid; 
+
+// 31/10/2015
+
+SELECT dataelementid, periodid, sourceid, categoryoptioncomboid, value, 
+       storedby, lastupdated, comment, followup, attributeoptioncomboid, 
+       created
+  FROM datavalue where periodid = 223458;
+
+select * from period where startdate = '2015-09-01';
+
+
+
+SELECT ou.organisationunitid, ou.name, ou.uid, ds.name ,p.startdate,dv.storedby,
+CASE WHEN count(value) is null then 0 END  from datavalue dv 
+inner join datasetmembers dsm on dv.dataelementid = dsm.dataelementid
+inner join dataset ds on ds.datasetid = dsm.datasetid
+inner join organisationunit ou on dv.sourceid = ou.organisationunitid 
+inner join period p on dv.periodid = p.periodid 
+where dsm.datasetid in ( 91455,91467 ) and  p.startdate = '2015-06-01' group by ou.organisationunitid,ou.uid,ou.name, ds.name, p.startdate, dv.storedby having count(value) = 0;
+
+
+select dv.sourceid, ou.name, ou.uid, ds.name ,p.startdate, count(value) entered,  dv.storedby from datavalue dv 
+inner join datasetmembers dsm on dv.dataelementid = dsm.dataelementid
+inner join dataset ds on ds.datasetid = dsm.datasetid
+inner join organisationunit ou on dv.sourceid = ou.organisationunitid 
+inner join period p on dv.periodid = p.periodid 
+where dsm.datasetid in ( 91455 ) and  p.startdate = '2015-09-01' group by dv.sourceid,ou.uid,ou.name, ds.name, p.startdate, dv.storedby;
+
+select dv.sourceid from datavalue dv 
+inner join datasetmembers dsm on dv.dataelementid = dsm.dataelementid
+where dsm.datasetid in ( 91455 ) and  dv.periodid = 447985 group by dv.sourceid having count(value) > 0;
+
+
+SELECT sourceid from datasetsource where datasetid = 91455 and sourceid not in ( 
+select dv.sourceid from datavalue dv 
+inner join datasetmembers dsm on dv.dataelementid = dsm.dataelementid
+where dsm.datasetid in ( 91455 ) and  dv.periodid = 447985 group by dv.sourceid having count(value) > 0)order by sourceid;    
+
+
+
+
+
+select dist,name,organisationunitid,string_agg(ph,',') ph, sname,fname  from 
+(
+select dist,name,asd.organisationunitid,ph , sname,fname 
+from
+(
+SELECT ou1.name AS dist,ou.name,os.idlevel3, ou.organisationunitid
+FROM organisationunit ou
+INNER JOIN _orgunitstructure os ON ou.organisationunitid=os.organisationunitid
+INNER JOIN organisationunit ou1 ON os.idlevel3=ou1.organisationunitid
+WHERE os.organisationunitid = 9541
+)asd
+left join 
+(
+select um.organisationunitid,u.phonenumber ph,u.surname sname, u.firstname fname
+from userinfo u
+inner join usermembership um on u.userinfoid=um.userinfoid
+where phonenumber is  not null
+and phonenumber not like ''
+)asd1
+on (asd.organisationunitid=asd1.organisationunitid or asd.idlevel3=asd1.organisationunitid)
+group by dist,name,asd.organisationunitid,ph,sname,fname
+)fin
+group by dist,name,organisationunitid,sname,fname ;
+
+
+
+
+
+
+
+
+SELECT dist,name,organisationunitid,string_agg(ph,',') ph from 
+            (
+            select dist,name,asd.organisationunitid,ph 
+            from
+            (
+            SELECT ou1.name AS dist,ou.name,os.idlevel3, ou.organisationunitid
+            FROM organisationunit ou
+            INNER JOIN _orgunitstructure os ON ou.organisationunitid=os.organisationunitid
+            INNER JOIN organisationunit ou1 ON os.idlevel3=ou1.organisationunitid
+            WHERE os.organisationunitid IN ( 9541 )
+            )asd
+            left join 
+            (
+            select um.organisationunitid,u.phonenumber ph
+            from userinfo u
+            inner join usermembership um on u.userinfoid=um.userinfoid
+            where phonenumber is  not null
+            and phonenumber not like ''
+            )asd1
+            on (asd.organisationunitid=asd1.organisationunitid or asd.idlevel3=asd1.organisationunitid)
+            group by dist,name,asd.organisationunitid,ph
+            )fin
+            group by dist,name,organisationunitid;
+ 
+// for KPI 09/11/2015
+
+SELECT dataelementid, periodid, sourceid, value, storedby, lastupdated FROM datavalue 
+where dataelementid in ( 3,4,6 ) and 
+periodid = 447985 order by lastupdated desc;
+
+
+SELECT sourceid, dataelementid, value FROM datavalue 
+where dataelementid in ( 3,4,6 ) and 
+periodid = 114779;
+
+
+SELECT dataelementid, periodid, sourceid, value, storedby, lastupdated FROM datavalue 
+where dataelementid in ( 3,4,6 )
+order by lastupdated desc;
+
+
+SELECT  distinct sourceid ,periodid, dataelementid,value FROM datavalue 
+where dataelementid in ( 3,4,6 ) 
+            and periodid = 114779;
+
+SELECT  distinct sourceid FROM datavalue 
+where dataelementid in ( 3,4,6 ) 
+            and periodid = 114779;
+
+SELECT indicatorid, indicatorgroupid
+  FROM indicatorgroupmembers where indicatorgroupid = 450817;
+
+
+select * from indicator where indicatorid in ( 35,38,322 );    
+
+SELECT userinfoid,surname, firstname, phonenumber FROM userinfo 
+                WHERE  userinfoid IN ( SELECT userid FROM usergroupmembers where usergroupid = 91451 ) ;                

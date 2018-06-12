@@ -1,0 +1,53 @@
+select count(*) from programstageinstance psi inner join programinstance pi on pi.programinstanceid=psi.programinstanceid inner join program p on p.programid=pi.programid inner join programstage ps on ps.programstageid=psi.programstageid left join trackedentityinstance tei on tei.trackedentityinstanceid=pi.trackedentityinstanceid left join organisationunit ou on (psi.organisationunitid=ou.organisationunitid) where ps.programstageid = 48121 and psi.organisationunitid in (9577)
+
+SELECT programstageinstanceid, programinstanceid, programstageid, duedate, 
+       executiondate, organisationunitid, status, completeduser, completeddate, 
+       uid, created, lastupdated, longitude, latitude
+  FROM programstageinstance;
+
+
+select psi.*,pi.trackedentityinstanceid  from programstageinstance psi 
+inner join programinstance pi on pi.programinstanceid=psi.programinstanceid 
+inner join program p on p.programid=pi.programid 
+inner join programstage ps on ps.programstageid=psi.programstageid 
+left join trackedentityinstance tei on tei.trackedentityinstanceid=pi.trackedentityinstanceid 
+left join organisationunit ou on (psi.organisationunitid=ou.organisationunitid) 
+where ps.programstageid = 48121 and psi.organisationunitid in (9577)
+
+// Min-max query
+
+SELECT dataelementid, periodid, sourceid, categoryoptioncomboid, value, 
+       storedby, lastupdated, comment, followup, attributeoptioncomboid, 
+       created
+  FROM datavalue;
+
+
+ select ou.organisationunitid, ( select stddev_pop( cast( dv.value as double precision ) ) 
+ from datavalue dv inner join period pe on dv.periodid = pe.periodid where dv.dataelementid = 6359 
+ and dv.categoryoptioncomboid = 7 and pe.startdate >= '0001-01-03' and 
+ dv.sourceid = ou.organisationunitid) as deviation 
+ from organisationunit ou 
+ where ou.organisationunitid in ( 762, 6556, 6588,6557, 6558 );
+
+
+
+  select ou.organisationunitid,
+                (select avg( cast( dv.value as double precision ) ) 
+                from datavalue dv 
+                inner join period pe on dv.periodid = pe.periodid 
+                where dv.dataelementid = 6359 
+                and dv.categoryoptioncomboid = 7 
+                and pe.startdate >= '0001-01-03' and dv.sourceid = ou.organisationunitid) as average 
+                from organisationunit ou 
+                where ou.organisationunitid in (762, 6556, 6588,6557, 6558);
+
+
+
+
+
+
+http://127.0.0.1:8090/dhis/api/events.json
+
+http://127.0.0.1:8090/dhis/api/events/FdBsObwYE3g.json
+
+"FdBsObwYE3g"

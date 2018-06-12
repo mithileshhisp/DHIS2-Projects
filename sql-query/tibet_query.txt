@@ -1,0 +1,123 @@
+select 
+(selectedou),
+(level6),
+(level4),
+(level3),
+max(CqzBeqwEwd0) as CqzBeqwEwd0,
+max(tZg5hIwUPeo) as tZg5hIwUPeo,
+max(gyN6pyJVBU8) as gyN6pyJVBU8,
+max(uCQGAbAMgDK) as uCQGAbAMgDK,
+max(yYdPDyAEKUJ) as yYdPDyAEKUJ,
+max(WkYTAdqYNpw) as WkYTAdqYNpw,
+max(oGVGyycdXIo) as oGVGyycdXIo,
+max(DeGuSIzkB8w) as DeGuSIzkB8w,
+max(e3ZpFsKPOCT) as e3ZpFsKPOCT,
+max(ALKrB9xXcFS) as ALKrB9xXcFS,
+max(J2d7C0vxc4D) as J2d7C0vxc4D,
+max(cnCVeb4dNNi) as cnCVeb4dNNi,
+max(ZT31SnGAER7) as ZT31SnGAER7,
+max(aEGckVBZU79) as aEGckVBZU79,
+max(CkdAt0loOm5) as CkdAt0loOm5,
+max(UQKXSzw3T3n) as UQKXSzw3T3n,
+max(blc7ToLLmEy) as blc7ToLLmEy,
+max(k2TpP39oofz) as k2TpP39oofz
+
+from
+(
+	select 
+	filtereddata.programstageinstanceid,
+	filtereddata.selectedou,
+	filtereddata.level6,
+	filtereddata.level4,
+	filtereddata.level3,
+	case when de.uid = 'CqzBeqwEwd0' then tedv.value end as CqzBeqwEwd0,
+	case when tea.uid='tZg5hIwUPeo' then teav.value end as tZg5hIwUPeo,
+	case when tea.uid='gyN6pyJVBU8' then teav.value end as gyN6pyJVBU8,
+	case when tea.uid='uCQGAbAMgDK' then teav.value end as uCQGAbAMgDK,
+	case when tea.uid='yYdPDyAEKUJ' then teav.value end as yYdPDyAEKUJ,
+	case when tea.uid='WkYTAdqYNpw' then teav.value end as WkYTAdqYNpw,
+	case when de.uid='oGVGyycdXIo' then tedv.value end as oGVGyycdXIo,
+	case when de.uid='DeGuSIzkB8w' then tedv.value end as DeGuSIzkB8w,
+	case when de.uid='e3ZpFsKPOCT' then tedv.value end as e3ZpFsKPOCT,
+	case when de.uid='ALKrB9xXcFS' then tedv.value end as ALKrB9xXcFS,
+	case when de.uid='J2d7C0vxc4D' then tedv.value end as J2d7C0vxc4D,
+	case when de.uid='cnCVeb4dNNi' then tedv.value end as cnCVeb4dNNi,
+	case when de.uid='ZT31SnGAER7' then tedv.value end as ZT31SnGAER7,
+	case when de.uid='aEGckVBZU79' then tedv.value end as aEGckVBZU79,
+	case when de.uid='CkdAt0loOm5' then tedv.value end as CkdAt0loOm5,
+	case when de.uid='UQKXSzw3T3n' then tedv.value end as UQKXSzw3T3n,
+	case when de.uid='blc7ToLLmEy' then tedv.value end as blc7ToLLmEy,
+	case when de.uid='k2TpP39oofz' then tedv.value end as k2TpP39oofz
+
+	from 
+	(
+	SELECT psi.programstageinstanceid as programstageinstanceid,psi.organisationunitid as ouid,pi.trackedentityinstanceid as tei,
+	selectedou.name as selectedou,
+	level6.name as level6,
+	level4.name as level4,
+	level3.name as level3
+	FROM programstageinstance psi
+	inner join programinstance pi on psi.programinstanceid = pi.programinstanceid
+	inner join programstage ps on psi.programstageid = ps.programstageid
+	inner join trackedentityinstance tei on tei.trackedentityinstanceid = pi.trackedentityinstanceid
+	inner join trackedentitydatavalue tedv on psi.programstageinstanceid = tedv.programstageinstanceid
+	inner join dataelement de on tedv.dataelementid = de.dataelementid
+	inner join organisationunit selectedou on selectedou.organisationunitid = psi.organisationunitid
+	left join organisationunit level6 on level6.organisationunitid = selectedou.parentid
+	left join organisationunit level5 on level6.parentid = level5.organisationunitid
+	left join organisationunit level4 on level5.parentid = level4.organisationunitid
+	left join organisationunit level3 on level4.parentid = level3.organisationunitid
+	where ps.uid = 'ZBaMEGnzHny' and de.uid = 'aEGckVBZU79' and tedv.value in ('Positive Pf','Positive Pv','Mixed','Negative','Not done')	
+	and psi.organisationunitid in (select organisationunitid 
+				from organisationunit 
+				where uid in ('G0NxkwhR17Y'))
+	and pi.incidentdate = '2018-02-22'
+	)filtereddata
+	inner join trackedentitydatavalue tedv on filtereddata.programstageinstanceid = tedv.programstageinstanceid
+	inner join trackedentityattributevalue teav on teav.trackedentityinstanceid = filtereddata.tei
+	inner join trackedentityattribute tea on tea.trackedentityattributeid = teav.trackedentityattributeid
+	inner join dataelement de on tedv.dataelementid = de.dataelementid
+	inner join organisationunit selectedou on selectedou.organisationunitid = filtereddata.ouid	
+	where de.uid in (
+	'CqzBeqwEwd0',
+	'oGVGyycdXIo',
+	'DeGuSIzkB8w',
+	'e3ZpFsKPOCT',
+	'ALKrB9xXcFS',
+	'J2d7C0vxc4D',
+	'cnCVeb4dNNi',
+	'ZT31SnGAER7',
+	'aEGckVBZU79',
+	'CkdAt0loOm5',
+	'UQKXSzw3T3n',
+	'blc7ToLLmEy',
+	'k2TpP39oofz'
+	)
+) final
+group by final.programstageinstanceid,selectedou,level6,level4,level3
+
+
+
+
+insert into dataelementgroupmembers(dataelementgroupid, dataelementid) values
+="("&A2&","&B2&"),"
+
+CASH_FLOW_DATASET_ID
+CASH_FLOW_RATE_DE_GROUP_ID
+
+
+// get latest data from datavalue
+SELECT * FROM datavalue v
+inner join period p on p.periodid = v.periodid
+where v.dataelementid = 33696 and v.categoryoptioncomboid = 15 and v.sourceid = 71
+order by p.enddate desc LIMIT 1
+
+SELECT dv.dataelementid, dv.periodid, dv.sourceid, dv.categoryoptioncomboid, dv.attributeoptioncomboid, dv.value FROM datavalue dv
+inner join period p on p.periodid = dv.periodid
+where dv.dataelementid = 33696 and dv.categoryoptioncomboid = 15 and dv.attributeoptioncomboid = 15 and dv.sourceid = 71
+order by p.enddate desc LIMIT 1
+
+select sourceid from datasetsource where datasetid = 19968;
+
+
+SELECT dataelementid from dataelementgroupmembers where dataelementgroupid = 78457;

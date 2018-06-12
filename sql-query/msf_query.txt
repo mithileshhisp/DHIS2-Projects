@@ -1,0 +1,106 @@
+
+Select * from trackedentityinstance where trackedentityinstanceid in ( select trackedentityinstanceid from programinstance where programid = 752 )
+order by trackedentityinstanceid;
+
+
+
+select * from programinstance where programid = 752 order by trackedentityinstanceid;
+
+select * from programstageinstance where programinstanceid in 
+( select programinstanceid from programinstance where programid = 752 );
+
+  
+select * from trackedentitydatavalue where programstageinstanceid in 
+( select programstageinstanceid from programstageinstance where programinstanceid in 
+( select programinstanceid from programinstance where programid = 752 ));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=TEXT(F2,"yyyy-MM-DD")
+
+
+insert into optionvalue (optionvalueid,code,name,created,lastupdated,optionsetid,sort_order) values
+="(nextval('hibernate_sequence'),'"&D2&"','"&C2&"','2018-01-05','2018-01-05',"&B2&",,"&G2&"),"
+
+
+
+
+
+
+
+
+
+
+="update optionvalue set optionvalueid = nextval('hibernate_sequence') where optionvalueid = "&A2&";"
+
+
+="update optionvalue set uid = '"&B2&"' where uid = "&A2&";"
+
+="update programstageinstance set executiondate  = '"&E2&"' where programstageinstanceid = "&A2&";"
+
+="update programstageinstance set executiondate  = '"&E2&"' where programstageinstanceid = "&A2&";"
+
+SELECT psi.programstageinstanceid, psi.executiondate::date,teav.trackedentityinstanceid,teav.value FROM programstageinstance psi
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+where teav.trackedentityattributeid = 335935 order by psi.executiondate::date desc;
+
+
+
+
+
+
+
+level = 3
+http://127.0.0.1:8090/dhis/api/organisationUnits.json?fields=id,name,code&filter=level:eq:3&sortOrder=ASC&paging=false
+
+
+
+http://127.0.0.1:8090/dhis/api/organisationUnits/' + HCM6YwyAyFx+ ".json?fields=id,name,code,parent[id,name,code,parent[id,name,code]],attributeValues[attribute[id,name,code],value]&paging=false"
+
+http://127.0.0.1:8090/dhis/api/organisationUnits.json?fields=id,name,code,parent[id,name,code,parent[id,name,code]],attributeValues[attribute[id,name,code],value]&paging=false"
+
+
+       getGrandParentOrgunitCode: function ( orgUnitUid ) {
+            var def = $q.defer();
+            $http.get('../api/organisationUnits/' + orgUnitUid+ ".json?fields=id,name,code,parent[id,name,code,parent[id,name,code]],attributeValues[attribute[id,name,code],value]&paging=false").then(function (response) {
+
+                def.resolve(response.data);
+            });
+            return def.promise;
+        }
+
+
+       //http://127.0.0.1:8090/dhis224/api/organisationUnits.json?fields=id,name,code&filter=level:eq:3&sortOrder=ASC&paging=false
+        getLevel2OrganisationUnit: function () {
+            var def = $q.defer();
+            $http.get('../api/organisationUnits.json?fields=id,name,code,parent[id],attributeValues[attribute[id,name,code],value]&paging=false").then(function (response) {
+
+                def.resolve(response.data);
+            });
+            return def.promise;
+        }

@@ -1,0 +1,28 @@
+select
+ou1.uid as uid1,max(ou1.name) as Level-1,
+ou2.uid as uid2,max(ou2.name) as Level-2,
+ou3.uid as uid3,max(ou3.name) as Level-3,
+ou4.uid as uid4,max(ou4.name) as Level-4,
+ou5.uid as uid5,max(ou5.name) as Level-5,
+ou6.uid as uid6,max(ou6.name) as Level-6,
+ou7.uid as uid7,max(ou7.name) as Level-7,
+ou8.uid as uid8,max(ou8.name) as Level-8,
+
+from _orgunitstructure ous
+inner join organisationunit ou1 on ou1.organisationunitid = ous.idlevel1
+inner join organisationunit ou2 on ou2.organisationunitid = ous.idlevel2
+inner join organisationunit ou3 on ou3.organisationunitid = ous.idlevel3
+inner join organisationunit ou4 on ou4.organisationunitid = ous.idlevel4
+inner join organisationunit ou5 on ou5.organisationunitid = ous.idlevel5
+inner join organisationunit ou6 on ou6.organisationunitid = ous.idlevel6
+inner join organisationunit ou7 on ou7.organisationunitid = ous.idlevel7
+inner join organisationunit ou8 on ou8.organisationunitid = ous.idlevel8
+group by
+ou1.uid,
+ou2.uid,
+ou3.uid,
+ou4.uid,
+ou5.uid,
+ou6.uid,
+ou7.uid,
+ou8.uid

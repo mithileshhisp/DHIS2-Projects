@@ -1,0 +1,83 @@
+// complete registration query
+
+select * from period where periodtypeid = 2 and startdate >= '2016-12-31' and enddate <= '2018-01-01' order by periodid;
+
+
+insert into completedatasetregistration (datasetid,periodid,sourceid,date,storedby,attributeoptioncomboid) values
+
+="("&B2&","&D2&","&A2&",'2018-02-09','admin',"&C2&"),"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  SELECT dataelementid, periodid, sourceid, categoryoptioncomboid, attributeoptioncomboid, 
+       value, storedby, lastupdated, comment, followup
+       delete
+  FROM datavalue where value = '    ';
+
+
+  SELECT dataelementid, periodid, sourceid, categoryoptioncomboid, attributeoptioncomboid, 
+       value, storedby, lastupdated, comment, followup
+       delete
+  FROM datavalue where value = '              ';
+
+
+  SELECT dataelementid, periodid, sourceid, categoryoptioncomboid, attributeoptioncomboid, 
+       value, storedby, lastupdated, comment, followup
+       
+  FROM datavalue where value = '  ';
+
+  delete
+  FROM datavalue where value = '  ';
+
+  delete
+  FROM datavalue where value = '              ';
+  
+  delete
+  FROM datavalue where value = '    ';
+
+
+
+
+  delete
+  FROM datavalue where value = '                                                                                                                                          ';
+  delete	
+  FROM datavalue where value = '                      ';
+
+  delete		
+  FROM datavalue where value = '                                                                                                                                                                                                                                                               ';
+ 
+  delete		
+  FROM datavalue where value = '                             ';
+  
+delete	
+  FROM datavalue where value = '                             ';		
+
+
+update datavalue set value = '45' where value = '45.0000';
+update datavalue set value = '5' where value = '5.0000';
+update datavalue set value = '22' where value = '22.0000';
+update datavalue set value = '48' where value = '48.0000';
+update datavalue set value = '3' where value = '3.0000';
+
+ update datavalue 
+ set value = split_part(value, '.', 1)
+ where value like '%.0000';

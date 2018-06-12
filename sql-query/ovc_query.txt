@@ -1,0 +1,195 @@
+SELECT programstageinstanceid, dataelementid, value, "timestamp", providedelsewhere, 
+       storedby
+  FROM patientdatavalue where timestamp = '21-07-2014';
+
+
+
+
+
+SELECT patient.organisationunitid,programinstance.patientid,dataelementid, value FROM patientdatavalue 
+                            INNER JOIN programstageinstance ON programstageinstance.programstageinstanceid = patientdatavalue.programstageinstanceid 
+                            INNER JOIN programinstance on programinstance.programinstanceid = programstageinstance.programinstanceid 
+                            INNER JOIN patient ON patient.patientid = programinstance.patientid 
+                            WHERE  
+                                patient.organisationunitid IN ( 133,119 ) AND patient.gender = 'F' and
+                                patientdatavalue.dataelementid IN (  1941,1942,1943,1944,1945,1946,1947,1948,1949 ) AND 
+                                programstageinstance.programstageid = 1966 AND 
+                                programstageinstance.executiondate = '2013-10-01'
+                                and value like 'true' ;
+                                
+
+
+
+
+
+
+
+
+
+
+SELECT count(programinstance.patientid) as total FROM patientdatavalue 
+                            INNER JOIN programstageinstance ON programstageinstance.programstageinstanceid = patientdatavalue.programstageinstanceid 
+                            INNER JOIN programinstance on programinstance.programinstanceid = programstageinstance.programinstanceid 
+                            INNER JOIN patient ON patient.patientid = programinstance.patientid 
+                            WHERE  
+                                patient.organisationunitid IN ( 119,133 ) AND patient.gender = 'F' and
+                                patientdatavalue.dataelementid IN (  1941,1942,1943,1944,1945,1946,1947,1948,1949 ) AND 
+                                programstageinstance.programstageid = 1966 AND 
+                                programstageinstance.executiondate = '2013-10-01'
+                                and value like 'true' 
+                                GROUP BY programinstance.patientid
+
+
+
+
+
+
+
+select count(total)
+from
+( SELECT programinstance.patientid total FROM patientdatavalue 
+                            INNER JOIN programstageinstance ON programstageinstance.programstageinstanceid = patientdatavalue.programstageinstanceid 
+                            INNER JOIN programinstance on programinstance.programinstanceid = programstageinstance.programinstanceid 
+                            INNER JOIN patient ON patient.patientid = programinstance.patientid 
+                            WHERE  
+                                patient.organisationunitid IN ( 119,133 ) AND patient.gender = 'F' and
+                                patientdatavalue.dataelementid IN (  1941,1942,1943,1944,1945,1946,1947,1948,1949 ) AND 
+                                programstageinstance.programstageid = 1966 AND 
+                                programstageinstance.executiondate = '2013-10-01'
+                                and value like 'true' 
+                                GROUP BY programinstance.patientid)asd;
+
+
+
+
+select count(total)
+from
+( SELECT programinstance.patientid total FROM patientdatavalue 
+                            INNER JOIN programstageinstance ON programstageinstance.programstageinstanceid = patientdatavalue.programstageinstanceid 
+                            INNER JOIN programinstance on programinstance.programinstanceid = programstageinstance.programinstanceid 
+                            INNER JOIN patient ON patient.patientid = programinstance.patientid 
+                            WHERE  
+                                patient.organisationunitid IN ( 119,133 ) AND patient.gender = 'F' and
+                                patientdatavalue.dataelementid IN (  1941,1942,1943,1944,1945,1946,1947,1948,1949 ) AND 
+                                programstageinstance.programstageid = 1966 AND 
+                                programstageinstance.executiondate = '2013-10-01'
+                                and value like 'true' 
+                                GROUP BY programinstance.patientid)asd;
+
+
+
+
+select count(total)
+from
+( SELECT programinstance.patientid total FROM patientdatavalue 
+                            INNER JOIN programstageinstance ON programstageinstance.programstageinstanceid = patientdatavalue.programstageinstanceid 
+                            INNER JOIN programinstance on programinstance.programinstanceid = programstageinstance.programinstanceid 
+                            INNER JOIN patient ON patient.patientid = programinstance.patientid 
+                            WHERE  
+                                patient.organisationunitid IN ( 119,133 ) AND patient.gender = 'F' and
+                                patientdatavalue.dataelementid IN (  1950 ) AND 
+                                programstageinstance.programstageid = 1966 AND 
+                                programstageinstance.executiondate = '2013-10-01'
+                                and value like 'true' 
+                                GROUP BY programinstance.patientid)asd;
+
+
+
+
+
+select orgUnitId,count(total)
+from
+( SELECT patient.organisationunitid orgUnitId ,programinstance.patientid total FROM patientdatavalue 
+                            INNER JOIN programstageinstance ON programstageinstance.programstageinstanceid = patientdatavalue.programstageinstanceid 
+                            INNER JOIN programinstance on programinstance.programinstanceid = programstageinstance.programinstanceid 
+                            INNER JOIN patient ON patient.patientid = programinstance.patientid 
+                            WHERE  
+                                patient.organisationunitid IN ( 119,133 ) AND patient.gender = 'F' and
+                                patientdatavalue.dataelementid IN ( 1941,1942,1943,1944,1945,1946,1947,1948,1949 ) AND 
+                                programstageinstance.programstageid = 1966 AND 
+                                programstageinstance.executiondate = '2013-10-01'
+                                and value like 'true' 
+                                GROUP BY patient.organisationunitid,programinstance.patientid)asd Group By asd.orgUnitId;
+
+
+// for Health & Nutrition service support
+SELECT orgUnitId,count(total)
+from
+( SELECT patient.organisationunitid orgUnitId ,programinstance.patientid total FROM patientdatavalue 
+                            INNER JOIN programstageinstance ON programstageinstance.programstageinstanceid = patientdatavalue.programstageinstanceid 
+                            INNER JOIN programinstance on programinstance.programinstanceid = programstageinstance.programinstanceid 
+                            INNER JOIN patient ON patient.patientid = programinstance.patientid 
+                            WHERE  
+                                patient.organisationunitid IN ( ORGUNITID_BY_COMMA ) AND patient.gender = 'F' and
+                                patientdatavalue.dataelementid IN ( 1941,1942,1943,1944,1945,1946,1947,1948,1949 ) AND 
+                                programstageinstance.programstageid = 1966 AND 
+                                programstageinstance.executiondate = 'CURRENT_PERIOD_STARTDATE'
+                                and value like 'true' 
+                                GROUP BY patient.organisationunitid,programinstance.patientid)asd Group By asd.orgUnitId;
+
+
+
+
+
+
+// for Economic strengthening service support
+SELECT orgUnitId,count(total)
+from
+( SELECT patient.organisationunitid orgUnitId ,programinstance.patientid total FROM patientdatavalue 
+                            INNER JOIN programstageinstance ON programstageinstance.programstageinstanceid = patientdatavalue.programstageinstanceid 
+                            INNER JOIN programinstance on programinstance.programinstanceid = programstageinstance.programinstanceid 
+                            INNER JOIN patient ON patient.patientid = programinstance.patientid 
+                            WHERE  
+                                patient.organisationunitid IN ( ORGUNITID_BY_COMMA ) AND patient.gender = 'F' and
+                                patientdatavalue.dataelementid IN ( 1954,1955,1958,1959,1960 ) AND 
+                                programstageinstance.programstageid = 1966 AND 
+                                programstageinstance.executiondate = 'CURRENT_PERIOD_STARTDATE'
+                                and value like 'true' 
+                                GROUP BY patient.organisationunitid,programinstance.patientid)asd Group By asd.orgUnitId;
+
+
+SELECT orgUnitId,count(total)
+from
+( SELECT patient.organisationunitid orgUnitId ,programinstance.patientid total FROM patientdatavalue 
+                            INNER JOIN programstageinstance ON programstageinstance.programstageinstanceid = patientdatavalue.programstageinstanceid 
+                            INNER JOIN programinstance on programinstance.programinstanceid = programstageinstance.programinstanceid 
+                            INNER JOIN patient ON patient.patientid = programinstance.patientid 
+                            WHERE  
+                                patient.organisationunitid IN (  164, 165, 136, 231, 145, 171, 2461, 269, 2179, 149, 228, 216, 133, 158, 235, 160, 159, 225, 2467, 208, 5017, 213, 172, 218, 153, 147, 2460, 2466, 2174, 2294, 219, 233, 2456, 150, 143, 220, 2472, 167, 177, 1901, 2186, 2470, 232, 229, 170, 146, 2040, 144, 211, 226, 234, 210, 221, 214, 227, 2465, 1871, 151, 166, 175, 119, 173, 141, 168, 2459, 161, 137, 2004, 2463, 223, 2288, 2458, 217, 148, 215, 169, 222, 142, 152, 134, 156, 212  ) AND patient.gender = 'F' and
+                                patientdatavalue.dataelementid IN ( 1954,1955,1958,1959,1960 ) AND 
+                                programstageinstance.programstageid = 1966 AND 
+                                programstageinstance.executiondate = '2013-10-01'
+                                and value like 'true' 
+                                GROUP BY patient.organisationunitid,programinstance.patientid)asd Group By asd.orgUnitId;
+
+
+
+
+
+
+
+SELECT last_value FROM hibernate_sequence;
+
+
+
+SELECT equipment.organisationunitid,COUNT(*) FROM modelattributevalue  
+INNER JOIN equipment ON modelattributevalue.modelid = equipment.modelid  
+INNER JOIN equipmentattributevalue ON equipmentattributevalue.equipmentid = equipment.equipmentid
+WHERE  equipment.equipmenttypeid = 44 AND  
+modelattributevalue.value = 'ChestRefrigerator' AND  
+modelattributevalue.modeltypeattributeid = 49 AND  
+equipment.organisationunitid IN ( ORGUNITID_BY_COMMA ) AND  
+equipmentattributevalue.value IN ( 'Functioning' ) 
+AND  equipment.registrationdate <= 'CURRENT_PERIOD_ENDDATE' 
+GROUP BY equipment.organisationunitid"
+
+
+// laos query
+
+ select td.dataelementid, td.value from ( select max(asd.level) as level,asd.dataelementid,asd.orgunitgroupid,datasetid
+ from (  select td.orgunitgroupid,td.organisationunitid,td.datasetid,td.dataelementid,os.level,td.value
+ from qualitymaxvalue td inner join _orgunitstructure os on os.organisationunitid = td.organisationunitid
+ where '2013-03-31'  between date(td.startdate) and date(td.enddate)  and orgunitgroupid in ( 1521)
+ and datasetid in ( 1432)  )asd  group by asd.dataelementid,asd.orgunitgroupid,datasetid  )sag1
+ inner join qualitymaxvalue td on td.dataelementid=sag1.dataelementid  where td.orgunitgroupid=sag1.orgunitgroupid
+ and td.datasetid=sag1.datasetid  and td.organisationunitid in (-1,49,65,118,663);

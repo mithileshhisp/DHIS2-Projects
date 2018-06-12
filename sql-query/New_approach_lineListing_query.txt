@@ -1,0 +1,178 @@
+SELECT programstageinstanceid, dataelementid, value, "timestamp", providedelsewhere, 
+       storedby
+  FROM trackedentitydatavalue where dataelementid in( 468,469,470,471,472,473 );
+
+
+
+SELECT  dataelementid, value FROM trackedentitydatavalue 
+                            INNER JOIN programstageinstance ON programstageinstance.programstageinstanceid = trackedentitydatavalue.programstageinstanceid
+                            INNER JOIN programinstance on programinstance.programinstanceid = programstageinstance.programinstanceid
+                            WHERE  
+                                 programinstance.programid = 465 AND 
+                                 programstageinstance.programstageid = 466 AND  
+                                 programstageinstance.organisationunitid = 50 AND 
+                                 trackedentitydatavalue.dataelementid IN ( 468,469,470,471,472,473 ) AND 
+                                 programstageinstance.executiondate = '2015-08-12';
+
+
+SELECT  programstageinstance.organisationunitid,trackedentitydatavalue.programstageinstanceid,dataelementid, value FROM trackedentitydatavalue 
+                            INNER JOIN programstageinstance ON programstageinstance.programstageinstanceid = trackedentitydatavalue.programstageinstanceid
+                            INNER JOIN programinstance on programinstance.programinstanceid = programstageinstance.programinstanceid
+                            WHERE  
+                                 programinstance.programid = 465 AND 
+                                 programstageinstance.programstageid = 466 AND  
+                                 programstageinstance.organisationunitid = 50 AND   
+                                 trackedentitydatavalue.dataelementid IN ( 468,469,470,471,472,473 ) AND 
+                                 programstageinstance.executiondate between '2015-08-01' and '2015-08-31';
+
+                                 
+SELECT  programstageinstanceid FROM programstageinstance 
+INNER JOIN programinstance on programinstance.programinstanceid = programstageinstance.programinstanceid
+WHERE  programinstance.programid = 465 AND 
+       programstageinstance.programstageid = 466 AND  
+       programstageinstance.organisationunitid = 50 AND    
+       programstageinstance.executiondate between '2015-07-01' and '2015-07-31';
+
+
+
+
+
+// 13/08/2015
+
+SELECT  programstageinstance.organisationunitid,trackedentitydatavalue.programstageinstanceid,dataelementid, value FROM trackedentitydatavalue 
+                            INNER JOIN programstageinstance ON programstageinstance.programstageinstanceid = trackedentitydatavalue.programstageinstanceid
+                            INNER JOIN programinstance on programinstance.programinstanceid = programstageinstance.programinstanceid
+                            WHERE  
+                                 programinstance.programid = 465 AND 
+                                 programstageinstance.programstageid = 466 AND  
+                                 programstageinstance.organisationunitid IN (49,50) AND   
+                                 trackedentitydatavalue.dataelementid IN ( 468,469,470,471,472,473 ) AND 
+                                 programstageinstance.executiondate between '2015-08-01' and '2015-08-31';
+
+
+
+
+
+// CSE REPORT QUERY
+
+select * from 
+(
+	select dataelementid, name from 
+	dataelement where 
+	dataelementid in (160,161,162,163,164,165,166)
+)sag13
+left join
+(
+	select de_tf,
+	sum(male_1014_in) male_1014_in,
+	sum(female_1014_in) female_1014_in,
+	sum(male_1519_in) male_1519_in,
+	sum(female_1519_in) female_1519_in,
+	sum(male_2024_in) male_2024_in,
+	sum(female_2024_in) female_2024_in,
+	sum(male_1014_out) male_1014_out,
+	sum(female_1014_out) female_1014_out,
+	sum(male_1519_out) male_1519_out,
+	sum(female_1519_out) female_1519_out,
+	sum(male_2024_out) male_2024_out,
+	sum(female_2024_out) female_2024_out
+	from
+	(
+		select de_tf, 
+		case when age::integer >= 10 and age::integer <=14 and programid =85 and gender like 'Male' then tf end male_1014_in,
+		case when age::integer >= 10 and age::integer <=14 and programid =85 and gender like 'Female' then tf end female_1014_in,
+		case when age::integer >= 15 and age::integer <=19 and programid =85 and gender like 'Male' then tf end male_1519_in,
+		case when age::integer >= 15 and age::integer <=19 and programid =85 and gender like 'Female' then tf end female_1519_in,
+		case when age::integer >= 20 and age::integer <=24 and programid =85 and gender like 'Male' then tf end male_2024_in,
+		case when age::integer >= 20 and age::integer <=24 and programid =85 and gender like 'Female' then tf end female_2024_in,
+		case when age::integer >= 10 and age::integer <=14 and programid =140 and gender like 'Male' then tf end male_1014_out,
+		case when age::integer >= 10 and age::integer <=14 and programid =140 and gender like 'Female' then tf end female_1014_out,
+		case when age::integer >= 10 and age::integer <=14 and programid =140 and gender like 'Male' then tf end male_1519_out,
+		case when age::integer >= 10 and age::integer <=14 and programid =140 and gender like 'Female' then tf end female_1519_out,
+		case when age::integer >= 10 and age::integer <=14 and programid =140 and gender like 'Male' then tf end male_2024_out,
+		case when age::integer >= 10 and age::integer <=14 and programid =140 and gender like 'Female' then tf end female_2024_out
+		from
+
+		(
+			select sag10.*,sag9.name from 
+			(
+				select organisationunitid,name from organisationunit where organisationunitid=50
+			)sag9
+			inner join
+			(
+				select sag7.programinstanceid,sag7.programid,sag7.organisationunitid,sag7.age,sag7.gender,sag8.de_tf,case when tf like 'true' then 1 else 0 end tf ,dt
+				from 
+				(
+					select sag.programinstanceid,sag.programid,sag.organisationunitid,sag.age,sag1.gender
+					from
+					(
+					select pi.programinstanceid,pi.trackedentityinstanceid,pi.programid,pi.organisationunitid,
+					teav.trackedentityattributeid,teav.value age
+					from programinstance pi
+					left join trackedentityattributevalue teav on teav.trackedentityinstanceid=pi.trackedentityinstanceid and teav.trackedentityattributeid in (71)
+					)sag
+					inner join
+					(
+					select pi.programinstanceid,pi.trackedentityinstanceid,pi.programid,pi.organisationunitid,
+					teav.trackedentityattributeid,teav.value gender
+					from programinstance pi
+					left join trackedentityattributevalue teav on teav.trackedentityinstanceid=pi.trackedentityinstanceid and teav.trackedentityattributeid in (72)
+					)sag1
+					on sag.programinstanceid=sag1.programinstanceid
+					and sag.trackedentityinstanceid=sag1.trackedentityinstanceid
+					and sag.programid=sag1.programid
+					and sag.organisationunitid=sag1.organisationunitid
+					where sag.programid in (85,140)
+				)sag7
+				left join 
+				(
+					select sag5.programinstanceid,sag5.organisationunitid,sag6.de_tf,tf,dt from 
+					(
+						select programstageinstanceid,programinstanceid,organisationunitid
+						from programstageinstance
+					)sag5
+					left join
+					(
+						select * from 
+						(
+							select sag2.*,sag3.de_dt,dt from
+							(
+							select  programstageinstanceid,dataelementid de_tf,value tf
+							from trackedentitydatavalue
+							where dataelementid in (160,161,162,163,164,165,166)
+							)sag2
+							inner join
+							(
+							select  programstageinstanceid,dataelementid de_dt,value dt
+							from trackedentitydatavalue
+							where dataelementid in (324,327,328,326,329,323,325)
+							)sag3
+							on sag2.programstageinstanceid=sag3.programstageinstanceid
+						)sag4
+						where case when de_tf=160 then de_dt=324 
+							 when de_tf=161 then de_dt=327 
+							 when de_tf=162 then de_dt=328 
+							 when de_tf=163 then de_dt=326 
+							 when de_tf=164 then de_dt=329 
+							 when de_tf=165 then de_dt=323 
+							 when de_tf=166 then de_dt=325 end 
+					)sag6	 
+					on sag5.programstageinstanceid=sag6.programstageinstanceid
+				)sag8	
+				on sag7.programinstanceid=sag8.programinstanceid
+				and sag7.organisationunitid=sag8.organisationunitid
+				and sag8.dt between '2015-07-01' and '2015-09-30'
+			)sag10
+			on sag9.organisationunitid=sag10.organisationunitid
+		)sag11
+	)sag12
+	group by de_tf
+)sag14
+on sag13.dataelementid=sag14.de_tf
+order by sag13.dataelementid
+
+
+
+
+
+GenerateLinelistingWebPortalReportAnalyserResultAction

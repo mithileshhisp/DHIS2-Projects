@@ -1,0 +1,13 @@
+// user related query
+
+
+SELECT um.organisationunitid,org.hierarchylevel, um.userinfoid, org.name as orgUnitName, uinfo.surname, uinfo.firstname FROM usermembership um 
+INNER JOIN organisationunit org ON org.organisationunitid = um.organisationunitid
+INNER JOIN userinfo uinfo ON uinfo.userinfoid = um.userinfoid order by org.hierarchylevel;
+
+
+SELECT um.organisationunitid,org.hierarchylevel, um.userinfoid, org.name as orgUnitName, uinfo.surname, uinfo.firstname,urole.name FROM usermembership um 
+INNER JOIN organisationunit org ON org.organisationunitid = um.organisationunitid
+INNER JOIN userinfo uinfo ON uinfo.userinfoid = um.userinfoid
+INNER JOIN userrolemembers urm ON uinfo.userinfoid = urm.userid
+INNER JOIN userrole urole ON urole.userroleid = urm.userroleid

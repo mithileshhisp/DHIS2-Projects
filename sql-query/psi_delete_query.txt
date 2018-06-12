@@ -1,0 +1,110 @@
+
+begin;
+
+-- 1) for Delete Report
+
+delete FROM report 
+where reportid in(1060039,1169075,450003,450005,450009,450026,450007,451683,451698,449997,449999,450001,1157442,1168445,1138134);
+
+-- delete tracker data 
+
+-- 2) delete from trackedentityattributevalue 
+delete from trackedentityattributevalue where trackedentityinstanceid in
+( select trackedentityinstanceid from trackedentityinstance where organisationunitid in ( 70117,70118,70119 ) );
+
+-- 3) delete from trackedentityattributevalueaudit 
+delete from trackedentityattributevalueaudit where trackedentityinstanceid in
+( select trackedentityinstanceid from trackedentityinstance where organisationunitid in ( 70117,70118,70119 ) );
+
+
+-- 4) delete from trackedentitydatavalue
+
+delete from trackedentitydatavalue where programstageinstanceid in (
+select programstageinstanceid
+from programstageinstance where programinstanceid in 
+( select programinstanceid from programinstance where trackedentityinstanceid in
+( select trackedentityinstanceid from trackedentityinstance where organisationunitid 
+	in ( 70117,70118,70119 ) )
+ ));
+
+-- 5) delete from trackedentitydatavalueaudit 
+delete from trackedentitydatavalueaudit where programstageinstanceid in (
+select programstageinstanceid
+from programstageinstance where programinstanceid in 
+( select programinstanceid from programinstance where trackedentityinstanceid in
+( select trackedentityinstanceid from trackedentityinstance where organisationunitid 
+	in ( 70117,70118,70119 ) )
+ ));
+
+-- 6) programstageinstancecomments 
+delete from programstageinstancecomments where programstageinstanceid in (
+select programstageinstanceid
+from programstageinstance where programinstanceid in 
+( select programinstanceid from programinstance where trackedentityinstanceid in
+( select trackedentityinstanceid from trackedentityinstance where organisationunitid 
+	in ( 70117,70118,70119 ) )
+ ));
+
+-- 7) programstageinstance 
+delete from programstageinstance where programinstanceid in 
+( select programinstanceid from programinstance where trackedentityinstanceid in
+( select trackedentityinstanceid from trackedentityinstance where organisationunitid 
+	in ( 70117,70118,70119 ) )
+ );
+
+-- 8) programinstance 
+delete from programinstance where trackedentityinstanceid in
+( select trackedentityinstanceid from trackedentityinstance where organisationunitid in ( 70117,70118,70119 ) );
+
+-- 9) trackedentityinstance 
+delete from trackedentityinstance where organisationunitid in ( 70117,70118,70119 );
+
+end;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+begin;
+-- delete tracker data 
+
+-- 1) delete from trackedentityattributevalue;
+
+-- 2) delete from trackedentityattributevalueaudit;
+
+
+-- 3) delete from trackedentitydatavalue
+
+delete from trackedentitydatavalue;
+
+-- 4) delete from trackedentitydatavalueaudit 
+      delete from trackedentitydatavalueaudit 
+
+-- 5) programstageinstancecomments 
+   delete from programstageinstancecomments;
+
+-- 6) programstageinstance 
+delete from programstageinstance;
+-- 7) programinstance 
+delete from programinstance;
+
+-- 8) trackedentityinstance 
+delete from trackedentityinstance;
