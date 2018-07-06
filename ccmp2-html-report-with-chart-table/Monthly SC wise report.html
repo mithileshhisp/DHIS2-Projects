@@ -1,0 +1,309 @@
+
+<script src="../dhis-web-commons/javascripts/jQuery/jquery.tablesorter.min.js"></script>
+
+<script type="text/javascript">
+	var periods = dhis2.report.periods;
+	var period = periods[0];
+	var orgUnit = dhis2.report.organisationUnit;	
+	orgUnit.parent = dhis2.report.organisationUnitHierarchy[1];
+	orgUnit.parent.parent = dhis2.report.organisationUnitHierarchy[2];
+	var orgUnitChildrens = dhis2.report.organisationUnitChildren;
+	//var stringDEs = "L2Hr5mT2TuQ;gHU2axe8SMo;uEW9E6W3Joi;xiqBNzLFq7N;kUblzoip82e;w1XJfR1qMFY;b1xITjZptuv;U8saZQXW6j9;egDgG28uPod";
+	var stringDEs = "egDgG28uPod;eGCKoT8Zh78;kUblzoip82e;b1xITjZptuv;bbETHYQwVSX;es1BEMqzt4v;hrOpx6utoln;L74cULAuOOH;w1XJfR1qMFY";
+	
+	var yearlyDEs = "egDgG28uPod";
+
+	var arrayDEs = stringDEs.split(";");                                                                                                                                                     
+		
+	var tableDX = [{ id: "egDgG28uPod", name: "Population", periodicity: "Y" }, { id: "eGCKoT8Zh78", name: "Tests", periodicity: "M" }, { id: "kUblzoip82e", name: "ABER", periodicity: "M" }, { id: "b1xITjZptuv", name: "TPR", periodicity: "M" }, { id: "bbETHYQwVSX", name: "Pf", periodicity: "M" }, { id: "es1BEMqzt4v", name: "Pv", periodicity: "M" }, { id: "hrOpx6utoln", name: "Mix", periodicity: "M" }, { id: "L74cULAuOOH", name: "Total Cases", periodicity: "M" }, { id: "w1XJfR1qMFY", name: "API", periodicity: "M" } ];
+ 	
+	var orgUnitList = [];
+    var orgUnitUIDs	= "";
+
+	var orgUnitGroupUID = "qaaIaEGClsl";
+	var selectedOrgUnitUID =  orgUnit.id;
+	
+	var url = window.location.href;
+	var params = url.split('=');
+	var gotPeriod=params[2];
+
+	//for state and district selection
+	var showingTable="datavalue1";
+
+	jQuery( document ).ready( function() {	
+		
+		validateReport();		
+		
+		$("#btnExport").click(function(e) {
+			window.open('data:application/vnd.ms-excel,'+ encodeURIComponent($('#printing').html()));
+			e.preventDefault();
+		});
+		
+	});
+
+	function validateReport()
+	{
+		$.get("../api/organisationUnitGroups/hdvIWjIWixd?filter=organisationUnits.id:eq:"+orgUnit.id,function(json){	
+			if (!json.name)
+			{
+				alert("Selected Facility is not in Intervention OU Group");
+				window.history.back();	
+			}
+			else
+			{
+				loadReport();
+			}
+		});	
+	}
+
+	function getPeriod(pr)
+	{
+		var year = pr.substring(0,4);
+		var month = pr.substring(4,6);
+		var strMonth="";
+		
+		if(month=="01" || month=="1")			strMonth="January";
+		else if(month=="02" || month=="2")		strMonth="February";
+		else if(month=="03" || month=="3")		strMonth="March";
+		else if(month=="04" || month=="4")		strMonth="April";
+		else if(month=="05" || month=="5")		strMonth="May";
+		else if(month=="06" || month=="6")		strMonth="June";
+		else if(month=="07" || month=="7")		strMonth="July";
+		else if(month=="08" || month=="8")		strMonth="August";
+		else if(month=="09" || month=="9")		strMonth="September";
+		else if(month=="10")					strMonth="October";
+		else if(month=="11")					strMonth="November";
+		else if(month=="12")					strMonth="December";
+		
+		return strMonth + " " +year;
+	}
+
+	function loadReport()
+	{
+		var htmlReport="";
+
+		var year = gotPeriod.substring(0,4);
+		var month = gotPeriod.substring(4,6);
+		
+		document.getElementById('blockName').innerHTML=orgUnit.name;
+		document.getElementById('districtName').innerHTML=orgUnit.parent.name;
+		document.getElementById('stateName').innerHTML=orgUnit.parent.parent.name;
+		document.getElementById('month_Year').innerHTML=getPeriod( gotPeriod );
+		
+		$.get("../api/analytics.json?dimension=dx:"+stringDEs+"&dimension=ou:"+selectedOrgUnitUID+";OU_GROUP-"+orgUnitGroupUID+"&filter=pe:"+year+""+month+"&displayProperty=NAME",function(json)
+		{
+			//console.log( "../api/analytics.json?dimension=dx:"+stringDEs+"&dimension=ou:"+selectedOrgUnitUID+";OU_GROUP-"+orgUnitGroupUID+"&filter=pe:"+gotPeriod+"&displayProperty=NAME" );
+			
+			$.get("../api/analytics.json?dimension=dx:"+yearlyDEs+"&dimension=ou:"+selectedOrgUnitUID+";OU_GROUP-"+orgUnitGroupUID+"&filter=pe:"+year+"&displayProperty=NAME",function(json1)
+			{
+				console.log( "../api/analytics.json?dimension=dx:"+yearlyDEs+"&dimension=ou:"+selectedOrgUnitUID+";OU_GROUP-"+orgUnitGroupUID+"&filter=pe:"+year+"&displayProperty=NAME" );		
+				var i=0;
+				var slnoCount = 0;
+				var colTotal = [];
+				var colCount = 0;
+				$.each(tableDX, function () {
+					colTotal[colCount]	= 0;
+					colCount++;
+				});
+							
+				json.metaData.ou.forEach(function(child)
+				{
+					slnoCount++;
+					htmlReport+="<tr>";						
+					htmlReport+="<td align='left'style='padding-left:5px'>"+json.metaData.names[child]+"</td>";					
+					var colCount = 0;
+					$.each(tableDX, function () {
+						var tempVal = 0;
+						if( this.periodicity == "M")
+						{
+							tempVal = parseInt( getCellValue( json, this.id, child ) );
+						}
+						else
+						{
+							tempVal = parseInt( getCellValue( json1, this.id, child ) );
+						}
+						tempVal = tempVal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+						htmlReport+="<td align='center'>"+ tempVal +"</td>";
+						colTotal[colCount]	= colTotal[colCount] + tempVal;
+						colCount++;
+					});	
+					
+					htmlReport+="</tr>";				
+				});
+
+				$("#"+showingTable+" tbody").append(htmlReport);
+			});		
+			/*
+			// TOTAL ROW
+			htmlReport+="<tr><td align='center' style='padding-left:2px'>&nbsp;</td>";				
+			htmlReport+="<td  align='left'style='padding-left:10px'>Total</td>";
+				
+			var colCount = 0;
+			$.each(tableDX, function () {
+				htmlReport+="<td align='center'>"+ colTotal[colCount] +"</td>";
+				colCount++;
+			});	
+				
+			htmlReport+="</tr>";
+			*/												         			
+		});
+	}
+
+	function getCellValue( json, de, orgUnit )
+	{
+		var result = 0;
+		
+		for (var i = 0; i < json.rows.length; i++)
+		{
+			if( json.rows[i][0] == de && json.rows[i][1] == orgUnit && json.rows[i][2] != null )
+			{
+				result = json.rows[i][2];
+				break;
+			}
+		}
+		
+		return result;
+	}	
+
+</script>
+
+<!--
+<style>
+	
+	td
+	{
+		padding: 5px 10px;
+		font:Arial, Helvetica, sans-serif;
+		border-style: solid;
+		border-width: thin;
+	}
+	
+		
+	#cover{ position:fixed; top:0; left:0; background:rgba(0,0,0,0.7); z-index:5; width:100%; height:100%;}
+			#loads { height:100px; width:500px; position:fixed; z-index:10;  margin:0 auto;   top: 50%; left: 50%; margin-top:-50px; margin-left:-250px; background:#999; border:5px solid #cccccc; text-align=center; border-radius:5px; }
+			.loading { width:400px; font-size:20px; font-family:verdana; font-weight:bolder; position:fixed;  top: 50%; left: 50%; margin:0 auto; margin-top:-8px; margin-left:-200px;}
+		
+</style>
+-->
+
+<!--<div id="loads" > <p class="loading" align="center">Reports Loading... Please Wait...</p></div>
+		<div id="cover" > </div>-->
+<table>
+<tr>
+ <input type="button" id="btnExport" value=" Download Excel " class="hideInPrint"/>
+</tr>
+</table>
+</br></br>
+
+<div id="printing">
+	<!-- State level --------->
+	<div id='state'>
+
+		<table  border="1" cellspacing="6" cellpadding="4"  id="datavalue2" width="100%" style="border-collapse:collapse; border:2px; font-weight:bolder" >
+
+			<tr align="center" height="30">
+				<td colspan="10" height="30" bgcolor="#32849C"><font color="white"><b>SUBCENTER-WISE MONTHLY REPORT</b></font></td>
+			</tr>
+			<tr bgcolor="#F2DDDC" align="center" height="42">
+				<td height="42"><b>State</b></td>
+				<td id="stateName"></td>
+				<td><b>District</b></td>
+				<td id="districtName">&nbsp;</td>
+				<td><b>Block</b></td>
+				<td id="blockName">&nbsp;</td>
+				<td><b>Month &amp; Year</b></td>
+				<td id="month_Year"></td>
+                <td colspan="2">&nbsp;</td>
+			</tr>
+		</table>
+		<br/>
+		<table class="tablesorter" id="datavalue1" >
+			<thead>
+				<tr bgcolor="#F2DDDC" align="center" height="30">
+					<!--<th><b>S.No.</b></th>-->
+					<th><b>SC name</b></th>
+					<th align="center"><b>Population</b></th>
+					<th align="center"><b>Tests</b></th>
+					<th align="center"><b>ABER</b></th>
+					<th align="center"><b>TPR</b></th>					
+					<th align="center"><b>Pf</b></th>
+					<th align="center"><b>Pv</b></th>
+					<th align="center"><b>Mix</b></th>
+					<th align="center"><b>Total Cases</b></th>
+					<th align="center"><b>API</b></th>					
+				</tr>
+			</thead>
+			<tbody>
+				
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<style>
+
+	/* tables */
+	table.tablesorter {
+		font-family:arial;
+		background-color: #CDCDCD;
+		margin:10px 0pt 15px;
+		font-size: 8pt;
+		width: 100%;
+		text-align: center;    
+	}
+
+	table.tablesorter thead tr th, table.tablesorter tfoot tr th {
+		background-color: #e6EEEE;
+		border: 1px solid #FFF;
+		font-size: 8pt;
+		padding: 4px;
+	}
+
+	table.tablesorter thead tr .header {
+		background-image: url(bg.gif);
+		background-repeat: no-repeat;
+		background-position: center right;
+		cursor: pointer;
+	}
+
+	table.tablesorter tbody td {
+		color: #3D3D3D;
+		padding: 4px;
+		background-color: #FFF;
+		vertical-align: middle;
+	}
+
+	table.tablesorter tbody tr.odd td {
+		background-color:#F0F0F6;
+	}
+
+	table.tablesorter thead tr .headerSortUp {
+		background-image: url(asc.gif);
+	}
+
+	table.tablesorter thead tr .headerSortDown {
+		background-image: url(desc.gif);
+	}
+
+	table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
+		background-color: #8dbdd8;
+	}
+
+	table.tablesorter td:hover {
+		background-color: #ffff99;
+	}
+
+	table.tablesorter tr.odd td:hover {
+		background-color: #ffff99;
+	}
+
+</style>
+
+<script>
+   
+    jQuery(document).ajaxStop(function()
+    {
+        $("#datavalue1").tablesorter(   {widgets: ['zebra'], sortList: [[9,1]]} );
+    });
+	
+</script>	

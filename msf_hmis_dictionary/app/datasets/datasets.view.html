@@ -4,10 +4,11 @@
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 <div ng-controller="datasetsMainController" id="DossierPanel" class="row">
-
-	<div id="headerDossierPanel" class="row headerPanel">
-		<h1>{{'Data Sets' | translate}}</h1>
+	<div id="headerDossierPanel" class="col-md-12 headerPanel">
+		<h1>{{'idx_DataSets' | translate}}</h1>
 		<p>{{'Number of Data Sets' | translate}}: {{datasets.dataSets.length}}</p>
+
+
 		<div class="col-md-2">
 			<select class="form-control col-md-2" ng-options="dataset.displayName for dataset in datasets.dataSets | orderBy: 'displayName'" name="selectedDataset" id="drpBoxServices" ng-model="selectedDataset">
 				<option value="" disabled selected>{{'Select a Data Set' | translate}}</option>
@@ -15,7 +16,7 @@
 		</div>
 	</div>
 
-	<div class="row">
+	<div class="col-md-12">
 
 		<div id="DossierTitleContainer" ng-if="selectedDataset" class="row">
 			<br>
@@ -34,8 +35,8 @@
 			</ul>
 		</div>
 
-		<div id="sectionContainer" ng-controller="datasetSectionController">
-			<div class="col-md-12"  ng-repeat="section in datasetDataElements.sections">
+		<div class="col-md-12" id="sectionContainer" ng-controller="datasetSectionController">
+			<div ng-repeat="section in datasetDataElements.sections">
 				<h3 class="section" id="{{section.id}}">{{section.displayName}}</h3>
 				<p>{{'Number of Elements in Section'| translate}}: {{section.dataElements.length}}</p>
 				<table class="sectionElementsTable table table-striped">
@@ -73,11 +74,11 @@
 						</tr>
 					</tbody>
 				</table>
-				
+
 			</div>
 		</div>
 
-		<div id="categoryComboContainer" ng-controller="datasetCategoryComboController">
+		<div class="col-md-12" id="categoryComboContainer" ng-controller="datasetCategoryComboController">
 			<div ng-if="selectedDataset" class="col-md-12">
 				<h3 class="section" id="categoryCombinations">Category combinations</h3>
 				<table class="sectionElementsTable table table-striped">
@@ -100,8 +101,40 @@
 						</tr>
 					</tbody>
 				</table>
-				
+
 			</div>
 		</div>
+
+
+		<div class="col-md-12" id="indicatorContainer" ng-controller="datasetsIndicatorsController">
+			<div ng-if="indicators.length > 0" col-md-12>
+				<h3 class="section" id="indicators">Indicators</h3>
+				<table class="sectionElementsTable table table-striped">
+					<thead>
+						<tr>
+							<th>{{'Name'| translate}}</th>
+							<th>{{'Type'| translate}}</th>
+							<th>{{'Numerator' | translate}}</th>
+							<th>{{'Numerator description'| translate}}</th>
+							<th>{{'Denominator'| translate}}</th>
+							<th>{{'Denominator description' | translate}}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="indicator in indicators |  orderBy: 'displayName'">
+							<td>{{indicator.displayName}}</td>
+							<td>{{indicator.indicatorType.displayName}}</td>
+							<td>{{indicator.numerator}}</td>
+							<td>{{indicator.numeratorDescription}}</td>
+							<td>{{indicator.denominator}}</td>
+							<td>{{indicator.denominatorDescription}}</td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+
+
 	</div>
 </div>

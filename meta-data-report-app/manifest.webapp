@@ -1,0 +1,20 @@
+{
+  "launch_path": "index.html",
+  "default_locale": "en",
+  "activities": {
+    "dhis": {
+      "href": "*"
+    }
+  },
+  "appType": "APP",
+  "name": "Search It- App",
+  "version": "1.0.0",
+  "description": "To display the type of UID",
+  "developer": {
+    "name": "kapilakshi",
+    "email": "kapilakshirana06@gmail.com"
+  },
+  "icons": {
+    "48": "s.png"
+  }
+}

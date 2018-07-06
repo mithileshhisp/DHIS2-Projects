@@ -3,27 +3,34 @@
     Please refer to the LICENSE.md and LICENSES-DEP.md for complete licenses.
 ------------------------------------------------------------------------------------*/
 
-adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUGSFactory', 'adminUGFactory', 'adminAFactory', 'adminOUGFactory', 'adminDSFactory', 'adminIGFactory', function($scope, $translate, adminOUGSFactory, adminUGFactory, adminAFactory, adminOUGFactory, adminDSFactory, adminIGFactory) {
+adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUGSFactory', 'adminUGFactory', 'adminAFactory', 'adminOUGFactory', 'adminDSFactory', 'adminIGFactory', 'adminDossierConfigCompleteFactory', function($scope, $translate, adminOUGSFactory, adminUGFactory, adminAFactory, adminOUGFactory, adminDSFactory, adminIGFactory, adminDossierConfigCompleteFactory) {
     $('#admin').tab('show');
-    
+
     $scope.loaded = false;
     startLoadingState(false);
-    
-    
+
+    $scope.dossierConfigComplete = {
+      UG: false,
+      OUGS: false,
+      OUG: false,
+      A: false
+    };
+
+
     $scope.UGList = adminUGFactory.get_UG.query(function(response) {
-        console.log(response);
         adminUGFactory.get_UG_set.query(function(response){
-            console.log(response);
             if (response.value) {
                 $scope.userAdminGroup = response.value;
                 $scope.UGList.userGroups.forEach(function(ug) {
                     if (ug.id == response.object.id) {
-                        $scope.selectedUG = ug;      
+                        $scope.selectedUG = ug;
                     }
                 });
                 $('#divUG').removeClass('alert-warning');
                 $('#divUG').removeClass('alert-danger');
                 $('#divUG').addClass('alert-success');
+
+                $scope.dossierConfigComplete.UG = true;
             }
         }, function() {
             $('#divUG').removeClass('alert-warning');
@@ -34,22 +41,22 @@ adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUG
     });
 
     $scope.OUGSList = adminOUGSFactory.get_OUGS.query(function(response) {
-        console.log(response);
         adminOUGSFactory.get_OUGS_set.query(function(response){
-            console.log(response);
             if (response.value) {
-                $scope.ougsUID = response.value; //BtFXTpKRl6n//
+                $scope.serviceSetUID = response.value;
                 $scope.OUGSList.organisationUnitGroupSets.forEach(function(ougs) {
                     if (ougs.id == response.object.id) {
-                        $scope.selectedOUGS = ougs;      
+                        $scope.selectedOUGS = ougs;
                     }
                 });
                 $('#divOUGS').removeClass('alert-warning');
                 $('#divOUGS').removeClass('alert-danger');
                 $('#divOUGS').addClass('alert-success');
-                
+
+                $scope.dossierConfigComplete.OUGS = true;
+
                 adminOUGFactory.get({
-                    ougsUID: $scope.ougsUID
+                    ougsUID: $scope.serviceSetUID
                 }, function(result) {
                     var test = true;
                     if(result.organisationUnitGroups.length > 0){
@@ -65,6 +72,9 @@ adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUG
                         $('#divOUG').removeClass('alert-warning');
                         $('#divOUG').removeClass('alert-danger');
                         $('#divOUG').addClass('alert-success');
+
+                        $scope.dossierConfigComplete.OUG = true;
+
                     }else{
                         $('#divOUG').removeClass('alert-success');
                         $('#divOUG').removeClass('alert-warning');
@@ -77,7 +87,7 @@ adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUG
             $('#divOUGS').removeClass('alert-warning');
             $('#divOUGS').removeClass('alert-success');
             $('#divOUGS').addClass('alert-danger');
-            
+
             $('#divOUG').removeClass('alert-warning');
             $('#divOUG').removeClass('alert-success');
             $('#divOUG').addClass('alert-danger');
@@ -85,8 +95,8 @@ adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUG
         endLoadingState();
     });
 
-    
-    
+
+
     $scope.$watch('selectedUG', function() {
         if (!($scope.selectedUG == undefined)) {
             $('#submitUG').removeClass('disabled');
@@ -97,25 +107,22 @@ adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUG
             $('#submitOUGS').removeClass('disabled');
         }
     });
-    
+
     $scope.submitUG = function() {
-        console.log($scope.selectedUG);
         var payload = '{"value":"' + $scope.selectedUG.name + '", "object":'+ JSON.stringify($scope.selectedUG) +'}';
         if ($scope.userAdminGroup) {
             adminUGFactory.upd_UG.query(payload,function(response){
-                console.log(response);
                 if (response) {
-                    $scope.userAdminGroup = $scope.selectedUG.name;    
+                    $scope.userAdminGroup = $scope.selectedUG.name;
                     $('#divUG').removeClass('alert-warning');
                     $('#divUG').removeClass('alert-danger');
                     $('#divUG').addClass('alert-success');
                 }
             });
-        }else{    
+        }else{
             adminUGFactory.set_UG.query(payload,function(response){
-                console.log(response);
                 if (response) {
-                    $scope.userAdminGroup = $scope.selectedUG.name;    
+                    $scope.userAdminGroup = $scope.selectedUG.name;
                     $('#divUG').removeClass('alert-warning');
                     $('#divUG').removeClass('alert-danger');
                     $('#divUG').addClass('alert-success');
@@ -124,15 +131,13 @@ adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUG
         }
         window.location.reload(true);
     };
-    
+
     $scope.submitOUGS = function() {
-        console.log($scope.selectedOUGS);
         var payload = '{"value":"' + $scope.selectedOUGS.id + '", "object":'+ JSON.stringify($scope.selectedOUGS) +'}';
-        if ($scope.ougsUID) {
+        if ($scope.serviceSetUID) {
             adminOUGSFactory.upd_OUGS.query(payload,function(response){
-                console.log(response);
                 if (response) {
-                    $scope.ougsUID = $scope.selectedOUGS.id;   
+                    $scope.serviceSetUID = $scope.selectedOUGS.id;
                     $('#divOUGS').removeClass('alert-warning');
                     $('#divOUGS').removeClass('alert-danger');
                     $('#divOUGS').addClass('alert-success');
@@ -140,9 +145,8 @@ adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUG
             });
         }else{
             adminOUGSFactory.set_OUGS.query(payload,function(response){
-                console.log(response);
                 if (response) {
-                    $scope.ougsUID = $scope.selectedOUGS.id;    
+                    $scope.serviceSetUID = $scope.selectedOUGS.id;
                     $('#divOUGS').removeClass('alert-warning');
                     $('#divOUGS').removeClass('alert-danger');
                     $('#divOUGS').addClass('alert-success');
@@ -151,9 +155,8 @@ adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUG
         }
         window.location.reload(true);
     };
-    
+
     adminAFactory.get(function(result) {
-        console.log(result);
         var test = false;
         result.attributes.forEach(function(attr) {
             if (attr.name == "serviceCode" && attr.dataSetAttribute && attr.indicatorGroupAttribute) {
@@ -164,6 +167,12 @@ adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUG
             $('#divA').removeClass('alert-warning');
             $('#divA').removeClass('alert-danger');
             $('#divA').addClass('alert-success');
+
+            $scope.dossierConfigComplete.A = true;
+            setTimeout(function(){
+              $scope.submitDossierConfigComplete();
+            }, 2500);
+
         }else{
             $('#divA').removeClass('alert-warning');
             $('#divA').removeClass('alert-success');
@@ -171,23 +180,20 @@ adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUG
         };
         endLoadingState(false);
     });
-    
+
     if ($scope.blacklist_datasets) {
         $scope.selectedDS = JSON.stringify($scope.blacklist_datasets);
     }
-    
+
     $scope.submitDS = function() {
-        console.log($scope.selectedDS);
         adminDSFactory.get_DS_set.query($scope.selectedDS).$promise.then(function(response1){
             return adminDSFactory.upd_DS.query($scope.selectedDS,function(response2){
-                console.log(response2);
                 if (response2) {
-                    $scope.blacklist_datasets = $scope.selectedDS;    
+                    $scope.blacklist_datasets = $scope.selectedDS;
                 }
             });
-        }, function() {   
+        }, function() {
             return adminDSFactory.set_DS.query($scope.selectedDS,function(response2){
-                console.log(response2);
                 if (response2) {
                     $scope.blacklist_datasets = $scope.selectedDS;
                 }
@@ -196,29 +202,49 @@ adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUG
             window.location.reload(true)
         });
     };
-    
+
     if ($scope.blacklist_indicatorgroups) {
         $scope.selectedIG = JSON.stringify($scope.blacklist_indicatorgroups);
     }
-    
+
     $scope.submitIG = function() {
-        console.log($scope.selectedIG);
         adminIGFactory.get_IG_set.query($scope.selectedIG).$promise.then(function(response1){
             return adminIGFactory.upd_IG.query($scope.selectedIG,function(response2){
-                console.log(response2);
                 if (response2) {
-                    $scope.blacklist_indicatorgroups = $scope.selectedIG;    
+                    $scope.blacklist_indicatorgroups = $scope.selectedIG;
                 }
             });
-        }, function() {  
+        }, function() {
             return adminIGFactory.set_IG.query($scope.selectedIG,function(response){
-                console.log(response);
                 if (response) {
-                    $scope.blacklist_indicatorgroups = $scope.selectedIG;    
+                    $scope.blacklist_indicatorgroups = $scope.selectedIG;
                 }
             });
         }).then(function(){
-            window.location.reload(true)
+            window.location.reload(true);
         });
     };
+
+    $scope.submitDossierConfigComplete = function() {
+        console.log("adminModule: $scope.dossierConfigComplete: ", $scope.dossierConfigComplete);
+        var payload = $scope.dossierConfigComplete.UG && $scope.dossierConfigComplete.OUGS && $scope.dossierConfigComplete.OUG && $scope.dossierConfigComplete.A;
+        payload = JSON.parse(JSON.stringify({ value: payload }));
+        adminDossierConfigCompleteFactory.get_dossierConfigComplete_set.query().$promise.then(
+          function(response1){
+            response = JSON.parse(JSON.stringify(response1));
+            console.log("adminModule: dossierConfigComplete: update, old - ", response.value, " / new - ", payload.value);
+            if (response.value != payload.value) {
+              return adminDossierConfigCompleteFactory.upd_dossierConfigComplete.query(payload,function(response2a){
+                  window.location.reload(true);
+              });
+            }
+          }, function() {
+            return adminDossierConfigCompleteFactory.set_dossierConfigComplete.query(payload,function(response2b){
+              console.log("adminModule: dossierConfigComplete: set");
+              window.location.reload(true);
+            });
+          }
+        );
+    };
+
 }]);

@@ -4,7 +4,7 @@
 ------------------------------------------------------------------------------------*/
 
 
-var qryDatasets = dhisUrl + 'dataSets.json?paging=false';
+var qryDatasets = dhisUrl + 'dataSets.json?paging=false&filter=id\\:!in\\:[:blackList]';
 
 datasetsModule.factory('datasetsFactory', ['$resource',
     function($resource) {
@@ -39,6 +39,34 @@ datasetsModule.factory('datasetsCategoryCombosFactory', ['$resource',
     function($resource) {
         return $resource(qryCategoryCombos, {
             ids: '@ids'
+        }, {
+            query: {
+                method: 'GET',
+                isArray: false
+            }
+        });
+    }
+]);
+
+var qryDatasetIndicators = dhisUrl + 'indicators?fields=displayName,indicatorType[displayName],description,numerator,numeratorDescription,denominator,denominatorDescription&paging=false'
+
+datasetsModule.factory('datasetsIndicatorsFactory', ['$resource',
+    function($resource) {
+        return $resource(qryDatasetIndicators, {}, {
+            query: {
+                method: 'GET',
+                isArray: false
+            }
+        });
+    }
+]);
+
+var qryDatsetIndicatorExpression = dhisUrl + 'expressions/description?expression=:expression'
+
+datasetsModule.factory('datasetsIndicatorExpressionFactory', ['$resource',
+    function($resource) {
+        return $resource(qryDatsetIndicatorExpression, {
+            expression: '@expression'
         }, {
             query: {
                 method: 'GET',

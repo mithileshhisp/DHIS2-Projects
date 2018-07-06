@@ -1,0 +1,415 @@
+
+<script type="text/javascript">
+
+	var periods = dhis2.report.periods;
+	var period = periods[0];
+	var orgUnit = dhis2.report.organisationUnit;		
+	orgUnit.parent = dhis2.report.organisationUnitHierarchy[1];
+	var orgUnitChildrens = dhis2.report.organisationUnitChildren;
+
+	//var stringDEs = "vCZMSwfUa4l;osVRVPP1ONO;vCZMSwfUa4l;osVRVPP1ONO;SnaCRoQqm4r;BkdRxU5wkmk;aeNHo82N0kC;Pv97ndhoNXW;bGLd1rLPaqu;G8EQfzsRuDm;sXalO1vWkdr;xCs233vj1LD;xMMAlhJJZSP;sXalO1vWkdr;xOdcG5gTQfC;zuwswDjtI7M;kUblzoip82e;w1XJfR1qMFY;b1xITjZptuv;uURGMdgPRSC;UpSbIHzw0YP;VFyOnsQS0yr;JOi5rmpn61x;ExBTn7xXfYB;Y0xBwaAYZwj;y35pxxqRKa0;fYbVLQaJnq8;OMJxjD02N5i;cmqpJJTnwfF;Bz8we8dBo4C;WMubQZIXRjl;OHYk7x4slho;xCs233vj1LD;xMMAlhJJZSP";
+
+	//var stringDEs = "L2Hr5mT2TuQ;mluvEkGtQhG;vCZMSwfUa4l;osVRVPP1ONO;SnaCRoQqm4r;BkdRxU5wkmk;aeNHo82N0kC;Pv97ndhoNXW;bGLd1rLPaqu;SzYtNvbFdN0;gHU2axe8SMo;uEW9E6W3Joi;xiqBNzLFq7N;L74cULAuOOH;xOdcG5gTQfC;zuwswDjtI7M;kUblzoip82e;w1XJfR1qMFY;b1xITjZptuv;LzsSlzYC7I9;UpSbIHzw0YP;cqL3ZihrtkB;GXzshukSGTz;aYecfmsBNNs;fTtrf8X2LQ6;TUnAkzEgEZO;WANYN8HsipE;nrJ8w47Lyfe;i6ooiaF5CEg";
+	var stringDEs = "eGCKoT8Zh78;kUblzoip82e;b1xITjZptuv;bbETHYQwVSX;es1BEMqzt4v;hrOpx6utoln;L74cULAuOOH;w1XJfR1qMFY;rvSy61LVmyW;cCxba4YDLRT;aeNHo82N0kC;VTku4b72sWI;scBA2kJQ9eh;N38MGB3PeyZ;cjOqMY54UXx;yWW9yC4okBS;PcaXqUZpvBe;zuwswDjtI7M;omzwly9Fm5c;WpjzX0S9Dk0;LzsSlzYC7I9;UpSbIHzw0YP;cqL3ZihrtkB;GXzshukSGTz;aYecfmsBNNs;fTtrf8X2LQ6;YP770NiLxvn;bknyXa5REyR;TUnAkzEgEZO;WANYN8HsipE;nrJ8w47Lyfe;HpSFpir9Vdy;i6ooiaF5CEg";
+	
+	var url = window.location.href;
+	var params = url.split('=');
+	var gotPeriod=params[2];
+	var showingTable="datavalue1";
+
+	jQuery( document ).ready( function() {	
+
+		getLastYYearPeriods();
+		
+		validateReport();		
+		
+		$("#btnExport").click(function(e) {
+			window.open('data:application/vnd.ms-excel,'+ encodeURIComponent($('#printing').html()));
+			e.preventDefault();
+		});
+		
+	});
+	
+	function validateReport()
+	{
+		$.get("../api/organisationUnitGroups/hdvIWjIWixd?filter=organisationUnits.id:eq:"+orgUnit.id,function(json){
+	
+			if( !json.name )
+			{
+				alert("Selected Facility is not in Intervention OU Group");
+				window.history.back();	
+			}
+			else
+			{
+				loadReport();
+			}
+		});
+	}
+	
+	var numberofYears = 3;
+	var lastYperiods = [];
+	var lastYperiodsStr = "";
+	var fromDate = "";
+	function getLastXYearPeriods( )
+	{
+		var year = parseInt( gotPeriod.substring(0,4) );
+		var month = parseInt( gotPeriod.substring(4,6) );
+		fromDate = (year-numberofYears)+"01";
+		
+		for( var i=numberofYears; i>=0; i-- )
+		{
+			for( var j=1; j<=12; j++ )
+			{
+				if( i==0 && j > month )
+				{
+					break;
+				}
+				
+				if( j < 10) 
+				{
+					lastXperiods.push( (year-i)+"0"+j );
+					lastXperiodsStr += (year-i)+"0"+j+";";
+				}
+				else
+				{
+					lastXperiods.push( (year-i)+""+j );
+					lastXperiodsStr += (year-i)+""+j+";";
+				}
+			}
+		}		
+	}
+	//last year annual data
+	function getLastYYearPeriods( )
+	{
+		var year = parseInt( gotPeriod.substring(0,4) );
+		//var month = parseInt( gotPeriod.substring(4,6) );
+		fromDate = (year-numberofYears)+"01";
+		
+		for( var i=numberofYears; i>=0; i-- )
+		{
+			
+					lastYperiods.push( (year-i) );
+					lastYperiodsStr += (year-i)+";";
+				
+			
+		}		
+	}
+	//last year annunal data
+		
+	function getPeriod( pr )
+	{
+		var year = pr.substring(0,4);
+		var month = pr.substring(4,6);
+		var strMonth="";
+		
+		if(month=="01" || month=="1") 		strMonth="January";
+		else if(month=="02" || month=="2")	strMonth="February";
+		else if(month=="03" || month=="3")	strMonth="March";
+		else if(month=="04" || month=="4")	strMonth="April";
+		else if(month=="05" || month=="5")	strMonth="May";
+		else if(month=="06" || month=="6")	strMonth="June";
+		else if(month=="07" || month=="7")	strMonth="July";
+		else if(month=="08" || month=="8")	strMonth="August";
+		else if(month=="09" || month=="9")	strMonth="September";
+		else if(month=="10")				strMonth="October";
+		else if(month=="11") 				strMonth="November";
+		else if(month=="12")				strMonth="December";
+		
+		return year;
+	}
+
+	function loadReport()
+	{
+		var htmlReport="";
+		var desArray = stringDEs.split(";");
+
+		document.getElementById('blockName').innerHTML=orgUnit.name;
+		document.getElementById('districtName').innerHTML=orgUnit.parent.name;
+		document.getElementById('fromDate').innerHTML=getPeriod(fromDate);
+		document.getElementById('toDate').innerHTML=getPeriod(gotPeriod);
+		
+		$.get("../api/analytics.json?dimension=dx:"+stringDEs+"&filter=ou:"+orgUnit.id+"&dimension=pe:"+lastYperiodsStr,function(json)
+		{
+			var i=0;
+			$.each(lastYperiods, function( index, value ) {  			
+				i++;
+				htmlReport+="<tr>";
+				var monthYear = value;
+				htmlReport+="<td align='center'>"+monthYear+"</td>";
+				
+				$.each(desArray, function( index1, value1 ) {
+				var tempVal = 0;
+				tempVal=parseInt( getCellValue(json, value1, value) );
+				tempVal = tempVal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+				htmlReport+="<td align='center'>"+tempVal+"</td>";
+				});											
+				htmlReport+="</tr>";
+			});			
+			
+			$("#"+showingTable).append(htmlReport);
+
+			document.getElementById("cover").style.display="none";
+			document.getElementById("loads").style.display="none";
+		});		
+	}
+
+
+	function getCellValue( json, de, p )
+	{
+		var result=0;
+		for (var i=0; i < json.rows.length; i++)
+		{
+			if (json.rows[i][0] == de && json.rows[i][1] == p && json.rows[i][2]!= null)
+			{
+				result=json.rows[i][2];
+			}
+		}		
+		return result;
+	}
+
+</script>
+
+
+<!-- download script ------------------------------------------------------
+		--------------------------------------------------------------------------
+		-------------------------------------------------------------------------------------- -->
+<script type="text/javascript">
+	 var tablesToExcel = (function() {
+    var uri ='data:application/vnd.ms-excel;base64,', tmplWorkbookXML ='<?xml version="1.0"?><?mso-application progid="Excel.Sheet"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">'+'<DocumentProperties xmlns="urn:schemas-microsoft-com:office:office"><Author>ThaiND</Author><Created>{created}</Created></DocumentProperties>'+'<Styles><Style ss:ID="Default" ss:Name="Normal"><Alignment ss:Horizontal="Center" ss:WrapText="1"/><Borders><Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/><Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/><Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/><Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/></Borders><Font/><Interior /><NumberFormat /><Protection /></Style><Style ss:ID="s21"><Alignment ss:WrapText="1" ss:Horizontal="Center" ss:Vertical="Center"/><Font ss:Size="10" ss:Bold="1" /><Interior ss:Color="#999999" ss:Pattern="Solid" /><Borders><Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/><Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/><Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/><Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/></Borders></Style> <Style ss:ID="s22"><Alignment ss:WrapText="1" ss:Horizontal="Center" ss:Vertical="Center"/><Font ss:Size="10" ss:Bold="1" /><Interior ss:Color="#999999" ss:Pattern="Solid" /><Borders><Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/><Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/><Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/><Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/></Borders></Style><Style ss:ID="s64"> <Alignment ss:WrapText="1" ss:Horizontal="Center" ss:Vertical="Center" ss:Indent="0" ss:Rotate="90"/><Font ss:Size="10" ss:Bold="1" /><Interior ss:Color="#999999" ss:Pattern="Solid" /> </Style> </Styles>'+'{worksheets}</Workbook>', tmplWorksheetXML ='<Worksheet ss:Name="{nameWS}"><Table><Column ss:AutoFitWidth="0" ss:Width="100"/><Column ss:AutoFitWidth="0" ss:Width="150"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/><Column ss:AutoFitWidth="0" ss:Width="80"/>{rows}</Table></Worksheet>', tmplCellXML ='<Cell ss:StyleID="{sid}" ss:MergeAcross="{mrg}"><Data ss:Type="{dtype}">{data}</Data></Cell>', base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+    , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+	
+    return function(tables, wsnames, wbname) {
+		var ctx = "";
+		var workbookXML = "";
+		var worksheetsXML = "";
+		var rowsXML = "";
+		
+		for (var i = 0; i < tables.length; i++) 
+		{
+		
+			if (!tables[i].nodeType) 
+			tables[i] = document.getElementById(tables[i]);
+		
+			for (var j = 0; j < tables[i].rows.length; j++) 
+			{
+				rowsXML +='<Row>'for (var k = 0; k < tables[i].rows[j].cells.length; k++) 
+				{
+					
+					var cols=tables[i].rows[j].cells[k].getAttribute("colspan");
+					var rws=tables[i].rows[j].cells[k].getAttribute("rowspan");
+					var styl=tables[i].rows[j].cells[k].getAttribute("bgcolor");
+					var styl2=tables[i].rows[j].getAttribute("bgcolor");
+					var cls=tables[i].rows[j].cells[k].getAttribute("class");
+					
+						var dataType ='String';
+						var dataValue = tables[i].rows[j].cells[k].innerHTML;
+						var typeD="";
+						var parsed=parseInt(dataValue);
+						
+						if (parsed==dataValue)
+						{
+							typeD="Number";
+						}
+						else
+						{
+							typeD="String";
+						}
+					
+					
+					
+					if(styl2)
+					{
+						if(cols)
+						{
+							if(cls=="aso")
+							{
+								ctx = {data: dataValue, mrg: cols-1, sid:"s64",dtype:typeD};
+								rowsXML += format(tmplCellXML, ctx);
+							}
+							else
+							{
+								ctx = {data: dataValue, mrg: cols-1, sid:"s22",dtype:typeD};
+								rowsXML += format(tmplCellXML, ctx);
+							}
+						}
+
+						else
+						{
+							if(cls=="aso")
+							{
+								ctx = {data: dataValue, mrg: 0, sid:"s64",dtype:typeD};
+								rowsXML += format(tmplCellXML, ctx);
+							}
+							else
+							{
+								ctx = {data: dataValue, mrg: 0, sid: "s22",dtype:typeD};
+								rowsXML += format(tmplCellXML, ctx);
+							}
+						}
+					}
+				
+					else if(styl)
+					{
+						if(cols)
+						{
+							ctx = {data: dataValue, mrg: cols-1, sid:"s21",dtype:typeD};
+							rowsXML += format(tmplCellXML, ctx);
+						}
+
+						else
+						{
+							ctx = {data: dataValue, mrg: 0, sid: "s21",dtype:typeD};
+							rowsXML += format(tmplCellXML, ctx);
+						}
+					}
+					
+					else
+					{
+						if(cols)
+						{
+							ctx = {data: dataValue, mrg: cols-1, sid:"Default",dtype:typeD};
+							rowsXML += format(tmplCellXML, ctx);
+						}
+
+						else
+						{
+							ctx = {data: dataValue, mrg: 0, sid: "Default",dtype:typeD};
+							rowsXML += format(tmplCellXML, ctx);
+						}
+					
+					}
+					
+				}
+				  rowsXML +='</Row>'}
+			ctx = {rows: rowsXML, nameWS: wsnames[i] ||'Sheet'+ i};
+			worksheetsXML += format(tmplWorksheetXML, ctx);
+			rowsXML = "";
+      }
+
+		ctx = {created: (new Date()).getTime(), worksheets: worksheetsXML};
+		workbookXML = format(tmplWorkbookXML, ctx);
+
+		console.log(workbookXML);
+
+		var link = document.createElement("A");
+		link.href = uri + base64(workbookXML);
+		link.download = wbname ||'Workbook.xls';
+		link.target ='_blank';
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+    }
+  })();
+</script>
+
+
+<style>
+	
+	td
+	{
+		padding: 5px 10px;
+		font:Arial, Helvetica, sans-serif;
+	}
+	
+	bd
+	{
+		border-style: solid;
+		border-color:#000000;
+	}	
+	
+	#cover{ position:fixed; top:0; left:0; background:rgba(0,0,0,0.7); z-index:5; width:100%; height:100%;}
+			#loads { height:100px; width:500px; position:fixed; z-index:10;  margin:0 auto;   top: 50%; left: 50%; margin-top:-50px; margin-left:-250px; background:#999; border:5px solid #cccccc; text-align=center; border-radius:5px; }
+			.loading { width:400px; font-size:20px; font-family:verdana; font-weight:bolder; position:fixed;  top: 50%; left: 50%; margin:0 auto; margin-top:-8px; margin-left:-200px;}
+			.vtext{
+			/*width:1px;
+			height: 50px;
+			-ms-transform: rotate(90deg);
+			-webkit-transform: rotate(90deg); 
+			transform: rotate(90deg); 
+			border-style: hidden;*/
+	}
+		
+</style>
+<!--<div id="loads" > <p class="loading" align="center">Reports Loading... Please Wait...</p></div>
+		<div id="cover" > </div>-->
+<table>
+<tr>
+ <input type="button" id="btnExport" value=" Download Excel " class="hideInPrint"/>
+</tr>
+</table>
+
+</br></br>
+
+<div id="printing">
+
+	<div id='state'>
+		<table border="1" cellspacing="6" cellpadding="4"  id="datavalue1" width="100%" style="border-collapse:collapse; border:2px; font-weight:bolder" >
+			<tr align="center"  height="34">
+				<td  colspan="34" width="2082" height="27" class="col" bgcolor="#32849C" ><font color="white"><b>Annual Report (Comparison with last three years)</b></font></td>
+			</tr>
+			<tr bgcolor="#F2DDDC" align="center" height="20">
+				<td colspan="2" height="20"><b>From</b></td>
+				<td colspan="3" id="fromDate"></td>
+				<td><b>To</b></td>
+				<td colspan="2" bgcolor="#F2DDDC" id="toDate"></td>
+				<td colspan="13">&nbsp;</td>
+				<td colspan="3" ><b>Block</b></td>
+				<td colspan="4" id="blockName">&nbsp;</td>
+				<td colspan="3"><b>District</b></td>
+				<td colspan="3" id="districtName">&nbsp;</td>				
+			</tr>
+  
+			<tr class="bd" bgcolor="#F2DDDC" align="center" height="39"  bordercolor="#333333">
+				<td class="vtext"  rowspan="2" height="83" width="5">Month & Year</td>
+				<!--<td class="vtext" rowspan="2" width="5">Month</td>-->
+				<td class="vtext" rowspan="2" width="5">Total tests</td>
+				<td class="vtext" rowspan="2" width="5">ABER</td>
+				<td class="vtext" rowspan="2" width="5">TPR</td>
+				<td class="vtext" rowspan="2" width="5">Pf</td>
+				<td class="vtext" rowspan="2" width="5">Pv</td>
+				<td class="vtext" rowspan="2" width="5">Mixed</td>
+				<td class="vtext" rowspan="2" width="5">Total cases</td>
+				<td class="vtext" rowspan="2" width="5">API</td>
+				<td class="vtext" rowspan="2" width="5">Pf%</td>
+				<td class="vtext" rowspan="2" width="5">Pv%</td>
+				
+				<td class="vtext" colspan="3" width="14">Testing (%)</td>
+				<td class="vtext" colspan="3" width="14">Treatment (%)</td>				
+				<td class="vtext" rowspan="2" width="5">Pf w/ACT</td>
+				<td class="vtext" rowspan="2" width="5">%Pf w/ACT</td>
+				<td class="vtext" rowspan="2" width="5">Pv w/ PQ</td>
+				<td class="vtext" rowspan="2" width="5">%Pv w/ PQ</td>
+				<td class="vtext" rowspan="2">Follow-up</td>
+				<td class="vtext" rowspan="2">%Follow up</td>
+
+				<td class="vtext" colspan="2" width="14">0-4 y</td>
+				<td class="vtext" colspan="2" width="14">5-14 y</td>
+				<td class="vtext" colspan="2" width="14">15-50 y</td>
+				<td class="vtext" colspan="2" width="14">50+ y</td>
+
+				<td class="vtext" rowspan="2" width="5">Pregnant Women</td>				
+				<td class="vtext" rowspan="2">Hospitalized</td>
+				<td class="vtext" rowspan="2">Death</td>
+			</tr>
+			<tr bgcolor="#F2DDDC" align="center" height="44">
+				<td  width="5">&lt;24 hrs</td>
+				<td  width="5">24-48 hrs</td>
+				<td  width="5">&gt;48 hrs</td>
+				<td  width="5">&lt;24 hrs</td>
+				<td  width="5">24-48 hrs</td>
+				<td  width="5">&gt;48 hrs</td>
+				
+				<td  height="44" width="5">M</td>
+				<td  width="5">F</td>
+				<td  width="5">M</td>
+				<td  width="5">F</td>
+				<td width="5">M</td>
+				<td  width="5">F</td>
+				<td width="5">M</td>
+				<td  width="5">F</td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+
