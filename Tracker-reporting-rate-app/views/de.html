@@ -1,0 +1,26 @@
+<h3>Data Elements</h3>
+<form>
+    <div class="input-group">
+      <input type="text" ng-model="search.dename" class="form-control" placeholder="Search">
+      <div class="input-group-btn">
+        <button class="btn btn-default" style="margin-top:5px" type="submit">
+          <i class="glyphicon glyphicon-search"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+<br>
+<span id="selectAll" ng-click="toggleSelectAll();"><i class="fa fa-check" id="{{de.deid}}" style="font-size:12pt;margin-right:20px;opacity:0.2"></i>Select
+    All</span>
+<table class="table table-striped de-table" style="overflow-y:scroll">
+    <!-- <tr style="height:50px;cursor:pointer">
+        <td ng-click="toggleSelectAll()">Select All</td>
+    </tr> -->
+    <tr ng-repeat="de in mappedDataElements | filter : search" style="height:50px;max-height:50px;cursor:pointer" ng-click="dataElementsSelections($index,de)">
+        <td ng-if="de.dename===undefined" colspan="1" class="headerRow">Program:
+            {{de.pr}}
+            | Program Stage: {{de.ps}}</td>
+        <td ng-if="de.dename!==undefined"><i class="fa fa-check" id="{{de.deid}}_{{de.psid}}" style="font-size:12pt;margin-right:20px;opacity:0.2"></i>
+            {{de.dename}}</td>
+    </tr>
+</table>
