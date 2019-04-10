@@ -1,5 +1,7 @@
 
-rwrw----  // write access  204275
+pg_dump -U postgres -d msf_23_07_2018 -T analytics* -T datavalue -T datavalueaudit > C:\Users\HISP\Desktop\msf_updated_db.sql
+
+
 
 // api filter of dataSets attribute value
 
@@ -23,8 +25,20 @@ ALTER SEQUENCE hibernate_sequence RESTART WITH 4412;
 
 ="update organisationunit set name  = '"&B2&"', shortname  = '"&B2&"' where organisationunitid = "&A2&";"
 
+update program_attributes set mandatory = true;
+
+select * FROM public.program_attributes where mandatory is false;
+
+
+="update attributevalue set value  = '"&B2&"', lastupdated  = '2018-11-30' where attributevalueid = "&C2&" and attributeid = "&D2&";"
 
 ="update dataelement set code = '"&C1&"' where uid = '"&B1&"';"
+
+="update dataelement set name  = '"&D2&"', shortname  = '"&E2&"', formname  = '"&F2&"', code  = '"&C2&"' where dataelementid = "&A2&" and uid = '"&B2&"';"
+
+
+
+="update dataelementcategoryoption set code = '"&B2&"' where uid = '"&A2&"';"	
 
 ="update programstagedataelement set sort_order  = "&D2&" where programstagedataelementid = "&A2&" and dataelementid = "&C2&";"
 
@@ -34,9 +48,52 @@ ALTER SEQUENCE hibernate_sequence RESTART WITH 4412;
 insert into datavalue (dataelementid,periodid,sourceid,categoryoptioncomboid,attributeoptioncomboid,value,storedby,created,lastupdated,deleted) values
 ="("&D2&","&G2&","&B2&","&E2&","&F2&",'"&C2&"','"&H2&"','2018-03-23','2018-03-23',false),"
 
+update datavalue set created = now()::timestamp where created ='2019-02-13';
+update datavalue set lastupdated = now()::timestamp where lastupdated ='2019-02-13';
+
+
 insert into trackedentityattributevalue (trackedentityinstanceid,trackedentityattributeid,created,lastupdated,value) values
 ="("&A2&",93,'2018-04-27','2018-04-27','"&C2&"'),"
 
+
+
+insert into dataelement (dataelementid, uid, created, lastupdated, lastupdatedby, name, shortname, valuetype, domaintype, aggregationtype, categorycomboid, zeroissignificant, userid, publicaccess) values
+="(nextval('hibernate_sequence'),'"&B2&"', '2018-12-19', '2018-12-19', 50, '"&C2&"','"&D2&"','INTEGER_ZERO_OR_POSITIVE','AGGREGATE','SUM',"&I2&",'TRUE',50,'rw------'),"
+
+update dataelement  set created = now()::timestamp where created ='2018-12-19';
+update dataelement  set lastupdated = now()::timestamp where lastupdated ='2018-12-19';
+
+
+insert into indicator (indicatorid, created, lastupdated, lastupdatedby, name, shortname, annualized, indicatortypeid, numerator, denominator, userid, publicaccess) values
+="(nextval('hibernate_sequence'), '2019-03-19', '2019-03-19', 3413, '"&A2&"','"&A2&"',false,"&E2&",'"&B2&"','"&D2&"',3413,'rw------'),"	
+
+	
+update indicator  set created = now()::timestamp where created ='2019-03-19';
+update indicator  set lastupdated = now()::timestamp where lastupdated ='2019-03-19';
+
+insert into indicatorgroupmembers (indicatorid,indicatorgroupid) values
+="("&A2&","&B2&"),"	
+
+
+insert into attributevalue (attributevalueid,created, lastupdated, value, attributeid ) values
+="(nextval('hibernate_sequence'),'2019-01-14','2019-01-14','"&B2&"',38115164),"
+
+update attributevalue  set created = now()::timestamp where created ='2019-01-14';
+update attributevalue set lastupdated = now()::timestamp where lastupdated ='2019-01-14';
+
+
+insert into keyjsonvalue (keyjsonvalueid,created, lastupdated, namespace, namespacekey ) values
+="(nextval('hibernate_sequence'),'2019-02-26','2019-02-26','"&A2&"','"&B2&"'),"
+
+update keyjsonvalue set created = now()::timestamp where created ='2019-02-01';
+update keyjsonvalue set lastupdated = now()::timestamp where lastupdated ='2019-02-01';
+
+
+insert into organisationunitattributevalues ( organisationunitid, attributevalueid ) values
+="("&C2&","&F2&"),"
+
+insert into datasetusergroupaccesses (datasetid,usergroupaccessid) values
+="("&A2&","&B2&"),"
 
 
 insert into userrolemembers (userroleid,userid) values
@@ -58,10 +115,21 @@ insert into organisationunit (organisationunitid,uid,code,name,shortname,parenti
 insert into organisationunit (organisationunitid,uid,code,name,shortname,parentid,openingdate,created,lastupdated,hierarchylevel,featuretype, coordinates) values
 ="(nextval('hibernate_sequence'),'"&E2&"','"&F2&"','"&G2&"','"&H2&"',"&D2&",'"&J2&"','2018-05-29','2018-05-29',"&I2&",'"&K2&"', '"&M2&"'),"
 
-update organisationunit set created = now()::timestamp where created ='2018-08-27';
-update organisationunit set lastupdated = now()::timestamp where lastupdated ='2018-08-27';
+update organisationunit set created = now()::timestamp where created ='2018-12-14';
+update organisationunit set lastupdated = now()::timestamp where lastupdated ='2018-12-14';
+
+
+update organisationunit set created = now()::timestamp where created ='2018-12-13';
+update organisationunit set lastupdated = now()::timestamp where lastupdated ='2018-12-13';
+
+
+update programindicator set lastupdated = now()::timestamp where lastupdated ='2018-12-06';
 
 update datavalue set created = now()::timestamp where created is null;
+
+="update trackedentityattributevalue set value  = '"&D2&"', lastupdated  = '2018-12-31' where trackedentityattributeid = "&B2&" and trackedentityinstanceid = "&A2&";"
+update trackedentityattributevalue set lastupdated = now()::timestamp where lastupdated = '2018-12-31';
+
 
 update trackedentityattributevalue set created = now()::timestamp where created = '2018-07-03';
 update trackedentityattributevalue set lastupdated = now()::timestamp where lastupdated = '2018-07-03';
@@ -70,6 +138,20 @@ update trackedentityattributevalue set lastupdated = now()::timestamp where last
 
 insert into dataelement (dataelementid, created, lastupdated,name, shortname, formname, valuetype, domaintype, aggregationtype, categorycomboid, zeroissignificant, optionsetid, publicaccess) values
 ="(nextval('hibernate_sequence'),'2018-10-03','2018-10-03', '"&A2&"','"&C2&"','"&D2&"','"&F2&"','"&E2&"','"&G2&"',"&H2&",'false',"&L2&", 'rw------'),"
+
+insert into trackedentitydatavalue (programstageinstanceid, dataelementid, value, created, lastupdated,providedelsewhere, storedby ) values
+="("&C2&","&E2&",'"&D2&"','2019-01-14','2019-01-14',false,'admin'),"
+
+insert into objecttranslation (objecttranslationid, locale, property, value ) values
+="(nextval('hibernate_sequence'),'es', 'NAME','"&E2&"' ),"
+
+insert into dataelementtranslations (dataelementid, objecttranslationid ) values
+="( "&A2&", "&B2&" ),"	
+
+
+
+update trackedentitydatavalue set created = now()::timestamp where created ='2019-01-14';
+update trackedentitydatavalue set lastupdated = now()::timestamp where lastupdated ='2019-01-14';
 
 
 update dataelement set  publicaccess = 'rw------'
@@ -790,6 +872,15 @@ pg_dump -U postgres -d hpa_08_03_2016 > C:\Users\HISP\Desktop\hpa_updated_09_03_
 
 
 
+INTPART 
+
+
+psql -U postgres intpart_2.30_23_01_2019 <
+
+pg_dump -U postgres -d intpart_2.30_23_01_2019 > "C:\Users\Mithilesh Thakur\Desktop\google-jars\intpart_04_02_2019.sql"
+
+
+
 psql -U postgres quic_siera_leone_12_06_2015 < C:\Users\HISP\Desktop\quic_siera_leone_12_06_2015.sql
 
 
@@ -798,17 +889,24 @@ ICMR
 test_db_orgUnit
 
 
-pg_dump -U postgres -d test_db_orgUnit > "C:\Users\Mithilesh Thakur\Desktop\nepal_org_unit.sql"
+nepal_hmis_28_03_2019
+
+
+psql -U postgres nepal_hmis_28_03_2019 < 
+
+pg_dump -U postgres -d nepah_hmis_13_03_2019 > "C:\Users\Mithilesh Thakur\Desktop\nepal_hmis_15_03_2019.sql"
 
 psql -U postgres hearing_20_07_2018 < "C:\Users\Mithilesh Thakur\Desktop\dhis_libya_Jun-04-18.sql"
 
 
 LIBIA
 
+libya_06_03_2019
+
 pg_dump -U postgres -d libya_14_09_2018 > "C:\Users\Mithilesh Thakur\Desktop\libya_db_2.30_after_delete.sql"
 
 
-psql -U postgres libya_14_09_2018 < "C:\Users\Mithilesh Thakur\Desktop\dhis_libya_Jun-04-18.sql"
+psql -U postgres libya_06_03_2019 < "C:\Users\Mithilesh Thakur\Desktop\dhis_libya_Jun-04-18.sql"
 
 psql -U postgres libia_28_05_2018 < "C:\Users\Mithilesh Thakur\Desktop\dhis_libya_May-28-18.sql"
 
@@ -820,15 +918,44 @@ psql -U postgres libia_2.29_30_04_2018 < C:\Users\HISP\Desktop\dhis_libya_Apr-30
 
 
 leprosy
+
+who_leprosy_10_04_2109
+
+psql -U postgres who_leprosy_10_04_2109 < "C:\Users\Mithilesh Thakur\Desktop\who_leprosy_08_04_2019.sql"
+
+
+pg_dump -U postgres -d who_leprosy_03_04_2109 > "C:\Users\Mithilesh Thakur\Desktop\who_leprosy_04_04_2019.sql"
+
+
+C:\Users\Mithilesh Thakur\Downloads>pg_restore -U postgres -d who_leprosy_03_04_2109 DHIS_LEP_03Apr2019.backup
+
+psql -U postgres who_leprosy_27_03_2109 < 
+
 who_leprosy_08_08_2107
 
 leprosy_12_06_2018
 
 leprosy_24_07_2018
 
+who_leprosy_22_10_2018
 
 
-psql -U postgres who_leprosy_28_09_2018 < "C:\Users\Mithilesh Thakur\Desktop\leprosy_db_May-09-18.sql"
+icmr_leprosy_29_03_2019
+
+
+psql -U postgres icmr_leprosy_29_03_2019 <
+
+
+
+pg_dump -U postgres -d icmr_amr_14_01_2019 > "C:\Users\Mithilesh Thakur\Desktop\icmr_amr.sql"
+
+psql -U postgres icmr_amr_2.29_18_12_2018 <
+
+psql -U postgres icmr_amr_2.30_13_12_2018 < "C:\Users\Mithilesh Thakur\Desktop\leprosy_db_May-09-18.sql"
+
+psql -U postgres icmr_leprosy_06_12_2018 < "C:\Users\Mithilesh Thakur\Desktop\leprosy_db_May-09-18.sql"
+
+psql -U postgres who_leprosy_22_10_2018 < "C:\Users\Mithilesh Thakur\Desktop\leprosy_db_May-09-18.sql"
 
 
 psql -U postgres who_leprosy_23_03_2108 < C:\Users\HISP\Desktop\leprosy_2018-03-08.sql
@@ -844,11 +971,15 @@ psql -U postgres who_leprosy_08_08_2107 < C:\Users\HISP\Desktop\leprosy_2017-08-
 psql -U postgres bhutan_maleria <
 
 
+pg_dump -U postgres -d bhutan_hmis_2.29_13_02_2019 > "C:\Users\Mithilesh Thakur\Desktop\bhutan_hmis_2.29_15_02_2019.sql"
 
-psql -U postgres bhutan_hmis <
 
 
-pg_dump -U postgres -d bhutan_maleria_28_09_2018 > "C:\Users\Mithilesh Thakur\Desktop\bhutan_maleria_updated.sql"
+psql -U postgres bhutan_hmis_2.26_20_02_2019 <
+
+
+
+pg_dump -U postgres -d bhutan_hmis_2.26_20_02_2019 > "C:\Users\Mithilesh Thakur\Desktop\bhutan_hmis_2.29.sql"
 
 psql -U postgres bhutan_maleria_28_09_2018 < C:\Users\HISP\Desktop\drukhmis_hmisdb_20180320_1900.sql
 
@@ -860,8 +991,13 @@ psql -U postgres bhutan_server_27_09_2017 < C:\Users\HISP\Desktop\drukhmis_hmisd
 
 HIV-TRACKER
 
+pg_dump -U postgres -d hiv_tracker_10_01_2019 > "C:\Users\Mithilesh Thakur\Desktop\hivtracker_14_01_2019.sql"
 
-hiv_tracker_12_09_2018
+hiv_tracker_28_01_2019
+
+psql -U postgres hiv_tracker_28_01_2019 < "C:\Users\Mithilesh Thakur\Desktop\hivtracker_18052018-21052018_1.sql"
+
+psql -U postgres hiv_tracker_15_10_2018 < "C:\Users\Mithilesh Thakur\Desktop\hivtracker_18052018-21052018_1.sql"
 
 psql -U postgres hiv_tracker_12_09_2018 < "C:\Users\Mithilesh Thakur\Desktop\hivtracker_18052018-21052018_1.sql"
 
@@ -948,8 +1084,9 @@ psql -U postgres nie_04_01_2017 < C:\Users\HISP\Desktop\nie_dev_Oct-26-16.sql
 TIBET
 
 
+tibet_pro_14_02_2019
 
-psql -U postgres tibet_pro_12_04_2018 < C:\Users\HISP\Desktop\tibet_pro_Apr-12-18_1.sql
+psql -U postgres tibet_pro_14_02_2019 < C:\Users\HISP\Desktop\tibet_pro_Apr-12-18_1.sql
 
 
 psql -U postgres tibet_pro_09_01_2018 < C:\Users\HISP\Desktop\tibet_pro_Jan-09-18.sql
@@ -970,6 +1107,10 @@ psql -U postgres tibet_28_09_2017 < C:\Users\HISP\Desktop\tibet_pro_28-Sep-17.sq
 AKROSH
 
 ORISSA_Japiogo
+
+psql -U postgres orissa_10_12_2018 < 
+
+
 
 psql -U postgres japigo_05_03_2018 < C:\Users\HISP\Desktop\mwmis_odhisa_24112017_Mar-05-18_1.sql
 
@@ -1105,6 +1246,11 @@ pg_dump -U postgres -d haryana_2.20_testing_18_01_2018 > C:\Users\HISP\Desktop\h
 
 ippf_FPAIMIS_05_04_2018
 
+
+ippf_pro_2.27_06_03_2019
+
+psql -U postgres ippf_pro_2.27_06_03_2019 < C:\Users\HISP\Desktop\fpan_pro_Apr-23-18_1.sql
+
 psql -U postgres ippf_RENEWB_26_07_2018 < C:\Users\HISP\Desktop\fpan_pro_Apr-23-18_1.sql
 
 psql -U postgres fpan_qty_ippf_19_06_2018 < C:\Users\HISP\Desktop\fpan_pro_Apr-23-18_1.sql
@@ -1183,7 +1329,11 @@ psql -U postgres idsp_14_03_2018 < C:\Users\HISP\Desktop\idsp_demo_Mar-14-18_1.s
 
 UP-HMIS
 
-psql -U postgres uphmis_meta_05_06_2018 < C:\Users\HISP\Desktop\uphmis_225.sql
+
+
+uphmis_meta_2.30_18_03_2019
+
+psql -U postgres uphmis_meta_2.30_18_03_2019 < C:\Users\HISP\Desktop\uphmis_225.sql
 
 
 psql -U postgres uphmis_2.25_07_03_2017 < C:\Users\HISP\Desktop\uphmis_225.sql
@@ -1296,6 +1446,12 @@ plan_pro_02_07_2018
 
 plan_13_09_2018
 
+
+
+psql -U postgres plan_2.29_31_01_2019 < C:\Users\HISP\Desktop\dhis_dbms_Feb-01-18_1.sql
+
+pg_dump -U postgres -d plan_2.29_18_01_2019 > "C:\Users\Mithilesh Thakur\Desktop\plan_2.29_18_01_2019.sql"
+
 pg_dump -U postgres -d plan_pro_06_08_2018 > "C:\Users\Mithilesh Thakur\Desktop\plan_updated_db.sql"
 
 pg_dump -U postgres -d plan_28_06_2018 > "C:\Users\Mithilesh Thakur\Desktop\plan_updated_db.sql"
@@ -1332,6 +1488,10 @@ psql -U postgres test_db_harsh < C:\Users\HISP\Desktop\pgDump.sql
 psql -U postgres indonesia_25_09_2018 <
 maharashtra
 
+psql -U postgres mh_03_12_2018
+
+psql -U postgres mh_03_12_2018 < C:\Users\HISP\Desktop\dhis_turkey_13-Nov-2015.sql
+
 psql -U postgres mh_25_09_2018 < C:\Users\HISP\Desktop\dhis_turkey_13-Nov-2015.sql
 
 psql -U postgres mh_pro_2.27_meta_26_03_2018 < C:\Users\HISP\Desktop\mh_pg_metadata_new_22032018.sql
@@ -1347,9 +1507,11 @@ mh_18_12_2015_2.20
 
 Nepal HIV Tracker
 
+
+
 pg_dump -U postgres -d hiv_tracker_22_08_2017 > C:\Users\HISP\Desktop\hivtracker_updated_db.sql
 
-psql -U postgres hiv_tracker_22_08_2017 < C:\Users\HISP\Desktop\hivtracker_22082017.sql
+psql -U postgres hiv_tracker_10_01_2019 < C:\Users\HISP\Desktop\hivtracker_22082017.sql
 
 
 pg_dump -U postgres -d nepal_01_08_2017 > C:\Users\HISP\Desktop\nepal_updated_db.sql
@@ -1516,9 +1678,17 @@ or
 
 INPART
 
+intpart_2.28_14_02_2019
+
+intpart_2.30_14_02_2019
+
+psql -U postgres intpart_2.28_21_02_2019 < C:\Users\HISP\Desktop\pcs_8march_08.sql
+
+pg_dump -U postgres intpart_2.30_23_01_2019 > C:\Users\HISP\Desktop\ippf_updated.sql
+
 psql -U postgres intpart_new_26_06_2018 < C:\Users\HISP\Desktop\pcs_8march_08.sql
 
-psql -U postgres inpart_08_03_2018 < C:\Users\HISP\Desktop\pcs_8march_08.sql
+psql -U postgres intpart_2.30_14_02_2019 < C:\Users\HISP\Desktop\pcs_8march_08.sql
 
 C:\Users\HISP>psql -U postgres inpart_20_11_2017 < C:\Users\HISP\Desktop\pcs_dhis_2017-11-18.sql
 
@@ -2151,6 +2321,14 @@ INNER JOIN datasetelement  ON  datasetelement.dataelementid = dataelement.datael
 order by dataelement.dataelementid
 
 
+// categorycombo and categoryoptioncombo map
+
+SELECT cc.uid as categorycombo_uid,cc.categorycomboid as categorycomboid,cc.name as categorycombo_name, _categoryoptioncomboname.categoryoptioncomboid, categoryoptioncombo.uid,  _categoryoptioncomboname.categoryoptioncomboname 
+FROM _categoryoptioncomboname
+INNER JOIN categoryoptioncombo ON categoryoptioncombo.categoryoptioncomboid = _categoryoptioncomboname.categoryoptioncomboid
+INNER JOIN categorycombos_optioncombos coc_cc ON coc_cc.categoryoptioncomboid = categoryoptioncombo.categoryoptioncomboid
+INNER JOIN categorycombo cc ON cc.categorycomboid = coc_cc.categorycomboid;
+
 
 
 // final categorycombo name uid query
@@ -2166,6 +2344,37 @@ select * from categorycombos_optioncombos
 select dse.*,ccombo.categoryoptioncomboid from datasetelement dse
 INNER JOIN categorycombos_optioncombos ccombo on ccombo.categorycomboid = dse.categorycomboid
 where dse.datasetid=6191
+
+
+// dataelement-category-and combination
+
+select de.dataelementid as deid,de.uid as deUID,de.name as deName,cc.uid as categoryUID,
+cc.name as categoryName,coc.categoryoptioncomboid as categoryoptioncomboid,coc.uid as categoryoptionUID,cocname.categoryoptioncomboname as categoryOptionName
+from dataelement as de
+inner join categorycombo as cc on cc.categorycomboid = de.categorycomboid
+inner join categorycombos_optioncombos as cc_coc on cc_coc.categorycomboid = de.categorycomboid
+inner join categoryoptioncombo as coc on coc.categoryoptioncomboid = cc_coc.categoryoptioncomboid
+inner join _categoryoptioncomboname as cocname on coc.categoryoptioncomboid = cocname.categoryoptioncomboid
+group by de.dataelementid,de.uid,cc.uid,de.name,cc.name,coc.categoryoptioncomboid ,coc.uid,cocname.categoryoptioncomboname
+order by de.name,cc.name,cocname.categoryoptioncomboname
+
+// catrgory-combo-and category-and option
+
+SELECT cat_catoption.categoryid, cat_catoption.categoryoptionid, catCombo.categorycomboid,deCateOption.name
+FROM public.categories_categoryoptions cat_catoption
+INNER JOIN categorycombos_categories catCombo ON catCombo.categoryid = cat_catoption.categoryid
+INNER JOIN dataelementcategoryoption deCateOption ON deCateOption.categoryoptionid = cat_catoption.categoryoptionid
+where catCombo.categorycomboid in( 588773,52240, 588773);
+
+
+
+
+
+
+
+
+
+
 
 
 // complusery_count_dataElements_for dataStatus app
@@ -2504,7 +2713,18 @@ group by ou3.uid,ou4.uid,ou5.uid,ou6.uid,ou7.uid,ou8.uid,ou9.uid;
 
 
 
+// orgUnit herarchy by uid and complete path_name
 
+select
+ous.organisationunituid as orgunituid,
+CONCAT (ou2.name,'/',ou3.name,'/',ou4.name ,'/',ou5.name ,'/',ou6.name) as heirarchy   
+from _orgunitstructure ous
+LEFT join organisationunit ou2 on ou2.organisationunitid = ous.idlevel2
+LEFT join organisationunit ou3 on ou3.organisationunitid = ous.idlevel3
+LEFT join organisationunit ou4 on ou4.organisationunitid = ous.idlevel4
+LEFT join organisationunit ou5 on ou5.organisationunitid = ous.idlevel5
+LEFT join organisationunit ou6 on ou6.organisationunitid = ous.idlevel6
+group by ous.organisationunituid,ou2.name,ou3.name,ou4.name,ou5.name,ou6.uid,ou6.name;
 
 
 
@@ -2555,6 +2775,25 @@ select pg.name,pg.programid,psde.programstageid, ps.name, count(psde.dataelement
 INNER JOIN programstage ps ON ps.programstageid = psde.programstageid
 INNER JOIN program pg ON pg.programid = ps.programid
 group by pg.name,pg.programid,psde.programstageid,ps.name;
+
+
+
+//Level wise org unit hierarchy with coordinates
+
+SELECT
+ou1.uid as Level1uid1, ou1.organisationunitid as ou1Id, max(ou1.code) as Level1Code, max(ou1.name) as Level1Name,
+ou2.uid as Level2uid2, ou2.organisationunitid as ou2Id, max(ou2.code) as Level2Code, max(ou2.name) as Level2Name,
+ou3.uid as Level3uid3, ou3.organisationunitid as ou3Id, max(ou3.code) as Level3Code, max(ou3.name) as Level3Name,
+ou4.uid as Level4uid4, ou4.organisationunitid as ou4Id, max(ou4.code) as Level4Code, max(ou4.name) as Level4Name, max(ou4.featuretype) as Level4Featuretype, max(ou4.coordinates) as Level4Coordinates
+
+from _orgunitstructure ous
+LEFT  JOIN organisationunit ou1 on ou1.organisationunitid = ous.idlevel1
+LEFT  join organisationunit ou2 on ou2.organisationunitid = ous.idlevel2
+LEFT  join organisationunit ou3 on ou3.organisationunitid = ous.idlevel3
+LEFT  join organisationunit ou4 on ou4.organisationunitid = ous.idlevel4
+
+group by ou1.uid,ou1.organisationunitid,ou2.uid,ou2.organisationunitid,ou3.uid,ou3.organisationunitid,
+ou4.uid,ou4.organisationunitid;
 
 
 
@@ -2618,6 +2857,7 @@ https://github.com/hispindia/dhis2-Core.git
 git branch
 git checkout master
 git remote -v
+
 // for add upstream
 git remote add upstream https://github.com/dhis2/dhis2-core.git
 git fetch upstream master
@@ -2628,11 +2868,27 @@ git push origin master
 
 git remote rm upstream
 
-// for tracker capture
+// for tracker capture and its builds
 
 git remote add upstream https://github.com/dhis2/tracker-capture-app.git
-// for event-capture
+// for builds
+git remote add upstream https://github.com/d2-ci/tracker-capture-app
+
+// for event-capture and its builds
 git remote add upstream https://github.com/dhis2/event-capture-app
+//for buids
+git remote add upstream https://github.com/d2-ci/event-capture-app
+
+// for data-admin app
+
+git remote add upstream https://github.com/dhis2/data-administration-app
+git remote add upstream https://github.com/d2-ci/data-administration-app
+
+
+
+
+
+
 
 
 // commands for reset the branch
@@ -2780,6 +3036,10 @@ git push origin MH_STATE-2.27
 
 
 
+git merge origin/BR_STATE-2.27 origin/STATE-2.27 -m "Merge and update BR_STATE-2.27 Branch with STATE-2.27 branch"
+git push origin BR_STATE-2.27
+
+
 //SUAAHARA2-2.27
 git branch SUAAHARA2-2.27 // for create new branch
 git checkout SUAAHARA2-2.27
@@ -2848,6 +3108,16 @@ git merge origin/ICMR-2.28 origin/2.28 -m "Merge and update ICMR-2.28 Branch wit
 git push origin ICMR-2.28
 
 
+// for ICMR-HEARING-2.28
+git branch ICMR-HEARING-2.28 // for create new branch
+git checkout ICMR-HEARING-2.28
+git push origin ICMR-HEARING-2.28
+git worktree add /e/scm/git_icmr_hearing_2.28 ICMR-HEARING-2.28
+git merge origin/ICMR-HEARING-2.28 origin/2.28 -m "Merge and update ICMR-HEARING-2.28 Branch with parent branch"
+git push origin ICMR-HEARING-2.28
+
+
+
 
 // for ICMR-LEP-2.28
 git branch ICMR-LEP-2.28 // for create new branch
@@ -2880,6 +3150,17 @@ git merge origin/PLAN-2.29 origin/2.29 -m "Merge and update PLAN-2.29 Branch wit
 git push origin PLAN-2.29
 
 
+// for ICMR-AMR-2.29
+git branch ICMR-AMR-2.29 // for create new branch
+git checkout ICMR-AMR-2.29
+git push origin ICMR-AMR-2.29
+git worktree add /e/scm/git_icmr_amr_2.29 ICMR-AMR-2.29
+git merge origin/ICMR-AMR-2.29 origin/2.29 -m "Merge and update ICMR-AMR-2.29 Branch with parent branch"
+git push origin ICMR-AMR-2.29
+
+
+
+
 // for LIBYA-2.30
 git branch LIBYA-2.30 // for create new branch
 git checkout LIBYA-2.30
@@ -2888,6 +3169,33 @@ git worktree add /e/scm/git_libya_2.30 LIBYA-2.30
 git pull origin LIBYA-2.30
 git merge origin/LIBYA-2.30 origin/2.30 -m "Merge and update LIBYA-2.30 Branch with parent branch"
 git push origin LIBYA-2.30
+
+
+// for UPHMIS-2.30
+git branch UPHMIS-2.30 // for create new branch
+git checkout UPHMIS-2.30
+git push origin UPHMIS-2.30
+git worktree add /e/scm/git_uphmis_2.30 UPHMIS-2.30
+git pull origin UPHMIS-2.30
+git merge origin/UPHMIS-2.30 origin/2.30 -m "Merge and update UPHMIS-2.30 Branch with parent branch"
+git push origin UPHMIS-2.30
+
+
+// for INTPART-2.30
+git branch INTPART-2.30 // for create new branch
+git checkout INTPART-2.30
+git push origin INTPART-2.30
+git pull origin INTPART-2.30
+git worktree add /e/scm/git_intpart_2.30 INTPART-2.30
+git merge origin/INTPART-2.30 origin/2.30 -m "Merge and update INTPART-2.30 Branch with parent branch"
+git push origin INTPART-2.30
+
+
+// for Nepa-Hmis-2.30
+
+git worktree add /e/scm/git_nepal_hmis_2.30 nepal
+git merge origin/nepal origin/2.30 -m "Merge and update nepal Branch with parent branch"
+
 
 
 
@@ -2959,6 +3267,17 @@ git merge origin/TIBET-v27   origin/v27 -m "Merge TIBET-v27 Tracker Capture App 
 git push origin TIBET-v27
 
 
+git branch ODISHA-v27 // for create new branch for tracker capture
+git checkout ODISHA-v27
+git push origin ODISHA-v27
+git worktree add /e/gitHub_source_code/odisha_tracker_capture_v27 ODISHA-v27
+git merge origin/ODISHA-v27   origin/v27 -m "Merge ODISHA-v27 Tracker Capture App with parent branch"
+git push origin ODISHA-v27
+
+
+
+
+
 
 // not used
 git branch SAVE-CHILD-2.28-SNAPSHOT // for create new branch for tracker capture
@@ -3017,14 +3336,95 @@ git worktree add /e/gitHub_source_code/plan_tracker_capture_2.29 PLAN-v29
 git merge origin/PLAN-v29   origin/v29 -m "Merge PLAN Tracker Capture App with parent branch"
 git push origin PLAN-v29
 
+
+// for plan-v29 build
+
+git branch PLAN-v29 // / for create new branch for tracker capture plan-v29 build
+git checkout PLAN-v29
+git push origin PLAN-v29
+git pull origin PLAN-v29
+git worktree add /e/gitHub_source_code/tracker_build/plan-v29 PLAN-v29
+git merge origin/PLAN-v29  origin/v29 -m "Merge PLAN-v29 Tracker Capture App with parent branch"
+git push origin PLAN-v29
+
+
+
+
+// for ICMR-AMR-v29
+git branch ICMR-AMR-v29 // for create new branch for tracker capture ICMR-AMR-v29
+git checkout ICMR-AMR-v29
+git push origin ICMR-AMR-v29
+git worktree add /e/gitHub_source_code/icmr_amr_v29 ICMR-AMR-v29
+git merge origin/ICMR-AMR-v29   origin/v29 -m "Merge ICMR-AMR-v29 Tracker Capture App with parent branch"
+git push origin ICMR-AMR-v29
+git pull origin ICMR-AMR-v29
+
+
+// for ICMR-AMR-v29 build
+
+git branch ICMR-AMR-v29 // / for create new branch for tracker capture ICMR-AMR-v29 build
+git checkout ICMR-AMR-v29
+git push origin ICMR-AMR-v29
+git pull origin ICMR-AMR-v29
+git worktree add /e/gitHub_source_code/tracker_build/icmr-amr-v29 ICMR-AMR-v29
+git merge origin/ICMR-AMR-v29  origin/v29 -m "Merge ICMR-AMR-v29 Tracker Capture App with parent branch"
+git push origin ICMR-AMR-v29
+
+
+
+
 // for v30
 git branch ICMR-AMR-v30 // for create new branch for tracker capture ICMR-AMR-v30
 git checkout ICMR-AMR-v30
 git push origin ICMR-AMR-v30
 git worktree add /e/gitHub_source_code/icmr_amr_v30 ICMR-AMR-v30
-git merge origin/ICMR-AMR-v30   origin/INPART-v30 -m "Merge ICMR-AMR-v30 Tracker Capture App with parent branch"
+git merge origin/ICMR-AMR-v30   origin/v30 -m "Merge ICMR-AMR-v30 Tracker Capture App with parent branch"
 git push origin ICMR-AMR-v30
 git pull origin ICMR-AMR-v30
+
+
+// for v30
+git branch UPHMIS-v30 // for create new branch for tracker capture UPHMIS-v30
+git checkout UPHMIS-v30
+git push origin UPHMIS-v30
+git worktree add /e/gitHub_source_code/uphmis_v30 UPHMIS-v30
+git merge origin/UPHMIS-v30   origin/v30 -m "Merge UPHMIS-v30 Tracker Capture App with parent branch"
+git push origin UPHMIS-v30
+git pull origin UPHMIS-v30
+
+
+
+// for UPHMIS Build v30
+git branch UPHMIS-v30 // for create new branch for tracker capture UPHMIS-v30
+git checkout UPHMIS-v30
+git push origin UPHMIS-v30
+git worktree add /e/gitHub_source_code/tracker_build/uphmis_v30 UPHMIS-v30
+git merge origin/UPHMIS-v30   origin/v30 -m "Merge UPHMIS-v30 Tracker Capture Builds App with parent branch"
+git push origin UPHMIS-v30
+git pull origin UPHMIS-v30
+
+
+// for INTPART-v30
+git branch INTPART-v30 // for create new branch for tracker capture INTPART-v30
+git checkout INTPART-v30
+git push origin INTPART-v30
+git worktree add /e/gitHub_source_code/intpart_v30 INTPART-v30
+git merge origin/INTPART-v30   origin/v30 -m "Merge INTPART-v30 Tracker Capture App with parent branch"
+git push origin INTPART-v30
+git pull origin INTPART-v30
+
+
+// for INTPART-KHERA-v30
+git branch INTPART-KHERA-v30 // for create new branch for tracker capture INTPART-KHERA-v30
+git checkout INTPART-KHERA-v30
+git push origin INTPART-KHERA-v30
+git worktree add /e/gitHub_source_code/intpart_khera_v30 INTPART-KHERA-v30
+git merge origin/INTPART-KHERA-v30   origin/v30 -m "Merge INTPART-KHERA-v30 Tracker Capture App with parent branch"
+git push origin INTPART-KHERA-v30
+git pull origin INTPART-KHERA-v30
+
+
+
 
 
 
@@ -3065,6 +3465,54 @@ git merge origin/libia-v29  origin/v29 -m "Merge LIBIA Event Capture App with pa
 git push origin libia-v29
 
 
+// dhis-data-administration-app
+
+
+git branch UPHMIS-v30 // for create new branch for data-administration-app
+git checkout UPHMIS-v30
+git push origin UPHMIS-v30
+git pull origin UPHMIS-v30
+git worktree add /e/gitHub_source_code/data-admin/uphmis_v30 UPHMIS-v30
+git merge origin/UPHMIS-v30  origin/v30 -m "Merge UPHMIS DATA-ADMIN App with parent branch"
+git push origin UPHMIS-v30
+
+// for build
+
+
+
+
+
+
+git branch UPHMIS-v30 // for create new branch for data-administration-app-builds
+git checkout UPHMIS-v30
+git push origin UPHMIS-v30
+git pull origin UPHMIS-v30
+git worktree add /e/gitHub_source_code/data-admin/builds/uphmis_v30 UPHMIS-v30
+git merge origin/UPHMIS-v30  origin/v30 -m "Merge UPHMIS DATA-ADMIN App with parent branch"
+git push origin UPHMIS-v30
+
+
+
+
+
+// tracker-event-report
+
+libya-tracker-event-report-v30
+
+// create brnch for 2.30 master
+
+git branch tracker-event-report-v30  // create brnch for 2.30 master
+git checkout tracker-event-report-v30
+git push origin tracker-event-report-v30
+
+
+
+
+
+
+
+
+
 // for biometric nepal-save - save-child
 
 https://github.com/hispindia/Biometrics-Nepal/tree/master
@@ -3081,6 +3529,10 @@ git push origin finger-print-set-up
 
 
 
+
+
+// for PhantomJS Setup
+git branch PhantomJS-tibet
 
 
 // git commamd for revision No ---
@@ -3118,6 +3570,32 @@ git cherry-pick 56794a
 git push origin NIE-2.27
 
 
+
+
+
+
+// custom app build 
+
+1- Biometric - Nepal - Java
+https://github.com/hispindia/Biometrics-Nepal
+
+2 - Libya Reporting App Angular - 6
+npm i or npm install/ and npm install text-encoding then npm run build
+https://github.com/hispindia/Apps-Development/tree/libya-reports-app-angular6
+
+3 - tracker event data exporter-app -- Angular JS no npm build
+https://github.com/hispindia/tracker-data-exporter-app
+
+4 - Explore dictionary -- Angular JS no npm build
+https://github.com/hispindia/Apps-Development/tree/explore-dictionary
+
+5 - Tracker-Event Reporting Rate App Angular JS no npm build
+https://github.com/hispindia/Apps-Development/tree/Tracker-reporting-rate-app
+
+6 - GBD dashboard App Vue-js npm install / npm install vue/ npm run build
+https://github.com/hispindia/interactive-dashboard-vuejs
+
+
 // git show revision no - 
 
 git rev-parse --short HEAD
@@ -3137,6 +3615,10 @@ npm install express -g
 or
 npm i
 or npm i npm --for latest dowmloads
+
+or
+npm i npm@latest -g
+
 //
 npm i (inside node command promt)
 
@@ -3244,6 +3726,34 @@ When everything is configured and running:
 disable chrome command
 
  "C:\Program Files\Google\Chrome\Application\chrome.exe" --disable-web-security
+
+
+build data-admin module ( in react-js)
+
+on command promt run the command or either run on node.js prompt
+
+// for install yarn globally
+npm install yarn -g or npm install --global yarn
+
+then build 
+yarn install
+
+// for [npm run lint -- --fix ] to get rid of current CRLF(Carriage Return (ASCII 13, \r) Line Feed (ASCII 10, \n))
+npm run lint -- --fix
+
+then
+
+yarn build
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -3486,3 +3996,213 @@ SELECT * from information_schema.tables where table_name like 'analytics%' and t
   SELECT orgAttrValue.organisationunitid,attrValue.attributeid, attrValue.value from organisationunitattributevalues orgAttrValue
   INNER JOIN attributevalue attrValue ON attrValue.attributevalueid = orgAttrValue.attributevalueid
   WHERE attrValue.attributeid = 38115164;
+
+
+SELECT attrValue.attributevalueid,  attrValue.value, attrValue.attributeid
+	FROM public.attributevalue attrValue
+	inner JOIN organisationunitattributevalues orgAttrValue ON attrValue.attributevalueid = orgAttrValue.attributevalueid
+	inner JOIN organisationunit org ON org.organisationunitid = orgAttrValue.organisationunitid
+    WHERE attrValue.attributeid = 38115164 and org.hierarchylevel = 8 and attrValue.value in (
+
+
+// enrollment count query user-wise
+
+select us.userid,us.username,org.name,org.uid,count(tei.trackedentityinstanceid) as count from trackedentityinstance tei
+INNER JOIN users us ON us.userid = tei.lastupdatedby
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = pi.organisationunitid
+where pi.programid = 2437 and pi.enrollmentdate between '2018-01-01' and '2018-10-31'
+group by us.userid,us.username,org.name,org.uid
+
+
+select us.userid,us.username,org.name,org.uid,pg.name,pg.uid,count(tei.trackedentityinstanceid) as count from trackedentityinstance tei
+INNER JOIN users us ON us.userid = tei.lastupdatedby
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = pi.organisationunitid
+INNER JOIN program pg ON pg.programid = pi.programid
+where pi.enrollmentdate between '1990-01-01' and '2018-10-31'
+group by us.userid,us.username,org.name,org.uid,pg.name,pg.uid;
+
+
+
+SELECT us.userid,us.username as user_name,org.name as org_name,org.uid as org_uid,pg.name as program_name,pg.uid as program_uid,count(tei.trackedentityinstanceid) as count from trackedentityinstance tei
+INNER JOIN users us ON us.userid = tei.lastupdatedby
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = pi.organisationunitid
+INNER JOIN program pg ON pg.programid = pi.programid
+where pg.uid in ('y6lXVg8TdOj','Fcyldy4VqSt') and  pi.enrollmentdate between '1990-01-01' and '2018-10-31'
+group by us.userid,us.username,org.name,org.uid,pg.name,pg.uid;
+
+SELECT dv.sourceid,org1.name,org.name,count(dv.sourceid) from datavalue dv
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+INNER JOIN organisationunit org1 ON org1.organisationunitid = org.parentid
+INNER JOIN datasetelement dse ON dse.dataelementid = dv.dataelementid
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+where dse.datasetid = 10886 and dv.dataelementid not in ( 10871,10872,10870, 1774) and dv.periodid = 848 
+group by dv.sourceid,org1.name,org.name order by org1.name;
+
+// user-wise enrollment count
+
+SELECT us.userinfoid,us.firstname,us.surname,org.name as org_name,org1.name as parent_name, org.uid as org_uid,count(tei.trackedentityinstanceid) as count from trackedentityinstance tei
+left JOIN userinfo us ON us.userinfoid = tei.lastupdatedby
+left JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+left JOIN organisationunit org ON org.organisationunitid = pi.organisationunitid
+left JOIN organisationunit org1 ON org1.organisationunitid = org.parentid
+left JOIN program pg ON pg.programid = pi.programid
+where pg.uid = 'y6lXVg8TdOj'  and pi.enrollmentdate::date between '2018-01-01' and '2018-12-31'  
+and pi.organisationunitid IN ( select organisationunitid from organisationunit where
+parentid in ( select organisationunitid from organisationunit where parentid in ( select organisationunitid from organisationunit  where uid = 'c1HbB4LCCcI') ) )
+group by us.userinfoid,us.firstname,us.surname,org.name,org1.name,org.uid,pg.name,pg.uid order by us.firstname\
+
+
+
+SELECT attvalue.attributevalueid, attvalue.created, attvalue.lastupdated, attvalue.value, attvalue.attributeid,orgUnit.name
+  FROM public.attributevalue attvalue
+INNER JOIN organisationunitattributevalues orgattvalue ON orgattvalue.attributevalueid = attvalue.attributevalueid
+INNER JOIN organisationunit orgUnit ON orgUnit.organisationunitid = orgattvalue.organisationunitid
+
+  where attvalue.attributeid = 38115164 and  orgUnit.hierarchylevel = 8 order by lastupdated desc;
+
+
+
+select pss.name as section_name ,ps.name as ps_name,de.name,de.dataelementid as de_name from programstagesection pss
+INNER JOIN programstage ps ON ps.programstageid = pss.programstageid
+INNER JOIN programstagedataelement psde on psde.programstageid = pss.programstageid
+INNER JOIN dataelement de ON de.dataelementid = psde.dataelementid where  de.dataelementid in(7710,
+176701,
+214872,
+7739,
+176739,
+156025,
+163594,
+8693,
+150033,
+176700,
+203837,
+174673);
+
+
+api/optionSets.json?fields=id,name,code,options[id,name,code]&filter=code:eq:"+code+"&rootJunction=OR&paging=false
+https://amrtest.icmr.org.in/amr/api/optionSets.json?fields=id,name,code,options[id,name,code]&filter=code:eq:Uttar%20Pradesh&rootJunction=OR&paging=false
+
+// section wise dataelements list
+
+SELECT pg.name as programName, ps.name as programStageName, ps_se.name as sectionName, ps_de.dataelementid,de.name as dataElementName, ps_de.sort_order
+FROM public.programstagesection_dataelements ps_de
+INNER JOIN programstagesection ps_se ON ps_se.programstagesectionid = ps_de.programstagesectionid
+INNER JOIN dataelement de On de.dataelementid = ps_de.dataelementid
+INNER JOIN programstage ps ON ps.programstageid = ps_se.programstageid
+INNER JOIN program pg ON pg.programid = ps.programid
+WHERE pg.uid = 'ecIoUziI2Gb';
+
+
+SELECT de.name deName,de.uid deUid ,os.name optionsetName,os.uid optionsetUid ,ov.uid optionValueUid ,ov.name optionValueName,ov.code optionValueCode FROM optionvalue ov
+INNEr JOIN optionset os ON os.optionsetid = ov.optionsetid
+INNER JOIN dataelement de ON de.optionsetid = os.optionsetid;
+
+select pg.name programname ,pg.programid,ps.name progrmStageName,ps.programstageid,pss.programstagesectionid,pss.name programstageSectionName from programstagesection pss 
+INNER JOIN programstage ps ON ps.programstageid = pss.programstageid
+INNER JOIN program pg ON pg.programid = ps.programid
+order by pg.name
+
+
+Excel import & Report app db key migration from systemsetting table to keyjsonvalue table
+
+Excel-import-app-templates
+Excel-import-app-orgunit-mapping
+Excel-import-app-pool
+Excel-import-app-history
+
+insert into keyjsonvalue (keyjsonvalueid,created, lastupdated, namespace, namespacekey ) values
+="(nextval('hibernate_sequence'),'2019-02-26','2019-02-26','"&A2&"','"&B2&"'),"
+
+
+update keyjsonvalue set created = now()::timestamp where created ='2019-02-26';
+update keyjsonvalue set lastupdated = now()::timestamp where lastupdated ='2019-02-26';
+
+update keyjsonvalue set value = 
+	( select right(value::text,length(value::text) - 22 )
+	from systemsetting
+	where name like 'Excel-import-app-orgunit-mapping%' )
+where namespace = 'Excel-import-app-orgunit-mapping';
+
+
+update keyjsonvalue set value = 
+	(select right(value::text,length(value::text) - 25)
+	from systemsetting
+	where name like 'Excel-import-app-pool%'
+)
+where namespace = 'Excel-import-app-pool';
+
+update keyjsonvalue set value = 
+	(select right(value::text,length(value::text) - 25)
+	from systemsetting
+	where name like 'Excel-import-app-templates%'
+)
+where namespace = 'Excel-import-app-templates';
+
+
+update keyjsonvalue set value = 
+	( select right(value::text,length(value::text) - 22 )
+	from systemsetting
+	where name like 'Excel-import-app-history%' )
+where namespace = 'Excel-import-app-history';
+
+
+
+update keyjsonvalue set value = 
+	(select right(value::text,length(value::text) - 22)
+	from systemsetting
+	where name like 'reportApp-section-json'
+)
+where namespace = 'reportApp-section-json';
+
+update keyjsonvalue set value = 
+	(select right(value::text,length(value::text) - 22)
+	from systemsetting
+	where name like 'reportApp-reports-json'
+)
+where namespace = 'reportApp-reports-json';
+
+
+select de.name deName, coc.name COCName, org.name orgName, pe.startdate STARTDATE, dv.* from datavalue dv 
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+INNER JOIN period pe ON pe.periodid = dv.periodid
+where dv.dataelementid in ( 591,590,589,23596,23475 ) and 	dv.categoryoptioncomboid = 21520
+and dv.sourceid in ( 17150,17180,17147,17175,17149,17151,17148,17176,17145,17146 ) and dv.periodid in 
+( 38135545,38002029,37979107,38115491,40582909,39795112,33184716,37809045,33143771)
+
+
+select de.name deName, coc.name COCName, org.name orgName, pe.startdate STARTDATE, dv.* from datavalueaudit dv 
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.organisationunitid
+INNER JOIN period pe ON pe.periodid = dv.periodid
+where dv.dataelementid in ( 591,590,589,23596,23475 ) and 	dv.categoryoptioncomboid = 21520
+and dv.organisationunitid in ( 17150,17180,17147,17175,17149,17151,17148,17176,17145,17146 ) and dv.periodid in 
+( 38135545,38002029,37979107,38115491,40582909,39795112,33184716,37809045,33143771) order by pe.startdate
+
+
+
+select pet.name,pe.* from period pe
+INNER JOIN periodtype pet ON pet.periodtypeid = pe.periodtypeid order by pe.startdate;
+where pe.periodid in ( select periodid from datavalue )
+order by pe.startdate;
+
+
+// UPHMIS-Auto-Approve Query
+SELECT psi.programstageinstanceid, psi.completeddate::date,psi.status, tedv.value from programstageinstance psi
+INNER JOIN trackedentitydatavalue tedv ON tedv.programstageinstanceid = psi.programstageinstanceid
+WHERE psi.programstageid in ( 38565722,38565580,38565712,38565696,73397819,73397876,
+73397824,73337045,73337059,73337069,73397847,73397870,73397880,73397864,73397815,
+73397885,73397828,73397894,73397890,73337065,87350569,87354729 ) AND 
+psi.completeddate <= CURRENT_DATE - interval '7 day' AND psi.status = 'COMPLETED' AND
+tedv.dataelementid = 38576348
+order by psi.completeddate desc;
+
+
+// source tree password reset link
+
+https://community.atlassian.com/t5/Sourcetree-questions/How-to-update-HTTP-S-credentials-in-sourcetree/qaq-p/297564
