@@ -31,7 +31,6 @@ package org.hisp.dhis.program.hibernate;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang.time.DateUtils;
-import org.apache.poi.util.SuppressForbidden;
 import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -54,7 +53,7 @@ import java.util.Set;
 
 import static org.hisp.dhis.common.IdentifiableObjectUtils.getUids;
 import static org.hisp.dhis.commons.util.TextUtils.getQuotedCommaDelimitedString;
-import static org.hisp.dhis.system.util.DateUtils.getMediumDateString;
+import static org.hisp.dhis.system.util.DateUtils.*;
 
 /**
  * @author Abyot Asalefew
@@ -107,7 +106,12 @@ public class HibernateProgramInstanceStore
         String hql = "from ProgramInstance pi";
         SqlHelper hlp = new SqlHelper( true );
 
-        if ( params.hasLastUpdated() )
+        if ( params.hasLastUpdatedDuration() )
+        {
+            hql += hlp.whereAnd() +  "pi.lastUpdated >= '" +
+                getLongGmtDateString( nowMinusDuration( params.getLastUpdatedDuration() ) ) + "'";
+        }
+        else if ( params.hasLastUpdated() )
         {
             hql += hlp.whereAnd() + "pi.lastUpdated >= '" + getMediumDateString( params.getLastUpdated() ) + "'";
         }
@@ -202,15 +206,23 @@ public class HibernateProgramInstanceStore
     @Override
     public boolean exists( String uid )
     {
-        Integer result = jdbcTemplate.queryForObject( "select count(*) from programinstance where uid=? and deleted is false", Integer.class, uid );
-        return result != null && result > 0;
+        if ( uid == null )
+        {
+            return false;
+        }
+
+        return jdbcTemplate.queryForRowSet( "select * from programinstance where uid='" + uid + "' and deleted is false limit 1;" ).next();
     }
 
     @Override
     public boolean existsIncludingDeleted( String uid )
     {
-        Integer result = jdbcTemplate.queryForObject( "select count(*) from programinstance where uid=?", Integer.class, uid );
-        return result != null && result > 0;
+        if ( uid == null )
+        {
+            return false;
+        }
+
+        return jdbcTemplate.queryForRowSet( "select * from programinstance where uid='" + uid + "' limit 1;" ).next();
     }
 
 

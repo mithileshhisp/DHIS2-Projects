@@ -58,12 +58,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.SessionFactory;
+import org.hisp.dhis.attribute.AttributeValue;
 import org.hisp.dhis.category.CategoryCombo;
 import org.hisp.dhis.category.CategoryOption;
 import org.hisp.dhis.category.CategoryOptionCombo;
@@ -143,6 +145,8 @@ import org.hisp.dhis.system.util.Clock;
 import org.hisp.dhis.system.util.DateUtils;
 import org.hisp.dhis.system.util.GeoUtils;
 import org.hisp.dhis.system.util.ValidationUtils;
+import org.hisp.dhis.trackedentity.TrackedEntityAttribute;
+import org.hisp.dhis.trackedentity.TrackedEntityAttributeService;
 import org.hisp.dhis.trackedentity.TrackedEntityInstance;
 import org.hisp.dhis.trackedentity.TrackedEntityInstanceService;
 import org.hisp.dhis.trackedentity.TrackerOwnershipManager;
@@ -154,6 +158,7 @@ import org.hisp.dhis.user.CurrentUserService;
 import org.hisp.dhis.user.User;
 import org.hisp.dhis.user.UserCredentials;
 import org.hisp.dhis.user.UserService;
+import org.hisp.dhis.util.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -162,6 +167,17 @@ import org.springframework.util.StringUtils;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+
+import org.hisp.dhis.trackedentityattributevalue.TrackedEntityAttributeValue;
+import org.hisp.dhis.trackedentityattributevalue.TrackedEntityAttributeValueService;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
+
+import java.text.SimpleDateFormat;
+
+import org.hisp.dhis.message.MessageSender;
+import org.hisp.dhis.outboundmessage.OutboundMessageResponse;
+import org.hisp.dhis.dxf2.webmessage.WebMessageUtils;
 
 /**
  * @author Morten Olav Hansen <mortenoh@gmail.com>
@@ -177,6 +193,12 @@ public abstract class AbstractEventService
         EVENT_EXECUTION_DATE_ID, EVENT_DUE_DATE_ID, EVENT_ORG_UNIT_ID, EVENT_ORG_UNIT_NAME, EVENT_STATUS_ID,
         EVENT_PROGRAM_STAGE_ID, EVENT_PROGRAM_ID,
         EVENT_ATTRIBUTE_OPTION_COMBO_ID, EVENT_DELETED, EVENT_GEOMETRY );
+    
+    // for UPHMIS sending e-mail when dataElement value change
+    //private final static int   TEIA_USER_NAME_ID = 76755184;
+    private final static String   TEIA_USER_NAME_UID = "fXG73s6W4ER";
+    private final static String   UPHMIS_DOCTOR_DIARY_PROGRAM_UID = "Bv3DaiOd5Ai";
+    
 
     // -------------------------------------------------------------------------
     // Dependencies
@@ -270,6 +292,18 @@ public abstract class AbstractEventService
     protected EventSyncService eventSyncService;
 
     protected static final int FLUSH_FREQUENCY = 100;
+    
+    
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private MessageSender emailMessageSender;
+    
+    @Autowired
+    protected TrackedEntityAttributeService trackedEntityAttributeService;
+
+    @Autowired
+    protected TrackedEntityAttributeValueService trackedEntityAttributeValueService;
 
     // -------------------------------------------------------------------------
     // Caches
@@ -328,7 +362,7 @@ public abstract class AbstractEventService
 
             if ( importOptions.getImportStrategy().isCreate() )
             {
-                create.addAll( events );
+                create.addAll( _events );
             }
             else if ( importOptions.getImportStrategy().isCreateAndUpdate() )
             {
@@ -339,11 +373,11 @@ public abstract class AbstractEventService
             }
             else if ( importOptions.getImportStrategy().isUpdate() )
             {
-                update.addAll( events );
+                update.addAll( _events );
             }
             else if ( importOptions.getImportStrategy().isDelete() )
             {
-                delete.addAll( events.stream().map( Event::getEvent ).collect( Collectors.toList() ) );
+                delete.addAll( _events.stream().map( Event::getEvent ).collect( Collectors.toList() ) );
             }
             else if ( importOptions.getImportStrategy().isSync() )
             {
@@ -572,7 +606,8 @@ public abstract class AbstractEventService
         {
             if ( programStage.getFeatureType().equals( FeatureType.NONE ) || !programStage.getFeatureType().value().equals( event.getGeometry().getGeometryType() ) )
             {
-                return new ImportSummary( ImportStatus.ERROR, "Geometry (" + event.getGeometry().getGeometryType() + ") does not conform to the feature type (" + programStage.getFeatureType().value() + ") specified for the program stage: " + programStage.getUid() );
+                return new ImportSummary( ImportStatus.ERROR, "Geometry (" + event.getGeometry().getGeometryType() + ") does not conform to the feature type (" + programStage.getFeatureType().value() + ") specified for the program stage: " + programStage.getUid() )
+                    .setReference( event.getEvent() ).incrementIgnored();
             }
         }
         else if ( event.getCoordinate() != null && event.getCoordinate().hasLatitudeLongitude() )
@@ -585,11 +620,11 @@ public abstract class AbstractEventService
             }
             catch ( IOException e )
             {
-                return new ImportSummary( ImportStatus.ERROR, "Invalid longitude or latitude for property 'coordinates'." );
+                return new ImportSummary( ImportStatus.ERROR, "Invalid longitude or latitude for property 'coordinates'." ).setReference( event.getEvent() ).incrementIgnored();
             }
         }
 
-        List<String> errors = trackerAccessManager.canWrite( importOptions.getUser(),
+        List<String> errors = trackerAccessManager.canCreate( importOptions.getUser(),
             new ProgramStageInstance( programInstance, programStage ).setOrganisationUnit( organisationUnit ).setStatus( event.getStatus() ), false );
 
         if ( !errors.isEmpty() )
@@ -980,10 +1015,11 @@ public abstract class AbstractEventService
     public EventSearchParams getFromUrl( String program, String programStage, ProgramStatus programStatus,
         Boolean followUp, String orgUnit, OrganisationUnitSelectionMode orgUnitSelectionMode,
         String trackedEntityInstance, Date startDate, Date endDate, Date dueDateStart, Date dueDateEnd,
-        Date lastUpdatedStartDate, Date lastUpdatedEndDate, EventStatus status,
+        Date lastUpdatedStartDate, Date lastUpdatedEndDate, String lastUpdatedDuration, EventStatus status,
         CategoryOptionCombo attributeOptionCombo, IdSchemes idSchemes, Integer page, Integer pageSize,
         boolean totalPages, boolean skipPaging, List<Order> orders, List<String> gridOrders, boolean includeAttributes,
-        Set<String> events, Set<String> filters, Set<String> dataElements, boolean includeAllDataElements, boolean includeDeleted )
+        Set<String> events, Set<String> filters, Set<String> dataElements, boolean includeAllDataElements,
+        boolean includeDeleted )
     {
         User user = currentUserService.getCurrentUser();
         UserCredentials userCredentials = user.getUserCredentials();
@@ -1089,6 +1125,7 @@ public abstract class AbstractEventService
         params.setDueDateEnd( dueDateEnd );
         params.setLastUpdatedStartDate( lastUpdatedStartDate );
         params.setLastUpdatedEndDate( lastUpdatedEndDate );
+        params.setLastUpdatedDuration( lastUpdatedDuration );
         params.setEventStatus( status );
         params.setCategoryOptionCombo( attributeOptionCombo );
         params.setIdSchemes( idSchemes );
@@ -1113,9 +1150,10 @@ public abstract class AbstractEventService
     @Override
     public ImportSummaries updateEvents( List<Event> events, ImportOptions importOptions, boolean singleValue, boolean clearSession )
     {
+        sortEventUpdates( events );
+        List<List<Event>> partitions = Lists.partition( events, FLUSH_FREQUENCY );
         ImportSummaries importSummaries = new ImportSummaries();
         importOptions = updateImportOptions( importOptions );
-        List<List<Event>> partitions = Lists.partition( events, FLUSH_FREQUENCY );
 
         for ( List<Event> _events : partitions )
         {
@@ -1157,7 +1195,7 @@ public abstract class AbstractEventService
         ImportSummary importSummary = new ImportSummary( event.getEvent() );
         ProgramStageInstance programStageInstance = getProgramStageInstance( event.getEvent() );
 
-        List<String> errors = trackerAccessManager.canWrite( importOptions.getUser(), programStageInstance, false );
+        List<String> errors = trackerAccessManager.canUpdate( importOptions.getUser(), programStageInstance, false );
 
         if ( programStageInstance == null )
         {
@@ -1245,7 +1283,6 @@ public abstract class AbstractEventService
 
         programStageInstance.setDueDate( dueDate );
         programStageInstance.setOrganisationUnit( organisationUnit );
-        programStageInstance.setGeometry( event.getGeometry() );
 
         Program program = getProgram( importOptions.getIdSchemes().getProgramIdScheme(), event.getProgram() );
 
@@ -1295,9 +1332,10 @@ public abstract class AbstractEventService
             if ( programStageInstance.getProgramStage().getFeatureType().equals( FeatureType.NONE ) ||
                 !programStageInstance.getProgramStage().getFeatureType().value().equals( event.getGeometry().getGeometryType() ) )
             {
-                return new ImportSummary( ImportStatus.ERROR, "Geometry (" + event.getGeometry().getGeometryType() +
-                    ") does not conform to the feature type (" + programStageInstance.getProgramStage().getFeatureType().value() +
-                    ") specified for the program stage: " + programStageInstance.getProgramStage().getUid() );
+                return new ImportSummary( ImportStatus.ERROR, String.format(
+                    "Geometry '%s' does not conform to the feature type '%s' specified for the program stage: '%s'",
+                    programStageInstance.getProgramStage().getUid(), event.getGeometry().getGeometryType(), programStageInstance.getProgramStage().getFeatureType().value() ) )
+                    .setReference( event.getEvent() ).incrementIgnored();
             }
         }
         else if ( event.getCoordinate() != null && event.getCoordinate().hasLatitudeLongitude() )
@@ -1316,6 +1354,8 @@ public abstract class AbstractEventService
             }
         }
 
+        programStageInstance.setGeometry( event.getGeometry() );
+
         saveTrackedEntityComment( programStageInstance, event, storedBy );
         programStageInstanceService.updateProgramStageInstance( programStageInstance );
 
@@ -1328,19 +1368,54 @@ public abstract class AbstractEventService
 
         Set<TrackedEntityDataValue> dataValues = new HashSet<>(
             dataValueService.getTrackedEntityDataValues( programStageInstance ) );
-        Map<String, TrackedEntityDataValue> dataElementToValueMap = getDataElementDataValueMap( dataValues );
+        Map<String, TrackedEntityDataValue> dataElementToValueMap = getDataElementDataValueMap( dataValues, importOptions );
 
         Map<String, DataElement> newDataElements = new HashMap<>();
 
         ImportSummary validationResult = validateDataValues( event, programStageInstance, dataElementToValueMap,
-            newDataElements, importSummary, importOptions );
+            dataValues, newDataElements, importSummary, importOptions );
 
         if ( validationResult.getStatus() == ImportStatus.ERROR )
         {
             return validationResult;
         }
+        
+        // change done for UPHMIS send-email when dataElement value updated
+        
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
+        //String userName = null;
+        String userEmail = null;
+        /*
+        for( TrackedEntityAttributeValue trackedEntityAttributeValue : programStageInstance.getProgramInstance().getEntityInstance().getTrackedEntityAttributeValues() )
+        {
+            if ( trackedEntityAttributeValue.getAttribute().getId() == TEIA_USER_NAME_ID )
+            {
+                userName = trackedEntityAttributeValue.getValue();
+                if( userName != null && !userName.equalsIgnoreCase( "" ) )
+                {
+                    userEmail = getUserEmail( userName );
+                }
+            }
+        }
+        */
+        
+        if( programStageInstance.getProgramInstance().getProgram().getUid().equalsIgnoreCase( UPHMIS_DOCTOR_DIARY_PROGRAM_UID ))
+        {
+            TrackedEntityAttribute userNameAttribute = trackedEntityAttributeService.getTrackedEntityAttribute( TEIA_USER_NAME_UID );
+            TrackedEntityAttributeValue userName = trackedEntityAttributeValueService.getTrackedEntityAttributeValue( programStageInstance.getProgramInstance().getEntityInstance(), userNameAttribute );
+            if ( userName != null && userName.getValue() != null )
+            {
+                if( userName.getValue() != null && !userName.getValue().equalsIgnoreCase( "" ) )
+                {
+                    userEmail = getUserEmail( userName.getValue() );
+                }
+            }
+        }
+        
+        
+        List<DataValue> eventDataValues = event.getDataValues().stream().filter(  ObjectUtils.distinctByKey( dv -> dv.getDataElement() ) ).collect( Collectors.toList() );
 
-        for ( DataValue dataValue : event.getDataValues() )
+        for ( DataValue dataValue : eventDataValues )
         {
             DataElement dataElement;
 
@@ -1360,7 +1435,26 @@ public abstract class AbstractEventService
                 teiDataValue.setValue( dataValue.getValue() );
                 teiDataValue.setProvidedElsewhere( dataValue.getProvidedElsewhere() );
                 dataValueService.updateTrackedEntityDataValue( teiDataValue );
-
+                
+                // change done for UPHMIS send-email when dataElement value updated
+                //System.out.println( " inside DXF2 service event dataValue update -- " + userName + " " + dataElement.getName() + " -- " + dataValue.getValue() + " -- " + programStageInstance.getExecutionDate().toString() );
+                if( programStageInstance.getProgramInstance().getProgram().getUid().equalsIgnoreCase( UPHMIS_DOCTOR_DIARY_PROGRAM_UID ))
+                {
+                    if( userEmail != null && !userEmail.equalsIgnoreCase( "" ) && isValidEmail( userEmail ) )
+                    {
+                        String subject = "Doctor Dairy Data Approval Status";
+                        String finalMessage = "";
+                        finalMessage = "Dear User,";
+                        finalMessage  += "\n\n Your data has been " + dataValue.getValue() + " for " + simpleDateFormat.format( programStageInstance.getExecutionDate() ) + ".";
+                        finalMessage  += "\n Thank you for using UPHMIS Doctor Dairy application." ;
+                        finalMessage  += "\n\n Thanks & Regards, ";
+                        finalMessage  += "\n UPHMIS Doctor Dairy Team ";
+                        
+                        OutboundMessageResponse emailResponse = emailMessageSender.sendMessage( subject, finalMessage, userEmail );
+                        emailResponseHandler( emailResponse );
+                    }
+                }
+                
                 // Marking that this data value was a part of an update so it should not be removed
                 dataValues.remove( teiDataValue );
             }
@@ -1371,6 +1465,25 @@ public abstract class AbstractEventService
 
                 saveDataValue( programStageInstance, event.getStoredBy(), dataElement, dataValue.getValue(),
                     dataValue.getProvidedElsewhere(), null, null );
+                
+                // change done for UPHMIS send-email when dataElement value updated
+                //System.out.println( " inside DXF2 service event dataValue new -- " + userName + " " + dataElement.getName() + " -- " + dataValue.getValue() + " -- " + programStageInstance.getExecutionDate().toString() );
+                if( programStageInstance.getProgramInstance().getProgram().getUid().equalsIgnoreCase( UPHMIS_DOCTOR_DIARY_PROGRAM_UID ))
+                {
+                    if( userEmail != null && !userEmail.equalsIgnoreCase( "" ) && isValidEmail( userEmail ) )
+                    {
+                        String subject = "Doctor Dairy Data Approval Status";
+                        String finalMessage = "";
+                        finalMessage = "Dear User,";
+                        finalMessage  += "\n\n Your data has been " + dataValue.getValue() + " for " + simpleDateFormat.format( programStageInstance.getExecutionDate() ) + ".";
+                        finalMessage  += "\n Thank you for using UPHMIS Doctor Dairy application." ;
+                        finalMessage  += "\n\n Thanks & Regards, ";
+                        finalMessage  += "\n UPHMIS Doctor Dairy Team ";
+                        
+                        OutboundMessageResponse emailResponse = emailMessageSender.sendMessage( subject, finalMessage, userEmail );
+                        emailResponseHandler( emailResponse );
+                    }
+                }
             }
 
             if ( !importOptions.isSkipNotifications() && ruleVariableService.isLinkedToProgramRuleVariable( program, dataElement ) )
@@ -1421,7 +1534,7 @@ public abstract class AbstractEventService
             return;
         }
 
-        List<String> errors = trackerAccessManager.canWrite( currentUserService.getCurrentUser(), programStageInstance, false );
+        List<String> errors = trackerAccessManager.canUpdate( currentUserService.getCurrentUser(), programStageInstance, false );
 
         if ( !errors.isEmpty() )
         {
@@ -1481,7 +1594,7 @@ public abstract class AbstractEventService
         {
             ProgramStageInstance programStageInstance = programStageInstanceService.getProgramStageInstance( uid );
 
-            List<String> errors = trackerAccessManager.canWrite( currentUserService.getCurrentUser(), programStageInstance, false );
+            List<String> errors = trackerAccessManager.canDelete( currentUserService.getCurrentUser(), programStageInstance, false );
 
             if ( !errors.isEmpty() )
             {
@@ -1495,7 +1608,9 @@ public abstract class AbstractEventService
                 entityInstanceService.updateTrackedEntityInstance( programStageInstance.getProgramInstance().getEntityInstance() );
             }
 
-            return new ImportSummary( ImportStatus.SUCCESS, "Deletion of event " + uid + " was successful" ).incrementDeleted();
+            ImportSummary importSummary = new ImportSummary( ImportStatus.SUCCESS, "Deletion of event " + uid + " was successful" ).incrementDeleted();
+            importSummary.setReference( uid );
+            return importSummary;
         }
         else
         {
@@ -1614,9 +1729,11 @@ public abstract class AbstractEventService
     }
 
     private ImportSummary validateDataValues( Event event, ProgramStageInstance programStageInstance,
-        Map<String, TrackedEntityDataValue> dataElementToValueMap, Map<String, DataElement> newDataElements,
-        ImportSummary importSummary, ImportOptions importOptions )
+        Map<String, TrackedEntityDataValue> dataElementToValueMap, Set<TrackedEntityDataValue> trackedEntityDataValues,
+        Map<String, DataElement> newDataElements, ImportSummary importSummary, ImportOptions importOptions )
     {
+        IdScheme dataElementIdScheme = importOptions.getIdSchemes().getDataElementIdScheme();
+
         // Loop through values, if only one validation problem occurs -> FAIL
         for ( DataValue dataValue : event.getDataValues() )
         {
@@ -1627,7 +1744,8 @@ public abstract class AbstractEventService
             }
             else
             {
-                dataElement = getDataElement( importOptions.getIdSchemes().getDataElementIdScheme(), dataValue.getDataElement() );
+                boolean isNewDataElement = true;
+                dataElement = getDataElement( dataElementIdScheme, dataValue.getDataElement() );
 
                 // This can happen if a wrong data element identifier is provided
                 if ( dataElement == null )
@@ -1640,7 +1758,24 @@ public abstract class AbstractEventService
                     return importSummary;
                 }
 
-                newDataElements.put( dataValue.getDataElement(), dataElement );
+                //A special treatment for idScheme with IdentifiableProperty.ATTRIBUTE is needed
+                if ( dataElementIdScheme.isAttribute() )
+                {
+                    Optional<TrackedEntityDataValue> matchingTrackedEntityDataValue = trackedEntityDataValues.stream()
+                        .filter( tedv -> tedv.getDataElement().getUid().equals( dataElement.getUid() ) )
+                        .findFirst();
+
+                    if ( matchingTrackedEntityDataValue.isPresent() )
+                    {
+                        isNewDataElement = false;
+                        dataElementToValueMap.put( dataValue.getDataElement(), matchingTrackedEntityDataValue.get() );
+                    }
+                }
+
+                if ( isNewDataElement )
+                {
+                    newDataElements.put( dataValue.getDataElement(), dataElement );
+                }
             }
 
             // Return error if one or more values fail validation
@@ -1787,10 +1922,12 @@ public abstract class AbstractEventService
         if ( existingEvent )
         {
             dataElementValueMap = getDataElementDataValueMap(
-                dataValueService.getTrackedEntityDataValues( programStageInstance ) );
+                dataValueService.getTrackedEntityDataValues( programStageInstance ), importOptions );
         }
 
-        for ( DataValue dataValue : event.getDataValues() )
+        List<DataValue> eventDataValues = event.getDataValues().stream().filter(  ObjectUtils.distinctByKey( dv -> dv.getDataElement() ) ).collect( Collectors.toList() );
+
+        for ( DataValue dataValue : eventDataValues )
         {
             DataElement dataElement;
 
@@ -1905,6 +2042,7 @@ public abstract class AbstractEventService
                 importSummary.getImportCount().incrementDeleted();
             }
         }
+        
     }
 
     private ProgramStageInstance createProgramStageInstance( Event event, ProgramStage programStage,
@@ -2022,9 +2160,31 @@ public abstract class AbstractEventService
     }
 
     private Map<String, TrackedEntityDataValue> getDataElementDataValueMap(
-        Collection<TrackedEntityDataValue> dataValues )
+        Collection<TrackedEntityDataValue> dataValues, ImportOptions importOptions )
     {
-        return dataValues.stream().collect( Collectors.toMap( dv -> dv.getDataElement().getUid(), dv -> dv ) );
+        //idScheme with IdentifiableProperty.ATTRIBUTE has to be specially treated in the code
+
+        IdScheme idScheme = importOptions.getIdSchemes().getDataElementIdScheme();
+
+        if ( idScheme.isNull() || idScheme.is( IdentifiableProperty.UID ) )
+        {
+            return dataValues.stream().collect( Collectors.toMap( dv -> dv.getDataElement().getUid(), dv -> dv ) );
+        }
+        else if ( idScheme.is( IdentifiableProperty.CODE ) )
+        {
+            return dataValues.stream().collect( Collectors.toMap( dv -> dv.getDataElement().getCode(), dv -> dv ) );
+        }
+        else if ( idScheme.is( IdentifiableProperty.NAME ) )
+        {
+            return dataValues.stream().collect( Collectors.toMap( dv -> dv.getDataElement().getName(), dv -> dv ) );
+        }
+        else if ( idScheme.is( IdentifiableProperty.ID ) )
+        {
+            return dataValues.stream().filter( dv -> dv.getDataElement().getId() > 0 )
+                .collect( Collectors.toMap( dv -> String.valueOf( dv.getDataElement().getId() ), dv -> dv ) );
+        }
+
+        return Collections.EMPTY_MAP;
     }
 
     private OrganisationUnit getOrganisationUnit( IdSchemes idSchemes, String id )
@@ -2190,6 +2350,16 @@ public abstract class AbstractEventService
             && params.getEvents().isEmpty() )
         {
             violation = "At least one of the following query parameters are required: orgUnit, program, trackedEntityInstance or event";
+        }
+
+        if ( params.hasLastUpdatedDuration() && ( params.hasLastUpdatedStartDate() || params.hasLastUpdatedEndDate() ) )
+        {
+            violation = "Last updated from and/or to and last updated duration cannot be specified simultaneously";
+        }
+
+        if ( params.hasLastUpdatedDuration() && DateUtils.getDuration( params.getLastUpdatedDuration() ) == null )
+        {
+            violation = "Duration is not valid: " + params.getLastUpdatedDuration();
         }
 
         if ( violation != null )
@@ -2507,6 +2677,18 @@ public abstract class AbstractEventService
         }
     }
 
+    /**
+     * Sorts events according to event identifier. Sorts data values within
+     * each event according to data element.
+     *
+     * @param events the list of events.
+     */
+    private void sortEventUpdates( List<Event> events )
+    {
+        events.sort( ( a, b ) -> a.getEvent().compareTo( b.getEvent() ) );
+        events.forEach( event -> event.getDataValues().sort( ( a, b ) -> a.getDataElement().compareTo( b.getDataElement() ) ) );
+    }
+
     protected ImportOptions updateImportOptions( ImportOptions importOptions )
     {
         if ( importOptions == null )
@@ -2530,5 +2712,53 @@ public abstract class AbstractEventService
         }
 
         importOptions.setUser( userService.getUser( importOptions.getUser().getId() ) );
+    }
+    
+    // get user E-mail
+    public String getUserEmail( String userName )
+    {
+        String uesrEmail = null;
+        try
+        {
+            String query = "SELECT us.username,usinfo.surname, usinfo.firstname, usinfo.email, usinfo.phonenumber from users us  " +
+                            "INNER JOIN userinfo usinfo ON usinfo.userinfoid = us.userid " +
+                            "WHERE us.username = '" + userName + "'; ";
+              
+            System.out.println( "query = " + query );
+            
+            SqlRowSet rs = jdbcTemplate.queryForRowSet( query );
+            
+            while ( rs.next() )
+            {
+                String userEMail = rs.getString( 4 );
+                if( userEMail != null && isValidEmail( userEMail ) )
+                {
+                    uesrEmail = userEMail;
+                }
+            }
+            return uesrEmail;
+        }
+        
+        catch ( Exception e )
+        {
+            throw new RuntimeException( "Illegal user-name", e );
+        }
+    }        
+    
+    private boolean isValidEmail( String email )
+    {
+        return ValidationUtils.emailIsValid( email );
+    }
+    
+    private void emailResponseHandler( OutboundMessageResponse emailResponse )
+    {
+        if ( emailResponse.isOk() )
+        {
+            log.info( WebMessageUtils.ok( "Email sent" ) );
+        }
+        else
+        {
+            log.info( WebMessageUtils.ok( "Email sending failed" ) );
+        }
     }
 }

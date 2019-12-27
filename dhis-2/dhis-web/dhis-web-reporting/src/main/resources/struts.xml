@@ -178,6 +178,151 @@
     <action name="getOrgUnitDistributionChart" class="org.hisp.dhis.reporting.orgunitdistribution.action.GetOrgUnitDistributionChartAction">
       <result name="success" type="chart"></result>
     </action>
+    
+    
+    
+<!--  for local customization -->
+	<!--  for download dataSet Report as dataEntry Screen to excel -->
+    <action name="exportToExcel" class="org.hisp.dhis.reporting.excel.ExportToExcelAction">
+      <result name="success" type="stream">
+      	<param name="contentType">application/vnd.ms-excel</param>
+      	<param name="inputName">inputStream</param>
+      	<param name="contentDisposition">filename="${fileName}"</param>
+      	<param name="bufferSize">10240</param>
+      </result>
+    </action>
+
+	<!--  DataEntry Form Status -->
+	<action name="dataEntryFormStatus"
+		class="org.hisp.dhis.reporting.dataentryformstatus.action.GenerateDataEntryStatusFormAction">
+		<result name="success" type="velocity">/main.vm</result>
+		<param name="page">/dhis-web-reporting/dataEntryStatusForm.vm</param>
+		<param name="menu">/dhis-web-reporting/menu.vm</param>
+		<param name="javascripts">javascript/dataEntryForm.js</param>
+		<param name="stylesheets">css/StylesForTags.css</param>
+		<param name="requiredAuthorities">F_DATA_ENTRY_FORM_DATAELEMENTS</param>
+	</action>		
+	
+   <!--  DataEntry Form Status Result -->
+	<action name="generateDataEntryFormStatusResult"
+		class="org.hisp.dhis.reporting.dataentryformstatus.action.GenerateDataEntryStatusResultAction">
+		<result name="success" type="velocity">/content.vm</result>
+		<param name="page">/dhis-web-reporting/dataEntryFormStatusResult.vm</param>
+		<!--<param name="stylesheets">css/StylesForTags.css</param>-->
+	</action>
+	
+	
+	<!-- Export To Excel -->
+	<action name="exportDataStatusToExcel"
+		class="org.hisp.dhis.reporting.dataentryformstatus.action.ExportToExcelAction">
+		<result name="success" type="stream">
+			<param name="contentType">application/vnd.ms-excel</param>
+			<param name="inputName">inputStream</param>
+			<param name="contentDisposition">filename="${fileName}"</param>
+			<param name="bufferSize">1024</param>
+		</result>
+	</action>
+
+    <!-- Meta Data Reports -->
+    <action name="metaDataReportAnalyser" class="org.hisp.dhis.reporting.meta.action.GenerateMetaDataReportAnalyserFormAction">
+        <result name="success" type="velocity">/main.vm</result>
+        <param name="page">/dhis-web-reporting/metaDataReportAnalysisFront.vm</param>
+        <param name="menu">/dhis-web-reporting/menu.vm</param>
+        <param name="stylesheets">css/StylesForTags.css</param>
+        <param name="requiredAuthorities">F_METADATA_REPORTS</param>
+        <interceptor-ref name="organisationUnitTreeStack"/>
+    </action>
+    <action name="generateMetaData"
+        class="org.hisp.dhis.reporting.meta.action.GenerateMetaDataReportResultAction">
+        <result name="success" type="stream">
+            <param name="contentType">application/vnd.ms-excel</param>
+            <param name="inputName">inputStream</param>
+            <param name="contentDisposition">filename="${fileName}"</param>
+            <param name="bufferSize">1024</param>
+        </result>
+    </action>
+
+	<!-- Advance Lock Exception Management  -->
+	
+	<action name="advanceLockException" class="org.hisp.dhis.reporting.advancelockexception.action.LockExceptionManagementFormAction">
+	  <interceptor-ref name="organisationUnitTreeStack" />
+	  <result name="success" type="velocity">/main.vm</result>
+	  <param name="page">/dhis-web-reporting/advanceLockExceptionForm.vm</param>
+	  <param name="menu">/dhis-web-reporting/menu.vm</param>
+	  <param name="javascripts">../dhis-web-commons/oust/oust.js,javascript/advanceLockException.js</param>
+	  <param name="requiredAuthorities">F_ADVANCE_LOCK_EXCEPTION</param>
+	</action>			  
+
+	<!-- Get Periods and DataSet List-->
+	<action name="getPeriodsAndDataSetList" class="org.hisp.dhis.reporting.advancelockexception.action.GetPeriodsAndDataSetListAction">
+		<result name="success" type="velocity-xml">/dhis-web-reporting/responsePeriodsAndDataSetList.vm</result>
+		<param name="onExceptionReturn">plainTextError</param>
+		<param name="requiredAuthorities">F_ADVANCE_LOCK_EXCEPTION</param>
+	</action>
+
+	<!-- Get Periods for selected Period type -->
+	<action name="getPeriodsForLockException" class="org.hisp.dhis.reporting.advancelockexception.action.GetPeriodsForLockExceptionAction">
+	  <result name="success" type="velocity">/dhis-web-commons/ajax/xmlPeriods.vm</result>
+	  <param name="onExceptionReturn">plainTextError</param>
+	</action>	  
+
+	<!-- Get Data Sets for selected Period type -->
+	<action name="getDataSetsForPeriodType" class="org.hisp.dhis.reporting.advancelockexception.action.GetDataSetsForPeriodTypeAction">
+	  <result name="success" type="velocity">/dhis-web-reporting/responseDataSets.vm</result>
+	  <param name="onExceptionReturn">plainTextError</param>
+	</action>	
+
+	<!-- Validate Lock Exception -->
+	<action name="validateLockException" class="org.hisp.dhis.reporting.advancelockexception.action.ValidateLockExceptionAction">
+	  <result name="success" type="velocity-json">/dhis-web-commons/ajax/jsonResponseSuccess.vm</result>
+	  <result name="input" type="velocity-json">/dhis-web-commons/ajax/jsonResponseInput.vm</result>
+	  <param name="onExceptionReturn">plainTextError</param>
+	</action>			  
+  
+	<!-- Save/Delete Lock Exception -->
+	<action name="saveDeleteLockException" class="org.hisp.dhis.reporting.advancelockexception.action.SaveDeleteLockExceptionAction">
+	  <result name="success" type="velocity">/main.vm </result>
+	  <result name="error" type="redirect">advanceLockException.action</result>
+	  <param name="page">/dhis-web-reporting/advanceLockExceptionStatus.vm</param>
+	  <param name="menu">/dhis-web-reporting/menu.vm</param>
+	  <param name="requiredAuthorities">F_LOCK_EXCEPTION</param>
+	</action> 
+	   
+    <!-- DataSet LockExceptions -->
+
+    <action name="lockException" class="org.hisp.dhis.reporting.advancelockexception.action.GetLockExceptionListAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="menu">/dhis-web-reporting/menu.vm</param>
+      <param name="page">/dhis-web-reporting/lockException.vm</param>
+    </action>    
+
+    <action name="getLockException" class="org.hisp.dhis.reporting.advancelockexception.action.GetLockExceptionAction">
+      <result name="success" type="velocity-json">jsonLockException.vm</result>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+
+    <action name="removeLockException" class="org.hisp.dhis.reporting.advancelockexception.action.RemoveLockExceptionAction">
+      <result name="success" type="velocity-json">/dhis-web-commons/ajax/jsonResponseSuccess.vm</result>
+      <result name="error" type="velocity-json">/dhis-web-commons/ajax/jsonResponseError.vm</result>
+      <param name="onExceptionReturn">plainTextError</param>
+      <param name="requiredAuthorities">F_DATASET_DELETE</param>
+    </action>
+
+	<action name="excelImportForm"
+		class="org.hisp.dhis.reporting.excelimport.ExcelImportFormAction">
+		<result name="success" type="velocity">/main.vm</result>
+		<param name="page">/dhis-web-reporting/excelImportForm.vm</param>
+		<param name="menu">/dhis-web-reporting/menu.vm</param>
+		<param name="requiredAuthorities">F_IMPORT_DATA_VALUES</param>
+	</action>
+
+	<action name="excelImportResultForm"
+		class="org.hisp.dhis.reporting.excelimport.ExcelImportResultAction">
+		<result name="success" type="velocity">/main.vm</result>
+		<param name="page">/dhis-web-reporting/responseImportStatus.vm</param>
+		<param name="menu">/dhis-web-reporting/menu.vm</param>
+		<interceptor-ref name="fileUploadStack" />
+	</action>
 
   </package>
 </struts>

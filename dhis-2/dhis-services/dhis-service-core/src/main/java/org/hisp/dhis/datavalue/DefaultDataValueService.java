@@ -116,7 +116,7 @@ public class DefaultDataValueService
 
         if ( result != null )
         {
-            log.info( "Data value is not valid: " + result );
+            log.info( "Data value is not valid: " + result + " -- " + dataValue.getDataElement() + " value : " + dataValue.getValue() );
             return false;
         }
 

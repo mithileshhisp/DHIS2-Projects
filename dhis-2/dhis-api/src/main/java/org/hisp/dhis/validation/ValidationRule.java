@@ -69,6 +69,7 @@ public class ValidationRule
      * The user-assigned importance of this rule (e.g. high, medium or low).
      */
     private Importance importance = Importance.MEDIUM;
+    //private Importance importance = Importance.NEEDCHECK;
 
     /**
      * The comparison operator to compare left and right expressions in the

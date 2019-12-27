@@ -1,7 +1,5 @@
 package org.hisp.dhis.i18n;
 
-import org.hisp.dhis.calendar.Calendar;
-
 /*
  * Copyright (c) 2004-2018, University of Oslo
  * All rights reserved.
@@ -30,16 +28,25 @@ import org.hisp.dhis.calendar.Calendar;
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import org.hisp.dhis.calendar.Calendar;
 import org.hisp.dhis.calendar.DateTimeUnit;
+import org.hisp.dhis.period.BiWeeklyAbstractPeriodType;
 import org.hisp.dhis.period.Period;
 import org.hisp.dhis.period.PeriodType;
 import org.hisp.dhis.period.WeeklyAbstractPeriodType;
+import org.hisp.dhis.period.WeeklyPeriodType;
+import org.joda.time.DateTime;
 
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.WeekFields;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -227,10 +234,53 @@ public class I18nFormat
 
         if ( periodType instanceof WeeklyAbstractPeriodType ) // Use ISO dates due to potential week confusion
         {
-            Calendar calendar = PeriodType.getCalendar();
-            DateTimeUnit dateTimeUnit = calendar.fromIso( period.getStartDate() );
+            DateTime dateTime = new DateTime( period.getStartDate() );
+            LocalDate date = Instant.ofEpochMilli( period.getStartDate().getTime() ).atZone( ZoneId.systemDefault() ).toLocalDate();
+            WeekFields weekFields = WeekFields.of( PeriodType.MAP_WEEK_TYPE.get( periodType.getName() ), 4 );
 
-            return periodType.getIsoDate( dateTimeUnit, calendar ) ;
+            String year = String.valueOf( date.get( weekFields.weekBasedYear() ) );
+            String week = String.valueOf( date.get( weekFields.weekOfWeekBasedYear() ) );
+
+            if ( periodType instanceof WeeklyPeriodType )
+            {
+                return String.format( "W%s %s", week, year );
+            }
+
+            year += dateTime.dayOfWeek().getAsShortText() + " " + year;
+
+            return String.format( "W%s %s", week, year );
+        }
+        else if ( periodType instanceof BiWeeklyAbstractPeriodType )
+        {
+            int year;
+            int week;
+
+            Calendar calendar = PeriodType.getCalendar();
+            BiWeeklyAbstractPeriodType biWeeklyAbstractPeriodType = (BiWeeklyAbstractPeriodType) periodType;
+            DateTimeUnit dateTimeUnit = DateTimeUnit.fromJdkDate( period.getStartDate() );
+
+            if ( calendar.isIso8601() )
+            {
+                LocalDate date = LocalDate.of( dateTimeUnit.getYear(), dateTimeUnit.getMonth(), dateTimeUnit.getDay() );
+                WeekFields weekFields = WeekFields.of( DayOfWeek.MONDAY, 4 );
+
+                year = date.get( weekFields.weekBasedYear() );
+                week = (date.get( weekFields.weekOfWeekBasedYear() ) / 2) + 1;
+            }
+            else
+            {
+                DateTimeUnit date = biWeeklyAbstractPeriodType.adjustToStartOfBiWeek( dateTimeUnit, calendar );
+                week = calendar.week( date );
+
+                if ( week == 1 && date.getMonth() == calendar.monthsInYear() )
+                {
+                    date.setYear( date.getYear() + 1 );
+                }
+
+                year = date.getYear();
+            }
+
+            return String.format( "BiW%s %s", week, year );
         }
 
         String keyStartDate = "format." + typeName + ".startDate";

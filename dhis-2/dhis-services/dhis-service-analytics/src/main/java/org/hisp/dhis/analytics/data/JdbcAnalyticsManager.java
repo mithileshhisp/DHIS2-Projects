@@ -48,7 +48,6 @@ import org.hisp.dhis.analytics.AnalyticsManager;
 import org.hisp.dhis.analytics.DataQueryParams;
 import org.hisp.dhis.analytics.DataType;
 import org.hisp.dhis.analytics.MeasureFilter;
-import org.hisp.dhis.analytics.QueryPlanner;
 import org.hisp.dhis.analytics.table.PartitionUtils;
 import org.hisp.dhis.analytics.util.AnalyticsUtils;
 import org.hisp.dhis.common.DimensionType;
@@ -63,7 +62,6 @@ import org.hisp.dhis.commons.util.TextUtils;
 import org.hisp.dhis.organisationunit.OrganisationUnit;
 import org.hisp.dhis.period.Period;
 import org.hisp.dhis.period.PeriodType;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -111,9 +109,6 @@ public class JdbcAnalyticsManager
         .put( MeasureFilter.LE, "<=" )
         .build();
 
-    @Autowired
-    private QueryPlanner queryPlanner;
-
     @Resource( name = "readOnlyJdbcTemplate" )
     private JdbcTemplate jdbcTemplate;
 
@@ -137,8 +132,6 @@ public class JdbcAnalyticsManager
                 params = DataQueryParams.newBuilder( params )
                     .withDataPeriodsForAggregationPeriods( dataPeriodAggregationPeriodMap )
                     .build();
-
-                params = queryPlanner.assignPartitionsFromQueryPeriods( params );
             }
 
             String sql = getSelectClause( params );

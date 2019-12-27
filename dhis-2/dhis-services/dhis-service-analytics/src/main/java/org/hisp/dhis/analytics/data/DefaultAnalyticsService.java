@@ -30,6 +30,7 @@ package org.hisp.dhis.analytics.data;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 import org.apache.commons.logging.Log;
@@ -84,6 +85,7 @@ import org.hisp.dhis.indicator.IndicatorValue;
 import org.hisp.dhis.organisationunit.OrganisationUnit;
 import org.hisp.dhis.organisationunit.OrganisationUnitGroup;
 import org.hisp.dhis.organisationunit.OrganisationUnitService;
+import org.hisp.dhis.period.DailyPeriodType;
 import org.hisp.dhis.period.Period;
 import org.hisp.dhis.period.PeriodType;
 import org.hisp.dhis.reporttable.ReportTable;
@@ -525,11 +527,11 @@ public class DefaultAnalyticsService
             }
         }
     }
-    
+
     /**
      * Checks whether the measure criteria in dataqueryparams is satisfied for
      * this indicator value.
-     * 
+     *
      * @param params The dataQueryParams
      * @param value The indicatorValue
      * @param indicator The indicator
@@ -736,7 +738,18 @@ public class DefaultAnalyticsService
 
                     PeriodType queryPt = filterPeriodType != null ? filterPeriodType : getPeriodTypeFromIsoString( dataRow.get( periodIndex ) );
                     PeriodType dataSetPt = dsPtMap.get( dataRow.get( dataSetIndex ) );
-                    target = target * queryPt.getPeriodSpan( dataSetPt ) * timeUnits;
+                    // Use number of days for daily data sets as target, as query
+                    // periods might often span/contain different numbers of days
+
+                    if ( dataSetPt.equalsName( DailyPeriodType.NAME ) )
+                    {
+                        Period period = PeriodType.getPeriodFromIsoString( dataRow.get( periodIndex ) );
+                        target = target * period.getDaysInPeriod() * timeUnits;
+                    }
+                    else
+                    {
+                        target = target * queryPt.getPeriodSpan( dataSetPt ) * timeUnits;
+                    }
 
                     // ---------------------------------------------------------
                     // Calculate reporting rate and replace data set with rate
@@ -1058,8 +1071,11 @@ public class DefaultAnalyticsService
 
         DataQueryParams orgUnitTargetParams = DataQueryParams.newBuilder( params )
             .pruneToDimensionType( DimensionType.ORGANISATION_UNIT )
-            .addDimension( new BaseDimensionalObject( DimensionalObject.ORGUNIT_GROUP_DIM_ID, DimensionType.ORGANISATION_UNIT_GROUP, new ArrayList<DimensionalItemObject>( orgUnitGroups ) ) )
-            .withSkipPartitioning( true ).build();
+            .addDimension( new BaseDimensionalObject( DimensionalObject.ORGUNIT_GROUP_DIM_ID,
+                DimensionType.ORGANISATION_UNIT_GROUP, new ArrayList<DimensionalItemObject>( orgUnitGroups ) ) )
+            .withOutputFormat( OutputFormat.ANALYTICS )
+            .withSkipPartitioning( true )
+            .build();
 
         Map<String, Double> orgUnitCountMap = getAggregatedOrganisationUnitTargetMap( orgUnitTargetParams );
 
@@ -1308,6 +1324,11 @@ public class DefaultAnalyticsService
     {
         List<DimensionalItemObject> items = Lists.newArrayList( expressionService.getDimensionalItemObjectsInIndicators( indicators ) );
 
+        if ( items.isEmpty() )
+        {
+            return Maps.newHashMap();
+        }
+
         items = DimensionalObjectUtils.replaceOperandTotalsWithDataElements( items );
 
         DimensionalObject dimension = new BaseDimensionalObject( DimensionalObject.DATA_X_DIM_ID, DimensionType.DATA_X, null, DISPLAY_NAME_DATA_X, items );
@@ -1316,6 +1337,7 @@ public class DefaultAnalyticsService
             .replaceDimension( dimension )
             .withMeasureCriteria( new HashMap<>() )
             .withIncludeNumDen( false )
+            .withOutputFormat( OutputFormat.ANALYTICS )
             .withSkipHeaders( true )
             .withSkipMeta( true ).build();
 

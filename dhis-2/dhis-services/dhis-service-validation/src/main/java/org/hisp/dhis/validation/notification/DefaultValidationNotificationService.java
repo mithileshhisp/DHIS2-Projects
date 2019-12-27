@@ -60,6 +60,9 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static org.hisp.dhis.commons.util.TextUtils.LN;
+import static org.hisp.dhis.validation.Importance.NEEDCHECK;
+import static org.hisp.dhis.validation.Importance.NEEDCORRECTION;
+
 import static org.hisp.dhis.validation.Importance.HIGH;
 import static org.hisp.dhis.validation.Importance.LOW;
 import static org.hisp.dhis.validation.Importance.MEDIUM;
@@ -254,13 +257,14 @@ public class DefaultValidationNotificationService
             "Validation violations as of %s",
             DateUtils.getLongDateString( validationDate )
         );
-
+        
+        
         String message = String.format(
             "Violations: High %d, medium %d, low %d",
             counts.getOrDefault( HIGH, 0L ),
             counts.getOrDefault( Importance.MEDIUM, 0L ),
             counts.getOrDefault( LOW, 0L ) );
-
+    
         // Concatenate the notifications in sorted order, divide by double linebreak
 
         message = message + pairs.stream().sorted()
@@ -270,12 +274,23 @@ public class DefaultValidationNotificationService
 
         NotificationMessage notificationMessage = new NotificationMessage( subject, message );
         notificationMessage.setPriority( getPriority( counts.getOrDefault( HIGH, 0L ) > 0 ? HIGH : counts.getOrDefault( MEDIUM, 0L ) > 0 ? MEDIUM : LOW ) );
-
+        
+        //notificationMessage.setPriority( getPriority( counts.getOrDefault( NEEDCORRECTION, 0L ) > 0 ? NEEDCORRECTION : counts.getOrDefault( NEEDCHECK, 0L ) > 0 ? NEEDCHECK : NEEDCHECK ) );
         return notificationMessage;
     }
 
     private static MessageConversationPriority getPriority( Importance importance )
     {
+        if ( importance.equals( NEEDCHECK ) )
+        {
+            return MessageConversationPriority.NEEDCHECK;
+        }
+        else if ( importance.equals( NEEDCORRECTION ) )
+        {
+            return MessageConversationPriority.NEEDCORRECTION;
+        }
+        
+        /*
         if ( importance.equals( HIGH ) )
         {
             return MessageConversationPriority.HIGH;
@@ -288,6 +303,7 @@ public class DefaultValidationNotificationService
         {
             return MessageConversationPriority.LOW;
         }
+        */
 
         return MessageConversationPriority.NONE;
     }

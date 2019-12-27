@@ -28,9 +28,25 @@ package org.hisp.dhis.startup;
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import static org.hisp.dhis.scheduling.JobType.AUTO_APPROVE_TRACKER_DATA;
+import static org.hisp.dhis.scheduling.JobType.CREDENTIALS_EXPIRY_ALERT;
+import static org.hisp.dhis.scheduling.JobType.DATA_SET_NOTIFICATION;
+import static org.hisp.dhis.scheduling.JobType.DATA_STATISTICS;
+import static org.hisp.dhis.scheduling.JobType.FILE_RESOURCE_CLEANUP;
+import static org.hisp.dhis.scheduling.JobType.KAFKA_TRACKER;
+import static org.hisp.dhis.scheduling.JobType.LEADER_ELECTION;
+import static org.hisp.dhis.scheduling.JobType.REMOVE_EXPIRED_RESERVED_VALUES;
+import static org.hisp.dhis.scheduling.JobType.VALIDATION_RESULTS_NOTIFICATION;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hisp.dhis.message.MessageService;
+import org.hisp.dhis.organisationunit.OrganisationUnit;
 import org.hisp.dhis.scheduling.JobConfiguration;
 import org.hisp.dhis.scheduling.JobConfigurationService;
 import org.hisp.dhis.scheduling.JobStatus;
@@ -41,14 +57,11 @@ import org.hisp.dhis.system.SystemService;
 import org.hisp.dhis.system.startup.AbstractStartupRoutine;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
 import static org.hisp.dhis.scheduling.JobStatus.FAILED;
 import static org.hisp.dhis.scheduling.JobStatus.SCHEDULED;
+import static org.hisp.dhis.scheduling.JobStatus.COMPLETED;
 import static org.hisp.dhis.scheduling.JobType.*;
+
 
 /**
  * Reschedule old jobs and execute jobs which were scheduled when the server was
@@ -62,7 +75,12 @@ public class SchedulerStart extends AbstractStartupRoutine
 
     private final String CRON_HOURLY = "0 0 * ? * *";
     private final String CRON_DAILY_2AM = "0 0 2 ? * *";
+    private final String CRON_MONTH_15 = "0 0 16 8 1/1 ? *";
+    private final String CRON_MONTH_14 = "0 0 16 14 1/1 ? *";
     private final String CRON_DAILY_7AM = "0 0 7 ? * *";
+    private final String CRON_DAILY_14PM = "0 0 14 * * ?";
+    private final String CRON_DAILY_15PM = "0 0 15 * * ?";
+    private final String CRON_DAILY_16PM = "0 0 17 * * ?";
     private final String LEADER_JOB_CRON_FORMAT = "0 0/%s * * * *";
     private final String DEFAULT_FILE_RESOURCE_CLEANUP_UID = "pd6O228pqr0";
     private final String DEFAULT_FILE_RESOURCE_CLEANUP = "File resource clean up";
@@ -80,6 +98,13 @@ public class SchedulerStart extends AbstractStartupRoutine
     private final String DEFAULT_KAFKA_TRACKER_UID = "ntWCT2BMalb";
     private final String DEFAULT_LEADER_ELECTION_UID = "MoUd5BTQ3lY";
     private final String DEFAULT_LEADER_ELECTION = "Leader election in cluster";
+    
+    private final String DEFAULT_AUTO_APPROVE_TRACKER_DATA = "Auto Approve Tracker Data";
+    private final String DEFAULT_AUTO_APPROVE_TRACKER_DATA_DOCTOR_DAIRY = "Auto Approve Tracker Data Doctor Diary";
+    private final String DEFAULT_DELETE_EXPIRED_LOCK_EXCEPTION = "Delete Expired Lock Exception";
+    
+    private final String DEFAULT_AUTO_EMAIL_MESSAGE = "Auto Email Message";
+    private final String DEFAULT_AUTO_SMS_MESSAGE = "Auto SMS Message";
 
     @Autowired
     private SystemSettingManager systemSettingManager;
@@ -248,6 +273,63 @@ public class SchedulerStart extends AbstractStartupRoutine
             leaderElectionJobConfiguration.setUid( DEFAULT_LEADER_ELECTION_UID );
             addAndScheduleJob( leaderElectionJobConfiguration );
         }
+        
+        
+        // for UPHMIS DELETE_LOCK_EXCEPTION
+        if ( verifyNoJobExist( DEFAULT_DELETE_EXPIRED_LOCK_EXCEPTION, jobConfigurations ) )
+        {
+            JobConfiguration deleteExpiredLockExceptionJob = new JobConfiguration( DEFAULT_DELETE_EXPIRED_LOCK_EXCEPTION,
+                DELETE_EXPIRED_LOCK_EXCEPTION, CRON_DAILY_14PM, null, true, true );
+            deleteExpiredLockExceptionJob.setLeaderOnlyJob( true );
+            addAndScheduleJob( deleteExpiredLockExceptionJob );
+        }
+        
+        
+        // for UPHMIS auto approve tracker data
+        if ( verifyNoJobExist( DEFAULT_AUTO_APPROVE_TRACKER_DATA, jobConfigurations ) )
+        {
+            JobConfiguration scheduleAutoApproveTrackerDataJob = new JobConfiguration( DEFAULT_AUTO_APPROVE_TRACKER_DATA,
+                AUTO_APPROVE_TRACKER_DATA, CRON_DAILY_16PM, null, true, true );
+            scheduleAutoApproveTrackerDataJob.setLeaderOnlyJob( true );
+            addAndScheduleJob( scheduleAutoApproveTrackerDataJob );
+        }
+        
+        // for UPHMIS auto approve tracker data
+        if ( verifyNoJobExist( DEFAULT_AUTO_APPROVE_TRACKER_DATA_DOCTOR_DAIRY, jobConfigurations ) )
+        {
+            JobConfiguration scheduleAutoApproveTrackerDataDoctorDiaryJob = new JobConfiguration( DEFAULT_AUTO_APPROVE_TRACKER_DATA_DOCTOR_DAIRY,
+                AUTO_APPROVE_TRACKER_DATA_DOCTOR_DAIRY, CRON_DAILY_15PM, null, true, true );
+            scheduleAutoApproveTrackerDataDoctorDiaryJob.setLeaderOnlyJob( true );
+            addAndScheduleJob( scheduleAutoApproveTrackerDataDoctorDiaryJob );
+        }
+        // for UPHMIS auto email
+        if ( verifyNoJobExist( DEFAULT_AUTO_EMAIL_MESSAGE, jobConfigurations ) )
+        {
+            JobConfiguration scheduleAutoEmailJob = new JobConfiguration( DEFAULT_AUTO_EMAIL_MESSAGE,
+                AUTO_EMAIL_MESSAGE, CRON_DAILY_16PM, null, true, true );
+            scheduleAutoEmailJob.setLeaderOnlyJob( true );
+            /*JobConfiguration scheduleAutoEmailJob2 = new JobConfiguration( DEFAULT_AUTO_EMAIL_MESSAGE,
+                    AUTO_EMAIL_MESSAGE, CRON_MONTH_15, null, true, true );
+                scheduleAutoEmailJob.setLeaderOnlyJob( true );
+            addAndScheduleJob( scheduleAutoEmailJob2 );*/
+            addAndScheduleJob( scheduleAutoEmailJob );
+        }
+     // for UPHMIS auto sms
+        if ( verifyNoJobExist( DEFAULT_AUTO_SMS_MESSAGE, jobConfigurations ) )
+        {
+            JobConfiguration scheduleAutoSMSJob = new JobConfiguration( DEFAULT_AUTO_SMS_MESSAGE,
+                AUTO_SMS_MESSAGE, CRON_DAILY_16PM, null, true, true );
+            scheduleAutoSMSJob.setLeaderOnlyJob( true );
+            addAndScheduleJob( scheduleAutoSMSJob );
+            
+           /* JobConfiguration scheduleAutoSMSJob2 = new JobConfiguration( DEFAULT_AUTO_SMS_MESSAGE,
+                    AUTO_SMS_MESSAGE, CRON_MONTH_15, null, true, true );
+                scheduleAutoSMSJob.setLeaderOnlyJob( true );
+                addAndScheduleJob( scheduleAutoSMSJob2 );
+                */
+        }
+        
+        
         else
         {
             checkLeaderElectionJobConfiguration( jobConfigurations );

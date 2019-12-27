@@ -76,6 +76,16 @@ public enum JobType
     REMOVE_EXPIRED_RESERVED_VALUES( "removeExpiredReservedValuesJob", false, null, null ),
     KAFKA_TRACKER( "kafkaTrackerJob", false, null, null ),
 
+    // for UPHMIS AUTO_APPROVE_TRACKER_DATA
+    AUTO_APPROVE_TRACKER_DATA( "scheduleAutoApproveTrackerDataJob", true, null, null ),
+    AUTO_APPROVE_TRACKER_DATA_DOCTOR_DAIRY( "scheduleAutoApproveTrackerDataDoctorDiaryJob", true, null, null ),
+    // for UPHMIS DELETE_LOCK_EXCEPTION
+    DELETE_EXPIRED_LOCK_EXCEPTION( "deleteExpiredLockExceptionJob", true, null, null ),
+    
+  //for UPHMIS AUTO_EMAIL/SMS_DATA
+    AUTO_EMAIL_MESSAGE( "scheduleAutoEmailJob", true, null, null ),
+    AUTO_SMS_MESSAGE( "scheduleAutoSMSJob", true, null, null ),
+        
     // For tests
     MOCK( "mockJob", false, MockJobParameters.class, null ),
 
@@ -91,7 +101,8 @@ public enum JobType
     LEADER_ELECTION( "leaderElectionJob", false, null, null ),
     LEADER_RENEWAL( "leaderRenewalJob", false, null, null ),
     COMPLETE_DATA_SET_REGISTRATION_IMPORT( null, false, null, null );
-
+    
+    
     private final String key;
 
     private final Class<? extends JobParameters> jobParameters;

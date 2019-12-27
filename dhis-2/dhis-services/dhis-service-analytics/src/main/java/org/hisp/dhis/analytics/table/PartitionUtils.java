@@ -63,30 +63,6 @@ public class PartitionUtils
      * @param year the year.
      * @return the start date.
      */
-    public static Date getIsoCalendarStartDate( Integer year )
-    {
-        return new DateTimeUnit( year, 1, 1 ).toJdkDate();
-    }
-    
-    /**
-     * Returns the start date for the given year, inclusive.
-     *
-     * @param calendar the calendar to base the date on.
-     * @param year the year.
-     * @return the start date.
-     */
-    public static Date getIsoCalendarEndDate( Integer year )
-    {
-        return new DateTimeUnit( year + 1, 1, 1 ).toJdkDate();
-    }
-    
-    /**
-     * Returns the start date for the given year, inclusive.
-     *
-     * @param calendar the calendar to base the date on.
-     * @param year the year.
-     * @return the start date.
-     */
     public static Date getStartDate( Calendar calendar, Integer year )
     {
         return calendar.isoStartOfYear( year ).toJdkDate();
@@ -199,11 +175,8 @@ public class PartitionUtils
     {
         Set<Integer> years = new HashSet<>();
 
-        //int startYear = PeriodType.getCalendar().fromIso( period.getStartDate() ).getYear();
-        //int endYear = PeriodType.getCalendar().fromIso( period.getEndDate() ).getYear();
-        
-        int startYear = DateTimeUnit.fromJdkDate( period.getStartDate() ).getYear();
-        int endYear = DateTimeUnit.fromJdkDate( period.getEndDate() ).getYear();
+        int startYear = PeriodType.getCalendar().fromIso( period.getStartDate() ).getYear();
+        int endYear = PeriodType.getCalendar().fromIso( period.getEndDate() ).getYear();
 
         while ( startYear <= endYear )
         {

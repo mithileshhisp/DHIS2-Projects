@@ -35,5 +35,7 @@ public enum Importance
 {
     HIGH,
     MEDIUM,
-    LOW
+    LOW,
+    NEEDCHECK,
+    NEEDCORRECTION
 }

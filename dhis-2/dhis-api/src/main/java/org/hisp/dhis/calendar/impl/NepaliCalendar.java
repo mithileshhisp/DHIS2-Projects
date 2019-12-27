@@ -157,9 +157,7 @@ public class NepaliCalendar extends AbstractCalendar
     @Override
     public int week( DateTimeUnit dateTimeUnit )
     {
-        DateTimeUnit _dateTimeUnit = minusDays( dateTimeUnit, weekday( dateTimeUnit ) );
-
-        return (int) (Math.floor( (getDayOfYear(_dateTimeUnit ) - 1) / 7 ) + 1);
+        return isoWeek( dateTimeUnit );
     }
 
     @Override
@@ -402,33 +400,16 @@ public class NepaliCalendar extends AbstractCalendar
 
     private int getYearTotal( int year )
     {
-        int yearTotal = 0;
-
         // if year total index is uninitialized, calculate and set in array
         if ( CONVERSION_MAP.get( year )[0] == 0 )
         {
             for ( int j = 1; j <= 12; j++ )
             {
-                yearTotal += CONVERSION_MAP.get( year )[j];
+                CONVERSION_MAP.get( year )[0] += CONVERSION_MAP.get( year )[j];
             }
         }
 
-        return yearTotal;
-    }
-
-    private int getDayOfYear( DateTimeUnit dateTimeUnit )
-    {
-        int dayOfYear = dateTimeUnit.getDay();
-
-        if ( CONVERSION_MAP.get( dateTimeUnit.getYear() )[0] == 0 )
-        {
-            for ( int j = 1; j < dateTimeUnit.getMonth(); j++ )
-            {
-                dayOfYear += CONVERSION_MAP.get( dateTimeUnit.getYear() )[j];
-            }
-        }
-
-        return dayOfYear;
+        return CONVERSION_MAP.get( year )[0];
     }
 
     // check if day is more than current maximum for month, don't overflow, just set to maximum
@@ -534,7 +515,7 @@ public class NepaliCalendar extends AbstractCalendar
         to = toIso( to );
 
         return new DateInterval( from, to, DateIntervalType.ISO8601_DAY );
-    }    
+    }
 
     //------------------------------------------------------------------------------------------------------------
     // Conversion map for Nepali calendar

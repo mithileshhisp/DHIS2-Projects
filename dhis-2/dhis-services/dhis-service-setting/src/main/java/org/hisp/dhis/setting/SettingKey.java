@@ -92,6 +92,17 @@ public enum SettingKey
     GOOGLE_ANALYTICS_UA( "googleAnalyticsUA" ),
     CREDENTIALS_EXPIRES( "credentialsExpires", 0, Integer.class ),
     CREDENTIALS_EXPIRY_ALERT( "credentialsExpiryAlert", false, Boolean.class ),
+    
+    // for UPHMIS AUTO_APPROVE_TRACKER_DATA
+    AUTO_APPROVE_TRACKER_DATA( "scheduleAutoApproveTrackerDataJob", true, Boolean.class ),
+    AUTO_APPROVE_TRACKER_DATA_DOCTOR_DAIRY( "scheduleAutoApproveTrackerDataDoctorDiaryJob", true, Boolean.class ),
+    // for UPHMIS DELETE_LOCK_EXCEPTION
+    DELETE_EXPIRED_LOCK_EXCEPTION( "deleteExpiredLockExceptionJob", true, Boolean.class ),
+    
+    //for UPHMIS AUTO_EMAIL/SMS_DATA
+    AUTO_EMAIL_MESSAGE( "scheduleAutoEmailJob", true, Boolean.class ),
+    AUTO_SMS_MESSAGE( "scheduleAutoSMSJob", true, Boolean.class ),
+    
     SELF_REGISTRATION_NO_RECAPTCHA( "keySelfRegistrationNoRecaptcha", Boolean.FALSE, Boolean.class ),
     RECAPTCHA_SECRET( "recaptchaSecret", "6LcVwT0UAAAAAAtMWnPoerWwLx_DSwrcEncHCiWu", String.class ),
     RECAPTCHA_SITE( "recaptchaSite", "6LcVwT0UAAAAAAkO_EGPiYOiymIszZUeHfqWIYX5", String.class ),

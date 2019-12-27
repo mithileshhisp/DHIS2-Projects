@@ -32,6 +32,7 @@ import org.hisp.dhis.category.CategoryOptionCombo;
 import org.hisp.dhis.dataelement.DataElementOperand;
 import org.hisp.dhis.dataset.DataSet;
 import org.hisp.dhis.organisationunit.OrganisationUnit;
+import org.hisp.dhis.organisationunit.OrganisationUnitGroup;
 import org.hisp.dhis.period.Period;
 
 import java.util.Collection;
@@ -43,7 +44,7 @@ import java.util.List;
  */
 public interface ValidationService
 {
-    int MAX_INTERACTIVE_ALERTS = 500;
+    int MAX_INTERACTIVE_ALERTS = 50000;
     int MAX_SCHEDULED_ALERTS = 100000;
 
     /**
@@ -76,5 +77,4 @@ public interface ValidationService
 
     ValidationAnalysisParams.Builder newParamsBuilder( DataSet dataSet, OrganisationUnit organisationUnits,
         Period period );
-
 }

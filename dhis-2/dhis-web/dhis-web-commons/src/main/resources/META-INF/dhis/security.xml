@@ -24,7 +24,8 @@
     <sec:anonymous enabled="false" />
     <sec:http-basic entry-point-ref="oauthAuthenticationEntryPoint" />
     <sec:access-denied-handler ref="oauthAccessDeniedHandler" />
-    <sec:csrf disabled="true" />
+    <!--<sec:csrf disabled="true" />-->
+    <sec:csrf disabled="false" />
   </sec:http>
 
   <sec:http pattern="/uaa/oauth/authorize/**" authentication-manager-ref="authenticationManager" disable-url-rewriting="true"
@@ -138,6 +139,8 @@
     <sec:intercept-url pattern="/api/account/recovery" access="permitAll()" />
     <sec:intercept-url pattern="/api/account/restore" access="permitAll()" />
     <sec:intercept-url pattern="/api/account/password" access="permitAll()" />
+    <sec:intercept-url pattern="/api/account/validatePassword" method="POST" access="permitAll()" />
+    <sec:intercept-url pattern="/api/account/validateUsername" method="POST" access="permitAll()" />
     <sec:intercept-url pattern="/api/account" access="permitAll()" />
     <sec:intercept-url pattern="/api/staticContent/*" method="GET" access="permitAll()" />
     <sec:intercept-url pattern="/api/externalFileResources/*" method="GET" access="permitAll()" />
@@ -162,7 +165,7 @@
     <sec:intercept-url pattern="/dhis-web-tracker-capture/**" access="hasAnyRole('ALL,M_dhis-web-tracker-capture')" />
     <sec:intercept-url pattern="/dhis-web-cache-cleaner/**" access="hasAnyRole('ALL,M_dhis-web-cache-cleaner')" />
     <sec:intercept-url pattern="/dhis-web-data-administration/**" access="hasAnyRole('ALL,M_dhis-web-data-administration')" />
-    <sec:intercept-url pattern="/dhis-web-data-quality/**" access="hasAnyRole('ALL,F_PERFORM_MAINTENANCE')" />
+    <sec:intercept-url pattern="/dhis-web-data-quality/**" access="hasAnyRole('ALL,M_dhis-web-data-quality')" />
 
     <sec:intercept-url pattern="/**" access="isAuthenticated()" />
     <sec:custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER" />

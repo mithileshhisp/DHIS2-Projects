@@ -28,7 +28,11 @@ package org.hisp.dhis.dxf2.events.trackedentity;
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import com.google.common.collect.Lists;
+import static org.hisp.dhis.system.notification.NotificationLevel.ERROR;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -69,31 +73,18 @@ import org.hisp.dhis.system.notification.NotificationLevel;
 import org.hisp.dhis.system.notification.Notifier;
 import org.hisp.dhis.system.util.DateUtils;
 import org.hisp.dhis.textpattern.TextPatternValidationUtils;
-import org.hisp.dhis.trackedentity.TrackedEntityAttribute;
-import org.hisp.dhis.trackedentity.TrackedEntityAttributeService;
-import org.hisp.dhis.trackedentity.TrackedEntityInstanceQueryParams;
-import org.hisp.dhis.trackedentity.TrackedEntityProgramOwner;
-import org.hisp.dhis.trackedentity.TrackedEntityType;
-import org.hisp.dhis.trackedentity.TrackerOwnershipManager;
+import org.hisp.dhis.trackedentity.*;
 import org.hisp.dhis.trackedentityattributevalue.TrackedEntityAttributeValue;
 import org.hisp.dhis.trackedentityattributevalue.TrackedEntityAttributeValueService;
 import org.hisp.dhis.user.CurrentUserService;
 import org.hisp.dhis.user.User;
 import org.hisp.dhis.user.UserCredentials;
 import org.hisp.dhis.user.UserService;
+import org.hisp.dhis.util.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import static org.hisp.dhis.system.notification.NotificationLevel.ERROR;
+import com.google.common.collect.Lists;
 
 /**
  * @author Morten Olav Hansen <mortenoh@gmail.com>
@@ -423,6 +414,7 @@ public abstract class AbstractTrackedEntityInstanceService
     public ImportSummaries updateTrackedEntityInstances( List<TrackedEntityInstance> trackedEntityInstances,
         ImportOptions importOptions )
     {
+        sortTrackedEntityInstanceUpdates( trackedEntityInstances );
         List<List<TrackedEntityInstance>> partitions = Lists.partition( trackedEntityInstances, FLUSH_FREQUENCY );
         importOptions = updateImportOptions( importOptions );
         ImportSummaries importSummaries = new ImportSummaries();
@@ -441,6 +433,16 @@ public abstract class AbstractTrackedEntityInstanceService
         }
 
         return importSummaries;
+    }
+
+    /**
+     * Sorts the tracked entity instances according to the tracked entity instance identifier.
+     *
+     * @param trackedEntityInstances the list of tracked entity instances.
+     */
+    private void sortTrackedEntityInstanceUpdates( List<TrackedEntityInstance> trackedEntityInstances )
+    {
+        trackedEntityInstances.sort( ( a, b ) -> a.getTrackedEntityInstance().compareTo( b.getTrackedEntityInstance() ) );
     }
 
     @Override
@@ -760,10 +762,9 @@ public abstract class AbstractTrackedEntityInstanceService
 
         ImportSummaries importSummaries = new ImportSummaries();
 
-        importSummaries
-            .addImportSummaries( enrollmentService.addEnrollments( create, importOptions, daoEntityInstance, false ) );
-        importSummaries.addImportSummaries( enrollmentService.updateEnrollments( update, importOptions, false ) );
         importSummaries.addImportSummaries( enrollmentService.deleteEnrollments( delete, importOptions, false ) );
+        importSummaries.addImportSummaries( enrollmentService.updateEnrollments( update, importOptions, false ) );
+        importSummaries.addImportSummaries( enrollmentService.addEnrollments( create, importOptions, daoEntityInstance, false ) );
 
         return importSummaries;
     }
@@ -803,7 +804,9 @@ public abstract class AbstractTrackedEntityInstanceService
 
         Set<String> incomingAttributes = new HashSet<>();
 
-        for ( Attribute dtoAttribute : dtoEntityInstance.getAttributes() )
+        List<Attribute> attributes = dtoEntityInstance.getAttributes().stream().filter(  ObjectUtils.distinctByKey( att -> att.getAttribute() ) ).collect( Collectors.toList() );
+
+        for ( Attribute dtoAttribute : attributes )
         {
             String storedBy = getStoredBy( dtoAttribute, new ImportSummary(),
                 user == null ? "[Unknown]" : user.getUsername() );
@@ -1183,12 +1186,39 @@ public abstract class AbstractTrackedEntityInstanceService
             {
                 trackedEntityInstance.getProgramOwners().add( new ProgramOwner( programOwner ) );
             }
+        }
 
+        Set<TrackedEntityAttribute> readableAttributesCopy;
+
+        if ( params.isDataSynchronizationQuery() )
+        {
+            List<String> programs = trackedEntityInstance.getEnrollments().stream()
+                .map( Enrollment::getProgram )
+                .collect( Collectors.toList() );
+
+            readableAttributesCopy = readableAttributes.stream()
+                .filter( att -> !att.getSkipSynchronization() )
+                .collect( Collectors.toSet() ) ;
+
+            IdSchemes idSchemes = new IdSchemes();
+            for ( String programUid : programs )
+            {
+                Program program = getProgram( idSchemes, programUid );
+
+                readableAttributesCopy.addAll(
+                    program.getTrackedEntityAttributes().stream()
+                        .filter( att -> !att.getSkipSynchronization() )
+                        .collect( Collectors.toSet() ) );
+            }
+        }
+        else
+        {
+            readableAttributesCopy = new HashSet<>( readableAttributes );
         }
 
         for ( TrackedEntityAttributeValue attributeValue : daoTrackedEntityInstance.getTrackedEntityAttributeValues() )
         {
-            if ( readableAttributes.contains( attributeValue.getAttribute() ) )
+            if ( readableAttributesCopy.contains( attributeValue.getAttribute() ) )
             {
                 Attribute attribute = new Attribute();
 

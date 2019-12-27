@@ -43,6 +43,7 @@ import org.hisp.dhis.commons.util.SqlHelper;
 import org.hisp.dhis.event.EventStatus;
 import org.hisp.dhis.jdbc.StatementBuilder;
 import org.hisp.dhis.organisationunit.OrganisationUnit;
+import org.hisp.dhis.organisationunit.OrganisationUnitStore;
 import org.hisp.dhis.system.util.DateUtils;
 import org.hisp.dhis.trackedentity.TrackedEntityInstance;
 import org.hisp.dhis.trackedentity.TrackedEntityInstanceQueryParams;
@@ -51,32 +52,13 @@ import org.hisp.dhis.user.User;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.hisp.dhis.common.IdentifiableObjectUtils.getIdentifiers;
 import static org.hisp.dhis.common.IdentifiableObjectUtils.getUids;
-import static org.hisp.dhis.commons.util.TextUtils.getCommaDelimitedString;
-import static org.hisp.dhis.commons.util.TextUtils.getQuotedCommaDelimitedString;
-import static org.hisp.dhis.commons.util.TextUtils.getTokens;
-import static org.hisp.dhis.commons.util.TextUtils.removeLastAnd;
-import static org.hisp.dhis.commons.util.TextUtils.removeLastComma;
-import static org.hisp.dhis.commons.util.TextUtils.removeLastOr;
-import static org.hisp.dhis.system.util.DateUtils.getDateAfterAddition;
-import static org.hisp.dhis.system.util.DateUtils.getMediumDateString;
-import static org.hisp.dhis.trackedentity.TrackedEntityInstanceQueryParams.CREATED_ID;
-import static org.hisp.dhis.trackedentity.TrackedEntityInstanceQueryParams.DELETED;
-import static org.hisp.dhis.trackedentity.TrackedEntityInstanceQueryParams.INACTIVE_ID;
-import static org.hisp.dhis.trackedentity.TrackedEntityInstanceQueryParams.LAST_UPDATED_ID;
-import static org.hisp.dhis.trackedentity.TrackedEntityInstanceQueryParams.ORG_UNIT_ID;
-import static org.hisp.dhis.trackedentity.TrackedEntityInstanceQueryParams.ORG_UNIT_NAME;
-import static org.hisp.dhis.trackedentity.TrackedEntityInstanceQueryParams.TRACKED_ENTITY_ID;
-import static org.hisp.dhis.trackedentity.TrackedEntityInstanceQueryParams.TRACKED_ENTITY_INSTANCE_ID;
+import static org.hisp.dhis.commons.util.TextUtils.*;
+import static org.hisp.dhis.system.util.DateUtils.*;
+import static org.hisp.dhis.trackedentity.TrackedEntityInstanceQueryParams.*;
 
 /**
  * @author Abyot Asalefew Gizaw
@@ -94,11 +76,18 @@ public class HibernateTrackedEntityInstanceStore
 
     private StatementBuilder statementBuilder;
 
+    private OrganisationUnitStore organisationUnitStore;
+
     public void setStatementBuilder( StatementBuilder statementBuilder )
     {
         this.statementBuilder = statementBuilder;
     }
 
+    public void setOrganisationUnitStore( OrganisationUnitStore organisationUnitStore )
+    {
+        this.organisationUnitStore = organisationUnitStore;
+    }
+    
     // -------------------------------------------------------------------------
     // Implementation methods
     // -------------------------------------------------------------------------
@@ -140,6 +129,7 @@ public class HibernateTrackedEntityInstanceStore
         return buildTrackedEntityInstanceHql( params )
             .replaceFirst( "select tei from", "select count(distinct tei) from" )
             .replaceFirst( "left join fetch tei.programInstances", "left join tei.programInstances" )
+            .replaceFirst( "inner join fetch tei.programOwners", "inner join tei.programOwners" )
             .replaceFirst( "order by case when pi.status = 'ACTIVE' then 1 when pi.status = 'COMPLETED' then 2 else 3 end asc, tei.lastUpdated desc ", "" )
             .replaceFirst( "order by tei.lastUpdated desc ", "" );
     }
@@ -149,10 +139,19 @@ public class HibernateTrackedEntityInstanceStore
         SqlHelper hlp = new SqlHelper( true );
 
         String hql = "select tei from TrackedEntityInstance tei ";
+        
+        //Used for switing between registration org unit or ownership org unit. Default source is registration ou.
+        String teiOuSource = "tei.organisationUnit";
 
         if ( params.hasProgram() )
         {
             hql += "left join fetch tei.programInstances as pi ";
+            
+            //Joining program owners and using that as tei ou source
+            hql += "inner join fetch tei.programOwners as po ";
+            teiOuSource = "po.organisationUnit";
+
+            hql += hlp.whereAnd() + " po.program.uid = '" + params.getProgram().getUid() + "'";
 
             hql += hlp.whereAnd() + " pi.program.uid = '" + params.getProgram().getUid() + "'";
 
@@ -208,14 +207,24 @@ public class HibernateTrackedEntityInstanceStore
             hql += hlp.whereAnd() + "tei.trackedEntityType.uid='" + params.getTrackedEntityType().getUid() + "'";
         }
 
-        if ( params.hasLastUpdatedStartDate() )
+        if ( params.hasLastUpdatedDuration() )
         {
-            hql += hlp.whereAnd() + "tei.lastUpdated >= '" + getMediumDateString( params.getLastUpdatedStartDate() ) + "'";
+            hql += hlp.whereAnd() +  "tei.lastUpdated >= '" +
+                getLongGmtDateString( DateUtils.nowMinusDuration( params.getLastUpdatedDuration() ) ) + "'";
         }
-
-        if ( params.hasLastUpdatedEndDate() )
+        else
         {
-            hql += hlp.whereAnd() + "tei.lastUpdated < '" + getMediumDateString( getDateAfterAddition( params.getLastUpdatedEndDate(), 1 ) ) + "'";
+            if ( params.hasLastUpdatedStartDate() )
+            {
+                hql += hlp.whereAnd() + "tei.lastUpdated >= '" +
+                    getMediumDateString( params.getLastUpdatedStartDate() ) + "'";
+            }
+
+            if ( params.hasLastUpdatedEndDate() )
+            {
+                hql += hlp.whereAnd() + "tei.lastUpdated < '" +
+                    getMediumDateString( getDateAfterAddition( params.getLastUpdatedEndDate(), 1 ) ) + "'";
+            }
         }
 
         if ( params.isSynchronizationQuery() )
@@ -242,7 +251,7 @@ public class HibernateTrackedEntityInstanceStore
 
                 for ( OrganisationUnit organisationUnit : params.getOrganisationUnits() )
                 {
-                    ouClause += orHlp.or() + "tei.organisationUnit.path LIKE '" + organisationUnit.getPath() + "%'";
+                    ouClause += orHlp.or() + teiOuSource + ".path LIKE '" + organisationUnit.getPath() + "%'";
                 }
 
                 ouClause += ")";
@@ -251,7 +260,7 @@ public class HibernateTrackedEntityInstanceStore
             }
             else
             {
-                hql += hlp.whereAnd() + "tei.organisationUnit.uid in (" + getQuotedCommaDelimitedString( getUids( params.getOrganisationUnits() ) ) + ")";
+                hql += hlp.whereAnd() + teiOuSource + ".uid in (" + getQuotedCommaDelimitedString( getUids( params.getOrganisationUnits() ) ) + ")";
             }
         }
 
@@ -388,7 +397,9 @@ public class HibernateTrackedEntityInstanceStore
 
             for ( QueryItem item : params.getAttributes() )
             {
-                map.put( item.getItemId(), rowSet.getString( item.getItemId() ) );
+                map.put( item.getItemId(),
+                    isOrgUnit( item ) ? getOrgUnitNameByUid( rowSet.getString( item.getItemId() ) )
+                        : rowSet.getString( item.getItemId() ) );
             }
 
             list.add( map );
@@ -398,7 +409,7 @@ public class HibernateTrackedEntityInstanceStore
     }
 
     @Override
-    public int getTrackedEntityInstanceCount( TrackedEntityInstanceQueryParams params )
+    public int getTrackedEntityInstanceCountForGrid( TrackedEntityInstanceQueryParams params )
     {
         SqlHelper hlp = new SqlHelper();
 
@@ -438,9 +449,16 @@ public class HibernateTrackedEntityInstanceStore
 
         String sql = "from trackedentityinstance tei "
             + "inner join trackedentitytype te on tei.trackedentitytypeid = te.trackedentitytypeid ";
+        
+        String teiOuSource = "tei.organisationunitid";
 
         if ( params.hasProgram() )
         {
+          //Using program owner OU instead of registration OU.
+            sql += "inner join (select trackedentityinstanceid, organisationunitid from trackedentityprogramowner where programid = ";
+            sql += params.getProgram().getId() + ") as tepo ON tei.trackedentityinstanceid = tepo.trackedentityinstanceid ";
+            teiOuSource = "tepo.organisationunitid";
+            
             sql += "inner join ("
                 + "select trackedentityinstanceid, min(case when status='ACTIVE' then 0 when status='COMPLETED' then 1 else 2 end) as status "
                 + "from programinstance pi ";
@@ -494,7 +512,7 @@ public class HibernateTrackedEntityInstanceStore
             sql += " group by trackedentityinstanceid ) as en on tei.trackedentityinstanceid = en.trackedentityinstanceid ";
         }
 
-        sql += "inner join organisationunit ou on tei.organisationunitid = ou.organisationunitid ";
+        sql += "inner join organisationunit ou on " + teiOuSource + " = ou.organisationunitid ";
 
         for ( QueryItem item : params.getAttributesAndFilters() )
         {
@@ -548,7 +566,7 @@ public class HibernateTrackedEntityInstanceStore
         }
         else // SELECTED (default)
         {
-            sql += hlp.whereAnd() + " tei.organisationunitid in ("
+            sql += hlp.whereAnd() + " " + teiOuSource + " in ("
                 + getCommaDelimitedString( getIdentifiers( params.getOrganisationUnits() ) ) + ") ";
         }
 
@@ -687,15 +705,23 @@ public class HibernateTrackedEntityInstanceStore
     @Override
     public boolean exists( String uid )
     {
-        Integer result = jdbcTemplate.queryForObject( "select count(*) from trackedentityinstance where uid=? and deleted is false", Integer.class, uid );
-        return result != null && result > 0;
+        if ( uid == null )
+        {
+            return false;
+        }
+
+        return jdbcTemplate.queryForRowSet( "select * from trackedentityinstance where uid='" + uid + "' and deleted is false limit 1;" ).next();
     }
 
     @Override
     public boolean existsIncludingDeleted( String uid )
     {
-        Integer result = jdbcTemplate.queryForObject( "select count(*) from trackedentityinstance where uid=?", Integer.class, uid );
-        return result != null && result > 0;
+        if ( uid == null )
+        {
+            return false;
+        }
+
+        return jdbcTemplate.queryForRowSet( "select * from trackedentityinstance where uid='" + uid + "' limit 1;").next();
     }
 
     @Override
@@ -728,5 +754,21 @@ public class HibernateTrackedEntityInstanceStore
     protected TrackedEntityInstance postProcessObject( TrackedEntityInstance trackedEntityInstance )
     {
         return (trackedEntityInstance == null || trackedEntityInstance.isDeleted()) ? null : trackedEntityInstance;
+    }
+    
+    private boolean isOrgUnit( QueryItem item )
+    {
+        return item.getValueType().isOrganisationUnit();
+    }
+
+    private String getOrgUnitNameByUid( String uid )
+    {
+        if ( uid != null )
+        {
+            return  Optional.ofNullable( organisationUnitStore.getByUid( uid ) )
+                    .orElseGet( () -> new OrganisationUnit( "" ) ).getName();
+        }
+
+        return StringUtils.EMPTY;
     }
 }

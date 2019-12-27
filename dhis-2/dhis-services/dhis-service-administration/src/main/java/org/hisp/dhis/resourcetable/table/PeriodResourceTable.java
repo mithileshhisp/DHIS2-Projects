@@ -35,7 +35,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.hisp.dhis.calendar.Calendar;
-import org.hisp.dhis.calendar.DateTimeUnit;
 import org.hisp.dhis.common.IdentifiableObjectUtils;
 import org.hisp.dhis.period.Period;
 import org.hisp.dhis.period.PeriodType;
@@ -100,7 +99,7 @@ public class PeriodResourceTable
             if ( period != null && period.isValid() )
             {
                 final String isoDate = period.getIsoDate();
-                final int year = DateTimeUnit.fromJdkDate( period.getStartDate() ).getYear();
+                final int year = PeriodType.getCalendar().fromIso( period.getStartDate() ).getYear();
 
                 if ( !uniqueIsoDates.add( isoDate ) )
                 {

@@ -610,6 +610,12 @@ public class DefaultDataValueSetService
         }
     }
 
+    @Override
+    public ImportSummary saveDataValueSetPdf( InputStream in, ImportOptions importOptions )
+    {
+       return saveDataValueSetPdf( in, importOptions, null );
+    }
+
     /**
      * There are specific id schemes for data elements and organisation units and
      * a generic id scheme for all objects. The specific id schemes will take
@@ -941,7 +947,7 @@ public class DefaultDataValueSetService
 
             if ( dataValue.isNullValue() && !dataValue.isDeletedValue() )
             {
-                summary.getConflicts().add( new ImportConflict( "Value", "Data value or comment not specified for data element: " + dataElement.getUid() ) );
+                summary.getConflicts().add( new ImportConflict( "Value", "Data value or comment not specified for data element: " + dataElement.getUid() + " , " + dataElement.getName() ) );
                 continue;
             }
 
@@ -952,7 +958,7 @@ public class DefaultDataValueSetService
 
             if ( valueValid != null )
             {
-                summary.getConflicts().add( new ImportConflict( dataValue.getValue(), i18n.getString( valueValid ) + ", must match data element type: " + dataElement.getUid() ) );
+                summary.getConflicts().add( new ImportConflict( dataValue.getValue(), i18n.getString( valueValid ) + ", must match data element type: " + dataElement.getUid() + " , " + dataElement.getName() ) );
                 continue;
             }
 
@@ -969,7 +975,7 @@ public class DefaultDataValueSetService
 
             if ( optionCodes.isPresent() && !optionCodes.get().contains( dataValue.getValue() ) )
             {
-                summary.getConflicts().add( new ImportConflict( dataValue.getValue(), "Data value is not a valid option of the data element option set: " + dataElement.getUid() ) );
+                summary.getConflicts().add( new ImportConflict( dataValue.getValue(), "Data value is not a valid option of the data element option set: " + dataElement.getUid() + " , " + dataElement.getName() ) );
                 continue;
             }
 
@@ -1007,7 +1013,7 @@ public class DefaultDataValueSetService
                 () -> dataElement.getPeriodTypes() ).contains( period.getPeriodType() ) )
             {
                 summary.getConflicts().add( new ImportConflict( dataValue.getPeriod(),
-                    "Period type of period: " + period.getIsoDate() + " not valid for data element: " + dataElement.getUid() ) );
+                    "Period type of period: " + period.getIsoDate() + " not valid for data element: " + dataElement.getUid() + " , " + dataElement.getName() ) );
                 continue;
             }
 
@@ -1015,7 +1021,7 @@ public class DefaultDataValueSetService
                 () -> dataElement.getCategoryOptionCombos() ).contains( categoryOptionCombo ) )
             {
                 summary.getConflicts().add( new ImportConflict( categoryOptionCombo.getUid(),
-                    "Category option combo: " + categoryOptionCombo.getUid() + " must be part of category combo of data element: " + dataElement.getUid() ) );
+                    "Category option combo: " + categoryOptionCombo.getUid() + " must be part of category combo of data element: " + dataElement.getUid() + " , " + dataElement.getName() ) );
                 continue;
             }
 
@@ -1023,7 +1029,7 @@ public class DefaultDataValueSetService
                 () -> dataElement.getDataSetCategoryOptionCombos() ).contains( attrOptionCombo ) )
             {
                 summary.getConflicts().add( new ImportConflict( attrOptionCombo.getUid(),
-                    "Attribute option combo: " + attrOptionCombo.getUid() + " must be part of category combo of data sets of data element: " + dataElement.getUid() ) );
+                    "Attribute option combo: " + attrOptionCombo.getUid() + " must be part of category combo of data sets of data element: " + dataElement.getUid() + " , " + dataElement.getName() ) );
                 continue;
             }
 
@@ -1031,7 +1037,7 @@ public class DefaultDataValueSetService
                 () -> orgUnit.hasDataElement( dataElement ) ) ) )
             {
                 summary.getConflicts().add( new ImportConflict( orgUnit.getUid(),
-                    "Data element: " + dataElement.getUid() + " must be assigned through data sets to organisation unit: " + orgUnit.getUid() ) );
+                    "Data element: " + dataElement.getUid() + " , " + dataElement.getName() + " must be assigned through data sets to organisation unit: " + orgUnit.getUid() + " , " + orgUnit.getName() ) );
                 continue;
             }
 
@@ -1078,9 +1084,10 @@ public class DefaultDataValueSetService
             final DataSet approvalDataSet = dataSet != null ? dataSet : dataElementDataSetMap.get( dataElement.getUid(),
                 () -> dataElement.getApprovalDataSet() );
 
-            if ( approvalDataSet != null ) // Data element is assigned to at least one data set
+            if ( approvalDataSet != null && !forceDataInput ) // Data element is assigned to at least one data set
             {
-                if ( !forceDataInput && dataSetLockedMap.get( approvalDataSet.getUid() + period.getUid() + orgUnit.getUid(),
+                //if( approvalDataSet.getSources().contains( orgUnit ) )
+                if ( dataSetLockedMap.get( approvalDataSet.getUid() + period.getUid() + orgUnit.getUid(),
                     () -> isLocked( currentUser, approvalDataSet, period, orgUnit, skipLockExceptionCheck ) ) )
                 {
                     summary.getConflicts().add( new ImportConflict( period.getIsoDate(), "Current date is past expiry days for period " +
@@ -1093,7 +1100,7 @@ public class DefaultDataValueSetService
                 if ( period.isAfter( latestFuturePeriod ) && isIso8601 )
                 {
                     summary.getConflicts().add( new ImportConflict( period.getIsoDate(), "Period: " +
-                        period.getIsoDate() + " is after latest open future period: " + latestFuturePeriod.getIsoDate() + " for data element: " + dataElement.getUid() ) );
+                        period.getIsoDate() + " is after latest open future period: " + latestFuturePeriod.getIsoDate() + " for data element: " + dataElement.getUid() + " , " + dataElement.getName() ) );
                     continue;
                 }
 
@@ -1119,14 +1126,14 @@ public class DefaultDataValueSetService
                 }
             }
 
-            if ( approvalDataSet != null && !approvalDataSet.isDataInputPeriodAndDateAllowed( period, new Date() ) )
+            if ( approvalDataSet != null && !forceDataInput && !approvalDataSet.isDataInputPeriodAndDateAllowed( period, new Date() ) )
             {
                 summary.getConflicts().add( new ImportConflict( orgUnit.getUid(),
                     "Period: " + period.getIsoDate() + " is not open for this data set at this time: " + approvalDataSet.getUid() ) );
                 continue;
             }
 
-            if ( !periodOpenForDataElement.get( dataElement.getUid() + period.getIsoDate(), () -> dataElement.isDataInputAllowedForPeriodAndDate( period, new Date() ) ) )
+            if ( !forceDataInput && !periodOpenForDataElement.get( dataElement.getUid() + period.getIsoDate(), () -> dataElement.isDataInputAllowedForPeriodAndDate( period, new Date() ) ) )
             {
                 summary.getConflicts().add( new ImportConflict( orgUnit.getUid(), "Period " + period.getName() + " does not conform to the open periods of associated data sets" ) );
                 continue;

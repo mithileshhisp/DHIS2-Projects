@@ -187,7 +187,7 @@ public class DefaultAclService implements AclService
             return true;
         }
 
-        List<String> anyAuthorities = schema.getAuthorityByType( AuthorityType.CREATE );
+        List<String> anyAuthorities = new ArrayList<>( schema.getAuthorityByType( AuthorityType.CREATE ) );
 
         if ( anyAuthorities.isEmpty() )
         {
@@ -236,6 +236,7 @@ public class DefaultAclService implements AclService
             return true;
         }
 
+        // returned unmodifiable list does not need to be cloned since it is not modified
         List<String> anyAuthorities = schema.getAuthorityByType( AuthorityType.DATA_CREATE );
 
         if ( canAccess( user, anyAuthorities ) )
@@ -269,7 +270,7 @@ public class DefaultAclService implements AclService
             return true;
         }
 
-        List<String> anyAuthorities = schema.getAuthorityByType( AuthorityType.UPDATE );
+        List<String> anyAuthorities = new ArrayList<>( schema.getAuthorityByType( AuthorityType.UPDATE ) );
 
         if ( anyAuthorities.isEmpty() )
         {
@@ -315,7 +316,7 @@ public class DefaultAclService implements AclService
             return true;
         }
 
-        List<String> anyAuthorities = schema.getAuthorityByType( AuthorityType.DELETE );
+        List<String> anyAuthorities = new ArrayList<>( schema.getAuthorityByType( AuthorityType.DELETE ) );
 
         if ( anyAuthorities.isEmpty() )
         {
@@ -337,7 +338,7 @@ public class DefaultAclService implements AclService
                 return true;
             }
         }
-        else if ( schema.isImplicitPrivateAuthority() && checkUser( user, object ) )
+        else if ( schema.isImplicitPrivateAuthority() && ( checkUser( user, object ) || checkSharingPermission( user, object, Permission.WRITE ) ) )
         {
             return true;
         }
@@ -474,20 +475,33 @@ public class DefaultAclService implements AclService
         BaseIdentifiableObject baseIdentifiableObject = (BaseIdentifiableObject) object;
         baseIdentifiableObject.setPublicAccess( AccessStringHelper.DEFAULT );
         baseIdentifiableObject.setExternalAccess( false );
-
         if ( object.getUser() == null )
         {
             baseIdentifiableObject.setUser( user );
         }
-
-        if ( canMakePublic( user, object.getClass() ) )
+        
+        if( object.getClass().getSimpleName().equalsIgnoreCase( "ReportTable" ) 
+            || object.getClass().getSimpleName().equalsIgnoreCase( "Chart" ))
         {
-            if ( defaultPublic( object.getClass() ) )
+            if ( canMakePublic( user, object.getClass() ) )
             {
-                baseIdentifiableObject.setPublicAccess( AccessStringHelper.READ_WRITE );
+                if ( defaultPublic( object.getClass() ) )
+                {
+                    baseIdentifiableObject.setPublicAccess( AccessStringHelper.DEFAULT );
+                }
             }
         }
-
+        else
+        {
+            if ( canMakePublic( user, object.getClass() ) )
+            {
+                if ( defaultPublic( object.getClass() ) )
+                {
+                    baseIdentifiableObject.setPublicAccess( AccessStringHelper.READ_WRITE );
+                }
+            }
+        }
+       
         object.getUserAccesses().clear();
         object.getUserGroupAccesses().clear();
     }
@@ -603,7 +617,7 @@ public class DefaultAclService implements AclService
         List<ErrorReport> errorReports = new ArrayList<>();
         Schema schema = schemaService.getSchema( object.getClass() );
 
-        if ( !schema.isImplicitPrivateAuthority() || checkUser( user, object ) )
+        if ( !schema.isImplicitPrivateAuthority() || checkUser( user, object ) || checkSharingPermission( user, object, Permission.WRITE ) )
         {
             return errorReports;
         }
@@ -697,7 +711,7 @@ public class DefaultAclService implements AclService
         for ( UserGroupAccess userGroupAccess : object.getUserGroupAccesses() )
         {
             /**
-             * Is the user allowed to read this object through group access? 
+             * Is the user allowed to read this object through group access?
              *
              */
             if ( AccessStringHelper.isEnabled( userGroupAccess.getAccess(), permission )
@@ -710,7 +724,7 @@ public class DefaultAclService implements AclService
         for ( UserAccess userAccess : object.getUserAccesses() )
         {
             /**
-             * Is the user allowed to read to this object through user access? 
+             * Is the user allowed to read to this object through user access?
              *
              */
             if ( AccessStringHelper.isEnabled( userAccess.getAccess(), permission )

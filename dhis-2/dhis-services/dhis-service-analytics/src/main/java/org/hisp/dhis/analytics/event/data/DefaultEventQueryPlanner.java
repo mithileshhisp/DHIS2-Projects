@@ -38,7 +38,6 @@ import org.hisp.dhis.analytics.QueryValidator;
 import org.hisp.dhis.analytics.data.QueryPlannerUtils;
 import org.hisp.dhis.analytics.event.EventQueryParams;
 import org.hisp.dhis.analytics.event.EventQueryPlanner;
-import org.hisp.dhis.analytics.partition.PartitionManager;
 import org.hisp.dhis.analytics.AggregationType;
 import org.hisp.dhis.analytics.AnalyticsTableType;
 import org.hisp.dhis.analytics.table.PartitionUtils;
@@ -63,9 +62,6 @@ public class DefaultEventQueryPlanner
 
     @Autowired
     private QueryValidator queryValidator;
-
-    @Autowired
-    private PartitionManager partitionManager;
 
     // -------------------------------------------------------------------------
     // EventQueryPlanner implementation
@@ -127,11 +123,6 @@ public class DefaultEventQueryPlanner
             AnalyticsTableType.EVENT.getTableName();
 
         String tableName = PartitionUtils.getTableName( baseName, params.getProgram() );
-
-        if ( params.getCurrentUser() != null )
-        {
-            partitionManager.filterNonExistingPartitions( partitions, tableName );
-        }
 
         return new EventQueryParams.Builder( params )
             .withTableName( tableName )
@@ -253,8 +244,7 @@ public class DefaultEventQueryPlanner
     {
         List<EventQueryParams> queries = new ArrayList<>();
 
-
-        if ( ( params.isLastPeriodAggregationType() || params.hasNonDefaultBoundaries() )  &&
+        if ( ( params.isLastPeriodAggregationType() || params.useIndividualQuery() ) &&
             !params.getPeriods().isEmpty() )
         {
             for ( DimensionalItemObject period : params.getPeriods() )

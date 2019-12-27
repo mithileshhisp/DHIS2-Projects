@@ -43,10 +43,12 @@ import org.hisp.dhis.program.notification.ProgramNotificationEventType;
 import org.hisp.dhis.program.notification.ProgramNotificationPublisher;
 import org.hisp.dhis.programrule.engine.ProgramRuleEnginePublisher;
 import org.hisp.dhis.programrule.engine.TrackedEntityInstanceEnrolledEvent;
+import org.hisp.dhis.system.util.DateUtils;
 import org.hisp.dhis.trackedentity.TrackedEntityInstance;
 import org.hisp.dhis.trackedentity.TrackedEntityInstanceService;
 import org.hisp.dhis.trackedentity.TrackedEntityType;
 import org.hisp.dhis.trackedentity.TrackedEntityTypeService;
+import org.hisp.dhis.trackedentity.TrackerOwnershipManager;
 import org.hisp.dhis.user.CurrentUserService;
 import org.hisp.dhis.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,9 +60,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.hisp.dhis.common.OrganisationUnitSelectionMode.ACCESSIBLE;
-import static org.hisp.dhis.common.OrganisationUnitSelectionMode.ALL;
-import static org.hisp.dhis.common.OrganisationUnitSelectionMode.CHILDREN;
+import static org.hisp.dhis.common.OrganisationUnitSelectionMode.*;
 
 /**
  * @author Abyot Asalefew
@@ -100,6 +100,9 @@ public class DefaultProgramInstanceService
 
     @Autowired
     private ProgramRuleEnginePublisher enginePublisher;
+
+    @Autowired
+    private TrackerOwnershipManager trackerOwnershipAccessManager;
     
     @Autowired
     private ProgramInstanceAuditService programInstanceAuditService;    
@@ -194,9 +197,11 @@ public class DefaultProgramInstanceService
 
     @Override
     @Transactional(readOnly = true)
-    public ProgramInstanceQueryParams getFromUrl( Set<String> ou, OrganisationUnitSelectionMode ouMode, Date lastUpdated, String program, ProgramStatus programStatus,
-        Date programStartDate, Date programEndDate, String trackedEntityType, String trackedEntityInstance, Boolean followUp, Integer page, Integer pageSize, 
-        boolean totalPages, boolean skipPaging, boolean includeDeleted )
+    public ProgramInstanceQueryParams getFromUrl( Set<String> ou, OrganisationUnitSelectionMode ouMode,
+        Date lastUpdated, String lastUpdatedDuration, String program, ProgramStatus programStatus,
+        Date programStartDate, Date programEndDate, String trackedEntityType, String trackedEntityInstance,
+        Boolean followUp, Integer page, Integer pageSize, boolean totalPages, boolean skipPaging,
+        boolean includeDeleted )
     {
         ProgramInstanceQueryParams params = new ProgramInstanceQueryParams();
 
@@ -240,6 +245,7 @@ public class DefaultProgramInstanceService
         params.setProgramStatus( programStatus );
         params.setFollowUp( followUp );
         params.setLastUpdated( lastUpdated );
+        params.setLastUpdatedDuration( lastUpdatedDuration );
         params.setProgramStartDate( programStartDate );
         params.setProgramEndDate( programEndDate );
         params.setTrackedEntityType( te );
@@ -266,7 +272,7 @@ public class DefaultProgramInstanceService
 
         if ( user != null && params.isOrganisationUnitMode( OrganisationUnitSelectionMode.ACCESSIBLE ) )
         {
-            params.setOrganisationUnits( user.getDataViewOrganisationUnitsWithFallback() );
+            params.setOrganisationUnits( user.getTeiSearchOrganisationUnitsWithFallback() );
             params.setOrganisationUnitMode( OrganisationUnitSelectionMode.DESCENDANTS );
         }
         else if ( params.isOrganisationUnitMode( CHILDREN ) )
@@ -308,7 +314,7 @@ public class DefaultProgramInstanceService
 
         if ( user != null && params.isOrganisationUnitMode( OrganisationUnitSelectionMode.ACCESSIBLE ) )
         {
-            params.setOrganisationUnits( user.getDataViewOrganisationUnitsWithFallback() );
+            params.setOrganisationUnits( user.getTeiSearchOrganisationUnitsWithFallback() );
             params.setOrganisationUnitMode( OrganisationUnitSelectionMode.DESCENDANTS );
         }
         else if ( params.isOrganisationUnitMode( CHILDREN ) )
@@ -382,6 +388,16 @@ public class DefaultProgramInstanceService
         if ( params.hasProgramEndDate() && !params.hasProgram() )
         {
             violation = "Program must be defined when program end date is specified";
+        }
+
+        if ( params.hasLastUpdated() && params.hasLastUpdatedDuration() )
+        {
+            violation = "Last updated and last updated duration cannot be specified simultaneously";
+        }
+
+        if ( params.hasLastUpdatedDuration() && DateUtils.getDuration( params.getLastUpdatedDuration() ) == null )
+        {
+            violation = "Duration is not valid: " + params.getLastUpdatedDuration();
         }
 
         if ( violation != null )
@@ -471,6 +487,12 @@ public class DefaultProgramInstanceService
         ProgramInstance programInstance = prepareProgramInstance( trackedEntityInstance, program, ProgramStatus.ACTIVE, enrollmentDate,
             incidentDate, organisationUnit, uid );
         addProgramInstance( programInstance );
+        // ---------------------------------------------------------------------
+        // Add program owner and overwrite if already exists.
+        // ---------------------------------------------------------------------
+
+        trackerOwnershipAccessManager.assignOwnership( trackedEntityInstance, program, organisationUnit, true, true );
+        
 
         // -----------------------------------------------------------------
         // Send enrollment notifications (if any)

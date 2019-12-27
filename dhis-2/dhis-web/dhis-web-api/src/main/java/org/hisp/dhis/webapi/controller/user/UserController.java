@@ -1,7 +1,7 @@
 package org.hisp.dhis.webapi.controller.user;
 
 /*
- * Copyright (c) 2004-2018, University of Oslo
+ * Copyright (c) 2004-2019, University of Oslo
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -436,6 +436,8 @@ public class UserController
         User parsed = renderService.fromXml( request.getInputStream(), getEntityClass() );
         parsed.setUid( pvUid );
 
+        parsed = mergeLastLoginAttribute( users.get( 0 ), parsed );
+
         if ( !userService.canAddOrUpdateUser( IdentifiableObjectUtils.getUids( parsed.getGroups() ), currentUser )
             || !currentUser.getUserCredentials().canModifyUser( users.get( 0 ).getUserCredentials() ) )
         {
@@ -478,6 +480,8 @@ public class UserController
 
         User parsed = renderService.fromJson( request.getInputStream(), getEntityClass() );
         parsed.setUid( pvUid );
+
+        parsed = mergeLastLoginAttribute( users.get( 0 ), parsed );
 
         if ( !userService.canAddOrUpdateUser( IdentifiableObjectUtils.getUids( parsed.getGroups() ), currentUser )
             || !currentUser.getUserCredentials().canModifyUser( users.get( 0 ).getUserCredentials() ) )
@@ -668,5 +672,25 @@ public class UserController
         }
 
         return null;
+    }
+
+    private User mergeLastLoginAttribute( User source, User target )
+    {
+        if ( target.getUserCredentials() == null )
+        {
+            return target;
+        }
+
+        if ( target.getUserCredentials().getLastLogin() != null )
+        {
+            return target;
+        }
+
+        if ( source.getUserCredentials() != null && source.getUserCredentials().getLastLogin() != null )
+        {
+            target.getUserCredentials().setLastLogin( source.getUserCredentials().getLastLogin() );
+        }
+
+        return target;
     }
 }
