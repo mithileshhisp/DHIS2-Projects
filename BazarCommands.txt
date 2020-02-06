@@ -2,6 +2,14 @@ app development workshop 29/10/2019 to 30/10/2019
 
 // 
 
+Chaining the three methods together:
+
+function reverseString(str) {
+    return str.split("").reverse().join("");
+}
+reverseString("hello");
+
+
 
 austin@dhis2.org
 
@@ -189,7 +197,7 @@ max_locks_per_transaction = 100		# min 10
 #max_pred_locks_per_page = 2            # min 0
 
 
-
+select setting  from pg_settings where name= 'max_locks_per_transaction';
 select setting,pending_restart from pg_settings where name= 'max_locks_per_transaction'; // set 200
 
 select * from pg_settings
@@ -243,6 +251,9 @@ update users set password = '$2a$10$FyFfOyfzQDKoJ6hs9Kr4WOfh7jp4H.LxMVQDcf1h4sJc
 update users set password = '$2a$10$ygJzpL.g054Z9RSPF1w6Y.SI3FhlqpPO4Hut690n6aHQG1BdvWKsa' where username = 'hispdev'; // district
 
 update users set password = '$2a$10$ygJzpL.g054Z9RSPF1w6Y.SI3FhlqpPO4Hut690n6aHQG1BdvWKsa' where username = 'admin'; // district
+
+update users set password = '$2a$10$ygJzpL.g054Z9RSPF1w6Y.SI3FhlqpPO4Hut690n6aHQG1BdvWKsa' where username = 'DHIS2 SUPPORT'; // district
+DHIS2 SUPPORT 
 
 set publicaccess = 'rw------' //for meta-data read write
 set publicaccess = 'rwrw----' // for data and meta-data reade write
@@ -313,6 +324,15 @@ update datavalue set lastupdated = now()::timestamp where lastupdated ='2019-02-
 insert into trackedentityattributevalue (trackedentityinstanceid,trackedentityattributeid,created,lastupdated,value) values
 ="("&A2&",93,'2018-04-27','2018-04-27','"&C2&"'),"
 
+
+
+insert into trackedentityattributevalue (trackedentityinstanceid,trackedentityattributeid,created,lastupdated,value) values
+="("&B2&",8374,'2020-01-31','2020-01-31','"&C2&"'),"
+
+update trackedentityattributevalue set created = now()::timestamp where created = '2020-01-31';
+update trackedentityattributevalue set lastupdated = now()::timestamp where lastupdated = '2020-01-31';
+
+
 insert into datasetelement (datasetelementid, datasetid, dataelementid, categorycomboid ) values
 ="(nextval('hibernate_sequence'),"&A2&", "&B2&","&C2&"),"
 
@@ -338,6 +358,17 @@ insert into programinstance (programinstanceid,  created, lastupdated, incidentd
 
 INSERT INTO programindicator(programindicatorid, uid, created, lastupdated, name, shortname, programid, expression, filter, aggregationtype, analyticstype,publicaccess) VALUES 
 ="(nextval('hibernate_sequence'),'"&A2&"','2019-12-20','2019-12-20','"&B2&"','"&C2&"','"&H2&"','"&F2&"','"&G2&"','"&D2&"','"&E2&"','"&I2&"'),"
+
+
+INSERT INTO programindicator(programindicatorid, uid, created, lastupdated, name, shortname, programid, expression, filter, aggregationtype, analyticstype,publicaccess) VALUES 
+="(nextval('hibernate_sequence'),'"&A2&"','2020-02-06','2020-02-06','"&B2&"','"&C2&"',"&H2&",'"&F2&"','"&G2&"','"&D2&"','"&E2&"','rw------'),"
+
+update programindicator set created = now()::timestamp where created ='2020-02-06';
+update keyjsonvalue set lastupdated = now()::timestamp where lastupdated ='2020-02-06';
+
+
+="update programindicator set  name  = '"&C2&"', shortname  = '"&D2&"', expression  = '"&H2&"', filter  = '"&I2&"', aggregationtype  = '"&E2&"', analyticstype  = '"&K2&"' where programindicatorid = "&B2&" and uid =  '"&A2&"';"
+
 
 insert into attributevalue (attributevalueid,created, lastupdated, value, attributeid ) values
 ="(nextval('hibernate_sequence'),'2019-01-14','2019-01-14','"&B2&"',38115164),"
@@ -380,6 +411,12 @@ insert into datasetusergroupaccesses ( datasetid, usergroupaccessid ) values
 
 insert into organisationunit (organisationunitid,name,shortname,parentid,openingdate,created,lastupdated,hierarchylevel) values
 ="(nextval('hibernate_sequence'),'"&C2&"','"&C2&"',"&B2&",'1990-01-01','2018-03-20','2018-03-20',3),"
+
+
+
+insert into organisationunit (organisationunitid,uid,name,shortname,parentid,openingdate,created,lastupdated,hierarchylevel) values
+="(nextval('hibernate_sequence'),'"&C2&"','"&A2&"','"&B2&"',"&E2&",'1990-01-01','2020-01-27','2020-01-27',"&D2&"),"
+	
 
 
 insert into organisationunit (organisationunitid,uid,code,name,shortname,parentid,openingdate,created,lastupdated,hierarchylevel,featuretype) values
@@ -439,6 +476,7 @@ insert into dataelementtranslations (dataelementid, objecttranslationid ) values
 ="update objecttranslation set value  = '"&H2&"'  where objecttranslationid = "&D2&" and locale = 'es' and property = '"&E2&"';"
 
 
+="update programinstance set organisationunitid = '"&B2&"' where trackedentityinstanceid = "&A2&";"
 
 
 update trackedentitydatavalue set created = now()::timestamp where created ='2019-01-14';
@@ -1200,9 +1238,12 @@ pg_dump -U postgres -d sa_data_sync_10_03_2016 > C:\Users\HISP\Desktop\latest_db
 pg_dump -U postgres -d hpa_08_03_2016 > C:\Users\HISP\Desktop\hpa_updated_09_03_2016.sql
 
 
-psql  -U postgres -d hiv_tracker_14_11_2019  < C:\Users\HISP\Desktop\sqlview_14_04_2016.sql
 
-pg_dump -U postgres -d hiv_tracker_24_10_2019 > "C:\Users\Mithilesh Thakur\Desktop\hiv_tracker_232_24_10_2019_with_out_analytics.sql"
+hiv_tracker_232_20_01_2020
+
+psql  -U postgres -d hiv_tracker_232_20_01_2020  < C:\Users\HISP\Desktop\sqlview_14_04_2016.sql
+
+pg_dump -U postgres -d hiv_tracker_232_20_01_2020 > "C:\Users\Mithilesh Thakur\Desktop\hiv_tracker_232_23_01_2020_with_out_analytics.sql"
 
 // postgres SQL query for import one table in database
 
@@ -1292,11 +1333,14 @@ psql -U postgres libia_2.29_30_04_2018 < C:\Users\HISP\Desktop\dhis_libya_Apr-30
 
 etbreg_24_05_2019
 
+
+etbreg_232_17_01_2019
+
 etbreg_01_08_2019
 
 pg_dump -U postgres -d etbreg_01_08_2019 > "C:\Users\Mithilesh Thakur\Desktop\etbreg_232.sql"
 
-psql -U postgres etbreg_01_08_2019 < "C:\Users\Mithilesh Thakur\Desktop\etbreg_22_May_2019.sql"
+psql -U postgres etbreg_232_17_01_2019 < "C:\Users\Mithilesh Thakur\Desktop\etbreg_22_May_2019.sql"
 
 
 
@@ -1757,11 +1801,11 @@ UP-HMIS
 myanmar_227_20_11_2019
 psql -U postgres myanmar_227_20_11_2019 <
 
-uphmis_meta_10_10_2019
+uphmis_meta_27_01_2020
 
 uphmis_meta_android_11_11_2019
 
-psql -U postgres uphmis_meta_10_10_2019 < C:\Users\HISP\Desktop\uphmis_225.sql
+psql -U postgres uphmis_meta_27_01_2020 < C:\Users\HISP\Desktop\uphmis_225.sql
 
 psql -U postgres uphmis_meta_android_11_11_2019 < C:\Users\HISP\Desktop\uphmis_225.sql
 
@@ -1872,9 +1916,9 @@ plan
 
 
 
-psql -U postgres plan_232_27_11_2019 <
+psql -U postgres plan_232_23_01_2020 <
 
-psql -U postgres plan_2.29_31_01_2019 < C:\Users\HISP\Desktop\dhis_dbms_Feb-01-18_1.sql
+psql -U postgres plan_232_23_01_2020 < C:\Users\HISP\Desktop\dhis_dbms_Feb-01-18_1.sql
 
 pg_dump -U postgres -d plan_232_27_11_2019 > "C:\Users\Mithilesh Thakur\Desktop\plan_232_28_11_2019.sql"
 
@@ -1920,9 +1964,9 @@ psql -U postgres bihar_2.27_17_06_2019 <
 
 psql -U postgres bihar_230_24_12_2019 < 
 
-mh_227_13_12_2019
+mh_227_24_01_2020
 
-psql -U postgres mh_227_13_12_2019 < 
+psql -U postgres mh_227_24_01_2020 < 
 
 psql -U postgres mh_2.27_29_05_2019 < C:\Users\HISP\Desktop\dhis_turkey_13-Nov-2015.sql
 
@@ -4120,7 +4164,7 @@ git branch SAVE-CHILD-v32 // / for create new branch for tracker capture SAVE-CH
 git checkout SAVE-CHILD-v32
 git push origin SAVE-CHILD-v32
 git pull origin SAVE-CHILD-v32
-git worktree add /e/gitHub_source_code/tracker_build/save_child_v32 SAVE-CHILD-v32
+git worktree add /e/gitHub_source_code/tracker_build/save_child_build_v32 SAVE-CHILD-v32
 
 #git merge origin/SAVE-CHILD-v32  origin/v32 -m "Merge SAVE-CHILD-v32 Tracker Capture build App with parent branch"
 git push origin SAVE-CHILD-v32
@@ -4142,7 +4186,7 @@ git branch PLAN-v32 // / for create new branch for tracker capture plan-v29 buil
 git checkout PLAN-v32
 git push origin PLAN-v32
 git pull origin PLAN-v32
-git worktree add /e/gitHub_source_code/tracker_build/plan-v32 PLAN-v32
+git worktree add /e/gitHub_source_code/tracker_build/plan-tracker-build-v32 PLAN-v32
 git merge origin/PLAN-v32  origin/v32 -m "Merge PLAN-v32 Tracker Capture App with parent branch"
 git push origin PLAN-v32
 
@@ -4581,7 +4625,7 @@ module.exports = {
 };
  
 
-To run the maintenance-app you’ll need to run dhis-core file first, and then the maintenance-app:
+To run the maintenance-app you?ll need to run dhis-core file first, and then the maintenance-app:
 
     git clone https://github.com/dhis2/maintenance-app.git
     cd maintenance-app
@@ -4597,7 +4641,7 @@ When everything is configured and running:
 
     Go to http://localhost:8080 and login with from the dhis-core first.
     Go to http://localhost:8081 which will redirect you to the separated maintenance-app itself.
-        If it doesn’t show up try to disable web security for the browser: https://stackoverflow.com/questions/24290149/creating-google-chrome-shortcut-with-disable-web-security
+        If it doesn?t show up try to disable web security for the browser: https://stackoverflow.com/questions/24290149/creating-google-chrome-shortcut-with-disable-web-security
         Check browser Inspector->Console for debugging.
 
 
@@ -5328,7 +5372,9 @@ psi.organisationunitid IN (select organisationunitid from organisationunit where
 and psi.executiondate between '${startdate}' and '${enddate}' 
 group by tei.uid,pi.enrollmentdate,tea.uid,ou.name,tei.created order by pi.enrollmentdate;
 
-// tanzania App
+// tanzania App and intractive dashboard
+
+https://github.com/hisptz/idashboard
 
 // create new app in App-Development Repo
 
@@ -5420,6 +5466,12 @@ SELECT programstageinstanceid, uid,
    programstageinstance;
 
 
+SELECT programstageinstanceid, uid,
+ eventdatavalues #>> '{gC5vAvkiDQC, value}'
+ 
+ FROM
+   programstageinstance;   
+
 create or replace function generate_uid()
   returns text as
 $$
@@ -5439,3 +5491,4 @@ language plpgsql;
 // apis
 
 http://127.0.0.1:8090/dhis/api/organisationUnits.json?fields=id,name,level&filter=level:eq:3&sortOrder=ASC&paging=false
+
