@@ -363,8 +363,15 @@ INSERT INTO programindicator(programindicatorid, uid, created, lastupdated, name
 INSERT INTO programindicator(programindicatorid, uid, created, lastupdated, name, shortname, programid, expression, filter, aggregationtype, analyticstype,publicaccess) VALUES 
 ="(nextval('hibernate_sequence'),'"&A2&"','2020-02-06','2020-02-06','"&B2&"','"&C2&"',"&H2&",'"&F2&"','"&G2&"','"&D2&"','"&E2&"','rw------'),"
 
+INSERT INTO periodboundary(periodboundaryid, uid, created, lastupdated, boundarytarget, analyticsperiodboundarytype, programindicatorid ) VALUES 
+="(nextval('hibernate_sequence'),'"&A2&"','2020-02-06','2020-02-06','"&C2&"','"&D2&"',"&A2&"),"
+
+	
+update periodboundary set created = now()::timestamp where created ='2020-02-06';
+update periodboundary set lastupdated = now()::timestamp where lastupdated ='2020-02-06';
+
 update programindicator set created = now()::timestamp where created ='2020-02-06';
-update keyjsonvalue set lastupdated = now()::timestamp where lastupdated ='2020-02-06';
+update programindicator set lastupdated = now()::timestamp where lastupdated ='2020-02-06';
 
 
 ="update programindicator set  name  = '"&C2&"', shortname  = '"&D2&"', expression  = '"&H2&"', filter  = '"&I2&"', aggregationtype  = '"&E2&"', analyticstype  = '"&K2&"' where programindicatorid = "&B2&" and uid =  '"&A2&"';"
@@ -1238,10 +1245,19 @@ pg_dump -U postgres -d sa_data_sync_10_03_2016 > C:\Users\HISP\Desktop\latest_db
 pg_dump -U postgres -d hpa_08_03_2016 > C:\Users\HISP\Desktop\hpa_updated_09_03_2016.sql
 
 
+fhi360_232_-7_02_2020
 
-hiv_tracker_232_20_01_2020
+psql  -U postgres -d fhi360_232_-7_02_2020  < 
+pg_dump -U postgres -d fhi360_232_-7_02_2020 > "C:\Users\Mithilesh Thakur\Desktop\fhi360_232_02_2020.sql"
 
-psql  -U postgres -d hiv_tracker_232_20_01_2020  < C:\Users\HISP\Desktop\sqlview_14_04_2016.sql
+
+nepal_hmis_230_11_02_2020
+
+psql  -U postgres -d nepal_hmis_230_11_02_2020 < C:\UsersMithilesh Thakur\Desktop\sqlview_14_04_2016.sql
+
+hiv_tracker_232_07_02_2020
+
+psql  -U postgres -d hiv_tracker_232_07_02_2020 < C:\Users\HISP\Desktop\sqlview_14_04_2016.sql
 
 pg_dump -U postgres -d hiv_tracker_232_20_01_2020 > "C:\Users\Mithilesh Thakur\Desktop\hiv_tracker_232_23_01_2020_with_out_analytics.sql"
 
@@ -4365,6 +4381,8 @@ yarn install
 yarn build
 npm run lint -- --fix // run for data-quality-app
 
+also remove /locales from the file .eslintignore only written src in file .eslintignore
+
 yarn build
 yarn start
 
@@ -5146,6 +5164,14 @@ http://localhost:8090/dhis/api/system/id.json?limit=10
 insert into keyjsonvalue (keyjsonvalueid,,uid, created, lastupdated, namespace, namespacekey ) values
 ="(nextval('hibernate_sequence'),'2019-02-26','2019-02-26','"&A2&"','"&B2&"'),"
 
+
+select value::text
+	from usersetting
+	where name like 'keyMessageSmsNotification%'	
+
+select value::text
+	from systemsetting
+	where name like 'keySmsSetting%' 	
 
 update keyjsonvalue set created = now()::timestamp where created ='2019-02-26';
 update keyjsonvalue set lastupdated = now()::timestamp where lastupdated ='2019-02-26';
