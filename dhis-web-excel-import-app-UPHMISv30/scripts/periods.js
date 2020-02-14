@@ -86,7 +86,10 @@
 	{
 		var sDate = new Date(sD);
 		sDate.setDate(1);
-		var eDate = new Date(eD);
+
+		var currentDate = new Date();
+		var eDate = new Date(currentDate);
+		//var eDate = new Date(eD);
 		eDate.setDate(1);
 		
 		var dateString = "";
@@ -98,7 +101,9 @@
 			dateString = ( dateString == "" ) ? dhisDate : ( dateString + ";" + dhisDate );
 			sDate.setMonth( sDate.getMonth() + 1 );	
 		}
-		
+
+		dateString = dateString.split(";").reverse().join(";");
+
 		return dateString;
 	}
 	
