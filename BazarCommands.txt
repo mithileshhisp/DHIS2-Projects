@@ -1,3 +1,27 @@
+Enviroment Variables as on 25/02/2020
+
+System Variable
+
+DHF_HOME -- c:\DHF_HOME
+DHIS2_HOME -- C:\DHIS2_HOME
+JAVA_HOME -- C:\Program Files\Java\jdk1.8.0_65
+JAVA_OPTS -- -Xms1024m -Xmx1536m -XX:MaxPermSize=512m
+M2_REPO -- C:\Users\Mithilesh Thakur\.m2
+MAVEN_HOME -- C:\apache-maven-3.5.3
+MAVEN_OPTS -- -Xms1024m -Xmx1536m -XX:MaxPermSize=512m
+
+in side -- Path
+
+add
+C:\apache-maven-3.5.3\bin
+
+
+
+
+
+
+
+
 app development workshop 29/10/2019 to 30/10/2019
 
 // 
@@ -50,7 +74,7 @@ select table_name from information_schema.tables where table_name like 'analytic
 // get all orgUnit with all children
 http://127.0.0.1:8090/dhis/api/organisationUnits/ANGhR1pa8I5.json?fields=id,displayName,code&includeDescendants=true&paging=false
 
-
+http://172.105.47.158/intpart232/api/events.json?orgUnit=fMTeIPKpZbI&program=Nb2EygU6dwp&order=lastUpdated:asc&skipPaging=true&ouMode=DESCENDANTS
 
 security training HISP-INDIA 22/08/2019
 
@@ -313,6 +337,11 @@ select * FROM public.program_attributes where mandatory is false;
 
 ="update programstageinstance set longitude  = "&D2&", latitude = "&E2&" where programstageinstanceid = "&A2&" and organisationunitid = "&C2&";"
 
+="update programinstance set programid  = "&E2&" where programinstanceid = "&A2&" and uid = '"&B2&"' and organisationunitid = "&D2&";"
+
+="update trackedentityprogramowner set programid  = "&D2&" where trackedentityprogramownerid = "&A2&" and trackedentityinstanceid = "&B2&"  and programid = "&C2&";"
+
+="update programstageinstance set programstageid  = "&F2&" where programstageinstanceid = "&A2&" and programinstanceid = "&C2&" and uid = '"&B2&"' and organisationunitid = "&E2&";"
 
 insert into datavalue (dataelementid,periodid,sourceid,categoryoptioncomboid,attributeoptioncomboid,value,storedby,created,lastupdated,followup,deleted) values
 ="("&D2&","&G2&","&B2&","&E2&","&F2&",'"&C2&"','"&H2&"','2018-03-23','2018-03-23',false,false),"
@@ -1245,9 +1274,9 @@ pg_dump -U postgres -d sa_data_sync_10_03_2016 > C:\Users\HISP\Desktop\latest_db
 pg_dump -U postgres -d hpa_08_03_2016 > C:\Users\HISP\Desktop\hpa_updated_09_03_2016.sql
 
 
-fhi360_232_-7_02_2020
+fhi360_232_20_02_2020
 
-psql  -U postgres -d fhi360_232_-7_02_2020  < 
+psql  -U postgres -d fhi360_232_20_02_2020  < 
 pg_dump -U postgres -d fhi360_232_-7_02_2020 > "C:\Users\Mithilesh Thakur\Desktop\fhi360_232_02_2020.sql"
 
 
@@ -1267,6 +1296,74 @@ psql  -U postgres -d hp_07_04_2016_2.20 -t sqlview < C:\Users\HISP\Desktop\sqlvi
 
 psql  -U postgres -d mp_13_11_2015_v20 -t sqlview < C:\Users\HISP\Desktop\sqlview.sql
 
+pg_dump -U dbuser -d dbname -t tablename > outputfilename.sql
+psql  -U postgres -d hp_07_04_2016_2.20 -t sqlview < 
+
+pg_dump -U postgres -d nipi_231_12_03_2020  > "C:\Users\Mithilesh Thakur\Desktop\nipi_complete_db_232.sql"
+
+pg_dump -U postgres  -d nipi_test_db -t trackedentityinstance > "C:\Users\Mithilesh Thakur\Desktop\trackedentityinstance.sql"
+psql  -U postgres -d nipi_231_12_03_2020 -t trackedentityinstance < 
+
+pg_dump -U postgres  -d nipi_test_db -t programinstance > "C:\Users\Mithilesh Thakur\Desktop\programinstance.sql"
+psql  -U postgres -d nipi_231_12_03_2020 -t programinstance < 
+
+pg_dump -U postgres  -d nipi_test_db -t programstageinstance > "C:\Users\Mithilesh Thakur\Desktop\programstageinstance.sql"
+psql  -U postgres -d nipi_231_12_03_2020 -t programstageinstance < 
+
+
+pg_dump -U postgres  -d mh_227_24_01_2020 -t dataelementtranslations > "C:\Users\Mithilesh Thakur\Desktop\dataelementtranslations.sql"
+psql  -U postgres -d nipi_231_12_03_2020 -t dataelementtranslations < 
+
+pg_dump -U postgres  -d mh_227_24_01_2020 -t attributetranslations > "C:\Users\Mithilesh Thakur\Desktop\attributetranslations.sql"
+psql  -U postgres -d nipi_231_12_03_2020 -t attributetranslations < 
+
+
+pg_dump -U postgres  -d mh_227_24_01_2020 -t categorycombotranslations > "C:\Users\Mithilesh Thakur\Desktop\categorycombotranslations.sql"
+psql  -U postgres -d nipi_231_12_03_2020 -t categorycombotranslations < 
+
+pg_dump -U postgres  -d mh_227_24_01_2020 -t categoryoptioncombotranslations > "C:\Users\Mithilesh Thakur\Desktop\categoryoptioncombotranslations.sql"
+psql  -U postgres -d nipi_231_12_03_2020 -t categoryoptioncombotranslations < 
+
+pg_dump -U postgres  -d mh_227_24_01_2020 -t categoryoptiongroupsettranslations > "C:\Users\Mithilesh Thakur\Desktop\categoryoptiongroupsettranslations.sql"
+psql  -U postgres -d nipi_231_12_03_2020 -t categoryoptiongroupsettranslations < 
+
+pg_dump -U postgres  -d mh_227_24_01_2020 -t categoryoptiongrouptranslations > "C:\Users\Mithilesh Thakur\Desktop\categoryoptiongrouptranslations.sql"
+psql  -U postgres -d nipi_231_12_03_2020 -t categoryoptiongrouptranslations < 
+
+
+pg_dump -U postgres  -d mh_227_24_01_2020 -t categoryoptiontranslations > "C:\Users\Mithilesh Thakur\Desktop\categoryoptiontranslations.sql"
+psql  -U postgres -d nipi_231_12_03_2020 -t categoryoptiontranslations < 
+
+
+pg_dump -U postgres  -d mh_227_24_01_2020 -t charttranslations > "C:\Users\Mithilesh Thakur\Desktop\charttranslations.sql"
+psql  -U postgres -d nipi_231_12_03_2020 -t charttranslations < 
+
+pg_dump -U postgres  -d mh_227_24_01_2020 -t colortranslations > "C:\Users\Mithilesh Thakur\Desktop\colortranslations.sql"
+psql  -U postgres -d nipi_231_12_03_2020 -t colortranslations < 
+
+
+pg_dump -U postgres  -d mh_227_24_01_2020 -t dashboardtranslations > "C:\Users\Mithilesh Thakur\Desktop\dashboardtranslations.sql"
+psql  -U postgres -d nipi_231_12_03_2020 -t dashboardtranslations < 
+
+
+pg_dump -U postgres  -d mh_227_24_01_2020 -t dataapprovalleveltranslations > "C:\Users\Mithilesh Thakur\Desktop\dataapprovalleveltranslations.sql"
+psql  -U postgres -d nipi_231_12_03_2020 -t dataapprovalleveltranslations < 
+
+pg_dump -U postgres  -d mh_227_24_01_2020 -t dataapprovalworkflowtranslations > "C:\Users\Mithilesh Thakur\Desktop\dataapprovalworkflowtranslations.sql"
+psql  -U postgres -d nipi_231_12_03_2020 -t dataapprovalworkflowtranslations < 
+
+pg_dump -U postgres  -d mh_227_24_01_2020 -t dataelementcategorytranslations > "C:\Users\Mithilesh Thakur\Desktop\dataelementcategorytranslations.sql"
+psql  -U postgres -d nipi_231_12_03_2020 -t dataelementcategorytranslations < 
+
+
+pg_dump -U postgres  -d mh_227_24_01_2020 -t dataelementgroupsettranslations > "C:\Users\Mithilesh Thakur\Desktop\dataelementgroupsettranslations.sql"
+psql  -U postgres -d nipi_231_12_03_2020 -t dataelementgroupsettranslations < 
+
+
+pg_dump -U postgres  -d mh_227_24_01_2020 -t dataelementgrouptranslations > "C:\Users\Mithilesh Thakur\Desktop\dataelementgrouptranslations.sql"
+psql  -U postgres -d nipi_231_12_03_2020 -t dataelementgrouptranslations < 
+
+dataelementgrouptranslations
 
 IMIS
 
@@ -1296,7 +1393,7 @@ psql -U postgres punjab_hmis_22_07_2019 <
 INTPART 
 
 
-psql -U postgres intpart_232_10_12_2019 <
+psql -U postgres intpart_232_19_02_2020 <
 
 pg_dump -U postgres -d intpart_232_balari_13_09_2019 > "C:\Users\Mithilesh Thakur\Desktop\intpart_balari_232.sql"
 
@@ -1347,6 +1444,10 @@ psql -U postgres libia_28_05_2018 < "C:\Users\Mithilesh Thakur\Desktop\dhis_liby
 psql -U postgres libia_2.29_30_04_2018 < C:\Users\HISP\Desktop\dhis_libya_Apr-30-18.sql
 
 
+cvstatus_230_09_03_2020
+
+psql -U postgres cvstatus_230_09_03_2020 < 
+
 etbreg_24_05_2019
 
 
@@ -1363,11 +1464,12 @@ psql -U postgres etbreg_232_17_01_2019 < "C:\Users\Mithilesh Thakur\Desktop\etbr
 
 
 indonesia_leprosy_25_10_2019
+who_leprosy_229_24_02_2020
 
 pg_dump -U postgres -d indonesia_leprosy_25_10_2019 > "C:\Users\Mithilesh Thakur\Desktop\indonesia_leprosy_232_29_10_2019.sql"
 
 
-psql -U postgres indonesia_leprosy_25_10_2019 < "C:\Users\Mithilesh Thakur\Desktop\indonesia_leprosy_10_08_2019.sql"
+psql -U postgres who_leprosy_229_24_02_2020 < "C:\Users\Mithilesh Thakur\Desktop\indonesia_leprosy_10_08_2019.sql"
 
 leprosy
 
@@ -1689,6 +1791,10 @@ pg_dump -U postgres -d msf_19_10_2016 > C:\Users\HISP\Desktop\msf_updated.sql
 pg_dump -U postgres -d msf_13_10_2016 > C:\Users\HISP\Desktop\msf_updated.sql
 
 
+nipi_231_12_03_2020
+psql -U postgres nipi_231_12_03_2020 < 
+
+
 // LIBYA
 
 psql -U postgres libya_19_03_2018 < C:\Users\HISP\Desktop\libya_DB.sql
@@ -1725,7 +1831,9 @@ ippf_pro_2.27_06_03_2019
 ippf_pro_08_05_2019
 ippf_afga_26_06_2019
 
-psql -U postgres ippf_afga_26_06_2019 < C:\Users\HISP\Desktop\fpan_pro_Apr-23-18_1.sql
+ippf_227_fpan_03_03_2020
+
+psql -U postgres ippf_227_fpan_03_03_2020 < C:\Users\HISP\Desktop\fpan_pro_Apr-23-18_1.sql
 
 psql -U postgres ippf_pro_08_05_2019 < C:\Users\HISP\Desktop\fpan_pro_Apr-23-18_1.sql
 
@@ -1807,7 +1915,9 @@ psql -U postgres idsp_14_03_2018 < C:\Users\HISP\Desktop\idsp_demo_Mar-14-18_1.s
 
 Training
 
-psql -U postgres myanmar_26_09_2019  < C:\Users\HISP\Desktop\uphmis_225.sql
+myanmar_227_28_02_2020
+
+psql -U postgres myanmar_227_28_02_2020  < C:\Users\HISP\Desktop\uphmis_225.sql
 pg_dump -U postgres -d myanmar_23_09_2019 > C:\Users\HISP\Desktop\myanmar232_23_09_2019.sql
 
 UP-HMIS
@@ -2880,6 +2990,25 @@ INNER JOIN datasetelement dse ON dse.dataelementid = de.dataelementid
 WHERE dse.datasetid = 940
 group by de.dataelementid,de.uid,cc.uid,de.name,cc.name,coc.categoryoptioncomboid ,coc.uid,cocname.categoryoptioncomboname
 order by de.name,cc.name,cocname.categoryoptioncomboname
+
+
+// catrgory-combo-and category-and option dataset-element-wise
+
+SELECT ds.datasetid as dataSetId, ds.uid as datasetUID, ds.name ad datasetName,de.dataelementid as dataElementID,
+de.uid as dataElementUID,de.name as dataElementName,cc.uid as categoryUID,
+cc.name as categoryName,coc.categoryoptioncomboid as categoryoptioncomboid,coc.uid as categoryOptionComboUID,
+cocname.categoryoptioncomboname as categoryOptionComboName from datasetelement dse
+INNER JOIN dataelement de ON de.dataelementid = dse.dataelementid
+inner join categorycombo as cc on cc.categorycomboid = dse.categorycomboid
+inner join categorycombos_optioncombos as cc_coc on cc_coc.categorycomboid = dse.categorycomboid
+inner join categoryoptioncombo as coc on coc.categoryoptioncomboid = cc_coc.categoryoptioncomboid
+inner join _categoryoptioncomboname as cocname on coc.categoryoptioncomboid = cocname.categoryoptioncomboid
+INNER JOIN dataset ds on ds.datasetid = dse.datasetid
+group by ds.datasetid,ds.uid,ds.name,de.dataelementid,de.uid,cc.uid,de.name,cc.name,coc.categoryoptioncomboid ,coc.uid,cocname.categoryoptioncomboname
+order by ds.name,de.name,cc.name,cocname.categoryoptioncomboname;
+
+
+
 
 
 // catrgory-combo-and category-and option
@@ -4160,7 +4289,7 @@ git branch INTPART-v32 // / for create new branch for tracker capture INTPART-v3
 git checkout INTPART-v32
 git push origin INTPART-v32
 git pull origin INTPART-v32
-git worktree add /e/gitHub_source_code/tracker_build/intpart_v32 INTPART-v32
+git worktree add /e/gitHub_source_code/tracker_build/intpart_build_v32 INTPART-v32
 
 #git merge origin/INTPART-v32  origin/v32 -m "Merge INTPART-v32 Tracker Capture build App with parent branch"
 git push origin INTPART-v32
@@ -4723,8 +4852,76 @@ yarn install
 
 
 
+rwanda-growth-tracking-analytics-v32
+
+yarn install
+yarn start
+then 
+yarn build on cygwin
 
 
+
+
+
+https://play.dhis2.org/appstore/app/M3T1BGCjD3y
+https://play.dhis2.org/appstore/app/M3T1BGCjD3y
+
+https://github.com/hisptz/idashboard
+// tanzania App and intractive dashboard deploy
+run on administator
+build process
+
+npm install
+ // not used npm install -g angular-cli@9.0.0
+
+npm run build
+
+npm start
+
+// tanzania App and intractive dashboard v2
+run on administator
+build process
+
+npm install
+npm install -g angular-cli
+npm install --global --production windows-build-tools
+npm run build
+
+npm start
+
+
+// create new app in App-Development Repo
+
+git branch tanzania-water-distribution-point-app-v29-angular-7
+git checkout tanzania-water-distribution-point-app-v29-angular-7
+
+https://github.com/hisptz?utf8=%E2%9C%93&q=distr&type=&language=
+https://github.com/hisptz/distribution-point-v2/tree/master
+exit
+  -- this app master branch is running 
+
+
+
+npm install
+npm install --save sweetalert
+npm run build
+
+
+"build": "ng build --prod --aot --output-hashing all --named-chunks false --build-optimizer --vendor-chunk  && cd dist && zip -r -D distribution-point.zip .",
+
+
+// for TV
+https://github.com/HISP-Uganda/dhis2-smart-display/tree/smart-displayV2
+
+building process
+
+npm install
+npm run build
+
+
+Using following commands to uninstall : 
+npm uninstall -g @angular/cli
+npm cache clean --force
 
 
 
@@ -4744,6 +4941,9 @@ New Password for All Except Git-Hub and launchpad.net password -
 https://jira.dhis2.org
 
 usename - mithilesh
+
+
+
 
 
 // SQL view/QUERY for Custom ID Generation and issue realted to duplicate ID
@@ -5061,10 +5261,6 @@ INNER JOIN dataelement de ON de.dataelementid = psde.dataelementid where  de.dat
 176700,
 203837,
 174673);
-
-
-api/optionSets.json?fields=id,name,code,options[id,name,code]&filter=code:eq:"+code+"&rootJunction=OR&paging=false
-https://amrtest.icmr.org.in/amr/api/optionSets.json?fields=id,name,code,options[id,name,code]&filter=code:eq:Uttar%20Pradesh&rootJunction=OR&paging=false
 
 // section wise dataelements list
 
@@ -5398,35 +5594,9 @@ psi.organisationunitid IN (select organisationunitid from organisationunit where
 and psi.executiondate between '${startdate}' and '${enddate}' 
 group by tei.uid,pi.enrollmentdate,tea.uid,ou.name,tei.created order by pi.enrollmentdate;
 
-// tanzania App and intractive dashboard
-
-https://github.com/hisptz/idashboard
-
-// create new app in App-Development Repo
-
-git branch tanzania-water-distribution-point-app-v29-angular-7
-git checkout tanzania-water-distribution-point-app-v29-angular-7
-
-https://github.com/hisptz?utf8=%E2%9C%93&q=distr&type=&language=
-https://github.com/hisptz/distribution-point-v2/tree/master
-exit
-  -- this app master branch is running 
-
-npm install
-npm install --save sweetalert
-npm run build
 
 
-"build": "ng build --prod --aot --output-hashing all --named-chunks false --build-optimizer --vendor-chunk  && cd dist && zip -r -D distribution-point.zip .",
 
-
-// for TV
-https://github.com/HISP-Uganda/dhis2-smart-display/tree/smart-displayV2
-
-building process
-
-npm install
-npm run build
 
 
 select sum(vil_max_pop.max::integer) from organisationunit village
@@ -5516,5 +5686,12 @@ language plpgsql;
 
 // apis
 
+api/optionSets.json?fields=id,name,code,options[id,name,code]&filter=code:eq:"+code+"&rootJunction=OR&paging=false
+https://amrtest.icmr.org.in/amr/api/optionSets.json?fields=id,name,code,options[id,name,code]&filter=code:eq:Uttar%20Pradesh&rootJunction=OR&paging=false
+
+
 http://127.0.0.1:8090/dhis/api/organisationUnits.json?fields=id,name,level&filter=level:eq:3&sortOrder=ASC&paging=false
 
+https://wpdm.maji.go.tz/wpdm/api/events.json?orgUnit=WTPNT000002&startDate=2020-03-01&endDate=2020-03-31&fields=event,eventDate,dataValues&paging=false
+
+http://127.0.0.1:8090/ippf/api/programs/dWPcV6EiVB1.json?fields=id,displayName,programTrackedEntityAttributes[displayInList,valueType,trackedEntityAttribute[id,displayName]]
