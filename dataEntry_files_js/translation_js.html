@@ -1,0 +1,38 @@
+<script type="text/javascript">
+  dhis2.util.on( 'dhis2.de.event.formReady', function( event, ds ) {
+    $( ".entryfield" ).width('75px');
+    
+    //Use english as default, in case there is a problem fetching locale or 
+    //there are no support for the users 
+    translate('en');
+	
+	$.ajax({
+		  type: "GET",
+		  url: '../api/me/profile.json',
+		  success: function(data){
+			 
+			 var locale = data.settings.keyUiLocale;
+			 console.log("Locale: " + locale);
+			 if (locale != 'en') translate(locale);
+		  },
+		error: function(){
+			
+		}
+	});	
+		
+  } );
+  
+  function translate(locale) {
+	for (var i = 0; i < translations.length; i++) {
+		var field = translations[i];
+		
+		if (!field.hasOwnProperty(locale)) return;
+		
+		$('[data-translate="' + field.id + '"]').html(field[locale]);
+	}
+  }
+</script>
+<span data-translate="test">THIS WILL BE TRANSLATED</span>
+<script>
+var translations = [{ "id": "test", "en": "Test", "fr": "Test" }];
+</script>
