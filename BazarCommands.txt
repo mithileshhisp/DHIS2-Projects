@@ -322,6 +322,8 @@ select * FROM public.program_attributes where mandatory is false;
 
 ="update dataelement set code = '"&C1&"' where uid = '"&B1&"';"
 
+="update dataelement set domaintype = '"&C2&"' where uid = '"&A2&"';"
+
 ="update dataelement set name  = '"&C2&"' where dataelementid = "&A2&" and uid = '"&B2&"';"
 
 ="update dataelement set name  = '"&D2&"', shortname  = '"&E2&"', formname  = '"&F2&"', code  = '"&C2&"' where dataelementid = "&A2&" and uid = '"&B2&"';"
@@ -1274,10 +1276,14 @@ pg_dump -U postgres -d sa_data_sync_10_03_2016 > C:\Users\HISP\Desktop\latest_db
 pg_dump -U postgres -d hpa_08_03_2016 > C:\Users\HISP\Desktop\hpa_updated_09_03_2016.sql
 
 
-fhi360_232_20_02_2020
+fhi360_232_24_03_2020
 
-psql  -U postgres -d fhi360_232_20_02_2020  < 
+fhi360_232_16_03_2020
+
+psql  -U postgres -d fhi360_232_24_03_2020  < 
 pg_dump -U postgres -d fhi360_232_-7_02_2020 > "C:\Users\Mithilesh Thakur\Desktop\fhi360_232_02_2020.sql"
+
+pg_dump -U postgres -d fhi360_232_02_03_2020  > "C:\Users\Mithilesh Thakur\Desktop\fhi360_232_16_03_2020.sql"
 
 
 nepal_hmis_230_11_02_2020
@@ -1299,7 +1305,12 @@ psql  -U postgres -d mp_13_11_2015_v20 -t sqlview < C:\Users\HISP\Desktop\sqlvie
 pg_dump -U dbuser -d dbname -t tablename > outputfilename.sql
 psql  -U postgres -d hp_07_04_2016_2.20 -t sqlview < 
 
-pg_dump -U postgres -d nipi_231_12_03_2020  > "C:\Users\Mithilesh Thakur\Desktop\nipi_complete_db_232.sql"
+
+nipi_232_19_03_2020
+
+psql  -U postgres -d nipi_232_19_03_2020 < 
+
+pg_dump -U postgres -d nipi_232_19_03_2020  > "C:\Users\Mithilesh Thakur\Desktop\nipi_complete_db_232_19_03_2020.sql"
 
 pg_dump -U postgres  -d nipi_test_db -t trackedentityinstance > "C:\Users\Mithilesh Thakur\Desktop\trackedentityinstance.sql"
 psql  -U postgres -d nipi_231_12_03_2020 -t trackedentityinstance < 
@@ -3339,7 +3350,19 @@ where ou2.uid in ('LpfSRXWPPRz' )
 group by ou1.uid,ou1.code,ou2.uid,ou2.code,ou3.uid,ou3.code,ou4.uid,ou4.code,ou5.uid,ou5.code,ou6.uid,ou6.code;
 
 
+up to level-3
 
+select
+ou1.uid as uid1,max(ou1.name) as Level1,ou1.code as code1,
+ou2.uid as uid2,max(ou2.name) as Level2 , ou2.code as code2,
+ou3.uid as uid3,max(ou3.name) as Level3 , ou3.code as code3
+
+from _orgunitstructure ous
+inner join organisationunit ou1 on ou1.organisationunitid = ous.idlevel1
+inner join organisationunit ou2 on ou2.organisationunitid = ous.idlevel2
+inner join organisationunit ou3 on ou3.organisationunitid = ous.idlevel3
+
+group by ou1.uid,ou1.code,ou2.uid,ou2.code,ou3.uid,ou3.code;
 
 
 
@@ -4924,6 +4947,22 @@ npm uninstall -g @angular/cli
 npm cache clean --force
 
 
+// openimis-dhis2 integration
+
+https://github.com/hispindia/openimis-dhis2integration
+
+● Check out source https://github.com/hispindia/openimis-dhis2integration
+● Npm install
+● Create config.json from example config
+● Run “node server.js --model insuree”
+
+https://github.com/hispindia/openimis-fhir-definitions
+https://github.com/hispindia/openimis-be-api_fhir_py
+https://github.com/openimis/openimis-be_py/tree/develop
+
+//openIMIS database
+https://github.com/openimis/database_ms_sqlserver/tree/master/Demo%20database 
+
 
 // Run analytics 1 hourly command
 
@@ -5636,10 +5675,57 @@ inner join dataset ds on ds.datasetid=d.datasetid
 where (ou.path like '/SpddBmmfvPr/v8EzhiynNtf%' ) group by ou_uid 
 
 
+// mh circle list
+SELECT 'All Circles' AS Circle FROM _orgunitstructure os
+UNION
+SELECT ou1.name AS Circle
+FROM _orgunitstructure os
+INNER JOIN organisationunit ou1 ON ou1.organisationunitid = os.idlevel3
+WHERE (ou1.name LIKE 'All Circles' OR 'All Circles' LIKE 'All Circles')
+GROUP BY ou1.name
+order by Circle
+
+// mh district
+
+SELECT 'All Districts' AS District FROM _orgunitstructure os
+
+UNION
+
+SELECT ou1.name AS District
+FROM _orgunitstructure os 
+INNER JOIN organisationunit ou1 ON ou1.organisationunitid = os.idlevel4
+INNER JOIN organisationunit ou2 ON ou2.organisationunitid = os.idlevel3
+WHERE (ou1.name LIKE 'All Districts' OR  'All Districts' LIKE 'All Districts')
+AND ou2.name LIKE ?
+GROUP BY ou1.name
+order by District
+
+// program-rue-action query
+
+
+
+
+SELECT pg.name pgName,pg.uid pgUID,pra.programstageid, ps.name psName,ps.uid psUID,
+pss.name sectionName,pss.uid sectionUid, pr.name prGRuleName ,pra.programruleid, 
+pra.dataelementid,pra.actiontype,pra.programstagesectionid, 
+pra.programstageid, de.name deName,de.uid deUID, pr.rulecondition from programruleaction pra
+LEFT JOIN programstage ps ON ps.programstageid = pra.programstageid
+LEFT JOIN program pg ON pg.programid = ps.programid
+LEFT JOIN programstagesection pss ON pss.programstagesectionid = pra.programstagesectionid
+LEFT JOIN programrule pr ON pr.programruleid = pra.programruleid
+LEFT JOIN dataelement de on de.dataelementid = pra.dataelementid
+
 
 // json query
 
 select * from json_each_text('{"a":"foo", "b":"bar"}')
+
+SELECT programstageinstanceid,uid,
+   eventdatavalues -> 'zTwMKXGt0xF' ->> 'value' as value
+FROM
+   programstageinstance where uid in ( 'AiSdX1jtq0x','ykEs09tttt7','vpcxSuFm4CS','d8f0Fjbjk2j',
+'QuV5wz4fzbK','YfwXSS3Q6F1','YHPOHL4Z7Q7')
+
 
 SELECT programstageinstanceid,
    eventdatavalues -> 'FU4eoBAjxVJ' ->> 'value' as value,
@@ -5678,7 +5764,7 @@ begin
   for i in 1..10 loop
     result := result || chars [1 + random() * (array_length(chars, 1) - 1)];
   end loop;
-  return result;
+  return result;	
 end;
 $$
 language plpgsql;
