@@ -1,3 +1,6 @@
+
+new Date(0) is January 1, 1970 in UTC. Your timezone is not UTC.
+
 Enviroment Variables as on 25/02/2020
 
 System Variable
@@ -394,6 +397,9 @@ INSERT INTO programindicator(programindicatorid, uid, created, lastupdated, name
 INSERT INTO programindicator(programindicatorid, uid, created, lastupdated, name, shortname, programid, expression, filter, aggregationtype, analyticstype,publicaccess) VALUES 
 ="(nextval('hibernate_sequence'),'"&A2&"','2020-02-06','2020-02-06','"&B2&"','"&C2&"',"&H2&",'"&F2&"','"&G2&"','"&D2&"','"&E2&"','rw------'),"
 
+INSERT INTO programindicator(programindicatorid, uid, created, lastupdated, name, shortname, programid, expression, filter, aggregationtype, analyticstype,publicaccess) VALUES 
+="(nextval('hibernate_sequence'),'"&A2&"','2020-04-09','2020-04-09','"&B2&"','"&C2&"',"&D2&",'"&E2&"','"&F2&"','"&G2&"','"&H2&"','rw------'),"
+
 INSERT INTO periodboundary(periodboundaryid, uid, created, lastupdated, boundarytarget, analyticsperiodboundarytype, programindicatorid ) VALUES 
 ="(nextval('hibernate_sequence'),'"&A2&"','2020-02-06','2020-02-06','"&C2&"','"&D2&"',"&A2&"),"
 
@@ -467,6 +473,11 @@ insert into organisationunit (organisationunitid,uid,code,name,shortname,parenti
 
 ="update organisationunit set featuretype  = '"&G2&"', coordinates  = '"&H2&"' where organisationunitid = "&C2&";"
 
+
+="update programinstance set enrollmentdate  = '"&B2&"' where trackedentityattributeid in( select trackedentityinstanceid from trackedentityattributevalue where value = '"&C2&"' );"
+
+="update programinstance set enrollmentdate  = '"&B2&"' where programid in ( select programid from program where uid = 'EZkN8vYZwjR ') and trackedentityattributeid in( select trackedentityinstanceid from trackedentityattributevalue where value = '"&C2&"' );"
+
 update organisationunit set created = now()::timestamp where created ='2018-12-14';
 update organisationunit set lastupdated = now()::timestamp where lastupdated ='2018-12-14';
 
@@ -535,11 +546,18 @@ update optionvalue set lastupdated = now()::timestamp where lastupdated ='2019-0
 insert into period ( periodid, periodtypeid, startdate, enddate ) values
 ="(nextval('hibernate_sequence'),"&C2&",'"&A2&"','"&B2&"'),"
 
+insert into datavalue (dataelementid,periodid,sourceid,categoryoptioncomboid,attributeoptioncomboid,value,storedby,created,lastupdated,followup,deleted) values
 
+="("&C2&","&E2&","&H2&","&K2&","&O2&",'"&L2&"','"&N2&"','"&M2&"','"&M2&"',false,false),"
 
 insert into datavalue (dataelementid,periodid,sourceid,categoryoptioncomboid,attributeoptioncomboid,value,storedby,created,lastupdated,followup,deleted) values
 
 ="("&B3&","&C3&","&A3&","&D3&","&E3&",'"&F3&"','hispdev','2019-06-28','2019-06-28',false,false),"
+
+
+insert into datavalue (dataelementid,periodid,sourceid,categoryoptioncomboid,attributeoptioncomboid,value,storedby,created,lastupdated,followup,deleted) values
+
+="("&A2&","&B2&","&C2&","&D2&","&E2&",'"&F2&"','"&G2&"','"&I2&"','"&K2&"',false,false),"
 
 update datavalue  set created = now()::timestamp where created ='2019-06-28';
 update datavalue set lastupdated = now()::timestamp where lastupdated ='2019-06-28';
@@ -1306,11 +1324,11 @@ pg_dump -U dbuser -d dbname -t tablename > outputfilename.sql
 psql  -U postgres -d hp_07_04_2016_2.20 -t sqlview < 
 
 
-nipi_232_19_03_2020
+nipi_232_27_03_2020
 
-psql  -U postgres -d nipi_232_19_03_2020 < 
+psql  -U postgres -d nipi_232_27_03_2020 < 
 
-pg_dump -U postgres -d nipi_232_19_03_2020  > "C:\Users\Mithilesh Thakur\Desktop\nipi_complete_db_232_19_03_2020.sql"
+pg_dump -U postgres -d nipi_232_27_03_2020  > "C:\Users\Mithilesh Thakur\Desktop\nipi_db_232_27_03_2020.sql"
 
 pg_dump -U postgres  -d nipi_test_db -t trackedentityinstance > "C:\Users\Mithilesh Thakur\Desktop\trackedentityinstance.sql"
 psql  -U postgres -d nipi_231_12_03_2020 -t trackedentityinstance < 
@@ -1473,9 +1491,14 @@ psql -U postgres etbreg_232_17_01_2019 < "C:\Users\Mithilesh Thakur\Desktop\etbr
 
 
 
-
+who_leprosy_25_03_2020
 indonesia_leprosy_25_10_2019
 who_leprosy_229_24_02_2020
+
+psql -U postgres who_leprosy_25_03_2020 < 
+
+pg_dump -U postgres -d who_leprosy_25_03_2020 > "C:\Users\Mithilesh Thakur\Desktop\who_leprosy_233_31_03_2020.sql"
+
 
 pg_dump -U postgres -d indonesia_leprosy_25_10_2019 > "C:\Users\Mithilesh Thakur\Desktop\indonesia_leprosy_232_29_10_2019.sql"
 
@@ -1498,6 +1521,16 @@ pg_dump -U postgres -d who_leprosy_03_04_2109 > "C:\Users\Mithilesh Thakur\Deskt
 
 C:\Users\Mithilesh Thakur\Downloads>pg_restore -U postgres -d who_leprosy_03_04_2109 DHIS_LEP_03Apr2019.backup
 
+
+
+// HP
+
+hp_upgraded_229_03_04_2020
+
+psql -U postgres hp_upgraded_229_03_04_2020 < 
+
+
+// who-lep
 psql -U postgres who_leprosy_27_03_2109 < 
 
 who_leprosy_08_08_2107
@@ -1926,6 +1959,9 @@ psql -U postgres idsp_14_03_2018 < C:\Users\HISP\Desktop\idsp_demo_Mar-14-18_1.s
 
 Training
 
+pmtct_233_09_04_2020
+psql -U postgres pmtct_233_09_04_2020 < 
+
 myanmar_227_28_02_2020
 
 psql -U postgres myanmar_227_28_02_2020  < C:\Users\HISP\Desktop\uphmis_225.sql
@@ -2053,9 +2089,9 @@ plan
 
 
 
-psql -U postgres plan_232_23_01_2020 <
+psql -U postgres plan_232_02_04_2020 <
 
-psql -U postgres plan_232_23_01_2020 < C:\Users\HISP\Desktop\dhis_dbms_Feb-01-18_1.sql
+psql -U postgres plan_232_27_03_2020 < C:\Users\HISP\Desktop\dhis_dbms_Feb-01-18_1.sql
 
 pg_dump -U postgres -d plan_232_27_11_2019 > "C:\Users\Mithilesh Thakur\Desktop\plan_232_28_11_2019.sql"
 
@@ -3045,9 +3081,66 @@ order by de.name,cc.name,cocname.categoryoptioncomboname
 
 
 
+select ds.name dataSetName ,de.dataelementid as deid,de.uid as deUID,de.name as deName,cc.uid as categoryUID,
+cc.name as categoryName,coc.categoryoptioncomboid as categoryoptioncomboid,coc.uid as categoryoptionUID,cocname.categoryoptioncomboname as categoryOptionName
+from dataelement  as de  
+inner join categorycombo as cc on cc.categorycomboid = de.categorycomboid 
+inner join categorycombos_optioncombos as cc_coc on cc_coc.categorycomboid = de.categorycomboid
+inner join categoryoptioncombo as coc on coc.categoryoptioncomboid = cc_coc.categoryoptioncomboid
+inner join _categoryoptioncomboname as cocname on coc.categoryoptioncomboid = cocname.categoryoptioncomboid
+inner join datasetelement dsm on dsm.dataelementid = de.dataelementid
+inner join dataset ds on ds.datasetid = dsm.datasetid 
+order by de.name,cc.name,cocname.categoryoptioncomboname;
+
+// hp-2.29 SQL-view Query
+
+select organisationunitid,name,parentid,uid from organisationunit;
+
+//  - ou parent
+select ou.uid as ouuid,ou.name,parent.uid as parentuid,parent.name as parentname, concat(ou.uid,'-',parent.uid)
+from organisationunit ou
+left join organisationunit parent on parent.organisationunitid = ou.parentid
+group by ou.organisationunitid,parent.uid,parent.name
+
+// dataelements list with data-sets with categoryUID,categoryID ,categoryName categoryoptioncomboid categoryoptioncomboname 
+categoryoptioncomboUID
+
+select string_agg(ds.name,chr(10)),de.dataelementid as deid,de.uid as deUID,de.name as deName,cc.uid as categoryUID,
+cc.name as categoryName,coc.categoryoptioncomboid as categoryoptioncomboid,coc.uid as categoryoptionUID,cocname.categoryoptioncomboname as categoryOptionName
+from dataelement  as de  
+inner join categorycombo as cc on cc.categorycomboid = de.categorycomboid 
+inner join categorycombos_optioncombos as cc_coc on cc_coc.categorycomboid = de.categorycomboid
+inner join categoryoptioncombo as coc on coc.categoryoptioncomboid = cc_coc.categoryoptioncomboid
+inner join _categoryoptioncomboname as cocname on coc.categoryoptioncomboid = cocname.categoryoptioncomboid
+inner join datasetelement dsm on dsm.dataelementid = de.dataelementid
+inner join dataset ds on ds.datasetid = dsm.datasetid
+group by de.dataelementid,de.uid,cc.uid,de.name,cc.name,coc.categoryoptioncomboid ,coc.uid,cocname.categoryoptioncomboname
+order by de.name,cc.name,cocname.categoryoptioncomboname;
+
+// dataelements list with data-sets with categoryUID,categoryID ,categoryName categoryoptioncomboid categoryoptioncomboname 
+categoryoptioncomboUID for 2.7
+
+SELECT ds.name,de.dataelementid AS deid,de.uid AS deUID,de.name AS deName,cc.uid AS categoryUID,
+cc.name AS categoryName,coc.categoryoptioncomboid AS categoryoptioncomboid,coc.uid AS categoryoptionUID,cocname.categoryoptioncomboname AS categoryOptionName
+FROM dataelement  AS de  
+INNER JOIN categorycombo AS cc ON cc.categorycomboid = de.categorycomboid 
+INNER JOIN categorycombos_optioncombos AS cc_coc ON cc_coc.categorycomboid = de.categorycomboid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = cc_coc.categoryoptioncomboid
+INNER JOIN _categoryoptioncomboname AS cocname ON coc.categoryoptioncomboid = cocname.categoryoptioncomboid
+INNER JOIN datasetmembers dsm ON dsm.dataelementid = de.dataelementid
+INNER JOIN dataset ds ON ds.datasetid = dsm.datasetid
+GROUP BY de.dataelementid,de.uid,cc.uid,de.name,cc.name,coc.categoryoptioncomboid ,coc.uid,cocname.categoryoptioncomboname
+ORDER BY de.name,cc.name,cocname.categoryoptioncomboname;
 
 
+// for datavalue of HP 2.7 my-sql
 
+SELECT de.uid AS dataElementUID,dv.dataelementid, dv.periodid, dv.sourceid, org.uid AS organisationunitUID, 
+dv.categoryoptioncomboid, coc.uid AS ategoryoptioncomboUID, dv.value, dv.lastupdated FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+WHERE dv.periodid = 385;
 
 
 
@@ -3495,7 +3588,9 @@ INNER JOIN program pg ON pg.programid = ps.programid
 INNER JOIN dataelement de ON de.dataelementid = psde.dataelementid;
 
 
-select pg.name PGName,pg.programid,psde.programstageid, ps.name PSName,de.name deName,de.uid from programstagedataelement psde
+select pg.name programNameName, pg.uid programUID, pg.programid programID ,psde.programstageid programStageID,
+ps.uid programStageUID, ps.name programStageName, de.name dataElementName, de.uid dataElementUID, de.dataelementid
+dataelementID, de.domaintype deDomainType from programstagedataelement psde
 INNER JOIN programstage ps ON ps.programstageid = psde.programstageid
 INNER JOIN program pg ON pg.programid = ps.programid
 INNER JOIN dataelement de ON de.dataelementid = psde.dataelementid;
@@ -3527,6 +3622,8 @@ ou4.uid,ou4.organisationunitid;
 api/users.xml?fields=*,userCredentials[name,lastLogin]&filter=userCredentials.lastLogin:le:2017-06-02&paging=false
 
 
+// for version upgradation
+https://github.com/dhis2/dhis2-releases 
 
 
 Git Command
@@ -4561,6 +4658,27 @@ yarn start
 
 
 
+// amr tanda react app build
+
+yarn install
+
+chnage env to cross-env for build in window in each lib/module package.json in side 
+
+"build": "cross-env NODE_ENV=production cross-env BABEL_ENV=production babel src -d dist",
+   "scripts": {
+        "transpile": "babel src -d dist",
+        "start": "babel src -d dist -w",
+        "build": "cross-env NODE_ENV=production cross-env BABEL_ENV=production babel src -d dist",
+        "prebuild": "rimraf dist",
+        "prestart": "rimraf dist",
+        "test": "react-scripts test"
+    },
+
+then 
+yarn build
+then 
+yarn start
+
 // tracker-event-report
 
 libya-tracker-event-report-v30
@@ -4592,6 +4710,13 @@ git checkout mh_api_integration_v27
 git push origin mh_api_integration_v27
 
 
+// create branch for excel-to-json-angular
+// this is used for import translation-2.32 and event-datavalue update/add for single-dataelement-2.32
+after removing translation and trackedentitydatavalue table 
+
+git branch excel-to-json-angular
+git checkout excel-to-json-angular
+git push origin excel-to-json-angular
 
 // for hisp-india-website
 
@@ -5203,6 +5328,10 @@ function phonenumber(inputtxt) {
   }
 }
 
+// lenghth function in sql
+
+delete from trackedentityattributevalue where trackedentityattributeid = 2617
+and length( value ) != 10
 
 
 // geeting all analytics tables
