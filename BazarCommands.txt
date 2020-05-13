@@ -293,6 +293,15 @@ update dataelementcategoryoption set publicaccess = 'rwrw----'
 
 public access no access update dataset set publicaccess = '--------';
 
+public access(view/edit) meta data read/write data reade ----   'rwr-----'
+public access(view/edit) meta data read/write data --- can/edit/view ----- rwrw----
+
+update dataelementcategoryoption set publicaccess = 'rwrw----' where publicaccess = 'rwr-----';
+
+
+select * from relationshipitem where programstageinstanceid in
+( select programstageinstanceid from programstageinstance where deleted is true );
+
 
 // api filter of dataSets attribute value
 
@@ -320,6 +329,13 @@ update program_attributes set mandatory = true;
 
 select * FROM public.program_attributes where mandatory is false;
 
+="update users set password  = '$2a$10$pB7gQ7nbMmLVExpua/8eHOLxweaZ.R11DJMWnrdWzLB0mpRoX5qYG' where username = '"&B2&"' and uid = '"&C2&"';"
+="update users set password  = '$2a$10$pB7gQ7nbMmLVExpua/8eHOLxweaZ.R11DJMWnrdWzLB0mpRoX5qYG' where username = '"&A2&"' and uid = '"&B2&"' and userid = "&C2&";"
+
+select * from 	organisationunit where geometry is not  null
+select * from 	organisationunit where geometry is   null
+
+update organisationunit set geometry = null
 
 ="update attributevalue set value  = '"&B2&"', lastupdated  = '2018-11-30' where attributevalueid = "&C2&" and attributeid = "&D2&";"
 
@@ -363,8 +379,17 @@ insert into trackedentityattributevalue (trackedentityinstanceid,trackedentityat
 insert into trackedentityattributevalue (trackedentityinstanceid,trackedentityattributeid,created,lastupdated,value) values
 ="("&B2&",8374,'2020-01-31','2020-01-31','"&C2&"'),"
 
+
+insert into trackedentityattributevalue (trackedentityinstanceid,trackedentityattributeid,created,lastupdated,value) values
+(1455291,8374,'2020-04-22','2020-04-22','PLAN-EG-OIC-890335'),
+(1455288,8374,'2020-04-22','2020-04-22','PLAN-EG-OIC-648230');
+
+
 update trackedentityattributevalue set created = now()::timestamp where created = '2020-01-31';
 update trackedentityattributevalue set lastupdated = now()::timestamp where lastupdated = '2020-01-31';
+
+
+="update trackedentityattributevalue set value  = '"&A2&"' where trackedentityinstanceid = "&B2&" and trackedentityattributeid = "&C2&";"
 
 
 insert into datasetelement (datasetelementid, datasetid, dataelementid, categorycomboid ) values
@@ -373,6 +398,40 @@ insert into datasetelement (datasetelementid, datasetid, dataelementid, category
 insert into dataelement (dataelementid, uid, created, lastupdated, lastupdatedby, name, shortname, valuetype, domaintype, aggregationtype, categorycomboid, zeroissignificant, userid, publicaccess) values
 ="(nextval('hibernate_sequence'),'"&B2&"', '2018-12-19', '2018-12-19', 50, '"&C2&"','"&D2&"','INTEGER_ZERO_OR_POSITIVE','AGGREGATE','SUM',"&I2&",'TRUE',50,'rw------'),"
 
+
+insert into programrulevariable (programrulevariableid,uid,created,lastupdated,name,programid,sourcetype,usecodeforoptionset) values
+="(nextval('hibernate_sequence'),'"&A2&"', '2020-04-23', '2020-04-23','"&D2&"',"&C2&",'"&E2&"',false),"
+
+
+	
+insert into programrulevariable (programrulevariableid,uid,created,lastupdated,name,programid,sourcetype,usecodeforoptionset,dataelementid) values
+="(nextval('hibernate_sequence'),'"&A2&"', '2020-04-23', '2020-04-23','"&D2&"',"&C2&",'"&E2&"',false, "&G2&"),"
+
+
+update programrulevariable  set created = now()::timestamp where created ='2020-04-23';
+update programrulevariable  set lastupdated = now()::timestamp where lastupdated ='2020-04-23';
+
+
+insert into programrule (programruleid,uid,created,lastupdated,name,programid,rulecondition,priority) values
+="(nextval('hibernate_sequence'),'"&C2&"', '2020-04-29', '2020-04-29','"&E2&"',"&D2&",'"&F2&"',"&G2&"),"	
+	
+
+update programrule  set created = now()::timestamp where created ='2020-04-29';
+update programrule  set lastupdated = now()::timestamp where lastupdated ='2020-04-29';
+
+
+
+
+insert into programruleaction (programruleactionid,uid,created,lastupdated,actiontype,programruleid,content, data) values
+="(nextval('hibernate_sequence'),'"&J2&"', '2020-04-29', '2020-04-29','"&K2&"',"&I2&",'"&L2&"','"&M2&"'),"	
+		
+
+update programruleaction  set created = now()::timestamp where created ='2020-04-29';
+update programruleaction  set lastupdated = now()::timestamp where lastupdated ='2020-04-29';
+
+insert into dataelement (dataelementid, uid, created, lastupdated, name, shortname, valuetype, domaintype, aggregationtype, categorycomboid, zeroissignificant, publicaccess) values
+="(nextval('hibernate_sequence'),'"&B2&"', '2020-04-28', '2020-04-28','"&E2&"','"&H2&"','"&J2&"','AGGREGATE','SUM',19,'TRUE','rw------'),"
+	
 update dataelement  set created = now()::timestamp where created ='2018-12-19';
 update dataelement  set lastupdated = now()::timestamp where lastupdated ='2018-12-19';
 
@@ -1308,9 +1367,11 @@ nepal_hmis_230_11_02_2020
 
 psql  -U postgres -d nepal_hmis_230_11_02_2020 < C:\UsersMithilesh Thakur\Desktop\sqlview_14_04_2016.sql
 
-hiv_tracker_232_07_02_2020
+hiv_tracker_232_11_04_2020
 
-psql  -U postgres -d hiv_tracker_232_07_02_2020 < C:\Users\HISP\Desktop\sqlview_14_04_2016.sql
+
+
+psql  -U postgres -d hiv_tracker_232_11_04_2020 < C:\Users\HISP\Desktop\sqlview_14_04_2016.sql
 
 pg_dump -U postgres -d hiv_tracker_232_20_01_2020 > "C:\Users\Mithilesh Thakur\Desktop\hiv_tracker_232_23_01_2020_with_out_analytics.sql"
 
@@ -1324,11 +1385,11 @@ pg_dump -U dbuser -d dbname -t tablename > outputfilename.sql
 psql  -U postgres -d hp_07_04_2016_2.20 -t sqlview < 
 
 
-nipi_232_27_03_2020
+nipi_234_07_05_2020
 
-psql  -U postgres -d nipi_232_27_03_2020 < 
+psql  -U postgres -d nipi_234_07_05_2020 < 
 
-pg_dump -U postgres -d nipi_232_27_03_2020  > "C:\Users\Mithilesh Thakur\Desktop\nipi_db_232_27_03_2020.sql"
+pg_dump -U postgres -d nipi_234_07_05_2020  > "C:\Users\Mithilesh Thakur\Desktop\nipi_db_234_07_05_2020.sql"
 
 pg_dump -U postgres  -d nipi_test_db -t trackedentityinstance > "C:\Users\Mithilesh Thakur\Desktop\trackedentityinstance.sql"
 psql  -U postgres -d nipi_231_12_03_2020 -t trackedentityinstance < 
@@ -1495,7 +1556,13 @@ who_leprosy_25_03_2020
 indonesia_leprosy_25_10_2019
 who_leprosy_229_24_02_2020
 
-psql -U postgres who_leprosy_25_03_2020 < 
+imis_233_17_04_2020
+psql -U postgres imis_233_17_04_2020 < 
+pg_dump -U postgres -d imis_233_17_04_2020 > "C:\Users\Mithilesh Thakur\Desktop\imis_233_17_04_2020.sql"
+
+who_leprosy_01_05_2020
+
+psql -U postgres who_leprosy_01_05_2020 < 
 
 pg_dump -U postgres -d who_leprosy_25_03_2020 > "C:\Users\Mithilesh Thakur\Desktop\who_leprosy_233_31_03_2020.sql"
 
@@ -1867,6 +1934,13 @@ pg_dump -U postgres -d sluhmis_29_07_2016 > C:\Users\HISP\Desktop\sluhmis_update
 
 pg_dump -U postgres -d haryana_2.20_testing_18_01_2018 > C:\Users\HISP\Desktop\haryana_testing.sql
 
+
+
+demo_234_13_05_2020
+psql -U postgres demo_234_13_05_2020 < 
+pg_dump -U postgres -d demo_234_13_05_2020 > "C:\Users\Mithilesh Thakur\Desktop\demo_234_13_05_2020.sql"
+
+
 ippf_FPAIMIS_05_04_2018
 
 
@@ -1875,9 +1949,9 @@ ippf_pro_2.27_06_03_2019
 ippf_pro_08_05_2019
 ippf_afga_26_06_2019
 
-ippf_227_fpan_03_03_2020
+ippf_227_fpan_13_05_2020
 
-psql -U postgres ippf_227_fpan_03_03_2020 < C:\Users\HISP\Desktop\fpan_pro_Apr-23-18_1.sql
+psql -U postgres ippf_227_fpan_13_05_2020 < C:\Users\HISP\Desktop\fpan_pro_Apr-23-18_1.sql
 
 psql -U postgres ippf_pro_08_05_2019 < C:\Users\HISP\Desktop\fpan_pro_Apr-23-18_1.sql
 
@@ -1963,6 +2037,19 @@ pmtct_233_09_04_2020
 psql -U postgres pmtct_233_09_04_2020 < 
 
 myanmar_227_28_02_2020
+
+myanmar_hmis_04_05_2020
+psql -U postgres myanmar_hmis_04_05_2020 < 
+pg_dump -U postgres -d myanmar_hmis_04_05_2020  > "C:\Users\Mithilesh Thakur\Desktop\myanmar_hmis_with_analytics_233.sql"
+pg_dump -U postgres -d myanmar_hmis_04_05_2020  > "C:\Users\Mithilesh Thakur\Desktop\myanmar_hmis_with_out_analytics_233.sql"
+
+
+
+myanmar_atm_14_04_2020
+psql -U postgres myanmar_atm_14_04_2020  < 
+
+pg_dump -U postgres -d myanmar_atm_14_04_2020   > "C:\Users\Mithilesh Thakur\Desktop\myanmar_atm_233.sql"
+
 
 psql -U postgres myanmar_227_28_02_2020  < C:\Users\HISP\Desktop\uphmis_225.sql
 pg_dump -U postgres -d myanmar_23_09_2019 > C:\Users\HISP\Desktop\myanmar232_23_09_2019.sql
@@ -2089,9 +2176,9 @@ plan
 
 
 
-psql -U postgres plan_232_02_04_2020 <
+psql -U postgres plan_232_04_05_2020 <
 
-psql -U postgres plan_232_27_03_2020 < C:\Users\HISP\Desktop\dhis_dbms_Feb-01-18_1.sql
+psql -U postgres plan_232_24_04_2020 < "C:\Users\Mithilesh Thakur\Desktop\plan_updated_db.sql"
 
 pg_dump -U postgres -d plan_232_27_11_2019 > "C:\Users\Mithilesh Thakur\Desktop\plan_232_28_11_2019.sql"
 
@@ -2124,7 +2211,34 @@ pg_dump -U postgres -d plan_10_06_2016 > C:\Users\HISP\Desktop\plan_10_06_2016.s
 
 psql -U postgres test_db_harsh < C:\Users\HISP\Desktop\pgDump.sql
 
+odisha
 
+odisha_232_20_04_2020
+psql -U postgres odisha_232_20_04_2020 < 
+
+psql -U postgres odisha_232_20_04_2020 < C:\Users\HISP\Desktop\dhis_turkey_13-Nov-2015.sql
+
+pg_dump -U postgres  -d odisha_232_20_04_2020 -t config_in > "C:\Users\Mithilesh Thakur\Desktop\odisha_232_config_in.sql"
+
+pg_dump -U postgres  -d odisha_232_20_04_2020 -t config_in > "C:\Users\Mithilesh Thakur\Desktop\odisha_232_02_05_2020_config_in.sql"
+
+pg_dump -U postgres  -d odisha_232_20_04_2020 -t reportin > "C:\Users\Mithilesh Thakur\Desktop\odisha_232_02_05_2020_reportin.sql"
+pg_dump -U postgres  -d odisha_232_20_04_2020 -t reportsource > "C:\Users\Mithilesh Thakur\Desktop\odisha_232_02_05_2020_reportsource.sql"
+
+
+pg_dump -U postgres  -d mh_227_24_01_2020 -t config_in > "C:\Users\Mithilesh Thakur\Desktop\mh_232_02_05_2020_config_in.sql"
+pg_dump -U postgres  -d mh_227_24_01_2020 -t reportin > "C:\Users\Mithilesh Thakur\Desktop\mh_232_reportin.sql"
+pg_dump -U postgres  -d mh_227_24_01_2020 -t reportsource > "C:\Users\Mithilesh Thakur\Desktop\mh_232_reportsource.sql"
+
+
+psql  -U postgres -d odisha_232_20_04_2020 -t config_in < 
+
+psql  -U postgres -d odisha_232_20_04_2020 -t reportin < 
+
+psql  -U postgres -d odisha_232_20_04_2020 -t reportsource  < 
+
+pg_dump -U postgres  -d odisha_232_20_04_2020 -t version > "C:\Users\Mithilesh Thakur\Desktop\odisha_232_version.sql"
+psql  -U postgres -d odisha_232_20_04_2020 -t version < 
 
 
 
@@ -2137,9 +2251,9 @@ psql -U postgres bihar_2.27_17_06_2019 <
 
 psql -U postgres bihar_230_24_12_2019 < 
 
-mh_227_24_01_2020
+mh_227_04_05_2020
 
-psql -U postgres mh_227_24_01_2020 < 
+psql -U postgres mh_227_04_05_2020 < 
 
 psql -U postgres mh_2.27_29_05_2019 < C:\Users\HISP\Desktop\dhis_turkey_13-Nov-2015.sql
 
@@ -2902,6 +3016,7 @@ zap                  Remove a lightweight checkout, if it can be done safely.
 // generate uid usiging dhis
  http://localhost:8080/dhis/api/system/id.json
  http://localhost:8090/dhis/api/system/id.json?limit=10
+http://localhost:8090/dhis/api/system/info
 
 
 github Detais
@@ -3106,7 +3221,7 @@ group by ou.organisationunitid,parent.uid,parent.name
 categoryoptioncomboUID
 
 select string_agg(ds.name,chr(10)),de.dataelementid as deid,de.uid as deUID,de.name as deName,cc.uid as categoryUID,
-cc.name as categoryName,coc.categoryoptioncomboid as categoryoptioncomboid,coc.uid as categoryoptionUID,cocname.categoryoptioncomboname as categoryOptionName
+cc.name as categoryName,coc.categoryoptioncomboid as categoryoptioncomboid,coc.uid as categoryoptionComboUID,cocname.categoryoptioncomboname as categoryOptionComboName
 from dataelement  as de  
 inner join categorycombo as cc on cc.categorycomboid = de.categorycomboid 
 inner join categorycombos_optioncombos as cc_coc on cc_coc.categorycomboid = de.categorycomboid
@@ -3132,7 +3247,24 @@ INNER JOIN dataset ds ON ds.datasetid = dsm.datasetid
 GROUP BY de.dataelementid,de.uid,cc.uid,de.name,cc.name,coc.categoryoptioncomboid ,coc.uid,cocname.categoryoptioncomboname
 ORDER BY de.name,cc.name,cocname.categoryoptioncomboname;
 
+//
 
+select de.dataelementid as deid,de.uid as deUID,de.name as deName,cc.categorycomboid,cc.uid as categoryUID, 
+cc.name as categoryName,coc.categoryoptioncomboid as categoryoptioncomboid,coc.uid as categoryoptionUID,
+cocname.categoryoptioncomboname as categoryOptionName from dataelement as de 
+inner join categorycombo as cc on cc.categorycomboid = de.categorycomboid 
+inner join categorycombos_optioncombos as cc_coc on cc_coc.categorycomboid = de.categorycomboid 
+inner join categoryoptioncombo as coc on coc.categoryoptioncomboid = cc_coc.categoryoptioncomboid 
+inner join _categoryoptioncomboname as cocname on coc.categoryoptioncomboid = cocname.categoryoptioncomboid 
+group by de.dataelementid,de.uid,cc.uid,de.name,cc.name,cc.categorycomboid,coc.categoryoptioncomboid ,coc.uid,cocname.categoryoptioncomboname 
+order by de.name,cc.name,cocname.categoryoptioncomboname
+
+
+
+
+select de.dataelementid as deid,de.uid as deUID,de.name as deName,cc.categoryid as categoryID,cc.uid as categoryUID, cc.name as categoryName,coc.categoryoptioncomboid as categoryoptioncomboid,coc.uid as categoryoptionUID,cocname.categoryoptioncomboname as categoryOptionName from dataelement as de inner join categorycombo as cc on cc.categorycomboid = de.categorycomboid inner join categorycombos_optioncombos as cc_coc on cc_coc.categorycomboid = de.categorycomboid inner join categoryoptioncombo as coc on coc.categoryoptioncomboid = cc_coc.categoryoptioncomboid inner join _categoryoptioncomboname as cocname on coc.categoryoptioncomboid = cocname.categoryoptioncomboid group by de.dataelementid,de.uid,cc.uid,cc.categoryid,de.name,cc.name,coc.categoryoptioncomboid ,coc.uid,cocname.categoryoptioncomboname order by de.name,cc.name,cocname.categoryoptioncomboname
+
+select de.dataelementid as deid,de.uid as deUID,de.name as deName,cc.categoryid as categoryID,cc.uid as categoryUID, cc.name as categoryName,coc.categoryoptioncomboid as categoryoptioncomboid,coc.uid as categoryoptionUID,cocname.categoryoptioncomboname as categoryOptionName from dataelement as de inner join categorycombo as cc on cc.categorycomboid = de.categorycomboid inner join categorycombos_optioncombos as cc_coc on cc_coc.categorycomboid = de.categorycomboid inner join categoryoptioncombo as coc on coc.categoryoptioncomboid = cc_coc.categoryoptioncomboid inner join _categoryoptioncomboname as cocname on coc.categoryoptioncomboid = cocname.categoryoptioncomboid group by de.dataelementid,de.uid,cc.uid,cc.categoryid,de.name,cc.name,coc.categoryoptioncomboid ,coc.uid,cocname.categoryoptioncomboname order by de.name,cc.name,cocname.categoryoptioncomboname
 // for datavalue of HP 2.7 my-sql
 
 SELECT de.uid AS dataElementUID,dv.dataelementid, dv.periodid, dv.sourceid, org.uid AS organisationunitUID, 
@@ -3531,24 +3663,6 @@ LEFT join organisationunit ou6 on ou6.organisationunitid = ous.idlevel6
 group by ous.organisationunituid,ou2.name,ou3.name,ou4.name,ou5.name,ou6.uid,ou6.name;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 select
 ou1.uid as uid1,max(ou1.name) as Level1,
 ou2.uid as uid2,max(ou2.name) as Level2,
@@ -3558,6 +3672,64 @@ inner join organisationunit ou1 on ou1.organisationunitid = ous.idlevel1
 inner join organisationunit ou2 on ou2.organisationunitid = ous.idlevel2
 inner join organisationunit ou3 on ou3.organisationunitid = ous.idlevel3
 group by ou1.uid,ou2.uid,ou3.uid;
+
+
+// WHO-LEP query
+
+// dataelement-cc-coc-datasetwise list
+select string_agg(ds.name,chr(10)),de.dataelementid as deid,de.uid as deUID,de.name as deName,cc.uid as categoryUID,
+cc.name as categoryName,coc.categoryoptioncomboid as categoryoptioncomboid,coc.uid as categoryoptionComboUID,cocname.categoryoptioncomboname as categoryOptionComboName
+from dataelement  as de  
+inner join categorycombo as cc on cc.categorycomboid = de.categorycomboid 
+inner join categorycombos_optioncombos as cc_coc on cc_coc.categorycomboid = de.categorycomboid
+inner join categoryoptioncombo as coc on coc.categoryoptioncomboid = cc_coc.categoryoptioncomboid
+inner join _categoryoptioncomboname as cocname on coc.categoryoptioncomboid = cocname.categoryoptioncomboid
+inner join datasetelement dsm on dsm.dataelementid = de.dataelementid
+inner join dataset ds on ds.datasetid = dsm.datasetid
+group by de.dataelementid,de.uid,cc.uid,de.name,cc.name,coc.categoryoptioncomboid ,coc.uid,cocname.categoryoptioncomboname
+order by de.name,cc.name,cocname.categoryoptioncomboname;
+
+// validation rule with expression
+
+SELECT vr.validationruleid, vr.uid,vr.name,vr.description, vr.instruction,vr.importance, vr.operator,
+vr.leftexpressionid,l_exp.description left_description, l_exp.expression left_expression, vr.rightexpressionid,
+r_exp.description right_description, r_exp.expression right_expression, 
+vr.periodtypeid,pt.name periodType  from validationrule vr
+INNER JOIN expression l_exp on vr.leftexpressionid = l_exp.expressionid
+INNER JOIN expression r_exp on vr.rightexpressionid = r_exp.expressionid
+INNER JOIN periodtype pt ON pt.periodtypeid = vr.periodtypeid;
+
+// level-wise ou list 
+
+select
+ou1.organisationunitid as level1_ID, ou1.uid as uid1,max(ou1.name) as Level1_name,
+ou2.organisationunitid as level2_ID, ou2.uid as uid2,max(ou2.name) as Level2_name,
+ou3.organisationunitid as level3_ID, ou3.uid as uid3,max(ou3.name) as Level3_name,
+ou4.organisationunitid as level4_ID, ou4.uid as uid4,max(ou4.name) as Level4_name
+
+from _orgunitstructure ous
+left join organisationunit ou1 on ou1.organisationunitid = ous.idlevel1
+left join organisationunit ou2 on ou2.organisationunitid = ous.idlevel2
+left join organisationunit ou3 on ou3.organisationunitid = ous.idlevel3
+left join organisationunit ou4 on ou4.organisationunitid = ous.idlevel4
+group by ou1.organisationunitid,ou2.organisationunitid,ou3.organisationunitid,
+ou4.organisationunitid,ou1.uid,ou2.uid,ou3.uid,ou4.uid;
+
+// indicator list 
+
+SELECT 	indicatorid, ind.uid, ind.name, shortname, description, annualized, decimals, 
+ind.indicatortypeid, numerator, numeratordescription, denominator, denominatordescription,
+it.name indicatorTypeName ,it.indicatorfactor,it.indicatornumber from indicator ind
+INNER join indicatortype it ON it.indicatortypeid = ind.indicatortypeid;
+
+// user-list user-role-wise
+
+select usr.userid,usr.uid,usr.username,usr.lastupdated,usr.passwordlastupdated,
+usr.lastlogin, usr.selfregistered, usr.invitation, usr.disabled, usrmem.userroleid,
+urole.uid as userRoleUID ,urole.name as userRoleName from users usr
+INNER JOIN userrolemembers usrmem ON usrmem.userid = usr.userid
+INNER JOIN userrole urole ON urole.userroleid = usrmem.userroleid
+order by usr.username;
 
 
 disable/ebnable key in postgres sql
@@ -4106,6 +4278,18 @@ git push origin PLAN-2.32
 git worktree add /e/scm/git_plan_2.32 PLAN-2.32
 git merge origin/PLAN-2.32 origin/2.32 -m "Merge and update PLAN-2.32 Branch with parent branch"
 git push origin PLAN-2.32
+
+
+// for STATE-2.32
+git branch STATE-2.32 // for create new branch for STATE-2.32
+git checkout STATE-2.32
+git push origin STATE-2.32
+git worktree add /e/scm/git_state_2.32 STATE-2.32
+git merge origin/STATE-2.32 origin/2.32 -m "Merge and update STATE-2.32 Branch with parent branch"
+git push origin STATE-2.32
+
+
+
 
 
 
@@ -4993,6 +5177,8 @@ npm install -g webpack-dev-server
 npm install -g webpack-cli // not use
 npm install --save-dev webpack
 
+npx webpack src/index.js dist/bundle.js
+
 npm i -g webpack webpack-cli
 or
 npm i webpack webpack-cli // for loc
@@ -5015,6 +5201,7 @@ https://play.dhis2.org/appstore/app/M3T1BGCjD3y
 https://play.dhis2.org/appstore/app/M3T1BGCjD3y
 
 https://github.com/hisptz/idashboard
+https://github.com/hisptz/idashboard/tree/2.0
 // tanzania App and intractive dashboard deploy
 run on administator
 build process
@@ -5030,8 +5217,16 @@ npm start
 run on administator
 build process
 
+// Run npm install -g npm to update!
+node -v 
+npm -v
+To Check Angular CLI version use
+ng --version
+
+
 npm install
 npm install -g angular-cli
+npm install -g @angular/cli 
 npm install --global --production windows-build-tools
 npm run build
 
@@ -5339,6 +5534,57 @@ and length( value ) != 10
 SELECT table_name from information_schema.tables where table_name like 'analytics%' and table_type = 'BASE TABLE';
 
 SELECT * from information_schema.tables where table_name like 'analytics%' and table_type = 'BASE TABLE';
+
+
+// period-wise-progress-report-query -- app based -- sample for orissa-2.32
+
+select json_agg(main.*) from (
+
+             select  pivot as key,
+        format('{%s}',string_agg(format('"%s":"%s"',
+                                        decoc,
+                                        value), ',')):: json as value
+        from
+        (
+            
+        select to_char(pe.startdate , 'yyyy-mm-dd')as pivot,
+        concat('nogroup','-',de.uid,'-',coc.uid) as decoc ,
+        sum(dv.value :: float) as value
+        from datavalue dv
+        
+        inner join period as pe on pe.periodid = dv.periodid 
+	inner join periodtype as pt on pt.periodtypeid = pe.periodtypeid 
+	inner join dataelement as de on de.dataelementid = dv.dataelementid 
+	inner join categoryoptioncombo coc on coc.categoryoptioncomboid = dv.categoryoptioncomboid 
+        where pe.startdate >= to_date('202001','yyyymm')
+        and pe.startdate <= to_date('202003','yyyymm')
+        and dv.attributeoptioncomboid=22
+	and dv.value ~'^-?[0-9]+.?[0-9]*$' and dv.value !='0'
+	and dv.sourceid in ( 7518,3274,8331,2548,6629,9366,5177,670,946,5261,7680,9489,9614,4424,417,5245,7041,4112,707,8784,3607,7040,227,9599,505,2646,280,2014,5366,5646,7809,3985,4850,3214,578,1771,3003,8724,3816,7161,5235,1124,9306,5119,508,9527,7072,7940,5461,9281,4325,796,7265,5143,7939,8703,4279,4425,8309,6358,8684,9491,321,5433,6537,4621,7274,6715,7162,3223,3244,2549,220,4845,7298,3509,5089,5689,497,3895,2911,7113,6952,416,4406,7824,8246,1992,4854,3733,902,6696,8462,8881,4224,8159,5285,5388,9305,7945,5335,1965,3621,3978,6700,7808,4399,5292,5650,4933,2811,7257,2677,787,7768,8372,4398,1214,1061,7368,7014,8550,8157,2849,2739,6311,6591,2220,2733,5690,795,9657,8369,789,1838,4981,2915,6003,7310,2720,4000,8839,6452,6777,9363,762,9478,1059,2141,9496,1689,9262,7163,5220,8374,1052,289,5766,7369,8278,3677,9315,9032,7400,8045,1398,763,279,507,7455,4476,6695,7803,3640,2218,8671,281,8181,9605,3506,288,3216,324,3275,7493,6976,8552,7681,6627,6386,3731,939,3910,3183,5760,2142,5668,868,418,2427,7383,947,9479,4057,3111,882,6855,2216,1904,6684,8838,5121,3222,5286,8388,4322,4377,6444,290,494,9635,7679,9288,8634,8290,7675,8378,492,6356,8387,9263,3663,4463,880,3643,7676,2948,4818,4400,3823,671,2219,7918,7926,4868,928,4184,130,9304,3993 )
+        and dv.dataelementid in  (select dataelementid from dataelement where uid in ('ywf4k8K5dvF','Bjf26xzMWhe'))
+        and concat(de.uid,'-',coc.uid) in ('ywf4k8K5dvF-HllvX50cXC0','Bjf26xzMWhe-HllvX50cXC0') group by pe.startdate,de.uid,coc.uid
+
+        )main
+        group by main.pivot
+
+                union all
+
+                
+        select 'pivot' as key,
+	format('{%s}' ,
+	       string_agg(format('"%s":"%s"',
+			         to_char(date,'yyyy-mm-dd'),
+			         to_char(date,'Mon yyyy')), 
+			  ','))::json as value
+        from generate_series(
+	    to_date('202001','yyyymm'),
+	    to_date('202003','yyyymm'),
+	    '1 month'::interval
+        ) date
+            
+        )main
+
+
 
 // organisationunitattributevalues
 
@@ -5835,7 +6081,7 @@ order by District
 
 
 SELECT pg.name pgName,pg.uid pgUID,pra.programstageid, ps.name psName,ps.uid psUID,
-pss.name sectionName,pss.uid sectionUid, pr.name prGRuleName ,pra.programruleid, 
+pss.name sectionName,pss.uid sectionUid, pr.name prGRuleName, pr.uid programRuleUID, pra.programruleid, pr.priority,
 pra.dataelementid,pra.actiontype,pra.programstagesectionid, 
 pra.programstageid, de.name deName,de.uid deUID, pr.rulecondition from programruleaction pra
 LEFT JOIN programstage ps ON ps.programstageid = pra.programstageid
@@ -5844,6 +6090,21 @@ LEFT JOIN programstagesection pss ON pss.programstagesectionid = pra.programstag
 LEFT JOIN programrule pr ON pr.programruleid = pra.programruleid
 LEFT JOIN dataelement de on de.dataelementid = pra.dataelementid
 
+// program rule list program wise
+select pg.name programName, pg.uid programUID,pr.programid programId,pr.name programRuleName, 
+pr.uid programRuleUID,pr.rulecondition, pr.priority from programrule pr
+INNER JOIN program pg on pg.programid = pr.programid 
+INNER JOIN programruleaction pra ON pra.programruleid = pr.programruleid
+
+// program rule list program wise with programrule action
+select pg.name programName, pg.uid programUID,pr.programid programId,pr.name programRuleName, 
+pr.uid programRuleUID,pr.rulecondition, pr.priority, pra.programruleactionid,
+pra.uid programruleactionUID, pra.actiontype programruleactionActiontype,pra.content programruleactionContent,
+pra.data programruleactionDATA from programrule pr
+INNER JOIN program pg on pg.programid = pr.programid
+INNER JOIN programruleaction pra ON pra.programruleid = pr.programruleid
+
+select * from programruleaction
 
 // json query
 
@@ -5910,3 +6171,14 @@ http://127.0.0.1:8090/dhis/api/organisationUnits.json?fields=id,name,level&filte
 https://wpdm.maji.go.tz/wpdm/api/events.json?orgUnit=WTPNT000002&startDate=2020-03-01&endDate=2020-03-31&fields=event,eventDate,dataValues&paging=false
 
 http://127.0.0.1:8090/ippf/api/programs/dWPcV6EiVB1.json?fields=id,displayName,programTrackedEntityAttributes[displayInList,valueType,trackedEntityAttribute[id,displayName]]
+
+
+// get all orgUnit with all children
+http://127.0.0.1:8090/dhis/api/organisationUnits/ANGhR1pa8I5.json?fields=id,displayName,code&includeDescendants=true&paging=false
+
+http://172.105.47.158/intpart232/api/events.json?orgUnit=fMTeIPKpZbI&program=Nb2EygU6dwp&order=lastUpdated:asc&skipPaging=true&ouMode=DESCENDANTS
+
+// event api
+https://yesme.plan-yes.online/yesme/api/events.json?program=lmx0np5tbk2&orgUnit=hvgoH6EjhsZ&&ouMode=DESCENDANTS&startDate=2020-01-01&endDate=2020-04-30&fields=*,relationships&paging=false
+
+https://yesme.plan-yes.online/yesme/api/events.json?program=lmx0np5tbk2&orgUnit=hvgoH6EjhsZ&&ouMode=DESCENDANTS&startDate=2020-01-01&endDate=2020-04-30&order=eventDate:asc&paging=false
