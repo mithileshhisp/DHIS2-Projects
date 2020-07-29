@@ -1,4 +1,39 @@
 
+// ubantu file location
+
+C:\Users\Mithilesh Thakur\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu18.04onWindows_79rhkp1fndgsc\LocalState\rootfs\home\mithilesh\dhis_report_app\reports-app
+
+
+For reference, the safer way of getting the DHIS2 home directory from java is to call:
+
+String getExternalDirectoryPath()
+or
+File getExternalDirectory()
+
+from the LocationManager class.
+
+
+
+Start a JAR Distribution﻿
+
+To start YouTrack JAR, run the command:
+
+java -jar youtrack-<version>.jar
+
+Copied!
+Stop a JAR Distribution﻿
+
+To stop YouTrack JAR, in the console, press Ctrl+C or run this command in a separate console window:
+
+java -jar youtrack-<version>.jar stop
+
+
+
+
+for e-mail sending security enable
+https://myaccount.google.com/u/1/lesssecureapps
+
+
 new Date(0) is January 1, 1970 in UTC. Your timezone is not UTC.
 
 Enviroment Variables as on 25/02/2020
@@ -19,7 +54,7 @@ add
 C:\apache-maven-3.5.3\bin
 
 
-
+select table_name from information_schema.tables where table_name like 'analytics%' and table_type = 'BASE TABLE'
 
 
 
@@ -73,6 +108,8 @@ https://debug.dhis2.org/dev
 
 
 select table_name from information_schema.tables where table_name like 'analytics%' and table_type = 'BASE TABLE'
+
+select table_name from information_schema.tables where table_name like 'analytics_enrollment%' and table_type = 'BASE TABLE'
 
 // get all orgUnit with all children
 http://127.0.0.1:8090/dhis/api/organisationUnits/ANGhR1pa8I5.json?fields=id,displayName,code&includeDescendants=true&paging=false
@@ -298,6 +335,9 @@ public access(view/edit) meta data read/write data --- can/edit/view ----- rwrw-
 
 update dataelementcategoryoption set publicaccess = 'rwrw----' where publicaccess = 'rwr-----';
 
+// give publicaccess for meta-data read write where publicaccess none
+update dataelement set publicaccess  = 'rw------' where publicaccess = '--------'
+
 
 select * from relationshipitem where programstageinstanceid in
 ( select programstageinstanceid from programstageinstance where deleted is true );
@@ -315,6 +355,10 @@ SELECT last_value FROM hibernate_sequence;
 
 ALTER SEQUENCE hibernate_sequence RESTART WITH 4412;
 
+
+SELECT *  FROM information_schema.columns WHERE table_schema = 'public'  AND table_name  = 'mapview';
+SELECT *  FROM information_schema.columns WHERE table_schema = 'public'  AND table_name  = 'map';
+
 // for insert ' replace ' to '' in name coloumn
 
 ="update organisationunit set shortname  = '"&F2&"' where uid = '"&D2&"';"
@@ -324,6 +368,10 @@ ALTER SEQUENCE hibernate_sequence RESTART WITH 4412;
 ="update organisationunit set name  = '"&B2&"' where organisationunitid = "&A2&";"
 
 ="update organisationunit set name  = '"&B2&"', shortname  = '"&B2&"' where organisationunitid = "&A2&";"
+
+
+="update datavalue set sourceid = "&B2&" where sourceid = "&A2&";"
+
 
 update program_attributes set mandatory = true;
 
@@ -370,6 +418,10 @@ insert into datavalue (dataelementid,periodid,sourceid,categoryoptioncomboid,att
 update datavalue set created = now()::timestamp where created ='2019-02-13';
 update datavalue set lastupdated = now()::timestamp where lastupdated ='2019-02-13';
 
+// hp-2.7 datavalue insert query
+
+INSERT INTO datavalue (dataelementid,periodid,sourceid,categoryoptioncomboid,VALUE,storedby,lastupdated,followup) VALUES
+="("&A2&","&D2&","&B2&","&C2&",'"&E2&"','hispdev','2020-07-16',false),"
 
 insert into trackedentityattributevalue (trackedentityinstanceid,trackedentityattributeid,created,lastupdated,value) values
 ="("&A2&",93,'2018-04-27','2018-04-27','"&C2&"'),"
@@ -398,6 +450,14 @@ insert into datasetelement (datasetelementid, datasetid, dataelementid, category
 insert into dataelement (dataelementid, uid, created, lastupdated, lastupdatedby, name, shortname, valuetype, domaintype, aggregationtype, categorycomboid, zeroissignificant, userid, publicaccess) values
 ="(nextval('hibernate_sequence'),'"&B2&"', '2018-12-19', '2018-12-19', 50, '"&C2&"','"&D2&"','INTEGER_ZERO_OR_POSITIVE','AGGREGATE','SUM',"&I2&",'TRUE',50,'rw------'),"
 
+
+
+insert into dataelement (dataelementid, uid, created, lastupdated, lastupdatedby, name, shortname, formname, valuetype, domaintype, aggregationtype, categorycomboid, zeroissignificant, userid, publicaccess) values
+="(nextval('hibernate_sequence'),'"&B2&"', '2020-06-03', '2020-06-03', 58, '"&A2&"','"&C2&"','"&D2&"','"&F2&"','"&E2&"','"&G2&"',21,false,58,'rw------'),"
+
+
+update dataelement set created = now()::timestamp where created = '2020-06-03';
+update dataelement set lastupdated = now()::timestamp where lastupdated = '2020-06-03';
 
 insert into programrulevariable (programrulevariableid,uid,created,lastupdated,name,programid,sourcetype,usecodeforoptionset) values
 ="(nextval('hibernate_sequence'),'"&A2&"', '2020-04-23', '2020-04-23','"&D2&"',"&C2&",'"&E2&"',false),"
@@ -432,8 +492,14 @@ update programruleaction  set lastupdated = now()::timestamp where lastupdated =
 insert into dataelement (dataelementid, uid, created, lastupdated, name, shortname, valuetype, domaintype, aggregationtype, categorycomboid, zeroissignificant, publicaccess) values
 ="(nextval('hibernate_sequence'),'"&B2&"', '2020-04-28', '2020-04-28','"&E2&"','"&H2&"','"&J2&"','AGGREGATE','SUM',19,'TRUE','rw------'),"
 	
-update dataelement  set created = now()::timestamp where created ='2018-12-19';
-update dataelement  set lastupdated = now()::timestamp where lastupdated ='2018-12-19';
+
+
+insert into dataelement (dataelementid, uid, created, lastupdated, lastupdatedby, name, shortname, formname, valuetype, domaintype, aggregationtype, categorycomboid, zeroissignificant, userid, publicaccess) values
+="(nextval('hibernate_sequence'),'"&B2&"', '2020-05-27', '2020-05-27', 56, '"&A2&"','"&D2&"','"&F2&"', 'INTEGER_ZERO_OR_POSITIVE','AGGREGATE','SUM',"&L2&",true,56,'rw------'),"
+	
+
+update dataelement  set created = now()::timestamp where created ='2020-05-27';
+update dataelement  set lastupdated = now()::timestamp where lastupdated ='2020-05-27';
 
 
 insert into indicator (indicatorid, created, lastupdated, lastupdatedby, name, shortname, annualized, indicatortypeid, numerator,numeratordescription, denominator, denominatordescription, userid, publicaccess) values
@@ -516,6 +582,9 @@ insert into organisationunit (organisationunitid,name,shortname,parentid,opening
 ="(nextval('hibernate_sequence'),'"&C2&"','"&C2&"',"&B2&",'1990-01-01','2018-03-20','2018-03-20',3),"
 
 
+insert into organisationunit (organisationunitid,uid,name,shortname,code,parentid,openingdate,created,lastupdated,hierarchylevel) values
+="(nextval('hibernate_sequence'),'"&C2&"','"&B2&"','"&B2&"','"&D2&"',"&F2&",'1990-01-01','2020-06-23','2020-06-23',"&E2&"),"
+	
 
 insert into organisationunit (organisationunitid,uid,name,shortname,parentid,openingdate,created,lastupdated,hierarchylevel) values
 ="(nextval('hibernate_sequence'),'"&C2&"','"&A2&"','"&B2&"',"&E2&",'1990-01-01','2020-01-27','2020-01-27',"&D2&"),"
@@ -586,6 +655,8 @@ insert into dataelementtranslations (dataelementid, objecttranslationid ) values
 
 ="update programinstance set organisationunitid = '"&B2&"' where trackedentityinstanceid = "&A2&";"
 
+="update userrolemembers set userroleid = "&F2&" where userid = "&D2&";"	
+
 
 update trackedentitydatavalue set created = now()::timestamp where created ='2019-01-14';
 update trackedentitydatavalue set lastupdated = now()::timestamp where lastupdated ='2019-01-14';
@@ -617,6 +688,10 @@ insert into datavalue (dataelementid,periodid,sourceid,categoryoptioncomboid,att
 insert into datavalue (dataelementid,periodid,sourceid,categoryoptioncomboid,attributeoptioncomboid,value,storedby,created,lastupdated,followup,deleted) values
 
 ="("&A2&","&B2&","&C2&","&D2&","&E2&",'"&F2&"','"&G2&"','"&I2&"','"&K2&"',false,false),"
+
+
+insert into datavalue (dataelementid,periodid,sourceid,categoryoptioncomboid,attributeoptioncomboid,value,storedby,created,lastupdated,followup,deleted) values
+="("&A2&","&B2&","&C2&","&D2&","&E2&",'"&F2&"','"&G2&"','2020-05-22','2020-05-22',false,false),"
 
 update datavalue  set created = now()::timestamp where created ='2019-06-28';
 update datavalue set lastupdated = now()::timestamp where lastupdated ='2019-06-28';
@@ -1353,25 +1428,45 @@ pg_dump -U postgres -d sa_data_sync_10_03_2016 > C:\Users\HISP\Desktop\latest_db
 pg_dump -U postgres -d hpa_08_03_2016 > C:\Users\HISP\Desktop\hpa_updated_09_03_2016.sql
 
 
-fhi360_232_24_03_2020
 
-fhi360_232_16_03_2020
+training_land_233_07_07_2020
+psql  -U postgres -d training_land_233_07_07_2020  < 
+pg_dump -U postgres -d training_land_233_07_07_2020 > "C:\Users\Mithilesh Thakur\Desktop\training_land_233_07_07_2020.sql"
 
-psql  -U postgres -d fhi360_232_24_03_2020  < 
+
+fhi360_merge_21_07_2020
+
+fhi360_232_03_07_2020
+
+
+
+psql  -U postgres -d fhi360_merge_21_07_2020  < 
+
+
+
+pg_dump -U postgres  -d hiv_tracker_232_27_05_2020 -t organisationunit > "C:\Users\Mithilesh Thakur\Desktop\hiv_tracker_organisationunit.sql"
+psql  -U postgres -d fhi360_232_27_05_2020 -t organisationunit < 
+
 pg_dump -U postgres -d fhi360_232_-7_02_2020 > "C:\Users\Mithilesh Thakur\Desktop\fhi360_232_02_2020.sql"
 
-pg_dump -U postgres -d fhi360_232_02_03_2020  > "C:\Users\Mithilesh Thakur\Desktop\fhi360_232_16_03_2020.sql"
+pg_dump -U postgres -d fhi360_232_27_05_2020  > "C:\Users\Mithilesh Thakur\Desktop\fhi360_232_database_newOrgUnit.sql"
+
+
+
+
+
+
 
 
 nepal_hmis_230_11_02_2020
 
 psql  -U postgres -d nepal_hmis_230_11_02_2020 < C:\UsersMithilesh Thakur\Desktop\sqlview_14_04_2016.sql
 
-hiv_tracker_232_11_04_2020
+
+hiv_tracker_232_27_05_2020
 
 
-
-psql  -U postgres -d hiv_tracker_232_11_04_2020 < C:\Users\HISP\Desktop\sqlview_14_04_2016.sql
+psql  -U postgres -d hiv_tracker_232_27_05_2020 < C:\Users\HISP\Desktop\sqlview_14_04_2016.sql
 
 pg_dump -U postgres -d hiv_tracker_232_20_01_2020 > "C:\Users\Mithilesh Thakur\Desktop\hiv_tracker_232_23_01_2020_with_out_analytics.sql"
 
@@ -1385,11 +1480,15 @@ pg_dump -U dbuser -d dbname -t tablename > outputfilename.sql
 psql  -U postgres -d hp_07_04_2016_2.20 -t sqlview < 
 
 
-nipi_234_07_05_2020
+nipi_ncr_234_27_07_2020
 
-psql  -U postgres -d nipi_234_07_05_2020 < 
+psql  -U postgres -d nipi_ncr_234_27_07_2020 < 
 
-pg_dump -U postgres -d nipi_234_07_05_2020  > "C:\Users\Mithilesh Thakur\Desktop\nipi_db_234_07_05_2020.sql"
+nipi_234_22_07_2020
+
+psql  -U postgres -d nipi_234_22_07_2020 < 
+
+pg_dump -U postgres -d nipi_234_22_06_2020 > "C:\Users\Mithilesh Thakur\Desktop\nipi_db_234_07_05_2020.sql"
 
 pg_dump -U postgres  -d nipi_test_db -t trackedentityinstance > "C:\Users\Mithilesh Thakur\Desktop\trackedentityinstance.sql"
 psql  -U postgres -d nipi_231_12_03_2020 -t trackedentityinstance < 
@@ -1457,7 +1556,7 @@ dataelementgrouptranslations
 
 IMIS
 
-psql -U postgres imis_20_06_2019 <
+psql -U postgres imis_20_07_2020 <
 
 
 Tanzania
@@ -1487,6 +1586,11 @@ psql -U postgres intpart_232_19_02_2020 <
 
 pg_dump -U postgres -d intpart_232_balari_13_09_2019 > "C:\Users\Mithilesh Thakur\Desktop\intpart_balari_232.sql"
 
+intpart_dmc_233_29_07_2020
+
+psql -U postgres intpart_232_dmc_24_06_2020 <
+
+pg_dump -U postgres -d intpart_232_balari_13_09_2019 > "C:\Users\Mithilesh Thakur\Desktop\intpart_balari_232.sql"
 
 
 psql -U postgres quic_siera_leone_12_06_2015 < C:\Users\HISP\Desktop\quic_siera_leone_12_06_2015.sql
@@ -1560,9 +1664,9 @@ imis_233_17_04_2020
 psql -U postgres imis_233_17_04_2020 < 
 pg_dump -U postgres -d imis_233_17_04_2020 > "C:\Users\Mithilesh Thakur\Desktop\imis_233_17_04_2020.sql"
 
-who_leprosy_01_05_2020
+who_leprosy_19_05_2020
 
-psql -U postgres who_leprosy_01_05_2020 < 
+psql -U postgres who_leprosy_19_05_2020 < 
 
 pg_dump -U postgres -d who_leprosy_25_03_2020 > "C:\Users\Mithilesh Thakur\Desktop\who_leprosy_233_31_03_2020.sql"
 
@@ -1592,10 +1696,10 @@ C:\Users\Mithilesh Thakur\Downloads>pg_restore -U postgres -d who_leprosy_03_04_
 
 // HP
 
-hp_upgraded_229_03_04_2020
+hp_upgraded_232_22_07_2020
 
-psql -U postgres hp_upgraded_229_03_04_2020 < 
-
+psql -U postgres hp_upgraded_232_22_07_2020 < 
+pg_dump -U postgres -d hp_upgraded_232_05_06_2020 > "C:\Users\Mithilesh Thakur\Desktop\hp_upgraded_with_out_analytics.sql"
 
 // who-lep
 psql -U postgres who_leprosy_27_03_2109 < 
@@ -1617,6 +1721,10 @@ icmr_leprosy_28_08_2019
 psql -U postgres icmr_leprosy_28_08_2019 <
 
 pg_dump -U postgres -d icmr_leprosy_27_08_2019 > "C:\Users\Mithilesh Thakur\Desktop\icmr_leprosy_232.sql"
+
+
+amr_hp_dev_230_15_05_2020
+psql -U postgres amr_hp_dev_230_15_05_2020 <
 
 
 icmr_amr_26_08_2019
@@ -1770,9 +1878,9 @@ psql -U postgres nie_04_01_2017 < C:\Users\HISP\Desktop\nie_dev_Oct-26-16.sql
 TIBET
 
 
-tibet_pro_14_02_2019
+tibet_pro_29_05_2019
 
-psql -U postgres tibet_pro_14_02_2019 < C:\Users\HISP\Desktop\tibet_pro_Apr-12-18_1.sql
+psql -U postgres tibet_pro_29_05_2019 < C:\Users\HISP\Desktop\tibet_pro_Apr-12-18_1.sql
 
 
 psql -U postgres tibet_pro_09_01_2018 < C:\Users\HISP\Desktop\tibet_pro_Jan-09-18.sql
@@ -1936,8 +2044,9 @@ pg_dump -U postgres -d haryana_2.20_testing_18_01_2018 > C:\Users\HISP\Desktop\h
 
 
 
-demo_234_13_05_2020
-psql -U postgres demo_234_13_05_2020 < 
+demo_234_14_05_2020
+
+psql -U postgres demo_234_14_05_2020 < 
 pg_dump -U postgres -d demo_234_13_05_2020 > "C:\Users\Mithilesh Thakur\Desktop\demo_234_13_05_2020.sql"
 
 
@@ -1952,6 +2061,10 @@ ippf_afga_26_06_2019
 ippf_227_fpan_13_05_2020
 
 psql -U postgres ippf_227_fpan_13_05_2020 < C:\Users\HISP\Desktop\fpan_pro_Apr-23-18_1.sql
+
+pg_dump -U postgres -d ippf_227_fpan_13_05_2020 > "C:\Users\Mithilesh Thakur\Desktop\ippf_234_22_06_2020.sql"
+
+
 
 psql -U postgres ippf_pro_08_05_2019 < C:\Users\HISP\Desktop\fpan_pro_Apr-23-18_1.sql
 
@@ -2033,20 +2146,43 @@ psql -U postgres idsp_14_03_2018 < C:\Users\HISP\Desktop\idsp_demo_Mar-14-18_1.s
 
 Training
 
-pmtct_233_09_04_2020
-psql -U postgres pmtct_233_09_04_2020 < 
+
+ict-kenya
+
+ict_kenya_232_04_06_2020
+
+psql -U postgres ict_kenya_232_04_06_2020 < 
+
+
+pmtct_233_13_05_2020
+psql -U postgres pmtct_233_13_05_2020 < 
 
 myanmar_227_28_02_2020
 
-myanmar_hmis_04_05_2020
-psql -U postgres myanmar_hmis_04_05_2020 < 
-pg_dump -U postgres -d myanmar_hmis_04_05_2020  > "C:\Users\Mithilesh Thakur\Desktop\myanmar_hmis_with_analytics_233.sql"
+pg_dump -U postgres  -d rwanda_nut_233_13_06_2020 -t keyjsonvalue > "C:\Users\Mithilesh Thakur\Desktop\keyjsonvalue.sql"
+
+myanmar_hmis_16_06_2020
+
+psql -U postgres myanmar_hmis_16_06_2020 < 
+pg_dump -U postgres -d myanmar_hmis_16_06_2020  > "C:\Users\Mithilesh Thakur\Desktop\myanmar_hmis_with_analytics_233.sql"
 pg_dump -U postgres -d myanmar_hmis_04_05_2020  > "C:\Users\Mithilesh Thakur\Desktop\myanmar_hmis_with_out_analytics_233.sql"
 
 
+psql -U postgres pmtct_233_16_06_2020 < 
 
-myanmar_atm_14_04_2020
-psql -U postgres myanmar_atm_14_04_2020  < 
+pg_dump -U postgres  -d pmtct_233_13_05_2020 -t organisationunit > "C:\Users\Mithilesh Thakur\Desktop\myanmar_233_organisationunit_hmis.sql"
+
+psql  -U postgres -d pmtct_233_16_06_2020 -t organisationunit < 
+
+pg_dump -U postgres  -d pmtct_233_16_06_2020 -t organisationunit > "C:\Users\Mithilesh Thakur\Desktop\myanmar_233_organisationunit_pmtct.sql"
+
+pg_dump -U postgres -d pmtct_233_16_06_2020  > "C:\Users\Mithilesh Thakur\Desktop\pmtct_new_orgUnit_hierarchy_233_19th_may_2020.sql"
+
+
+
+
+myanmar_atm_01_06_2020
+psql -U postgres myanmar_atm_01_06_2020  < 
 
 pg_dump -U postgres -d myanmar_atm_14_04_2020   > "C:\Users\Mithilesh Thakur\Desktop\myanmar_atm_233.sql"
 
@@ -2116,6 +2252,13 @@ pg_dump -U postgres -d bhutan_local_11_07_2017 > C:\Users\HISP\Desktop\bhutan_lo
 
 
 
+psql -U postgres rwanda_nut_233_13_06_2020 <
+
+psql -U postgres rwanda_nut_233_13_06_2020 < "C:\Users\Mithilesh Thakur\Desktop\rwanda_nut_233_13_06_2020_db.sql"
+
+pg_dump -U postgres -d rwanda_nut_233_13_06_2020 > "C:\Users\Mithilesh Thakur\Desktop\rwanda_nut_233.sql"
+
+
 RWANDA MINAGRI
 
 pg_dump -U postgres -d rwanda_minagri_10_01_2017 > C:\Users\HISP\Desktop\rwanda_minagri_10_01_2017.sql
@@ -2172,6 +2315,14 @@ psql -U postgres leprosy_source_20_03_2018 < C:\Users\HISP\Desktop\leprosy__sour
 psql -U postgres leprosy_07_04_2017 < C:\Users\HISP\Desktop\leprosy_07042017.sql
 
 
+
+em production Yemen Emergency COVID-19
+em_pro_230_18_05_2020
+
+psql -U postgres em_pro_230_18_05_2020 <
+
+pg_dump -U postgres -d em_pro_230_18_05_2020 > "C:\Users\Mithilesh Thakur\Desktop\em_pro_233_without_analytics.sql"
+
 plan
 
 
@@ -2213,10 +2364,14 @@ psql -U postgres test_db_harsh < C:\Users\HISP\Desktop\pgDump.sql
 
 odisha
 
-odisha_232_20_04_2020
-psql -U postgres odisha_232_20_04_2020 < 
+odisha_232_27_07_2020
+psql -U postgres odisha_232_27_07_2020 < 
 
-psql -U postgres odisha_232_20_04_2020 < C:\Users\HISP\Desktop\dhis_turkey_13-Nov-2015.sql
+psql -U postgres odisha_232_27_07_2020  < C:\Users\HISP\Desktop\dhis_turkey_13-Nov-2015.sql
+
+pg_dump -U postgres  -d hp_upgraded_232_05_06_2020 -t systemsetting > "C:\Users\Mithilesh Thakur\Desktop\hp_232_systemsetting.sql"
+
+psql  -U postgres -d odisha_232_20_04_2020 -t systemsetting < 
 
 pg_dump -U postgres  -d odisha_232_20_04_2020 -t config_in > "C:\Users\Mithilesh Thakur\Desktop\odisha_232_config_in.sql"
 
@@ -2251,9 +2406,9 @@ psql -U postgres bihar_2.27_17_06_2019 <
 
 psql -U postgres bihar_230_24_12_2019 < 
 
-mh_227_04_05_2020
+mh_227_27_05_2020
 
-psql -U postgres mh_227_04_05_2020 < 
+psql -U postgres mh_227_27_05_2020 < 
 
 psql -U postgres mh_2.27_29_05_2019 < C:\Users\HISP\Desktop\dhis_turkey_13-Nov-2015.sql
 
@@ -3217,6 +3372,15 @@ from organisationunit ou
 left join organisationunit parent on parent.organisationunitid = ou.parentid
 group by ou.organisationunitid,parent.uid,parent.name
 
+
+select ou.organisationunitid orgUnitId, ou.uid orgUID, ou.name, parent.uid parentUID, 
+parent.organisationunitid parentID ,parent.name as parentname, concat(ou.uid,'-',parent.uid)
+from organisationunit ou
+left join organisationunit parent on parent.organisationunitid = ou.parentid
+group by ou.organisationunitid,parent.uid,parent.name
+
+
+
 // dataelements list with data-sets with categoryUID,categoryID ,categoryName categoryoptioncomboid categoryoptioncomboname 
 categoryoptioncomboUID
 
@@ -3231,6 +3395,20 @@ inner join datasetelement dsm on dsm.dataelementid = de.dataelementid
 inner join dataset ds on ds.datasetid = dsm.datasetid
 group by de.dataelementid,de.uid,cc.uid,de.name,cc.name,coc.categoryoptioncomboid ,coc.uid,cocname.categoryoptioncomboname
 order by de.name,cc.name,cocname.categoryoptioncomboname;
+
+// select ds.name as dataSetName, ds.uid as dataSetUid, de.dataelementid as deid,de.uid as deUID,de.name as deName,cc.uid as categoryUID,
+cc.name as categoryName,coc.categoryoptioncomboid as categoryoptioncomboid,coc.uid as categoryoptionComboUID,cocname.categoryoptioncomboname as categoryOptionComboName
+from dataelement  as de  
+inner join categorycombo as cc on cc.categorycomboid = de.categorycomboid 
+inner join categorycombos_optioncombos as cc_coc on cc_coc.categorycomboid = de.categorycomboid
+inner join categoryoptioncombo as coc on coc.categoryoptioncomboid = cc_coc.categoryoptioncomboid
+inner join _categoryoptioncomboname as cocname on coc.categoryoptioncomboid = cocname.categoryoptioncomboid
+inner join datasetelement dsm on dsm.dataelementid = de.dataelementid
+inner join dataset ds on ds.datasetid = dsm.datasetid
+order by ds.name,cc.name,cocname.categoryoptioncomboname;
+
+
+
 
 // dataelements list with data-sets with categoryUID,categoryID ,categoryName categoryoptioncomboid categoryoptioncomboname 
 categoryoptioncomboUID for 2.7
@@ -3296,6 +3474,12 @@ INNER JOIN _orgunitstructure ON _orgunitstructure.organisationunitid = organisat
 and _orgunitstructure.level = 4;
 
 
+select ou.organisationunitid orgUnitId, ou.uid orgUID, ou.name, parent.uid parentUID, 
+parent.organisationunitid parentID ,parent.name as parentname, concat(ou.uid,'-',parent.uid)
+from organisationunit ou
+left join organisationunit parent on parent.organisationunitid = ou.parentid
+group by ou.organisationunitid,parent.uid,parent.name
+
 
 
 SELECT ou1.name, _orgunitstructure.idlevel1, _orgunitstructure.uidlevel1,  
@@ -3310,6 +3494,28 @@ left JOIN organisationunit ou4 ON ou4.uid = _orgunitstructure.uidlevel4
 where level < 5
 order by level;
 
+
+// user import query
+
+select 	ui.firstname, ui.surname, us.username,org.uid, ui.uid  from userinfo ui
+INNER JOIN users us ON us.userid = ui.userinfoid
+INNER JOIN usermembership um ON um.userinfoid = ui.userinfoid
+inner join organisationunit org ON org.organisationunitid = um.organisationunitid
+
+
+// user-role list
+
+select 	urm.userid,us.username, urm.userroleid,ur.name,ur.uid from  userrolemembers urm
+INNER JOIN users us ON us.userid = urm.userid
+INNER JOIN userrole ur on ur.userroleid = urm.userroleid
+
+// user-outPut org list
+
+select 	uo.userinfoid,us.username, org.uid outPutOrgUID from  userdatavieworgunits uo
+INNER JOIN userinfo ui ON ui.userinfoid = uo.userinfoid
+INNER JOIN users us ON us.userid = ui.userinfoid
+inner join organisationunit org ON org.organisationunitid = uo.organisationunitid
+order by us.username
 
 select count(*) from _orgunitstructure
 where level < 5
@@ -3591,8 +3797,20 @@ group by ou1.uid,ou1.code,ou2.uid,ou2.code,ou3.uid,ou3.code;
 
 
 
+up to level-4
 
 
+select
+ou1.uid as uid1,max(ou1.name) as Level1,ou1.code as code1,
+ou2.uid as uid2,max(ou2.name) as Level2 , ou2.code as code2,
+ou3.uid as uid3,max(ou3.name) as Level3 , ou3.code as code3
+
+from _orgunitstructure ous
+inner join organisationunit ou1 on ou1.organisationunitid = ous.idlevel1
+inner join organisationunit ou2 on ou2.organisationunitid = ous.idlevel2
+inner join organisationunit ou3 on ou3.organisationunitid = ous.idlevel3
+
+group by ou1.uid,ou1.code,ou2.uid,ou2.code,ou3.uid,ou3.code;
 
 
 
@@ -3871,9 +4089,8 @@ git remote add upstream https://github.com/dhis2/event-capture-app
 //for buids
 git remote add upstream https://github.com/d2-ci/event-capture-app
 
-
-
-
+// for dhis-capture app
+git remote add upstream https://github.com/dhis2/capture-app.git
 
 // for data-admin app
 
@@ -3916,6 +4133,13 @@ git remote add upstream https://github.com/hispindia/dhis2-capture-app.git
 
 $ git reset --hard HEAD~1
 $ git push origin master --force
+
+
+// mithileshhisp git Repositories
+
+git branch openIMIS-dhis2-ou-sync // for create new branch
+git checkout openIMIS-dhis2-ou-sync
+git push origin openIMIS-dhis2-ou-sync
 
 
 
@@ -4289,9 +4513,41 @@ git merge origin/STATE-2.32 origin/2.32 -m "Merge and update STATE-2.32 Branch w
 git push origin STATE-2.32
 
 
+// ODISHA_STATE-2.32
+git branch ODISHA_STATE-2.32 // for create new branch for orisha 2.32
+git checkout ODISHA_STATE-2.32
+git push origin ODISHA_STATE-2.32
+git worktree add /e/scm/git_odisha_2.32 ODISHA_STATE-2.32
+git merge origin/ODISHA_STATE-2.32 origin/STATE-2.32 -m "Merge and update ODISHA_STATE-2.32 Branch with STATE-2.32 branch"
+git push origin ODISHA_STATE-2.32
+
+
+// HP_STATE-2.32
+git branch HP_STATE-2.32 // for create new branch for HP 2.32
+git checkout HP_STATE-2.32
+git push origin HP_STATE-2.32
+git worktree add /e/scm/git_hp_state_2.32 HP_STATE-2.32
+git merge origin/HP_STATE-2.32 origin/STATE-2.32 -m "Merge and update HP_STATE-2.32 Branch with STATE-2.32 branch"
+git push origin HP_STATE-2.32
+
+
+// for WHO-LEP-2.33
+git branch WHO-LEP-2.33 // for create new branch for WHO-LEP-2.33
+git checkout WHO-LEP-2.33
+git push origin WHO-LEP-2.33
+git worktree add /e/scm/git_who_lep_2.33 WHO-LEP-2.33
+git merge origin/WHO-LEP-2.33 origin/2.33 -m "Merge and update WHO-LEP-2.33 Branch with parent branch"
+git push origin WHO-LEP-2.33
 
 
 
+// for NIPI-2.34
+git branch NIPI-2.34 // for create new branch for NIPI-2.34
+git checkout NIPI-2.34
+git push origin NIPI-2.34
+git worktree add /e/scm/git_nipi_2.34 NIPI-2.34
+git merge origin/NIPI-2.34 origin/2.34 -m "Merge and update NIPI-2.34 Branch with parent branch"
+git push origin NIPI-2.34
 
 
 $ git worktree add /e/scm/git_plan_2.26 PLAN-2.26
@@ -4646,11 +4902,17 @@ git branch Rwanda-Growth-Tracking-v33 // for create new branch for tracker captu
 git checkout Rwanda-Growth-Tracking-v33
 git push origin Rwanda-Growth-Tracking-v33
 git worktree add /e/gitHub_source_code/rwanda_growth_tracking_2.33 Rwanda-Growth-Tracking-v33
-git merge origin/Rwanda-Growth-Tracking-v33   origin/v33 -m "Merge PLAN Tracker Capture App with parent branch"
+git merge origin/Rwanda-Growth-Tracking-v33 origin/v33 -m "Merge Rwanda-Growth-Tracking-v33 Tracker Capture App with parent branch"
 git push origin Rwanda-Growth-Tracking-v33
 
 
-
+// UNICEF PMTCT Tracker Myanmar-v33  for tracker-capture
+git branch PMTCT-Tracker-Myanmar-v33 // for create new branch for tracker capture
+git checkout PMTCT-Tracker-Myanmar-v33
+git push origin PMTCT-Tracker-Myanmar-v33
+git worktree add /e/gitHub_source_code/pmtct_tracker-myanmar_v33 PMTCT-Tracker-Myanmar-v33
+git merge origin/PMTCT-Tracker-Myanmar-v33   origin/v33 -m "Merge PMTCT-Tracker-Myanmar-v33 Tracker Capture App with parent branch"
+git push origin PMTCT-Tracker-Myanmar-v33
 
 
 
@@ -4712,6 +4974,39 @@ git merge origin/punjab-v30  origin/v30 -m "Merge PUNJAB Event Capture App Build
 git push origin punjab-v30
 
 
+
+// OU-Period-Progressive-Report-mapping
+
+git branch odisha-v32  // for create new branch for odisha-v32  OU-Period-Progressive-Report-mapping 
+git checkout odisha-v32
+git push origin odisha-v32
+
+
+git branch bihar-v27  // for create new branch for bihar-v27  OU-Period-Progressive-Report-mapping 
+git checkout bihar-v27
+git push origin bihar-v27
+
+git branch mh-v27  // for create new branch for mh-v27  OU-Period-Progressive-Report-mapping 
+git checkout mh-v27
+git push origin mh-v27
+
+
+
+
+// OU-Period-Progressive-Report
+
+git branch odisha-v32  // for create new branch for odisha-v32  OU-Period-Progressive-Report
+git checkout odisha-v32
+git push origin odisha-v32
+
+git branch bihar-v27  // for create new branch for bihar-v27  OU-Period-Progressive-Report
+git checkout bihar-v27
+git push origin bihar-v27
+
+
+git branch mh-v27  // for create new branch for mh-v27  OU-Period-Progressive-Report
+git checkout mh-v27
+git push origin mh-v27
 
 
 // dhis-data-administration-app
@@ -4789,7 +5084,6 @@ git pull origin UPHMIS-v30
 
 git merge origin/UPHMIS-v30  origin/v30 -m "Merge UPHMIS maintenance-app-build with parent branch"
 git push origin UPHMIS-v30
-
 
 
 
@@ -4901,6 +5195,13 @@ after removing translation and trackedentitydatavalue table
 git branch excel-to-json-angular
 git checkout excel-to-json-angular
 git push origin excel-to-json-angular
+
+// for IPPF bulk-event-enrollment push
+
+git branch ippf-bulk-event-enrollment-push
+git checkout ippf-bulk-event-enrollment-push
+git push origin ippf-bulk-event-enrollment-push
+
 
 // for hisp-india-website
 
@@ -5194,7 +5495,19 @@ then
 yarn build on cygwin
 
 
+// rwanda-growth-tracking -- tracker-capture
 
+https://github.com/jonasbhe/growth-tracking-27
+
+//growth-tracking-analytics
+https://github.com/jonasbhe/growth-tracking-analytics
+
+
+// UPHMIS portal-mock-api
+
+npm install ssl-root-cas
+npm install body-parser
+node server.js
 
 
 https://play.dhis2.org/appstore/app/M3T1BGCjD3y
@@ -5249,6 +5562,7 @@ npm install
 npm install --save sweetalert
 npm run build
 
+npm cache clean --force 
 
 "build": "ng build --prod --aot --output-hashing all --named-chunks false --build-optimizer --vendor-chunk  && cd dist && zip -r -D distribution-point.zip .",
 
@@ -5279,6 +5593,19 @@ https://github.com/hispindia/openimis-dhis2integration
 https://github.com/hispindia/openimis-fhir-definitions
 https://github.com/hispindia/openimis-be-api_fhir_py
 https://github.com/openimis/openimis-be_py/tree/develop
+
+
+// create branch in side openimis https://github.com/openimis/openimis-be-api_fhir_py.git  name feature_hispindia
+git branch feature_hispindia  // for create new branch for for maintenance-app
+git checkout feature_hispindia
+git push origin feature_hispindia
+git pull origin feature_hispindia
+
+
+
+
+
+
 
 //openIMIS database
 https://github.com/openimis/database_ms_sqlserver/tree/master/Demo%20database 
@@ -5356,6 +5683,23 @@ SQL View Parameters
 var param = "var=program:"+program.id + "&var=orgunit:"+$scope.selectedOrgUnitName_level_id+"&var=startdate:"+$scope.startdateSelected+"&var=enddate:"+$scope.enddateSelected;
 
 https://uphmis.in/uphmis/api/sqlViews/yHR3u7imDlB/data.json?var=deuid:qYpFbVo8WsL&var=orgunituid:N5WWbRtsjWp
+
+https://ln1.hispindia.org/leprosy/api/sqlViews/pRpki4MlEOr/data.json?paging=false
+https://ln1.hispindia.org/leprosy/api/sqlViews/xK5wR6gwMtW/data.json?paging=false&var=dataSetUid:m4Hy2QZbW9p&var=startDate:2019-01-01&var=endDate:2019-12-31
+
+SELECT dv.sourceid,org1.name as region_Name , org1.uid as region_uid, org.name as country_name,
+org.uid as country_uid,count( dv.sourceid ) from datavalue dv
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+INNER JOIN organisationunit org1 ON org1.organisationunitid = org.parentid
+INNER JOIN datasetelement dse ON dse.dataelementid = dv.dataelementid
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN dataset ds ON ds.datasetid = dse.datasetid
+INNER JOIN period pe ON pe.periodid = dv.periodid
+where ds.uid = '${dataSetUid}' and dv.deleted is not true and 
+dv.dataelementid not in ( 22506,2350,2349, 1774 ) and 
+pe.startdate = '${startDate}' and pe.enddate = '${endDate}'
+group by dv.sourceid,org1.name,org1.uid,org.name,org.uid order by org1.name;
+
 
 
 /api/sqlViews/{id}/data?var=key1:value1&var=key2:value2
@@ -5762,6 +6106,38 @@ INNER JOIN program pg ON pg.programid = ps.programid
 order by pg.name
 
 
+//  who_leprosy reporting rate query
+
+SELECT dv.sourceid,org1.name as Region_Name ,org.name as country_name,count( dv.sourceid ) 
+from datavalue dv
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+INNER JOIN organisationunit org1 ON org1.organisationunitid = org.parentid
+INNER JOIN datasetelement dse ON dse.dataelementid = dv.dataelementid
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN dataset ds ON ds.datasetid = dse.datasetid
+INNER JOIN period pe ON pe.periodid = dv.periodid
+where ds.uid in( 'KaaRzuDwB2X') and dv.deleted is not true and 
+dv.dataelementid not in ( 22506,2350,2349, 1774 ) and 
+pe.startdate = '2019-01-01' and pe.enddate = '2019-12-31'
+group by dv.sourceid,org1.name,org.name order by org1.name;	
+
+
+SELECT dv.sourceid,org1.name as region_Name , org1.uid as region_uid, org.name as country_name,
+org.uid as country_uid,count( dv.sourceid ) from datavalue dv
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+INNER JOIN organisationunit org1 ON org1.organisationunitid = org.parentid
+INNER JOIN datasetelement dse ON dse.dataelementid = dv.dataelementid
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN dataset ds ON ds.datasetid = dse.datasetid
+INNER JOIN period pe ON pe.periodid = dv.periodid
+where ds.uid = '${dataSetUid}' and dv.deleted is not true and 
+dv.dataelementid not in ( 22506,2350,2349, 1774 ) and 
+pe.startdate = '${startDate}' and pe.enddate = '${endDate}'
+group by dv.sourceid,org1.name,org1.uid,org.name,org.uid order by org1.name;
+
+
+
+
 Excel import & Report app db key migration from systemsetting table to keyjsonvalue table
 
 Excel-import-app-templates
@@ -6144,6 +6520,15 @@ SELECT programstageinstanceid, uid,
  FROM
    programstageinstance;   
 
+
+SELECT programstageinstanceid, uid,
+ eventdatavalues #>> '{S1sDvEir5Ur, value}'
+ 
+ FROM
+   programstageinstance;
+
+
+
 create or replace function generate_uid()
   returns text as
 $$
@@ -6161,6 +6546,21 @@ language plpgsql;
 
 
 // apis
+
+all teis for selected program and orgUnit
+https://yesme.plan-yes.online/yesme/api/trackedEntityInstances.json?program=y6lXVg8TdOj&ou=qaKyG3zWNO4&paging=false&attributes&enrollments
+
+https://yesme.plan-yes.online/yesme/api/trackedEntityInstances.json?program=y6lXVg8TdOj&ou=qaKyG3zWNO4&paging=false&fields=*
+
+
+// for one tei
+https://yesme.plan-yes.online/yesme/api/trackedEntityInstances/JJ8pwI1u4dx.json?program=y6lXVg8TdOj&ou=qaKyG3zWNO4&paging=false&fields=*,attributes,enrollments
+
+
+
+//
+https://yesme.plan-yes.online/yesme/api/trackedEntityInstances/JJ8pwI1u4dx.json?program=y6lXVg8TdOj&ou=qaKyG3zWNO4&paging=false&fields=*
+
 
 api/optionSets.json?fields=id,name,code,options[id,name,code]&filter=code:eq:"+code+"&rootJunction=OR&paging=false
 https://amrtest.icmr.org.in/amr/api/optionSets.json?fields=id,name,code,options[id,name,code]&filter=code:eq:Uttar%20Pradesh&rootJunction=OR&paging=false
@@ -6182,3 +6582,252 @@ http://172.105.47.158/intpart232/api/events.json?orgUnit=fMTeIPKpZbI&program=Nb2
 https://yesme.plan-yes.online/yesme/api/events.json?program=lmx0np5tbk2&orgUnit=hvgoH6EjhsZ&&ouMode=DESCENDANTS&startDate=2020-01-01&endDate=2020-04-30&fields=*,relationships&paging=false
 
 https://yesme.plan-yes.online/yesme/api/events.json?program=lmx0np5tbk2&orgUnit=hvgoH6EjhsZ&&ouMode=DESCENDANTS&startDate=2020-01-01&endDate=2020-04-30&order=eventDate:asc&paging=false
+
+// ippf
+http://127.0.0.1:8092/dhis234/api/events.json?program=dWPcV6EiVB1&orgUnit=hRFwxAbtA83&&ouMode=DESCENDANTS&enrollmentStatus=COMPLETED&paging=false
+http://127.0.0.1:8092/dhis234/api/events.json?program=dWPcV6EiVB1&orgUnit=hRFwxAbtA83&&ouMode=DESCENDANTS&status=ACTIVE&paging=false
+http://127.0.0.1:8092/dhis234/api/events.json?program=dWPcV6EiVB1&orgUnit=hRFwxAbtA83&&ouMode=DESCENDANTS&status=ACTIVE&filter=S1sDvEir5Ur:eq:Test%20school&paging=false
+http://127.0.0.1:8092/dhis234/api/events/query.json?orgUnit=hRFwxAbtA83&programStage=d1rVH5boEKJ&dataElement=S1sDvEir5Ur
+http://127.0.0.1:8092/dhis234/api/events.json?program=dWPcV6EiVB1&orgUnit=hRFwxAbtA83&ouMode=DESCENDANTS&paging=false
+
+http://127.0.0.1:8092/dhis234/api/trackedEntityInstances/yaYoqHhILId.json?fields=enrollments,attributes
+http://127.0.0.1:8092/dhis234/api/trackedEntityInstances/yaYoqHhILId.json?fields=*&paging=false
+http://127.0.0.1:8092/dhis234/api/enrollments.json?&ou=hRFwxAbtA83&program=dWPcV6EiVB1&trackedEntityInstance=yaYoqHhILId&paging=false
+
+
+http://127.0.0.1:8092/dhis234/api/enrollments.json?program=dWPcV6EiVB1&ou=hRFwxAbtA83&status=ACTIVE&paging=false
+http://127.0.0.1:8092/dhis234/api/trackedEntityInstances.json?program=dWPcV6EiVB1&ou=hRFwxAbtA83&paging=false&fields=enrollments[filter=status=COMPLETED],attributes
+
+https://yesme.plan-yes.online/yesme/api/enrollments.json?program=VscnMM6g6Ow&ou=sdQOJ7uN5tO&status=COMPLETED&paging=false
+
+https://yesme.plan-yes.online/yesme/api/trackedEntityInstances.json?program=y6lXVg8TdOj&ou=qaKyG3zWNO4&paging=false&fields=enrollments[filter=status=COMPLETED],attributes
+
+ENiP4wEAm9t
+
+// enrollment update
+http://127.0.0.1:8092/dhis234/api/30/enrollments/ciH0tThARgY
+put
+attributes: []
+created: "2020-03-02T17:20:15.510"
+createdAtClient: "2020-03-02T17:20:15.510"
+deleted: false
+enrollment: "ciH0tThARgY"
+enrollmentDate: "2020-03-02"
+followup: false
+incidentDate: "2020-03-02"
+lastUpdated: "2020-03-02T17:20:15.629"
+lastUpdatedAtClient: "2020-03-02T17:20:15.629"
+orgUnit: "hRFwxAbtA83"
+program: "dWPcV6EiVB1"
+relationships: []
+status: "COMPLETED"
+trackedEntityInstance: "yaYoqHhILId"
+trackedEntityType: "Aq4kwM1gnUM"
+
+
+// update trackedEntityInstances
+
+
+http://127.0.0.1:8092/dhis234/api/30/trackedEntityInstances/H7PzsO6cSIy
+PUT
+
+{created: "2020-04-09T09:30:36.795", orgUnit: "uHMj0yRLgyY",…}
+attributes: [{attribute: "MaBiIrJDIWA", value: "Female"}, {attribute: "OtlvScDjzcR", value: "Namobuddha"},…]
+0: {attribute: "MaBiIrJDIWA", value: "Female"}
+1: {attribute: "OtlvScDjzcR", value: "Namobuddha"}
+2: {attribute: "Z3iRWT5y8ET", value: "Namobuddha"}
+3: {attribute: "aSpasplLgMf", value: 25}
+4: {attribute: "tsBbDQe3sGo", value: "Ranju tamang"}
+5: {attribute: "x8DsdwsLJKE", value: 12}
+6: {attribute: "zJKv5dQVKVI", value: "Janjati"}
+created: "2020-04-09T09:30:36.795"
+createdAtClient: "2020-04-09T09:30:38.514"
+deleted: false
+featureType: "NONE"
+inactive: false
+lastUpdated: "2020-05-25T21:39:49.564"
+lastUpdatedAtClient: "2020-04-09T09:30:38.514"
+orgUnit: "uHMj0yRLgyY"
+programOwners: [{ownerOrgUnit: "uHMj0yRLgyY", program: "xBFke3TQXO7", trackedEntityInstance: "H7PzsO6cSIy"}]
+0: {ownerOrgUnit: "uHMj0yRLgyY", program: "xBFke3TQXO7", trackedEntityInstance: "H7PzsO6cSIy"}
+ownerOrgUnit: "uHMj0yRLgyY"
+program: "xBFke3TQXO7"
+trackedEntityInstance: "H7PzsO6cSIy"
+relationships: []
+trackedEntityInstance: "H7PzsO6cSIy"
+trackedEntityType: "Aq4kwM1gnUM"
+
+
+// new enrollments
+http://127.0.0.1:8092/dhis234/api/30/enrollments
+
+POST
+
+{trackedEntityInstance: "H7PzsO6cSIy", program: "xBFke3TQXO7", status: "ACTIVE",…}
+enrollmentDate: "2020-05-25"
+incidentDate: "2020-05-25"
+orgUnit: "uHMj0yRLgyY"
+program: "xBFke3TQXO7"
+status: "ACTIVE"
+trackedEntityInstance: "H7PzsO6cSIy"
+
+
+
+response
+
+httpStatus: "OK"
+httpStatusCode: 200
+message: "Import was successful."
+response: {responseType: "ImportSummaries", status: "SUCCESS", imported: 1, updated: 0, deleted: 0, ignored: 0,…}
+deleted: 0
+ignored: 0
+importOptions: {idSchemes: {}, dryRun: false, async: false, importStrategy: "CREATE_AND_UPDATE", mergeMode: "REPLACE",…}
+importSummaries: [{responseType: "ImportSummary", status: "SUCCESS",…}]
+0: {responseType: "ImportSummary", status: "SUCCESS",…}
+events: {responseType: "ImportSummaries", status: "SUCCESS", imported: 0, updated: 0, deleted: 0, ignored: 0,…}
+href: "http://127.0.0.1:8092/dhis234/api/enrollments/LtcyXpLkXDK"
+importCount: {imported: 1, updated: 0, ignored: 0, deleted: 0}
+importOptions: {idSchemes: {}, dryRun: false, async: false, importStrategy: "CREATE_AND_UPDATE", mergeMode: "REPLACE",…}
+reference: "LtcyXpLkXDK"
+responseType: "ImportSummary"
+status: "SUCCESS"
+imported: 1
+responseType: "ImportSummaries"
+status: "SUCCESS"
+total: 1
+updated: 0
+status: "OK"
+
+
+response.response.importSummaries[0].reference;
+
+
+// new events
+http://127.0.0.1:8092/dhis234/api/30/events.json
+
+POST
+
+events: [{trackedEntityInstance: "ENiP4wEAm9t", program: "dWPcV6EiVB1", programStage: "d1rVH5boEKJ",…}]
+0: {trackedEntityInstance: "ENiP4wEAm9t", program: "dWPcV6EiVB1", programStage: "d1rVH5boEKJ",…}
+dueDate: "2020-05-25"
+enrollment: "LtcyXpLkXDK"
+orgUnit: "hRFwxAbtA83"
+program: "dWPcV6EiVB1"
+programStage: "d1rVH5boEKJ"
+status: "SCHEDULE"
+trackedEntityInstance: "ENiP4wEAm9t"
+
+
+https://ln1.hispindia.org/odisha/api/organisationUnits.geojson?parent=MkN1fDV9fD2
+
+
+
+
+https://172.105.47.158/ict4cop_kenya/api/userGroups.json?fields=id,name,code,users[id,name,phoneNumber]&paging=false
+
+
+
+
+
+
+https://ln2.hispindia.org/ippf_dev/api/organisationUnits.json?fields=id,name,code,level&filter=level:eq:1&sortOrder=ASC&paging=false
+
+
+/api/organisationUnits.json?fields=id,name,code,level,attributeValues[attribute[id,name,code],value]&filter=level:eq:4&sortOrder=ASC&paging=false
+
+// get orgUnit level-wise
+
+{
+organisationUnits: [
+{
+code: "Root",
+level: 1,
+name: "Root",
+id: "yToWgUDECAh",
+attributeValues: [
+{
+value: "root",
+attribute: {
+code: "openIMISLocationId",
+name: "OpenIMIS LocationId",
+id: "veZ49fBzseV"
+}
+},
+{
+value: "root",
+attribute: {
+code: "openIMISLocationType",
+name: "OpenIMIS LocationType",
+id: "gOXwCqwgxL9"
+}
+}
+]
+}
+]
+}
+
+
+
+
+
+// orgUnit add api
+
+
+
+
+http://127.0.0.1:8092/dhis234/api/29/schemas/organisationUnit
+Request Method: POST
+Status Code: 200 OK
+
+
+{name: "Test orgUnit", shortName: "Test orgUnit", openingDate: "2020-06-24T18:30:00.000Z",…}
+name: "Test orgUnit"
+openingDate: "2020-06-24T18:30:00.000Z"
+parent: {id: "YFIhxwKA3WR"}
+shortName: "Test orgUnit"
+
+
+
+http://127.0.0.1:8092/dhis234/api/29/organisationUnits
+Request Method: POST
+Status Code: 201 Created
+
+{name: "Test orgUnit", shortName: "Test orgUnit", openingDate: "2020-06-24T18:30:00.000Z",…}
+name: "Test orgUnit"
+openingDate: "2020-06-24T18:30:00.000Z"
+parent: {id: "YFIhxwKA3WR"}
+shortName: "Test orgUnit"
+
+
+
+// for post
+http://127.0.0.1:8092/dhis234/api/29/organisationUnits
+Request Method: POST
+Status Code: 201 Created
+
+{,…}
+attributeValues: [{value: "test123", attribute: {id: "veZ49fBzseV", name: "OpenIMIS LocationId"}},…]
+0: {value: "test123", attribute: {id: "veZ49fBzseV", name: "OpenIMIS LocationId"}}
+attribute: {id: "veZ49fBzseV", name: "OpenIMIS LocationId"}
+id: "veZ49fBzseV"
+name: "OpenIMIS LocationId"
+value: "test123"
+1: {value: "test456", attribute: {id: "gOXwCqwgxL9", name: "OpenIMIS LocationType"}}
+attribute: {id: "gOXwCqwgxL9", name: "OpenIMIS LocationType"}
+id: "gOXwCqwgxL9"
+name: "OpenIMIS LocationType"
+value: "test456"
+name: "Test123"
+openingDate: "2020-06-30T18:30:00.000Z"
+parent: {id: "yToWgUDECAh"}
+id: "yToWgUDECAh"
+shortName: "Test123"
+
+
+
+
+Posting orgUnit: {"organisationUnits": [
+{"name":"Ultha", "shortName":"Ultha", "code":"R1", "openingDate":"2020-07-02", 
+"parent":"{"id":"yToWgUDECAh"}", 
+"attributeValues":"[{"value":"1", "attribute":"{"id":"veZ49fBzseV"}"}, 
+{"value":"R", "attribute":"{"id":"gOXwCqwgxL9"}"}]"}]}
