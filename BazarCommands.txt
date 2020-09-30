@@ -306,6 +306,15 @@ password reset in MY_SQL
 SET PASSWORD FOR 'root'@'localhost' = PASSWORD('MyNewPass');
 
 
+
+// my-sql hispdev password code '56fca91da7db86434c23f579993ccbae' // Devhisp@1
+
+UPDATE users SET PASSWORD = '56fca91da7db86434c23f579993ccbae' WHERE username = 'hispdev';
+
+MY-SQL District1 -- 59ef69feca1a172a17384b14a7a8529a
+
+// postgres
+
 dhis -- trunk
 
 username -- hispdev
@@ -332,6 +341,10 @@ public access no access update dataset set publicaccess = '--------';
 
 public access(view/edit) meta data read/write data reade ----   'rwr-----'
 public access(view/edit) meta data read/write data --- can/edit/view ----- rwrw----
+
+public access(view/edit) meta data can edit and view ----   'rw------'
+
+update indicator set publicaccess  = 'rw------' // for meta data can edit and view
 
 update dataelementcategoryoption set publicaccess = 'rwrw----' where publicaccess = 'rwr-----';
 
@@ -594,10 +607,16 @@ insert into organisationunit (organisationunitid,uid,name,shortname,parentid,ope
 insert into organisationunit (organisationunitid,uid,code,name,shortname,parentid,openingdate,created,lastupdated,hierarchylevel,featuretype) values
 ="(nextval('hibernate_sequence'),'"&E2&"','"&F2&"','"&G2&"','"&H2&"',"&D2&",'"&J2&"','2018-05-25','2018-05-25',"&I2&",'"&K2&"' ),"
 
-
+insert into organisationunit (organisationunitid,name,shortname,parentid,openingdate,created,lastupdated,hierarchylevel) values
+="(nextval('hibernate_sequence'),'"&A2&"','"&A2&"',"&E2&",'1987-05-18','2020-09-14','2020-09-14',"&G2&"),"
 
 insert into organisationunit (organisationunitid,uid,code,name,shortname,parentid,openingdate,created,lastupdated,hierarchylevel,featuretype, coordinates) values
 ="(nextval('hibernate_sequence'),'"&E2&"','"&F2&"','"&G2&"','"&H2&"',"&D2&",'"&J2&"','2018-05-29','2018-05-29',"&I2&",'"&K2&"', '"&M2&"'),"
+
+
+
+insert into organisationunit (organisationunitid,uid, name,shortname,parentid,openingdate,created,lastupdated,hierarchylevel) values
+="(nextval('hibernate_sequence'),'"&B2&"','"&A2&"','"&A2&"',"&E2&",'1987-05-18','2020-09-14','2020-09-14',"&G2&"),"	
 
 ="update organisationunit set featuretype  = '"&G2&"', coordinates  = '"&H2&"' where organisationunitid = "&C2&";"
 
@@ -629,6 +648,11 @@ update trackedentityattributevalue set lastupdated = now()::timestamp where last
 
 insert into dataelement (dataelementid, created, lastupdated,name, shortname, formname, valuetype, domaintype, aggregationtype, categorycomboid, zeroissignificant, optionsetid, publicaccess) values
 ="(nextval('hibernate_sequence'),'2018-10-03','2018-10-03', '"&A2&"','"&C2&"','"&D2&"','"&F2&"','"&E2&"','"&G2&"',"&H2&",'false',"&L2&", 'rw------'),"
+
+
+update dataelement set created = now()::timestamp where created = '2020-09-29';
+update dataelement set lastupdated = now()::timestamp where lastupdated = '2020-09-29';
+
 
 insert into optionset (optionsetid, uid, code, created, lastupdated, lastupdatedby name, valuetype, userid, publicaccess) values
 ="(nextval('hibernate_sequence'),'"&B2&"','"&C2&"','2019-06-12','2019-06-12',57,'"&A2&"','TEXT',57,'rw------'),"
@@ -1434,13 +1458,21 @@ psql  -U postgres -d training_land_233_07_07_2020  <
 pg_dump -U postgres -d training_land_233_07_07_2020 > "C:\Users\Mithilesh Thakur\Desktop\training_land_233_07_07_2020.sql"
 
 
+kyrgyzstan_234_11_08_2020
+psql  -U postgres -d kyrgyzstan_234_11_08_2020  < 
+pg_dump -U postgres -d kyrgyzstan_2.34_11_08_2020  > "C:\Users\Mithilesh Thakur\Desktop\kyrgyzstan_234_data_base.sql"
+
+
+
 fhi360_merge_21_07_2020
 
 fhi360_232_03_07_2020
 
+fhi360_232_onhis_26_08_2020
 
 
-psql  -U postgres -d fhi360_merge_21_07_2020  < 
+
+psql  -U postgres -d fhi360_232_onhis_26_08_2020  < 
 
 
 
@@ -1465,8 +1497,10 @@ psql  -U postgres -d nepal_hmis_230_11_02_2020 < C:\UsersMithilesh Thakur\Deskto
 
 hiv_tracker_232_27_05_2020
 
+hiv_tracker_232_31_08_2020
 
-psql  -U postgres -d hiv_tracker_232_27_05_2020 < C:\Users\HISP\Desktop\sqlview_14_04_2016.sql
+
+psql  -U postgres -d hiv_tracker_232_31_08_2020 < C:\Users\HISP\Desktop\sqlview_14_04_2016.sql
 
 pg_dump -U postgres -d hiv_tracker_232_20_01_2020 > "C:\Users\Mithilesh Thakur\Desktop\hiv_tracker_232_23_01_2020_with_out_analytics.sql"
 
@@ -1480,13 +1514,22 @@ pg_dump -U dbuser -d dbname -t tablename > outputfilename.sql
 psql  -U postgres -d hp_07_04_2016_2.20 -t sqlview < 
 
 
+nipi_234_03_09_2020
+
+psql  -U postgres -d nipi_234_03_09_2020 < 
+
 nipi_ncr_234_27_07_2020
 
 psql  -U postgres -d nipi_ncr_234_27_07_2020 < 
 
-nipi_234_22_07_2020
 
-psql  -U postgres -d nipi_234_22_07_2020 < 
+nipi_mp_235_10_09_2020
+
+psql  -U postgres -d nipi_mp_235_10_09_2020 < 
+
+nipi_234_05_08_2020
+
+psql  -U postgres -d nipi_234_05_08_2020 < 
 
 pg_dump -U postgres -d nipi_234_22_06_2020 > "C:\Users\Mithilesh Thakur\Desktop\nipi_db_234_07_05_2020.sql"
 
@@ -1572,8 +1615,16 @@ psql -U postgres tb_demo_22_05_2019 <
 tb_demo_22_05_2019
 
 
+epi_tracker_234_18_09_2020
+psql -U postgres epi_tracker_234_18_09_2020 < 
 
-psql -U postgres training_land_22_07_2019 <
+demo_training_234_13_08_2020
+psql -U postgres demo_training_234_13_08_2020 < 
+pg_dump -U postgres -d demo_training_234_13_08_2020 > "C:\Users\Mithilesh Thakur\Desktop\demo_training_234.sql"
+
+
+
+psql -U postgres training_land_22_07_2019 < 
 
 
 psql -U postgres punjab_hmis_22_07_2019 <
@@ -1586,7 +1637,11 @@ psql -U postgres intpart_232_19_02_2020 <
 
 pg_dump -U postgres -d intpart_232_balari_13_09_2019 > "C:\Users\Mithilesh Thakur\Desktop\intpart_balari_232.sql"
 
-intpart_dmc_233_29_07_2020
+intpart_dmc_233_13_08_2020
+
+psql -U postgres intpart_dmc_233_13_08_2020 <  
+
+pg_dump -U postgres -d intpart_dmc_233_29_07_2020 > "C:\Users\Mithilesh Thakur\Desktop\intpart_dmc_233.sql"
 
 psql -U postgres intpart_232_dmc_24_06_2020 <
 
@@ -1664,12 +1719,14 @@ imis_233_17_04_2020
 psql -U postgres imis_233_17_04_2020 < 
 pg_dump -U postgres -d imis_233_17_04_2020 > "C:\Users\Mithilesh Thakur\Desktop\imis_233_17_04_2020.sql"
 
-who_leprosy_19_05_2020
+who_leprosy_20_08_2020
 
-psql -U postgres who_leprosy_19_05_2020 < 
+psql -U postgres who_leprosy_20_08_2020 < 
 
 pg_dump -U postgres -d who_leprosy_25_03_2020 > "C:\Users\Mithilesh Thakur\Desktop\who_leprosy_233_31_03_2020.sql"
 
+who_measles_233_05_09_2020
+psql -U postgres who_measles_233_05_09_2020 < 
 
 pg_dump -U postgres -d indonesia_leprosy_25_10_2019 > "C:\Users\Mithilesh Thakur\Desktop\indonesia_leprosy_232_29_10_2019.sql"
 
@@ -1688,6 +1745,11 @@ psql -U postgres who_lep_09_07_2019 < "C:\Users\Mithilesh Thakur\Desktop\who_lep
 
 
 pg_dump -U postgres -d who_leprosy_03_04_2109 > "C:\Users\Mithilesh Thakur\Desktop\who_leprosy_04_04_2019.sql"
+
+
+surveillance_234_06_09_2020
+psql -U postgres surveillance_234_06_09_2020 < 
+
 
 
 C:\Users\Mithilesh Thakur\Downloads>pg_restore -U postgres -d who_leprosy_03_04_2109 DHIS_LEP_03Apr2019.backup
@@ -1725,6 +1787,10 @@ pg_dump -U postgres -d icmr_leprosy_27_08_2019 > "C:\Users\Mithilesh Thakur\Desk
 
 amr_hp_dev_230_15_05_2020
 psql -U postgres amr_hp_dev_230_15_05_2020 <
+
+amr_base_line_234_20_08_2020
+psql -U postgres amr_base_line_234_20_08_2020 <
+pg_dump -U postgres -d amr_base_line_234_20_08_2020 > "C:\Users\Mithilesh Thakur\Desktop\amr_base_line_234.sql"
 
 
 icmr_amr_26_08_2019
@@ -1878,9 +1944,9 @@ psql -U postgres nie_04_01_2017 < C:\Users\HISP\Desktop\nie_dev_Oct-26-16.sql
 TIBET
 
 
-tibet_pro_29_05_2019
+tibet_pro_30_09_2020
 
-psql -U postgres tibet_pro_29_05_2019 < C:\Users\HISP\Desktop\tibet_pro_Apr-12-18_1.sql
+psql -U postgres tibet_pro_30_09_2020 < C:\Users\HISP\Desktop\tibet_pro_Apr-12-18_1.sql
 
 
 psql -U postgres tibet_pro_09_01_2018 < C:\Users\HISP\Desktop\tibet_pro_Jan-09-18.sql
@@ -2058,9 +2124,9 @@ ippf_pro_2.27_06_03_2019
 ippf_pro_08_05_2019
 ippf_afga_26_06_2019
 
-ippf_227_fpan_13_05_2020
+ippf_234_fpan_17_09_2020
 
-psql -U postgres ippf_227_fpan_13_05_2020 < C:\Users\HISP\Desktop\fpan_pro_Apr-23-18_1.sql
+psql -U postgres ippf_234_fpan_17_09_2020 < C:\Users\HISP\Desktop\fpan_pro_Apr-23-18_1.sql
 
 pg_dump -U postgres -d ippf_227_fpan_13_05_2020 > "C:\Users\Mithilesh Thakur\Desktop\ippf_234_22_06_2020.sql"
 
@@ -2168,7 +2234,7 @@ pg_dump -U postgres -d myanmar_hmis_16_06_2020  > "C:\Users\Mithilesh Thakur\Des
 pg_dump -U postgres -d myanmar_hmis_04_05_2020  > "C:\Users\Mithilesh Thakur\Desktop\myanmar_hmis_with_out_analytics_233.sql"
 
 
-psql -U postgres pmtct_233_16_06_2020 < 
+psql -U postgres pmtct_233_17_08_2020  < 
 
 pg_dump -U postgres  -d pmtct_233_13_05_2020 -t organisationunit > "C:\Users\Mithilesh Thakur\Desktop\myanmar_233_organisationunit_hmis.sql"
 
@@ -2364,8 +2430,29 @@ psql -U postgres test_db_harsh < C:\Users\HISP\Desktop\pgDump.sql
 
 odisha
 
-odisha_232_27_07_2020
-psql -U postgres odisha_232_27_07_2020 < 
+odisha_232_18_08_2020
+
+
+
+
+psql -U postgres odisha_232_18_08_2020 < 
+
+
+
+pg_dump -U postgres  -d odisha_232_18_08_2020 -t attributevalue > "C:\Users\Mithilesh Thakur\Desktop\attributevalue_232.sql"
+pg_dump -U postgres  -d odisha_232_18_08_2020 -t userattributevalues > "C:\Users\Mithilesh Thakur\Desktop\userattributevalues_232.sql"
+pg_dump -U postgres  -d odisha_232_18_08_2020 -t attribute > "C:\Users\Mithilesh Thakur\Desktop\attribute_232.sql"
+
+psql  -U postgres -d fhi360_232_onhis_26_08_2020 -t users < 
+psql  -U postgres -d fhi360_232_onhis_26_08_2020 -t attribute < 
+psql  -U postgres -d fhi360_232_onhis_26_08_2020 -t attributevalue < 
+psql  -U postgres -d fhi360_232_onhis_26_08_2020 -t userattributevalues < 
+pg_dump -U postgres  -d hp_upgraded_232_22_07_2020 -t users > "C:\Users\Mithilesh Thakur\Desktop\users_232.sql"
+
+pg_dump -U postgres  -d fhi360_232_onhis_26_08_2020 -t users > "C:\Users\Mithilesh Thakur\Desktop\usersfhi__232.sql"
+
+
+pg_dump -U postgres  -d odisha_232_18_08_2020 -t datavalueaudit > "C:\Users\Mithilesh Thakur\Desktop\hp_232_datavalueaudit.sql"
 
 psql -U postgres odisha_232_27_07_2020  < C:\Users\HISP\Desktop\dhis_turkey_13-Nov-2015.sql
 
@@ -3502,6 +3589,11 @@ INNER JOIN users us ON us.userid = ui.userinfoid
 INNER JOIN usermembership um ON um.userinfoid = ui.userinfoid
 inner join organisationunit org ON org.organisationunitid = um.organisationunitid
 
+// user and userinfo table query
+
+select us.userid,us.username,usinf.userinfoid,usinf.firstname,usinf.firstname from users us
+inner join userinfo usinf ON usinf.userinfoid = us.userid;
+
 
 // user-role list
 
@@ -4010,6 +4102,23 @@ ou4.uid,ou4.organisationunitid;
 // link for User Details from API
 
 api/users.xml?fields=*,userCredentials[name,lastLogin]&filter=userCredentials.lastLogin:le:2017-06-02&paging=false
+
+
+
+
+#-- india module -->
+dhis-web-maintenance-in=Configuration
+dhis-web-dataanalyser-in=Data Analyser
+dhis-web-reports-in=NHM Reports
+dhis-web-excelimport = Data Integration
+
+#-- Intro modules -------------------------------------------------------------#
+
+intro_dhis-web-maintenance-in = Configuration
+intro_dhis-web-dataanalyser-in = Data Analyser
+intro_dhis-web-reports-in = NHM Reports
+intro_dhis-web-excelimport = Data Integration
+
 
 
 // for version upgradation
@@ -4915,7 +5024,15 @@ git merge origin/PMTCT-Tracker-Myanmar-v33   origin/v33 -m "Merge PMTCT-Tracker-
 git push origin PMTCT-Tracker-Myanmar-v33
 
 
+// INTPART-DMC-v33
 
+git branch INTPART-DMC-v33 // for create new branch for tracker capture  INTPART-DMC-v33
+git checkout INTPART-DMC-v33
+git push origin INTPART-DMC-v33
+git worktree add /e/gitHub_source_code/intpart_dmc_v33 INTPART-DMC-v33
+git merge origin/INTPART-DMC-v33   origin/v33 -m "Merge INTPART-DMC-v33 Tracker Capture App with parent branch"
+git push origin INTPART-DMC-v33
+git pull origin INTPART-DMC-v33
 
 
 
@@ -5157,6 +5274,14 @@ yarn build
 then 
 yarn start
 
+// dhis-web-excel-import app aggregated
+
+
+git branch dhis-web-excel-import-app-default-v34
+git checkout dhis-web-excel-import-app-default-v34
+git push origin dhis-web-excel-import-app-default-v34
+
+
 // tracker-event-report
 
 libya-tracker-event-report-v30
@@ -5173,6 +5298,19 @@ punjab-hmis-tracker-event-report-v30
 git branch punjab-hmis-tracker-event-report-v30
 git checkout punjab-hmis-tracker-event-report-v30
 git push origin punjab-hmis-tracker-event-report-v30
+
+create default branch tracker-event-enrollment-report-v32
+
+git branch tracker-event-enrollment-report-v32
+git checkout tracker-event-enrollment-report-v32
+git push origin tracker-event-enrollment-report-v32
+
+create  branch hp-tracker-event-enrollment-report-v32 //for hp_upgraded-v32
+
+git branch hp-tracker-event-enrollment-report-v32
+git checkout hp-tracker-event-enrollment-report-v32
+git push origin hp-tracker-event-enrollment-report-v32
+
 
 // for app development
 
@@ -5277,7 +5415,7 @@ git push origin NIE-2.27
 https://github.com/hispindia/Biometrics-Nepal
 
 2 - Libya Reporting App Angular - 6
-npm i or npm install/ and npm install text-encoding then npm run build
+npm i or npm install/ then npm install node-sass then npm run build and if not then  npm install text-encoding then npm run build
 https://github.com/hispindia/Apps-Development/tree/libya-reports-app-angular6
 
 3 - tracker event data exporter-app -- Angular JS no npm build
@@ -5291,6 +5429,21 @@ https://github.com/hispindia/Apps-Development/tree/Tracker-reporting-rate-app
 
 6 - GBD dashboard App Vue-js npm install / npm install vue/ npm run build
 https://github.com/hispindia/interactive-dashboard-vuejs
+
+
+// AMR-Data-Entry-Tanda-2.34
+
+
+git branch AMR-Data-Entry-Tanda-2.34
+git checkout AMR-Data-Entry-Tanda-2.34
+git push origin AMR-Data-Entry-Tanda-2.34
+
+build process
+
+yarn install
+yarn build
+yarn start
+
 
 
 // git show revision no - 
@@ -5430,6 +5583,28 @@ disable chrome command
 
  "C:\Program Files\Google\Chrome\Application\chrome.exe" --disable-web-security
 
+// for delete the directory
+
+rmdir node_modules
+
+whonet-importer excel-import app build process
+
+https://github.com/hispindia/whonet-importer
+
+master branch
+
+npm install
+npm run build
+
+and change in index.html inside build foldar
+remove / from main.38444415.js and main.66a9db6c.css
+
+initila one 
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name="theme-color" content="#000000"><link rel="manifest" href="/manifest.json"><link rel="shortcut icon" href="/favicon.ico"><title>WHONET Importer</title><link href="/static/css/main.66a9db6c.css" rel="stylesheet"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id="root"></div><script type="text/javascript" src="/static/js/main.38444415.js"></script></body></html>
+
+changed one
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name="theme-color" content="#000000"><link rel="manifest" href="/manifest.json"><link rel="shortcut icon" href="/favicon.ico"><title>WHONET Importer</title><link href="static/css/main.66a9db6c.css" rel="stylesheet"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id="root"></div><script type="text/javascript" src="static/js/main.38444415.js"></script></body></html>
+
 
 build data-admin module ( in react-js)
 
@@ -5486,6 +5661,26 @@ npm i webpack webpack-cli // for loc
 yarn install
 
 
+dashboard app(default - v32/v33/v34..) build proccess
+
+https://github.com/dhis2/dashboards-app/tree/v33
+
+yarn install
+for issue related to PUBLIC_URL add command 
+yarn add cross-env
+
+and also add cross-env in package.json for PUBLIC_URL build issue
+"build": "cross-env PUBLIC_URL=. react-scripts build",
+
+then 
+yarn build 
+and write inside manifest.webapp 
+"href": ".." 
+then update build folder
+
+
+
+
 
 rwanda-growth-tracking-analytics-v32
 
@@ -5501,6 +5696,20 @@ https://github.com/jonasbhe/growth-tracking-27
 
 //growth-tracking-analytics
 https://github.com/jonasbhe/growth-tracking-analytics
+
+hisp-india in side dhis-tracker-capture-app
+https://github.com/hispindia/dhis-tracker-capture-app/tree/Rwanda-Growth-Tracking-v33
+
+hisp-india
+https://github.com/hispindia/Apps-Development/tree/rwanda-growth-tracking-analytics-v32
+
+build process
+
+yarn install
+yarn build ( run on cygwin error come related to .zip but no issue zip build folder and upload)
+yarn start
+
+
 
 
 // UPHMIS portal-mock-api
@@ -5678,6 +5887,10 @@ INNER JOIN program prg ON prg.programid = pi.programid
 where teav.trackedentityattributeid = 8374 and org.uid = '${orgUnitUid}' and prg.uid = '${programUid}';
 
 
+
+http://172.104.45.148/mh/api/26/me.json
+http://172.104.45.148/mh/api/userGroups/Ki2oAVFHA0e.json?fields=users[id,name]
+
 SQL View Parameters
 
 var param = "var=program:"+program.id + "&var=orgunit:"+$scope.selectedOrgUnitName_level_id+"&var=startdate:"+$scope.startdateSelected+"&var=enddate:"+$scope.enddateSelected;
@@ -5686,6 +5899,11 @@ https://uphmis.in/uphmis/api/sqlViews/yHR3u7imDlB/data.json?var=deuid:qYpFbVo8Ws
 
 https://ln1.hispindia.org/leprosy/api/sqlViews/pRpki4MlEOr/data.json?paging=false
 https://ln1.hispindia.org/leprosy/api/sqlViews/xK5wR6gwMtW/data.json?paging=false&var=dataSetUid:m4Hy2QZbW9p&var=startDate:2019-01-01&var=endDate:2019-12-31
+
+// amr sql-views
+
+https://ln2.hispindia.org/amr/api/sqlViews/joGfuhbHQUx/data.json?var=orgunit:mKmB0wcw7Gf&paging=false
+
 
 SELECT dv.sourceid,org1.name as region_Name , org1.uid as region_uid, org.name as country_name,
 org.uid as country_uid,count( dv.sourceid ) from datavalue dv
@@ -6022,13 +6240,14 @@ INNER JOIN dataelement de ON de.dataelementid = psde.dataelementid where  de.dat
 
 // section wise dataelements list
 
-SELECT pg.name as programName, ps.name as programStageName, ps_se.name as sectionName, ps_de.dataelementid,de.name as dataElementName, ps_de.sort_order
+SELECT pg.name as programName,pg.uid as programUID, ps.name as programStageName, 
+ps.uid as programStageUid, ps_se.name as sectionName, ps_se.uid as sectionUid,
+ps_de.dataelementid,de.name as dataElementName, de.uid as dataElementUID, ps_de.sort_order
 FROM public.programstagesection_dataelements ps_de
 INNER JOIN programstagesection ps_se ON ps_se.programstagesectionid = ps_de.programstagesectionid
 INNER JOIN dataelement de On de.dataelementid = ps_de.dataelementid
 INNER JOIN programstage ps ON ps.programstageid = ps_se.programstageid
 INNER JOIN program pg ON pg.programid = ps.programid
-WHERE pg.uid = 'ecIoUziI2Gb';
 
 // program dataElement List
 
@@ -6484,6 +6703,27 @@ select * from programruleaction
 
 // json query
 
+
+// json query for AMR-2.34
+
+SELECT eventdatavalues -> 'lIkk661BLpG' ->> 'value' as amrid
+FROM programstageinstance e
+INNER JOIN programinstance pi ON e.programinstanceid = pi.programinstanceid
+INNER JOIN program pr ON pi.programid = pr.programid
+INNER JOIN organisationunit o ON e.organisationunitid = o.organisationunitid
+WHERE o.path LIKE '%mKmB0wcw7Gf%' and eventdatavalues -> 'lIkk661BLpG' is not null 
+ORDER BY eventdatavalues -> 'lIkk661BLpG' ->> 'value';
+
+
+SELECT eventdatavalues -> 'lIkk661BLpG' ->> 'value' as amrid
+FROM programstageinstance e
+INNER JOIN programinstance pi ON e.programinstanceid = pi.programinstanceid
+INNER JOIN program pr ON pi.programid = pr.programid
+INNER JOIN organisationunit o ON e.organisationunitid = o.organisationunitid
+WHERE o.path LIKE '%mKmB0wcw7Gf%' and eventdatavalues is not null 
+ORDER BY eventdatavalues -> 'lIkk661BLpG' ->> 'value';
+
+
 select * from json_each_text('{"a":"foo", "b":"bar"}')
 
 SELECT programstageinstanceid,uid,
@@ -6558,6 +6798,15 @@ https://yesme.plan-yes.online/yesme/api/trackedEntityInstances/JJ8pwI1u4dx.json?
 
 
 
+
+
+//  amr apis
+
+https://ln2.hispindia.org/amr/api/events.json?orgUnit=ANGhR1pa8I5&ouMode=DESCENDANTS&startDate=2020-01-01&endDate=2020-04-30&paging=false&order=eventDate:des
+
+
+https://ln2.hispindia.org/amr/api/events.json?orgUnit=ANGhR1pa8I5&ouMode=DESCENDANTS&paging=false&order=eventDate:des
+
 //
 https://yesme.plan-yes.online/yesme/api/trackedEntityInstances/JJ8pwI1u4dx.json?program=y6lXVg8TdOj&ou=qaKyG3zWNO4&paging=false&fields=*
 
@@ -6603,6 +6852,11 @@ https://yesme.plan-yes.online/yesme/api/enrollments.json?program=VscnMM6g6Ow&ou=
 https://yesme.plan-yes.online/yesme/api/trackedEntityInstances.json?program=y6lXVg8TdOj&ou=qaKyG3zWNO4&paging=false&fields=enrollments[filter=status=COMPLETED],attributes
 
 ENiP4wEAm9t
+
+
+// list of events based on tei program/programStage/orgUnit and order by eventDate des
+http://127.0.0.1:8090/dhis233/api/events.json?trackedEntityInstance=ERxfZppzuCp&program=B8MqLS47pW6&programStage=hHdZDPXykTP&orgUnit=gXTsDI2XSyf&&order=eventDate:des&paging=false
+
 
 // enrollment update
 http://127.0.0.1:8092/dhis234/api/30/enrollments/ciH0tThARgY
