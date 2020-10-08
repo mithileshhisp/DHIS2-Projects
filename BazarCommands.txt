@@ -5092,6 +5092,42 @@ git push origin punjab-v30
 
 
 
+// hispindia-openimis-dhis2integration  based on spring boot
+
+// openimis-dhis2-configuration_json
+
+git branch openimis-dhis2-configuration_json
+git checkout openimis-dhis2-configuration_json
+git push origin openimis-dhis2-configuration_json
+
+// its beehyv develop without orgUnit sync
+git branch develop
+git checkout develop
+git push origin develop
+
+// its  develop with orgUnit sync
+git branch develop-with-orgUnit-sync
+git checkout develop-with-orgUnit-sync
+git push origin develop-with-orgUnit-sync
+
+git add .
+git commit -a -m "develop branch with orgUnit sync"
+git push origin develop-with-orgUnit-sync
+
+
+// for openimis which also commit on openimis git Repository-- https://github.com/openimis/openimis-dhis2-adapter_java
+
+git branch openimis
+git checkout openimis
+git push origin  openimis
+
+git add .
+git commit -a -m "commit for openimis organisation"
+git push origin openimis
+
+
+
+
 // OU-Period-Progressive-Report-mapping
 
 git branch odisha-v32  // for create new branch for odisha-v32  OU-Period-Progressive-Report-mapping 
@@ -5810,14 +5846,51 @@ git checkout feature_hispindia
 git push origin feature_hispindia
 git pull origin feature_hispindia
 
-
-
-
-
-
-
 //openIMIS database
 https://github.com/openimis/database_ms_sqlserver/tree/master/Demo%20database 
+
+
+
+kenya-sms-alert -- https://github.com/hispindia/ict4cop-sms-alerts-panel.git 
+checkout master branch
+
+npm install
+Build npm install webpack then 
+webpack 
+
+create manual zip exclude node_modules
+
+// kenya-sms-getway
+https://api.africastalking.com/restless/send?username=ict4cop-kenya&Apikey=cc6b5e43056f3bcb3272fd573cc99e343e0bd99845d10fb47685196f66f27998&message=jhjgh&to=+254725693735&from=40153
+https://api.africastalking.com/restless/send?username=ict4cop-kenya&Apikey=cc6b5e43056f3bcb3272fd573cc99e343e0bd99845d10fb47685196f66f27998&message=jhjgh&to=+254725693735
+https://api.africastalking.com/restless/send?username=ict4cop-kenya&Apikey=cc6b5e43056f3bcb3272fd573cc99e343e0bd99845d10fb47685196f66f27998&message=jhjgh&to=+254725693735,+254728527536
+
+
+kenya-sms-alert-service -- ict4cop_kenya_sms_service
+
+checkout master branch
+
+Steps to run it
+● Check out source https://github.com/hispindia/ict4cop_kenya_sms_service.git
+checkout master branch 
+● Npm install
+● Create config.json from example config
+● Run node server.js
+
+// example config.json
+{
+    "sms" :{
+        "apikey" : "",
+        "username" : "",
+        "shortcode" : "",
+        "base_url" : "https://api.africastalking.com/version1/messaging"
+    },
+
+    "dhis2" : {
+        "username" : "",
+        "password" : ""
+    }
+}
 
 
 // Run analytics 1 hourly command
