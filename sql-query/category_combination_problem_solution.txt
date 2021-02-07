@@ -1,0 +1,27 @@
+
+in table :
+
+categoryoptioncombos_categoryoptions
+
+1) open manage indexs or Alter table.
+2) delete all index except fk_categoryoptioncombo_categoryoptionid and fk_categoryoptioncombos_categoryoptions_categoryoptioncomboid
+3) change table type InnoDB from more table operation
+4) delete coloumn sort_order
+5) Now create FOREIGN KEYS
+
+a) Constraint name : fk_categoryoptioncombos_categoryoptions_categoryoptioncomboid
+   Referencing Columns : categoryoptioncomboid
+   Referencing Table : categoryoptioncombo
+
+b) Constraint name : fk_categoryoptioncombo_categoryoptionid
+   Referencing Columns : categoryoptionid
+   Referencing Table : dataelementcategoryoption
+
+
+or run this query
+
+ALTER TABLE `kerla_meta_data_15_07_2014`.`categoryoptioncombos_categoryoptions`  
+  ADD CONSTRAINT `fk_categoryoptioncombos_categoryoptions_categoryoptioncomboid` FOREIGN KEY (`categoryoptioncomboid`) REFERENCES `kerla_meta_data_15_07_2014`.`categoryoptioncombo`(`categoryoptioncomboid`),
+  ADD CONSTRAINT `fk_categoryoptioncombo_categoryoptionid` FOREIGN KEY (`categoryoptionid`) REFERENCES `kerla_meta_data_15_07_2014`.`dataelementcategoryoption`(`categoryoptionid`);
+
+Note : If there is problem in creating FOREIGN KEYS no problem issue resolved.

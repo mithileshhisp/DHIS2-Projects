@@ -1,0 +1,29 @@
+// query for move datavalue
+
+
+update programstageinstance  set organisationunitid =  217684 where organisationunitid  = 217685;
+update programstageinstance  set organisationunitid  = 300910 where organisationunitid  = 217819;
+update programstageinstance  set organisationunitid  = 218008 where organisationunitid  = 218009;
+update programstageinstance  set organisationunitid  = 218169 where organisationunitid  = 218168;
+update programstageinstance  set organisationunitid  = 218248 where organisationunitid  = 248851;
+update programstageinstance  set organisationunitid  = 217460 where organisationunitid  = 262376;
+update programstageinstance  set organisationunitid  = 218525 where organisationunitid  = 262136;
+update programstageinstance  set organisationunitid  = 218524 where organisationunitid  = 262134;
+update programstageinstance  set organisationunitid  = 218562 where organisationunitid  = 262133;
+update programstageinstance  set organisationunitid  = 218562 where organisationunitid  = 262131;
+update programstageinstance  set organisationunitid  = 218562 where organisationunitid  = 262132;
+
+
+
+delete from organisationunit where organisationunitid in(
+217685,217819,218009,218168,248851,
+262376,262136,262134,262133,
+262131,262132,217686,218045,218043
+)
+
+
+delete from datasetsource where sourceid in(
+217685,217819,218009,218168,248851,
+262376,262136,262134,262133,
+262131,262132,217686,218045,218043
+)
