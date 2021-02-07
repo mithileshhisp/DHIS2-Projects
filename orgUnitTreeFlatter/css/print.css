@@ -1,0 +1,217 @@
+.non-printable {
+	display: none;
+}
+.printable {
+    display: block;		
+}
+	
+
+
+@page {
+	size: 297mm 210mm; /* landscape */
+	/* you can also specify margins here: */
+	margin: 5mm;
+	margin-right: 5mm; /* for compatibility with both A4 and Letter */
+
+
+}
+
+html
+{
+	background-color: #FFFFFF; 
+	margin: 0px;  /* this affects the margin on the html before sending to printer */
+	font-size:8pt;
+}
+
+
+.content-area
+{
+
+	margin-top:50px;
+	margin-left:20px;
+}
+
+#footer
+{
+	position:fixed;
+	bottom:0;
+	left:0;
+	width:100%;
+	height:30px;
+	background:#222;
+	text-align:center;
+	color:#ccc;
+	font-size:12px;
+	font-family:'Open Sans', verdana;
+	padding-top:7px;
+}
+
+
+.sameLine
+{
+	display: inline-block !important;
+}
+
+.center {
+   text-align:center;
+}
+
+.districtReport{
+    text-align:center;
+    page-break-before: always;
+    page-break-inside: avoid;
+}
+.nationalReport{
+    text-align:center;
+    page-break-inside: avoid;
+}
+
+.title {
+	font-size: 24pt;
+	font-style: bold;
+}
+
+.subtitle {
+	font-size: 18pt;
+	font-style: bold;
+}
+
+.subtitle2 {
+	font-size: 18pt;
+	font-style: bold;
+	margin-bottom:20pt;
+}
+
+
+@import url('//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+ 
+.isa_info, .isa_success, .isa_warning, .isa_error {
+margin: 10px 0px;
+padding:12px;
+ 
+}
+.isa_info {
+    color: #00529B;
+    background-color: #BDE5F8;
+}
+.isa_success {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+}
+.isa_warning {
+    color: #9F6000;
+    background-color: #FEEFB3;
+}
+.isa_error {
+    color: #D8000C;
+    background-color: #FFBABA;
+}
+.isa_info i, .isa_success i, .isa_warning i, .isa_error i {
+    margin:10px 22px;
+    font-size:2em;
+    vertical-align:middle;
+}
+
+table {
+	float:left;
+	margin: 10pt 5pt 10pt 5pt;
+}
+
+.populationTable {
+	width: 50mm !important;
+}
+
+.populationTable th:nth-child(2){
+     width:40% !important;
+}
+
+.communitiesTable {
+    width: 60mm !important;
+}
+
+.communitiesTable th:nth-child(2){
+     width:18% !important;
+}
+
+.tabletsTable {
+    width:140mm !important;
+}
+
+input {
+	width:224px;
+}
+
+.drop{
+	border:2px dashed #bbb;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	padding:25px;
+	text-align:center;
+	font:20pt bold,"Vollkorn";color:#bbb
+}
+
+.dropInverse{
+	border:2px dashed #FFFFFF;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	padding:25px;
+	text-align:center;
+	background-color: #bbb;
+	font:20pt bold,"Vollkorn";color:#FFFFFF
+}
+
+
+.reportTable {
+	display: inline-block !important;
+	border: 1px solid #ddd;
+	text-align: left;
+	border-collapse: collapse; 
+    border-spacing: 0; 
+	color: #333;
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+
+.reportTable td, .reportTable th {  
+    border: 1px solid transparent; /* No more visible border */
+    height: 30px; 
+    transition: all 0.3s;  /* Simple transition for hover effect */
+    	
+	font-size: 10pt !important;
+}
+
+.reportTable th {  
+    background: #DFDFDF;  /* Darken header a bit */
+    font-weight: bold;
+}
+
+.reportTable td {  
+    background: #FAFAFA;
+    text-align: center;
+}
+
+/* Cells in even rows (2,4,6...) are one color */        
+.reportTable tr:nth-child(even) td { background: #F1F1F1; }   
+
+/* Cells in odd rows (1,3,5...) are another (excludes header cells)  */        
+.reportTable tr:nth-child(odd) td { background: #FEFEFE; }  
+
+
+.reportTable th:nth-child(n+2), .reportTable td:nth-child(n+2){
+	text-align:center;
+}
+
+#progressbar {
+    margin-top: 20px;
+  }
+ 
+  .progress-label {
+    font-weight: bold;
+    text-shadow: 1px 1px 0 #fff;
+  }
+ 
+  .ui-dialog-titlebar-close {
+    display: none;
+  }
