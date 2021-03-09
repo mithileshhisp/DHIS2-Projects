@@ -1,28 +1,24 @@
 google re-captcha
-https://www.google.com/recaptcha/admin/site/443982322/settings
+
 https://developers.google.com/recaptcha/docs/v3
-client -- 6LfyoXYaAAAAABTpgyi3blRSffSxBOxJVEXXf6gl
+client -- 
 https://developers.google.com/recaptcha/docs/verify
-server -- 6LfyoXYaAAAAAN1e98ScPATZszSyWcNmFwg82dD1
+server -- 
 
 https://www.a2hosting.com/blog/implement-captcha-solution-website/
 
 // for reCAPTCHA type:v2 Checkbox
-https://www.google.com/recaptcha/admin/site/444001605/settings
+
 
 https://developers.google.com/recaptcha/docs/display
-client -- 6LdF7XYaAAAAAIh7wrGwd-QY8cV8ukPPHEAJnV5Q
-https://www.google.com/recaptcha/api2/anchor?ar=1&k=6LdF7XYaAAAAAIh7wrGwd-QY8cV8ukPPHEAJnV5Q&co=aHR0cDovL2xvY2FsaG9zdDo4MDky&hl=en&v=4eHYAlZEVyrAlR9UNnRUmNcL&size=normal&cb=1g4x9h418wv
-https://developers.google.com/recaptcha/docs/verify
-server -- 6LdF7XYaAAAAADf9Vd4RfKE6T4L_MQlbWo28ZK2L
+client -- 
+
+server -- 
 
 https://www.a2hosting.com/blog/implement-captcha-solution-website/
 
 // adding in login .vm
 
- <script src="https://www.google.com/recaptcha/api.js"></script>
-
-<div style="display: inline-block;" class="g-recaptcha" data-sitekey="6LdF7XYaAAAAAIh7wrGwd-QY8cV8ukPPHEAJnV5Q" ></div>
 
 
 
