@@ -1,0 +1,16 @@
+Enviroment Variables 
+add in side
+System Variable
+
+
+DHF_HOME -- c:\DHF_HOME // for nepal biometric
+DHIS2_HOME -- C:\DHIS2_HOME
+JAVA_HOME -- C:\Program Files\Java\jdk1.8.0_65
+JAVA_OPTS -- -Xms1024m -Xmx1536m -XX:MaxPermSize=512m
+M2_REPO -- C:\Users\Mithilesh Thakur\.m2 // for development eclipse
+MAVEN_HOME -- C:\apache-maven-3.5.3
+MAVEN_OPTS -- -Xms1024m -Xmx1536m -XX:MaxPermSize=512m
+
+in side -- Path in System Variable // for development
+add
+C:\apache-maven-3.5.3\bin
