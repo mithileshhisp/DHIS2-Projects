@@ -1,27 +1,3 @@
-google re-captcha
-
-https://developers.google.com/recaptcha/docs/v3
-client -- 
-https://developers.google.com/recaptcha/docs/verify
-server -- 
-
-https://www.a2hosting.com/blog/implement-captcha-solution-website/
-
-// for reCAPTCHA type:v2 Checkbox
-
-
-https://developers.google.com/recaptcha/docs/display
-client -- 
-
-server -- 
-
-https://www.a2hosting.com/blog/implement-captcha-solution-website/
-
-// adding in login .vm
-
-
-
-
 
 https://developers.dhis2.org/
 
@@ -461,6 +437,8 @@ update dataelement set publicaccess  = 'rw------' where publicaccess = 'rwrw----
 
 update dataelement set publicaccess  = 'rwrw----' where publicaccess = '--------';
 
+// for optionSet only meta-data read and write access
+update 	optionset set publicaccess  = 'rw------' ;
 
 select * from relationshipitem where programstageinstanceid in
 ( select programstageinstanceid from programstageinstance where deleted is true );
@@ -2054,15 +2032,19 @@ psql -U postgres bhutan_maleria <
 
 
 
-bhutan_hmis_234_27_01_2021
+bhutan_hmis_234_15_03_2021
 
-psql -U postgres bhutan_hmis_234_27_01_2021 <  
+psql -U postgres bhutan_hmis_234_15_03_2021 <  
 
-pg_dump -U postgres -d bhutan_hmis_26_11_2020 > "C:\Users\Mithilesh Thakur\Desktop\bhutan_hmis_234_with_analytics.sql"
+pg_dump -U postgres -d bhutan_hmis_234_15_03_2021 > "C:\Users\Mithilesh Thakur\Desktop\bhutan_hmis_234_metadata.sql"
 
 pg_dump -U postgres -d bhutan_hmis_26_11_2020 -T analytics* > "C:\Users\Mithilesh Thakur\Desktop\bhutan_hmis_234_with_out_analytics.sql"
 
 pg_dump -U postgres -d bhutan_hmis_26_11_2020 > "C:\Users\Mithilesh Thakur\Desktop\bhutan_hmis_234_with_out_analytics.sql"
+
+pg_dump -U postgres  -d bhutan_hmis_234_15_03_2021 -t datavalueaudit > "C:\Users\Mithilesh Thakur\Desktop\datavalueaudit.sql"
+psql  -U postgres -d saint_lucia_234_14_04_2021  -t flyway_schema_history < 
+
 
 
 psql -U postgres bhutan_hmis_2.26_20_02_2019 <
@@ -2325,9 +2307,11 @@ pg_dump -U postgres -d libya_19_03_2018 > C:\Users\HISP\Desktop\libya_DB_Updated
 libya_DB
 
 
-SAINT-LUCIA 2.24
+
 
 // for IPPF 2.23
+
+SAINT-LUCIA 2.24
 
 bzr branch lp:~dhis2-devs-core/dhis2/2.24 lp:~dhis2-devs-core/dhis2/sluhmis2.24
 
@@ -2336,14 +2320,28 @@ bzr checkout lp:~dhis2-devs-core/dhis2/sluhmis2.24
 bzr merge lp:~dhis2-devs-core/dhis2/2.24
 
 pg_dump -U postgres -d saint_lucia_13_09_2016 > C:\Users\HISP\Desktop\sluhmis_updated.sql
-
-
 pg_dump -U postgres -d sluhmis_29_07_2016 > C:\Users\HISP\Desktop\sluhmis_updated.sql
-
-
-
 pg_dump -U postgres -d haryana_2.20_testing_18_01_2018 > C:\Users\HISP\Desktop\haryana_testing.sql
 
+psql -U postgres saint_lucia_224_16_03_2021 < 
+psql -U postgres saint_lucia_234_14_04_2021 < 
+
+psql -U postgres saint_lucia_234_17_03_2021 < 
+
+pg_dump -U postgres -d saint_lucia_234_17_03_2021 > "C:\Users\Mithilesh Thakur\Desktop\saint_lucia_234_22032021.sql"
+
+saint_lucia_235_25_03_2021
+psql -U postgres saint_lucia_235_25_03_2021 < 
+
+saint_lucia_235_25_03_2021_update
+psql -U postgres saint_lucia_235_25_03_2021_update < 
+
+pg_dump -U postgres  -d saint_lucia_235_25_03_2021_update -t flyway_schema_history > "C:\Users\Mithilesh Thakur\Desktop\flyway_schema_history_235.sql"
+psql  -U postgres -d saint_lucia_235_25_03_2021  -t flyway_schema_history < 
+
+
+
+pg_dump -U postgres -d saint_lucia_224_13_03_2021 > "C:\Users\Mithilesh Thakur\Desktop\saint_lucia_234_14032021.sql"
 
 
 demo_234_14_05_2020
@@ -2412,6 +2410,13 @@ psql -U postgres ippf_234_fpan_07_12_2020 < C:\Users\HISP\Desktop\fpan_pro_Apr-2
 
 pg_dump -U postgres -d ippf_234_fpan_07_12_2020 > "C:\Users\Mithilesh Thakur\Desktop\ippf_234_21_12_2020.sql"
 
+// ippf Afganistan
+ippf_227_afga_22_03_2021
+psql -U postgres ippf_227_afga_22_03_2021 < 
+pg_dump -U postgres -d ippf_227_afga_22_03_2021  > "C:\Users\Mithilesh Thakur\Desktop\ippf_234_afga_with_weekly_dataSet_23032021.sql"
+
+pg_dump -U postgres -d ippf_227_afga_22_03_2021  > "C:\Users\Mithilesh Thakur\Desktop\ippf_234_afga_with_monthly_weekly_dataSet_23032021.sql"
+pg_dump -U postgres -d ippf_227_afga_22_03_2021  > "C:\Users\Mithilesh Thakur\Desktop\ippf_234_afga_with_monthly_dataSet_26032021.sql"
 
 
 psql -U postgres ippf_pro_08_05_2019 < C:\Users\HISP\Desktop\fpan_pro_Apr-23-18_1.sql
@@ -4660,7 +4665,7 @@ INNER JOIN program pg ON pg.programid = ps.programid
 INNER JOIN dataelement de ON de.dataelementid = psde.dataelementid;
 
 
-select pg.name programNameName, pg.uid programUID, pg.programid programID ,psde.programstageid programStageID,
+select pg.name programName, pg.uid programUID, pg.programid programID ,psde.programstageid programStageID,
 ps.uid programStageUID, ps.name programStageName, de.name dataElementName, de.uid dataElementUID, de.dataelementid
 dataelementID, de.domaintype deDomainType from programstagedataelement psde
 INNER JOIN programstage ps ON ps.programstageid = psde.programstageid
@@ -4853,6 +4858,20 @@ git push origin openIMIS-dhis2-ou-sync
 git branch api-integration-aggregated
 git checkout api-integration-aggregated
 git push origin api-integration-aggregated
+
+// for api integration of punjab-cova to dhis2 version-2.34 tracker-data
+
+git branch api-integration-tracker
+git checkout api-integration-tracker
+git push origin api-integration-tracker
+
+
+// dhis2 covid default package
+https://dhis2.org/who-package-downloads/
+https://github.com/dhis2/dhis2-covid19-doc
+https://dhis2.org/who-package-downloads/
+https://raw.githubusercontent.com/dhis2/metadata-package-development/work-in-progress/metadata/COVID19/COVID19_TRACKER_V1_DHIS2.33/metadata.json
+https://dhis2.org/downloads/
 
 
 
@@ -5251,6 +5270,13 @@ git worktree add /e/scm/git_who_lep_2.33 WHO-LEP-2.33
 git merge origin/WHO-LEP-2.33 origin/2.33 -m "Merge and update WHO-LEP-2.33 Branch with parent branch"
 git push origin WHO-LEP-2.33
 
+// for WHO-Measles-2.33
+git branch WHO-Measles-2.33  // for create new branch for WHO-Measles-2.33
+git checkout WHO-Measles-2.33
+git push origin WHO-Measles-2.33
+git worktree add /e/scm/git_who_measles_2.33 WHO-Measles-2.33
+git merge origin/WHO-Measles-2.33 origin/2.33 -m "Merge and update WHO-Measles-2.33 Branch with parent branch"
+git push origin WHO-Measles-2.33
 
 
 // for NIPI-2.34
@@ -5277,6 +5303,28 @@ git push origin SAVE-CHILD-2.34
 git worktree add /e/scm/git_save_child_2.34 SAVE-CHILD-2.34
 git merge origin/SAVE-CHILD-2.34 origin/2.34 -m "Merge and update SAVE-CHILD-2.34 Branch with parent branch"
 git push origin SAVE-CHILD-2.34
+
+
+// for SAINT-LUCIA-EHIS-2.34
+git branch SAINT-LUCIA-EHIS-2.34 // for create new branch
+git checkout SAINT-LUCIA-EHIS-2.34
+git push origin SAINT-LUCIA-EHIS-2.34
+git worktree add /e/scm/git_saint_lucia_ehis_2.34 SAINT-LUCIA-EHIS-2.34
+git merge origin/SAINT-LUCIA-EHIS-2.34 origin/2.34 -m "Merge and update SAINT-LUCIA-EHIS-2.34 Branch with parent branch"
+git push origin SAINT-LUCIA-EHIS-2.34
+
+
+
+
+// for SAINT-LUCIA-EHIS-2.35
+git branch SAINT-LUCIA-EHIS-2.35 // for create new branch
+git checkout SAINT-LUCIA-EHIS-2.35
+git push origin SAINT-LUCIA-EHIS-2.35
+git worktree add /e/scm/git_saint_lucia_ehis_2.35 SAINT-LUCIA-EHIS-2.35
+git merge origin/SAINT-LUCIA-EHIS-2.35 origin/2.35 -m "Merge and update SAINT-LUCIA-EHIS-2.35 Branch with parent branch"
+git push origin SAINT-LUCIA-EHIS-2.35
+
+
 
 
 
@@ -5666,7 +5714,14 @@ git merge origin/SAVE-CHILD-v34 origin/v34 -m "Merge SAVE-CHILD-v34 Tracker Capt
 git push origin SAVE-CHILD-v34
 
 
-
+// for create new branch for tracker capture - v35  SAINT-LUCIA-EHIS-v35
+git branch SAINT-LUCIA-EHIS-v35
+git checkout SAINT-LUCIA-EHIS-v35
+git push origin SAINT-LUCIA-EHIS-v35
+git worktree add /e/gitHub_source_code/saint_lucia_ehis-v35 SAINT-LUCIA-EHIS-v35
+git pull origin SAINT-LUCIA-EHIS-v35
+git merge origin/SAINT-LUCIA-EHIS-v35 origin/v35 -m "Merge SAINT-LUCIA-EHIS-v35 Tracker Capture App with parent branch"
+git push origin SAINT-LUCIA-EHIS-v35
 
 
 
@@ -6520,6 +6575,23 @@ npm uninstall -g @angular/cli
 npm cache clean --force
 
 
+
+// who vector controll palcage
+
+https://www.who.int/teams/global-malaria-programme/prevention/vector-control/dhis-data-collection-and-collation-tools
+https://github.com/WorldHealthOrganization/DHIS2-standard-packages-nonHF/tree/GMP/VCR
+link
+https://extranet.who.int/dhis2-ento-vc/dhis-web-dashboard/index.html#/
+hispindia
+DHIS2Ento2020!
+
+https://extranet.who.int/dhis2-ento-vc/dhis-web-tracker-capture/index.html#/
+
+Username: EVCDemoEN
+Password:
+EVCModules2019!
+
+
 // openimis-dhis2 integration
 
 https://github.com/hispindia/openimis-dhis2integration
@@ -6609,7 +6681,23 @@ https://jira.dhis2.org
 
 usename - mithilesh
 
+// for RFC error fail to load meta data in tracker-capture
+https://community.dhis2.org/t/failed-to-load-metadata-error/35916/2
 
+add relaxedQueryChars="[,]" inside Connector
+
+    <Connector port="8091" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443" relaxedQueryChars="[,]"/>
+
+// for mixed content error add followings
+
+Reference:
+   <Connector port="8080" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443"
+               relaxedQueryChars="[,]"
+               proxyPort="443" scheme="https"/>
 
 
 
