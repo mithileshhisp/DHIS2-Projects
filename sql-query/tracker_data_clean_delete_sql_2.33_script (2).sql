@@ -22,29 +22,27 @@ begin;
 -- 6) programstageinstancecomments
 
 	delete from programstageinstancecomments;
-	
--- 7) programmessage
 
+-- 7) programstageinstance 
+    delete from programmessage_deliverychannels;
 	delete from programmessage_phonenumbers;
-	delete from programmessage_emailaddresses;
-	delete from programmessage_deliverychannels;
 	delete from programmessage;
-	
--- 8) programstageinstance 
 	delete from programstageinstance;
 	
-
--- 9) programstageinstance 
+-- 8) programstageinstance 
 	delete from programinstancecomments;
 
--- 10) programinstance 
+-- 9) programinstance 
 
 	  delete from programinstanceaudit;	
       delete from programinstance;
 
--- 11) trackedentityinstance
-     delete from trackedentityprogramowner;	  
-	  
+-- 10) trackedentityinstance
+     delete from trackedentityprogramowner;	 
+	 
+-- 11) programownershiphistory
+     delete from programownershiphistory;	
+
 -- 12) trackedentityinstance
      delete from trackedentityinstance;	 
 	 

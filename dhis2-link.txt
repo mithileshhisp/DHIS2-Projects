@@ -1,0 +1,875 @@
+
+https://github.com/hispindia/dhis-tracker-capture-app/commit/110e75afbd23e099a9f8e298d61750eea94a077a
+
+// postgres 12 downloads link
+
+https://www.postgresql.org/download/
+https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
+
+
+Custom SMS Task  -- 0 0 10 * * ? 
+
+// for RFC error fail to load meta data in tracker-capture
+https://community.dhis2.org/t/failed-to-load-metadata-error/35916/2
+
+add relaxedQueryChars="[,]" inside Connector
+
+    <Connector port="8091" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443" relaxedQueryChars="[,]"/>
+
+// for ippf india fpai
+<Connector port="20091" protocol="HTTP/1.1"
+              connectionTimeout="20000"
+              redirectPort="8443" relaxedQueryChars="[,]" />
+
+// for mixed content error add followings
+
+Reference:
+   <Connector port="8080" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443"
+               relaxedQueryChars="[,]"
+               proxyPort="443" scheme="https"/>
+
+
+// postgres user creation and PRIVILEGES 
+CREATE USER fpidbpro WITH PASSWORD fpaidbpro@9876
+ALTER USER fpidbpro WITH SUPERUSER;
+GRANT ALL PRIVILEGES ON DATABASE fpaidb_pro to fpidbpro;
+
+d
+“Patients recognised and was registered at [HF NAME]”.
+https://ln3.hispindia.org/owncloud/index.php/s/HI1OSh6ASFEJTif
+http://ufi.ztedevice.com/index.html#login
+
+// ownCloud 
+
+https://ln3.hispindia.org/owncloud/index.php/login
+
+// jira
+https://links.hispindia.org/secure/Dashboard.jspa
+
+//gitHub
+https://github.com/hispindia
+
+// daily-standup meeting
+https://meet.google.com/ork-oifb-rqo?authuser=1 // daily
+https://meet.google.com/ork-oifb-rqo
+
+// zoom meeting
+
+https://us04web.zoom.us/meeting/schedule
+
+http://bazaar.launchpad.net/~dhis2-devs-core/dhis2/trunk/changes
+
+dhis-web-excelimport = Data Integration
+
+https://www.youtube.com/playlist?list=PLo6Seh-066RyEqf0tz0705F5P8oAtr340
+
+https://developers.dhis2.org/
+
+#-- Intro modules -------------------------------------------------------------#
+
+intro_dhis-web-excelimport = Data Integration
+
+
+
+<ui><li><a href="../dhis-web-capture/index.html#">Data Entry</a></li></ui>
+
+<button onClick={this.onDataEntryClickClick} >Data Entry</button>
+
+// react-native app for mobile
+
+https://medium.com/@leonardobrunolima/react-native-tips-setting-up-your-development-environment-for-windows-d326635604ea
+
+ install python-3.8.3
+
+
+
+https://www.python.org/downloads/release/python-383/
+
+without VirtualBox:
+
+https://www.genymotion.com/download/
+install genymotion-3.1.0
+
+then
+Step 6: Install React Native CLI and create the first project
+
+$ npm install -g react-native-cli
+
+Finally you can create your first React Native application by running the following command in your workspace location:
+
+$ react-native init myFirstReactNativeApp --version 0.55.4
+
+
+Done in 78.35s.
+To run your app on iOS:
+   cd E:\gitHub_source_code\react-native-app\myFirstReactNativeApp
+   react-native run-ios
+   - or -
+   Open ios\myFirstReactNativeApp.xcodeproj in Xcode
+   Hit the Run button
+To run your app on Android:
+   cd E:\gitHub_source_code\react-native-app\myFirstReactNativeApp
+   Have an Android emulator running (quickest way to get started), or a device connected
+
+   react-native run-android
+// //
+
+code given by sourabh
+
+app.js
+
+import * as React from 'react';
+import { Component } from 'react';
+import { Platform, StyleSheet, Text, View,AppRegistry } from 'react-native';
+import { WebView } from 'react-native-webview';
+const instructions = Platform.select({
+ios: `Press Cmd+R to reload,\nCmd+D or shake for dev menu`,
+android: `Double tap R on your keyboard to reload,\nShake or press menu button for dev menu`,
+});
+
+export default class ActivityIndicatorDemo extends Component {
+render() {
+return (
+<WebView
+source = {{ uri:'https://ln1.hispindia.org/demo' }}
+/>
+)
+}
+}
+const styles = StyleSheet.create({
+container: {
+flex: 1,
+}
+});
+
+AppRegistry.registerComponent('App', () => ActivityIndicatorDemo);
+
+
+
+// //
+
+
+em -- $2a$10$O.txErvou49E0VIwyYnBc.UuaxUuu/oaLmW/nAm.gF7zJbqzAcYIC
+2.27/2.32 -- attributeValues":[{"value":"5874254856","attribute":{"id":"GHXW2VReNjS","name":"NIN"}}]
+
+2.27 "coordinates":"[86.91762355,24.86590802]",
+
+
+Configuration_IN
+
+Configuration_INSchemaDescriptor
+
+jpickering
+
+$2a$10$Z3QNqaPJ9OB8dC8hPQT8Lej8RLTPuBYWT5/JoLhXpWPtx8cxEaos.
+
+$2a$10$ygJzpL.g054Z9RSPF1w6Y.SI3FhlqpPO4Hut690n6aHQG1BdvWKsa -- district
+
+
+private Map<String, Integer> constantMap = new HashMap<String, Integer>();
+
+        List<Constant> constantList = new ArrayList<Constant>( constantService.getAllConstants() );
+        constantMap = new HashMap<String, Integer>();
+        
+        for( Constant constant : constantList )
+        {
+            if( constant.getName() != null )
+            {
+                constantMap.put( constant.getName(), (int)constant.getId() );
+            }
+        }
+        
+        //Constant constant = constantService.getConstantByName( SUMMARYSTATUSVARIABLE );
+        Constant constant = constantService.getConstant( constantMap.get( SUMMARYSTATUSVARIABLE ) );
+
+List<String> tables = new ArrayList<>();
+CategoryOptionCombo categoryOptionCombo,
+CategoryOptionCombo optionCombo = categoryService.getCategoryOptionCombo( optionComboId );
+decoc = categoryService.getDefaultCategoryOptionCombo();
+
+
+CategoryOptionCombo decoc;
+CategoryCombo dataElementCategoryCombo = dataElement.getCategoryCombo();
+List<CategoryOptionCombo> optionCombos = new ArrayList<CategoryOptionCombo>( dataElementCategoryCombo.getOptionCombos() );
+
+List<CategoryOption> categoryOptions = new ArrayList<CategoryOption>( decoc.getCategoryOptions() );
+
+    @Autowired
+    private CategoryService categoryService;
+(int)
+
+xl-report mapping
+
+npm install
+
+npm install --global webpack // already install
+npm install --save-dev webpack
+npm install --save-dev webpack-cli
+
+npm link webpack-cli
+webpack index.js or only run webpack
+
+xl-report
+
+npm install
+npm install --global webpack // already install
+npm install --save-dev webpack
+npm install --save-dev webpack-cli
+
+webpack index.js  or only run webpack
+
+npm install --save-dev webpack
+
+# or specific version
+npm install --save-dev webpack@<version>
+
+If you're using webpack v4 or later, you'll also need to install the CLI.
+npm install --save-dev webpack-cli
+
+npm install --global webpack
+
+npm link webpack-cli
+webpack index.js
+
+Otherwise npm install --save-dev webpack-cli or yarn add webpack-cli --dev will install it.
+
+
+
+Link globally installed package to your project
+
+npm i webpack-cli
+
+insert into datavalue (dataelementid,periodid,sourceid,categoryoptioncomboid,attributeoptioncomboid,value,storedby,created,lastupdated,followup,deleted) values
+="("&K2&","&N2&","&J2&","&L2&","&M2&",'"&I2&"','priyanka','2020-04-14','2020-04-14',false,false),"
+
+
+https://signin.aws.amazon.com/signin?redirect_uri=https%3A%2F%2Fconsole.aws.amazon.com%2Fconsole%2Fhome%3Fstate%3DhashArgs%2523%26isauthcode%3Dtrue&client_id=arn%3Aaws%3Aiam%3A%3A015428540659%3Auser%2Fhomepage&forceMobileApp=0&code_challenge=xGWWjJ9JbPR9-57vKn6W-wDxA_aGTc_HxLzNZ41r1Vg&code_challenge_method=SHA-256
+username: saurabh.leekha password: 0VvN0s]0TnN^
+account -id 661120747883 new password -- HispIndia@123
+
+hispindia
+District1#
+
+HMIS
+https://drive.google.com/uc?id=1roh_PhSoaKCYAdVff6HVhK_5aoFvF7zk&export=download
+
+jpickering
+
+$2a$10$Z3QNqaPJ9OB8dC8hPQT8Lej8RLTPuBYWT5/JoLhXpWPtx8cxEaos.
+
+
+
+schedule-params -- AnalyticsTableUpdateParams{last years=0, skip resource tables=false, skip table types=[], start time=Sun Apr 12 22:52:00 IST 2020}
+manualy- params -- AnalyticsTableUpdateParams{last years=null, skip resource tables=false, skip table types=[], start time=Sun Apr 12 22:56:53 IST 2020}
+
+
+https://github.com/hispindia/dhis2-Core/commit/bdc4c69c76927b37a4fbb6a9f68bc22b82e2948e
+https://github.com/hispindia/dhis2-Core/commits/PLAN-2.32
+https://github.com/hispindia/dhis2-Core/commits/SAVE-CHILD-2.32?after=bd7fdaaa4db3c394e7f872a0f96a7e1623021574+34
+
+https://play.dhis2.org/2.32dev/api/29/dataElements?filter=name:ne:default&fields=displayName%2CshortName%2Cid%2ClastUpdated%2Ccreated%2CdisplayDescription%2Ccode%2CpublicAccess%2Caccess%2Chref%2Clevel%2CdisplayName%2Ccode%2CdomainType%2CvalueType%2CcategoryCombo%5BdisplayName%5D%2ClastUpdated%2C&order=displayName%3AASC
+
+
+https://play.dhis2.org/2.32.4/api/29/dataElements?filter=name:ne:default&fields=displayName%2CshortName%2Cid%2ClastUpdated%2Ccreated%2CdisplayDescription%2Ccode%2CpublicAccess%2Caccess%2Chref%2Clevel%2CdisplayName%2Ccode%2CdomainType%2CvalueType%2CcategoryCombo%5BdisplayName%5D%2ClastUpdated%2C&order=displayName%3AASC
+
+
+http://127.0.0.1:8090/dhis/api/29/dataElements?filter=name:ne:default&fields=displayName%2CshortName%2Cid%2ClastUpdated%2Ccreated%2CdisplayDescription%2Ccode%2CpublicAccess%2Caccess%2Chref%2Clevel%2CdisplayName%2CdomainType%2CvalueType%2CcategoryCombo%5BdisplayName%5D%2ClastUpdated%2C&order=displayName%3AASC
+https://tracker.hivaids.gov.np/save-child-2.27/api/29/dataElements?filter=name:ne:default&fields=displayName%2CshortName%2Cid%2ClastUpdated%2Ccreated%2CdisplayDescription%2Ccode%2CpublicAccess%2Caccess%2Chref%2Clevel%2CdisplayName%2CdomainType%2CvalueType%2CcategoryCombo%5BdisplayName%5D%2ClastUpdated%2C&order=displayName%3AASC
+
+https://tracker.hivaids.gov.np/save-child-2.27
+http://45.79.54.176/fhi360
+
+http://45.79.54.176/fhi360_merge
+
+http://45.79.54.176/fhi360_merge/
+
+http://45.79.54.176/onhis/
+// fhis-nepal instance
+
+http://202.63.242.59/dhis2/dhis-web-commons/security/login.action
+
+Server details:
+Ip: 202.51.74.197     user: ubuntu    pass: 44kxxG5P
+
+
+URL for login :  https://devtest.hispindia.org/api/admin
+
+ https://devtest.hispindia.org/api/api_fhir/
+beehyv
+beehyv
+
+
+http://localhost:8090/dhis/api/system/id.json?limit=10
+
+
+https://tracker.hivaids.gov.np/save-child-2.27/api/sqlViews/qwqgxFygofx/data?paging=false
+
+https://tracker.hivaids.gov.np/save-child-2.27/api/sqlViews/qwqgxFygofx/data?paging=false
+
+// Run analytics 1 hourly command
+#!/bin/sh /usr/bin/curl "localhost:8080/api/resourceTables/analytics?skipResourceTables=true&lastYears=2" -X POST -u admin:district >/dev/null 2>&1
+
+
+// hiv-tracker SMS configuration 2.34 setup
+
+https://tracker.hivaids.gov.np/save-child-2.27/dhis-web-maintenance-mobile/showUpdateGateWayConfigForm.action?index=0
+
+getwayName -- Sparrow
+url -- http://api.sparrowsms.com/v2/sms/?
+template -- token=${token}&from=${from}&to=${recipients}&text=${text}
+contentType: -- application/x-www-form-urlencoded
+sendUrlParameters: -- 
+from -- InfoSMS
+token -- fzuvg0cm8J6DJdFTP2kr
+
+
+https://tracker.hivaids.gov.np/save-child-2.27
+http://45.79.54.176/hivtracker
+
+https://yesme.plan-yes.online/yesme
+https://training.yesme.plan-yes.online/training/
+
+https://links.hispindia.org/plan_testing
+
+// plan new instance
+https://me.yesdigital.org/yesdigital
+mithilesh
+District1#
+https://training-me.yesdigital.org/yesdigital/
+
+<a class="greyButtonLink" href="javascript:dhis2.db.viewOrgUnitSelector()"><i class="fa fa-cog"></i></a>
+
+http://172.104.45.148/mh
+db size as on 10/05/2021 -- 684 GB
+http://88.80.191.115:29014/mh_revamping
+
+// new link
+http://115.124.111.208/mh/
+
+https://ln1.hispindia.org/leprosy/dhis-web-commons/security/login.action 
+priyanka
+Leprosy@1234
+https://dhis.searo.who.int/lep/dhis-web-commons/security/login.action 
+
+https://ln1.hispindia.org/indonesia_leprosy/dhis-web-cache-cleaner/index.html
+
+AEFI
+
+https://who-dev.dhis2.org/tracker_dev/dhis-web-dashboard/#/
+HISPINDIA
+WHOtracker123!
+
+// nepalhmis
+
+http://45.79.54.176/nepalhmis/dhis-web-dashboard/#/
+hispdev
+District@1
+
+// AES -- 2.26
+
+http://88.80.191.115:20094/aes/
+
+hispdev
+Devhisp@1
+
+http://45.79.54.176/pmtct
+
+http://45.79.54.176/ict_guatemala   
+
+admin
+district
+
+http://88.80.191.115/hp_upgraded 
+
+http://88.80.191.115/hp_upgraded/dhis-web-maintenance-dataadmin/index.action  
+admin
+district
+
+http://88.80.191.115:46094/bihar227
+
+http://139.162.16.101/tibet_pro -- 2.27
+
+https://ln2.hispindia.org/tibet
+
+hispdev
+Devhisp@1
+
+https://ln2.hispindia.org/tibet/dhis-web-commons/security/login.action
+
+// orissa production
+
+http://117.239.112.213:8080/dhis-web-reports-odisha/index.action
+
+orissa 2.32
+https://ln1.hispindia.org/odisha
+https://ln1.hispindia.org/odisha/dhis-web-user/index.html#/user-roles
+admin
+district
+
+http://88.80.191.115:29011/odisha_revamping/   
+
+http://88.80.191.115:46094/bihar227/ 
+
+http://172.105.47.158/imis
+admin
+District@1
+
+https://ln2.hispindia.org/bihar230/
+
+http://172.105.47.158/intpart232
+
+http://172.105.47.158/hp
+
+// intpart HP related to E-Family Folder IGMC Shimla
+http://172.105.47.158/hp
+
+http://172.105.47.158/amrhp_dev
+
+nipi
+https://ln1.hispindia.org/demo/
+
+nipi/ncr
+https://links.hispindia.org/ncr
+
+https://ln2.hispindia.org/nipi/
+hispdev
+Dev#isp@12
+
+https://links.hispindia.org/ncr/dhis-web-commons/security/login.action
+
+https://links.hispindia.org/mp
+amin
+district
+
+// malaria bangladesh
+https://links.hispindia.org/malaria_bangladesh/dhis-web-commons/security/login.action
+https://links.hispindia.org/malaria_bangladesh/
+admin
+district
+
+
+http://172.105.47.158/imis
+
+https://dhis.hki.org.np/suaahara2/dhis-web-commons/security/login.action
+
+https://who.dhis2.org/tracker_epi/api/apps/Excel-Import/index.html
+kim
+Tracker2018!
+
+WHO-measles
+http://45.79.54.176/measles/dhis-web-app-management/index.html
+http://45.79.54.176/measles/dhis-web-commons/security/login.action
+admin
+district
+
+// testing link
+https://links.hispindia.org/measles  upgrade to 2.36 as on 24/06/2021
+
+
+https://172.105.47.158/ict4cop_kenya/dhis-web-commons/security/login.action#/users
+
+Username kirti
+Password kirti@1234
+
+https://www.ifipjwc2020.org/ict4cop_kenya/dhis-web-commons/security/login.action#/qzinHKLNXT8
+
+Username kirti
+Password Dhis@123
+
+
+My user name and password for the old account is:
+
+user name: magerokevin40@gmail.com
+
+password: m@g3r0k3v!n  
+
+
+http://172.105.47.158:8010/importSMSIntoDHIS2
+
+https://account.africastalking.com/apps/pzjoxsrvgw/sms/inbox/callback
+https://account.africastalking.com/auth/login?next=%2Fapps%2Fpzjoxsrvgw%2Fsms%2Finbox%2Fcallback
+
+
+https://ln1.hispindia.org/openimis
+admin
+District@1
+
+https://links.hispindia.org/openimisdemo/dhis-web-commons/security/login.action
+
+https://ln2.hispindia.org/dmc   2345687965432567543234
+pohir
+Pohir@1234
+
+dmch
+Password : DMch@1234
+
+https://ln1.hispindia.org/rwandanew/dhis-web-commons/security/login.action
+https://ln1.hispindia.org/rwandanew/api/dataStore/growthTracker/config
+https://ln1.hispindia.org/rwandanew/dhis-web-commons/security/login.action
+https://ln1.hispindia.org/rwandanew/api/trackedEntityTypes.json?paging=false&fields=id,displayName,featureType,maxTeiCountToReturn,minAttributesRequiredToSearch,trackedEntityTypeAttributes[*,trackedEntityAttribute[id,unique,displayInListNoProgram]]
+
+// nap replace  https://ln1.hispindia.org/rwandanew
+// as on 28/12/2020
+https://ln1.hispindia.org/nap
+
+// intpart HP
+http://172.105.47.158/hp/
+
+// openIMIS fhir-extension
+
+https://links.hispindia.org/api/admin/
+username - hisp
+
+password - h!$p
+
+after login 
+
+https://links.hispindia.org/api/api_fhir
+
+https://links.hispindia.org/api/api_fhir/Location/?format=json
+
+saint lucia - 2.34
+
+https://ln2.hispindia.org/sl_ehis/
+admin district
+database - sl_ehis
+covid-data-entry
+Covid@123
+
+
+// ippf qualty 2.27
+
+http://139.162.61.19/fpanqty/
+
+https://ln2.hispindia.org/ippf_dev/dhis-web-dashboard/#/
+http://localhost:8092/dhis234
+
+
+http://afgamis.org/afga/
+IP -- 172.104.175.204
+port -- 22
+
+
+// ippf Iran -- FHAI (Family Health Association of Iran)
+http://172.105.63.251:8080/dhis-web-user-profile/#/aboutPage
+
+http://139.162.61.19/fpab/
+http://fpabmis.org.bd/fpab/dhis-web-commons/security/login.action
+// IPPF Sri Lanka -- 2.34
+https://dhis2.fpasrilanka.org/fpasl/
+
+// ippf Bangladesh
+http://202.53.172.118/fpab/dhis-web-dashboard/#/
+
+
+// ippf nepal  family planning association of Nepal
+
+https://fpanmis.org/fpanpro/dhis-web-commons/security/login.action
+new data-base -fpanpro
+
+// ippf india
+
+http://fpaimis.org/fpai/dhis-web-commons/security/login.action
+
+// hp-dhis2 production
+
+139.162.16.101  jatin
+
+
+aws uphmis
+https://up.dhis2.org/uphmis 
+https://up.dhis2.org/uphmis/dhis-web-dashboard/
+neha
+Joshi@1234
+
+http://172.105.47.158/imis
+admin
+District@1
+
+https://links.hispindia.org/openimisdemo
+admin
+district
+
+https://ln1.hispindia.org/kyrgyzstan/dhis-web-dashboard/
+admin
+District@1
+85.113.15.252 port 22
+user
+User-RCI@
+// production
+https://rci.med.kg/kyrgyzstan/dhis-web-commons/security/login.action
+
+// AMR-Tanda // 2.34 // production
+http://172.105.47.158/amrhp_pilot/dhis-web-dashboard/#/events/incomplete
+admin
+District@1
+
+// AMR-Dev-Testing -- 2.34
+http://172.105.47.158/amrhp_dev
+
+// base-line -- 2.30
+Instance - https://ln2.hispindia.org/amr/
+
+
+
+
+https://ln2.hispindia.org/amr/api/apps/AMR-Data-Entry--Patient-Overview/index.html#/events/complete
+hispdev
+Devhisp@1
+
+// amr-2.34
+https://links.hispindia.org/baseline_dev
+
+https://ln2.hispindia.org/combat_amr/dhis-web-dashboard/#/
+admin
+district
+
+// amr aggregation doc link
+https://docs.google.com/document/d/1qFl_JH0tBYwFwH2kJ5h3HnlzYwqBXHxyNpB0msQXo7s/edit?usp=sharing
+
+bihar-production
+http://bihardhis.nhsrc-hmis.org/
+http://88.80.191.115:46094/bihar227
+
+
+atm -- Myanmar
+
+//source of data
+https://links.hispindia.org/atm_dhis2/dhis-web-commons/security/login.action
+hispindia
+District1#
+
+// from 29/10/2020
+// myanmar_hmis server - ip 172.104.173.245 -- https://ln2.hispindia.org
+
+// backup instance
+https://ln2.hispindia.org/myanmar_hmis/dhis-web-dashboard/#/ // backup
+database name - myanmar_hmis_new
+
+
+// live instance data destination
+https://links.hispindia.org/hmis_new/dhis-web-commons/security/login.action
+hispindia
+Di$trict1#
+hispdev
+Devhisp@1
+
+import database name mynmaar_hmis_v233 for view purpose without analytics on 
+172.105.47.164 or https://links.hispindia.org/
+
+https://links.hispindia.org/covid_epi
+https://links.hispindia.org/covid_epi2
+admin
+Devhisp@1
+
+https://links.hispindia.org/libya
+https://links.hispindia.org/libya_training/dhis-web-dashboard/#/
+
+LMIS
+
+https://links.hispindia.org/lmis_demo/dhis-web-dashboard/#/
+admin/district
+
+UIO
+
+https://dhis2-staging.kuunika.org:8087/dhis-web-dashboard/index.html#/
+
+scottrusspatrick
+P@ssword1
+
+
+punjab-cova
+https://links.hispindia.org/covid 
+admin
+district
+
+https://ln3.hispindia.org/bihar_dhis
+
+// emro
+
+http://45.79.54.176/emro/ 
+ 
+https://rdr1.emro.who.int/core/
+
+// bihar production
+
+http://bihardhis.nhsrc-hmis.org/
+http://164.100.130.13:20092/dhis/dhis-web-portal/intro.action
+hispdev
+Devhisp@1
+neha
+Devhisp@1
+
+bhutan 
+https://ln2.hispindia.org/druk_hepatitis/dhis-web-commons/security/login.action
+
+// testing bhutan
+http://ln1.hispindia.org/bhutanhmis/dhis-web-dashboard/#/
+admin
+district
+
+https://drukhmis.gov.bt/dhis/
+admin
+Hisp@2020
+// bhutan data issue // dataavailable in 15/04/2021 database
+
+select * from datavalue where dataelementid in( 156641,156663) and sourceid = 496
+and periodid = 3974456;
+
+select * from datavalueaudit where dataelementid in( 156641,156663) and organisationunitid = 496
+and periodid in( 3974456,3974126 );
+
+select * from datavalue where dataelementid in( 156641,156663) and sourceid = 496
+and periodid in( 3974456,3974126 );
+
+
+"3974456"
+3974126
+select * from dataelement where uid = 'aAtliV2jasa'	
+select * from organisationunit where uid = 'R1iWHxe0fkY'
+select * from period where startdate = '2021-02-01'
+
+
+
+
+
+
+https://docs.dhis2.org/2.29/en/developer/html/dhis2_developer_manual_full.html#webapi_plugins
+
+// tamilnadu
+
+https://ln2.hispindia.org/tamilnaducdsp
+admin
+district
+
+// data portal
+https://ln2.hispindia.org/data_portal
+
+
+// who vector controll palcage
+
+https://www.who.int/teams/global-malaria-programme/prevention/vector-control/dhis-data-collection-and-collation-tools
+https://github.com/WorldHealthOrganization/DHIS2-standard-packages-nonHF/tree/GMP/VCR
+link
+https://extranet.who.int/dhis2-ento-vc/dhis-web-dashboard/index.html#/
+hispindia
+DHIS2Ento2020!
+
+https://extranet.who.int/dhis2-ento-vc/dhis-web-tracker-capture/index.html#/
+
+Username: EVCDemoEN
+Password:
+EVCModules2019!
+
+
+// saint-lucia
+http://10.135.68.6:29002/dhis/dhis-web-commons-about/about.action
+username: dhisuser
+password: Dh!$us3r
+
+saint lucia - 2.34
+
+https://ln2.hispindia.org/sl_ehis/
+admin district
+database - sl_ehis
+covid-data-entry
+Covid@123
+
+// covid certificate
+
+https://li1637-34.members.linode.com/epi/dhis-web-app-management/index.html
+who
+Aiham@@2021
+
+vcreader / 
+Yemen@2021
+
+
+https://tracker.hivaids.gov.np/save-child-2.27/dhis-web-maintenance-mobile/showUpdateGateWayConfigForm.action?index=0
+
+getwayName -- mohepi
+url -- http://52.36.50.145:8080/MainServlet?
+template -- orgName=MOHEPI&userName=Arafat&password=${password}&mobileNo=${recipients}&text=${text}&coding=2
+contentType: -- application/x-www-form-urlencoded
+sendUrlParameters: -- 
+from -- InfoSMS
+token -- fzuvg0cm8J6DJdFTP2kr
+
+
+
+http://sms.exatech-ye.com/
+
+orgName: MOHEPI
+
+userName : Arafat
+password : Arafat@255
+
+
+
+http://52.36.50.145:8080/MainServlet
+
+orgName=MOHEPI&userName=Arafat&password=${password}&mobileNo=${recipients}&text=${text}&coding=2
+
+base 64 encode/decode
+
+https://www.base64encode.org/
+http://172.104.57.34:3000/?19291
+http://172.104.57.34:3000/?00012121212
+172.104.57.34
+port - 221
+root
+73252300@Cross
+yarn
+yarn start
+
+apt install npm
+npm install forever -g
+forever start -c "yarn start" ./
+
+forever start -c "yarn start" ./
+forever stop -c "yarn start" ./
+
+forever list
+forever stopall 
+
+// kill port
+sudo kill -9 `sudo lsof -t -i:3000`
+who:Aiham@@2021
+REACT_APP_AUTH='d2hvOkFpaGFtQEAyMDIx'
+vcreader:Yemen@2021
+REACT_APP_AUTH='dmNyZWFkZXI6WWVtZW5AMjAyMQ=='
+
+
+punjab portal
+database: https://ln3.hispindia.org/owncloud/index.php/s/OM0HtmXCPZ1tEIX
+warfile-folder: https://ln3.hispindia.org/owncloud/index.php/s/z9Ivan5g6hrbPtP
+war file: https://ln3.hispindia.org/owncloud/index.php/s/DnqdbrRJ6dWgoNP
+
+http://ln1.hispindia.org/pbhealthportal/dhis-web-commons/security/login.action
+homepage
+Homepage123
+
+// libnon
+
+anydesk -- 863882666
+password -- N@da2019
+upgrade from 2.31 to 2.35
+delete from trackedentityinstance where deleted is true;
+select * from trackedentityinstance where deleted is true;
+
+https://esu.moph.gov.lb/dhis/dhis-web-data-administration/index.html#/
+P@ssw0rd111
+chammaah
+
+
+// for another server
+
+anydesk -- 197201006
+password --TbM@ph2019
+database-name  -- dhis2_tb_lb
+P@ssw0rd111
+chammaah
