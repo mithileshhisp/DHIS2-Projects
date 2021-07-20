@@ -100,12 +100,18 @@ class ShowTEI extends React.Component {
     render() {
         const { history } = this.props;
         // console.log('here is props at  showTEI', this.props.teis.payload.tei, this.state, this.state.payload.tei);
-        let checkBoxHead = this.state.check ? "Unselect All" : "Select All";
+        let checkBoxHead = this.state.check ? "UnSelect All" : "Select All";
         const tei =  () => {
              if (this.state.tei.length > 0 )
              {
-                return (        
+                return (
                 <div className="float-center m-5" >
+                <Row>
+                    <Col md="auto"  sm={{ size: 10, offset: -1 }} >
+                        <Button color="primary"  onClick={() => this.props.history.goBack()}> Back </Button>
+                    </Col>
+                </Row>
+                <br />
                 <div className="tei-element shadow-lg p-3 mb-3 bg-white rounded box">
                     <Table >
                         <thead>
@@ -114,7 +120,7 @@ class ShowTEI extends React.Component {
                                 {this.state.teiAttributeHeader.map((teiAttrName, index) => (
                                      <th>{teiAttrName}</th>
                                   ))}
-                                <th><Label> <Input type="checkbox" id="checkbox-head" onClick={() => this.markCheckll()} />  {checkBoxHead}</Label></th>
+                                <th><Label> <input type="checkbox" id="checkbox-head" onClick={() => this.markCheckll()} />  {checkBoxHead}</Label></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -124,14 +130,14 @@ class ShowTEI extends React.Component {
                                     {this.state.teiAttributeHeader.map((teiAttrName, index) => (
                                         <td>{tei[teiAttrName]}</td>
                                      ))}
-                                    <td> <Input type="checkbox" onClick={() => this.markCheck(index)} /> </td>
+                                    <td> <input type="checkbox" onClick={() => this.markCheck(index)} /> </td>
                                 </tr>
                             ))}
                         </tbody>
     
                     </Table>
                     <Row>
-                    <Col md="auto"  sm={{ size: 10, offset: 1}}><Button color="primary" disabled={this.state.buttonStatus} onClick={() => this.sendEvents()}> Submit
+                    <Col md="auto"  sm={{ size: 10, offset: 10 }} ><Button color="primary" disabled={this.state.buttonStatus} onClick={() => this.sendEvents()}> Submit
                     { this.state.flag ? <Alert  flag={this.state.flag} /> :null }
                     </Button></Col>
                    </Row>
@@ -140,9 +146,14 @@ class ShowTEI extends React.Component {
               } 
               if(this.state.tei.length === 0){
                 return ( <div className="float-center m-5 text-center" >
-                <div className="shadow-lg p-3 mb-3 bg-white rounded box">
-                <h1>Tracked Entity Instance not available</h1>
-              </div>
+                        <Row>
+                            <Col md="auto"  sm={{ size: 10, offset: -1 }} >
+                                <Button color="primary"  onClick={() => this.props.history.goBack()}> Back </Button>
+                            </Col>
+                        </Row><br />
+                        <div className="shadow-lg p-3 mb-3 bg-white rounded box">
+                        <h1>Tracked Entity Instance not available</h1>
+                        </div>
              </div>)
             }
         } 

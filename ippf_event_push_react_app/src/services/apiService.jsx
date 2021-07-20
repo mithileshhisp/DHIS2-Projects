@@ -1,9 +1,16 @@
 import { BaseUrl } from '../services/BaseUrlService';
 export const ApiService = {
+    updateEnrollmentStatus,
+    getEvents,
+    getOptionSetOptions,
+    getTrackedEntityInstanceDetails,
+    getTrackedEntityInstance,
+    newEnrollmentTEI,
+    createNewEnrollment,
     getProgram,
     getProgramStage,
     getDataElements,
-    getTrackedEntityInstance,
+    getTrackedEntityInstances,
     postEvent,
     getUserData,
     getMetaData,
@@ -12,9 +19,67 @@ export const ApiService = {
     getDetials,
     getProgramTEIAttribute
 };
+
+// update enrollment Status
+function updateEnrollmentStatus(enrollment) {
+    const requestOptions = {
+        method: 'PUT',
+        body: JSON.stringify(enrollment),
+        headers: {
+            'Content-Type': 'application/json'}
+    };
+    return fetch( BaseUrl + '/api/enrollments/'+ enrollment.enrollment, requestOptions).then(res => res.json());
+}
+
+// new enrollment creation
+function createNewEnrollment(enrollment) {
+    const requestOptions = {
+        method: 'POST',
+        body: JSON.stringify(enrollment),
+        headers: {
+            'Content-Type': 'application/json'}
+    };
+    return fetch( BaseUrl + '/api/enrollments', requestOptions).then(res => res.json());
+}
+
+// update new TEI
+function newEnrollmentTEI(trackedEntityInstance) {
+    const requestOptions = {
+        method: 'PUT',
+        body: JSON.stringify(trackedEntityInstance),
+        headers: {
+            'Content-Type': 'application/json'}
+    };
+    return fetch( BaseUrl + '/api/trackedEntityInstances/'+ trackedEntityInstance.trackedEntityInstance, requestOptions).then(res => res.json());
+}
+
+// get events
+function getEvents(eventParam) {
+    const requestOptions = { method: 'GET' };
+    return fetch( BaseUrl + '/api/events.json?program=' + eventParam.programId + '&orgUnit=' + eventParam.orgUnitId + '&ouMode=DESCENDANTS&paging=false', requestOptions).then(res => res.json());
+}
+
+// get trackedEntityInstance and its enrollments
+function getTrackedEntityInstanceDetails(tei) {
+    const requestOptions = { method: 'GET' };
+    return fetch(BaseUrl + '/api/trackedEntityInstances/' + tei + '.json?fields=*&paging=false', requestOptions).then(res => res.json());
+}
+
+// get trackedEntityInstance and its enrollments
+function getTrackedEntityInstance(tei) {
+    const requestOptions = { method: 'GET' };
+    return fetch(BaseUrl + '/api/trackedEntityInstances/' + tei + '.json', requestOptions).then(res => res.json());
+}
+
+// get optionSet's options
+function getOptionSetOptions(id) {
+    const requestOptions = { method: 'GET' };
+    return fetch(BaseUrl + '/api/optionSets/' + id + '.json?fields=id,displayName,options[id,displayName,code]&paging=false', requestOptions).then(res => res.json());
+}
+
 function getProgram(id) {
     const requestOptions = { method: 'GET' };
-    return fetch(BaseUrl + '/api/organisationUnits/' + id + '.json?fields=id,name,displayName,programs[id,name,displayName,code]&paging=false', requestOptions).then(res => res.json());
+    return fetch(BaseUrl + '/api/organisationUnits/' + id + '.json?fields=id,name,displayName,programs[id,name,displayName,code,withoutRegistration,attributeValues[value,attribute[id,name,code]]]&paging=false', requestOptions).then(res => res.json());
 }
 
 function getProgramStage(id) {
@@ -27,9 +92,9 @@ function getDataElements(id) {
     return fetch( BaseUrl+"/api/programStages/"+id+".json?fields=id,displayName,name,programStageSections[id,name,displayName,dataElements[id,name,valueType,displayFormName,optionSetValue,optionSet[id,name,valueType,options[id,name,code,valueType]]]]&paging=false", requestOptions).then(res => res.json());
 }
 
-function getTrackedEntityInstance(data) {
+function getTrackedEntityInstances(data) {
     const requestOptions = { method: 'GET' };
-    return fetch( BaseUrl + '/api/trackedEntityInstances.json?program=' + data.program + '&ou=' + data.ou + '', requestOptions).then(res => res.json());
+    return fetch( BaseUrl + '/api/trackedEntityInstances.json?paging=false&fields=*&program=' + data.program + '&ou=' + data.ou + '', requestOptions).then(res => res.json());
 }
 
 function postEvent(event) {
