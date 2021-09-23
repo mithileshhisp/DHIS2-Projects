@@ -140,8 +140,8 @@ excelImport
                         let importCount = 1;
                         XL_row_object.forEach(row => {
                             //console.log( row );
-                            //latitude: row.coordinates.split(",")[1],
-                            //longitude: row.coordinates.split(",")[0]
+                            //latitude: row.coordinates.split(",")[1], small
+                            //longitude: row.coordinates.split(",")[0] big
                             $.ajax({
                                 type: "GET",
                                 async: false,
@@ -843,6 +843,71 @@ excelImport
                         });
                     }
 
+                    // indicator update
+                    else if( sheetName === 'indicatorUpdate' ){
+                        var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                        var json_object = JSON.stringify(XL_row_object);
+                        var objectKeys = Object.keys(XL_row_object["0"]);
+                        var importCount = 1;
+                        XL_row_object.forEach(row => {
+                            importCount++;
+                            //console.log( row );
+                            // for point coordinates: [row.coordinates.split(",")[0], row.coordinates.split(",")[1]]
+                            // for polygon coordinates: row.coordinates
+                            $.ajax({
+                                type: "GET",
+                                async: false,
+                                url: '../../indicators/' + row.uid + ".json?paging=false",
+                                success: function (indicatorResponse) {
+                                    var updateIndicator = indicatorResponse;
+
+                                    updateIndicator.id = row.uid;
+                                    updateIndicator.name = row.name;
+                                    updateIndicator.shortName = row.shortName;
+                                    updateIndicator.numerator = row.numerator;
+                                    updateIndicator.numeratorDescription = row.numeratorDescription;
+                                    updateIndicator.denominator = row.denominator;
+                                    updateIndicator.denominatorDescription = row.denominatorDescription;
+                                    updateIndicator.indicatorType=  { id:  row.indicatorType };
+
+                                    $.ajax({
+                                        type: "PUT",
+                                        async: false,
+                                        dataType: "json",
+                                        contentType: "application/json",
+                                        data: JSON.stringify(updateIndicator),
+                                        url: '../../indicators/' + row.uid,
+                                        //url: '../../indicators/' + row.uid + "?mergeMode=REPLACE",
+
+                                        success: function (response) {
+                                            //console.log( __rowNum__ + " -- "+ row.event + "Event updated with " + row.value + "response: " + response );
+                                            console.log(  "Row - " + importCount + " update done response: " + JSON.stringify(response) );
+                                        },
+                                        error: function (response) {
+                                            console.log(  "Row - " + importCount + " error response: " + JSON.stringify(response ));
+                                        },
+                                        warning: function (response) {
+                                            console.log( "Row - " + importCount + "Warning response : " +  JSON.stringify(response ) );
+                                        }
+
+                                    });
+                                },
+                                error: function (orgUnitResponse) {
+                                    console.log( JSON.stringify( row.uid ) +  " -- "+ "Error!: " +  JSON.stringify( indicatorResponse ) );
+                                },
+                                warning: function (indicatorResponse) {
+                                    console.log( JSON.stringify( row.uid ) +  " -- "+ "Error!: " +  JSON.stringify( indicatorResponse ) );
+                                }
+                            });
+
+                            //console.log( "Row - " + importCount + " update done for organisationUnit " + row.uid );
+                            if( importCount === parseInt(XL_row_object.length) + 1 ){
+                                console.log( " update complete ");
+
+                            }
+                        });
+
+                    }
 
                     // indicator delete
                     else if( sheetName === 'indicatorDelete' ){
@@ -875,7 +940,7 @@ excelImport
                             //importCount++;
                             //console.log( "Row - " + importCount + " update done for event " + row.event );
                             if( deleteCount === parseInt(XL_row_object.length) + 1 ){
-                                console.log( " delete done ");
+                                console.log( " indicator delete done ");
                             }
                         });
 
@@ -1033,7 +1098,7 @@ excelImport
                             //importCount++;
                             //console.log( "Row - " + importCount + " update done for event " + row.event );
                             if( deleteCount === parseInt(XL_row_object.length) + 1 ){
-                                console.log( " delete done ");
+                                console.log( " datavalue delete done ");
                             }
                         });
                     }
@@ -1316,9 +1381,6 @@ excelImport
                         });
 
                     }
-
-
-
 
                     // dataElements  update
                     else if( sheetName === 'dataElementsPUT' ){
@@ -1655,48 +1717,59 @@ excelImport
                             usersPost.userCredentials.username = row.username;
                             usersPost.userCredentials.password = row.password;
 
-                            organisationUnits.push({
-                                'id': row.organisationUnits
-                            });
-                            usersPost.organisationUnits = organisationUnits;
-
-                            dataViewOrganisationUnits.push({
-                                'id': row.dataViewOrganisationUnits
-                            });
-                            usersPost.dataViewOrganisationUnits = dataViewOrganisationUnits;
-
-                            teiSearchOrganisationUnits.push({
-                                'id': row.teiSearchOrganisationUnits
-                            });
-                            usersPost.teiSearchOrganisationUnits = teiSearchOrganisationUnits;
-
-                            let tempUserGroups = row.userGroups.split(",");
-                            for (let i=0;i<tempUserGroups.length;i++){
-                                userGroups.push({
-                                    'id': tempUserGroups[i]
+                            if( row.organisationUnits !== undefined  && row.organisationUnits !== "" ){
+                                organisationUnits.push({
+                                    'id': row.organisationUnits
                                 });
+                                usersPost.organisationUnits = organisationUnits;
                             }
+
+                            if( row.dataViewOrganisationUnits !== undefined  && row.dataViewOrganisationUnits !== "" ){
+                                dataViewOrganisationUnits.push({
+                                    'id': row.dataViewOrganisationUnits
+                                });
+                                usersPost.dataViewOrganisationUnits = dataViewOrganisationUnits;
+                            }
+
+                            if( row.teiSearchOrganisationUnits !== undefined && row.teiSearchOrganisationUnits !== "" ){
+                                teiSearchOrganisationUnits.push({
+                                    'id': row.teiSearchOrganisationUnits
+                                });
+                                usersPost.teiSearchOrganisationUnits = teiSearchOrganisationUnits;
+                            }
+
+                            if( row.userGroups !== undefined  && row.userGroups !== "" ){
+                                let tempUserGroups = row.userGroups.split(",");
+                                for (let i=0;i<tempUserGroups.length;i++){
+                                    userGroups.push({
+                                        'id': tempUserGroups[i]
+                                    });
+                                }
+                                usersPost.userGroups = userGroups;
+                            }
+
                             /*
                             userGroups.push({
                                 'id': row.userGroups
                             });
                             */
-                            usersPost.userGroups = userGroups;
 
-                            let tempUserRoles = row.userRoles.split(",");
-                            for (let j=0;j<tempUserRoles.length;j++){
-                                //user.userGroups.push(this.userGroups[i]);
-                                userRoles.push({
-                                    'id': tempUserRoles[j]
-                                });
+                            if( row.userRoles !== undefined  && row.userRoles !== "" ){
+                                let tempUserRoles = row.userRoles.split(",");
+                                for (let j=0;j<tempUserRoles.length;j++){
+                                    //user.userGroups.push(this.userGroups[i]);
+                                    userRoles.push({
+                                        'id': tempUserRoles[j]
+                                    });
+                                }
+                                usersPost.userCredentials.userRoles = userRoles;
                             }
+
                             /*
                             userRoles.push({
                                 'id': row.userRoles
                             });
                              */
-                            usersPost.userCredentials.userRoles = userRoles;
-
 
                             $.ajax({
                                 type: "POST",
