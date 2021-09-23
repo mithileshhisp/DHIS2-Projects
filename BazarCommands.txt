@@ -1,4 +1,128 @@
 
+// table name for sequential number counter for tracked entity attribute
+
+sequentialnumbercounter
+SELECT id, owneruid, key, counter
+	FROM public.sequentialnumbercounter;
+
+owneruid( means trackedentityattribute UID)
+https://dhis2.org/downloads/archive/
+https://dhis2.org/downloads/
+https://github.com/dhis2/dhis2-utils/blob/master/resources/sql/upgrade-225.sql
+
+
+https://releases.dhis2.org/2.25/dhis.war 
+
+ 
+
+// postgres 12 downloads link
+
+https://www.postgresql.org/download/
+https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
+
+//
+sudo apt-get install p7zip
+7za e myfiles.7z
+/ used for plan
+// unzip command
+7zip file unzip
+7z - e <file name>
+
+// import database for plan
+psql - p 5432  - h <host> - U <username > - d < database name >  - f <. sql file >
+
+
+
+
+// postgres database size query
+SELECT pg_size_pretty( pg_database_size('mh_227_30_01_2021') );
+SELECT pg_size_pretty( pg_database_size('myanmar_hmis_20_05_2021') );
+SELECT pg_size_pretty( pg_database_size('hiv_tracker_234_18_06_2021') );
+
+SELECT pg_size_pretty( pg_database_size('ippf_234_fpan_22_06_2021') );
+
+SELECT pg_size_pretty( pg_database_size('icmr_nikushta_v228_23062021') ); // 1063 in 2.28
+
+
+// create user on poatgres
+CREATE USER fpaidbpro WITH PASSWORD fpaidbpro@9876; 
+ALTER USER fpidbpro WITH SUPERUSER;
+GRANT ALL PRIVILEGES ON DATABASE fpaidb_pro to fpaidbpro;
+
+
+CREATE USER fpidbpro WITH PASSWORD fpaidbpro@9876
+ALTER USER fpidbpro WITH SUPERUSER;
+
+GRANT ALL PRIVILEGES ON DATABASE fpaidb_pro to fpidbpro;
+
+// give permisson to postgres user like /dhis/hmis
+
+nano /etc/postgressql/13/main/pg_hba.cong
+add
+local   all   hmis  md5openimisdemo_v233_09_04_2021
+
+then ctrl + X then Y ( for saving )
+
+then restart the postgres
+
+and for database on another server add following in 
+nano /etc/postgressql/13/main/pg_hba.cong
+
+host all all all all
+
+host    all  	    all  	xxx.xxx.xxx.xxx       md5
+host    all  	    all  	all                   md5
+
+And then restart the Service
+connect to postgres through command line
+
+psql -U postgres -h localhost
+or go through to C:\Program Files\PostgreSQL\10\bin\psql.exe
+
+list of database
+\list or \l+
+\d+ // for all tables for selected database
+select version();
+\! psql -V
+// move to database
+
+\connect dbname or \c dbname
+\d+  // list of tables
+and run the sql script as required
+
+// connect on server linode
+
+// login to postgres
+sudo -s
+su postgres 
+psql
+// to connect the database
+\c dbname username
+psql dbname username
+ \c dmc dhis  or \connect dbname username
+
+\d+  // list of tables
+and run the sql script as required
+
+
+// ubantu server password update
+
+// password update
+sudo passwd username
+Enter new UNIX password:
+Retype new UNIX password:
+passwd: password updated successfully
+
+or
+passwd
+Changing password for abhishek.
+(current) UNIX password: 
+Enter new UNIX password: 
+Retype new UNIX password: 
+passwd: password updated successfully
+
+
+
 https://developers.dhis2.org/
 
 https://docs.dhis2.org/2.29/en/developer/html/dhis2_developer_manual_full.html#webapi_plugins
@@ -392,9 +516,10 @@ My-sql
 dhis -- trunk
 
 username -- hispdev
-password -- $2a$10$FyFfOyfzQDKoJ6hs9Kr4WOfh7jp4H.LxMVQDcf1h4sJciYH1Y0meu
+password -- $2a$10$FyFfOyfzQDKoJ6hs9Kr4WOfh7jp4H.LxMVQDcf1h4sJciYH1Y0meu -- Devhisp@1
 
-$2a$10$d6gddFV12DkGbs7BT7C9Qevqme4Ux1q3hIjy8/dlS2f0kFTjeYwua -- Devhisp@1
+username -- admin
+password -- $2a$10$G33.vNKhKSfzixYbNsVB8epkcDqsWnxSkspfSBbI021X31mX/Av8G -- District@1
 
 $2a$10$1YlO9QW/w93kOHJ3btJUqOjrm1/PXwYEmuz.BbsHcJNeh6RILI0PO -- Password@1
 
@@ -402,6 +527,7 @@ update users set password = '$2a$10$FyFfOyfzQDKoJ6hs9Kr4WOfh7jp4H.LxMVQDcf1h4sJc
 update users set password = '$2a$10$ygJzpL.g054Z9RSPF1w6Y.SI3FhlqpPO4Hut690n6aHQG1BdvWKsa' where username = 'hispdev'; // district
 
 update users set password = '$2a$10$ygJzpL.g054Z9RSPF1w6Y.SI3FhlqpPO4Hut690n6aHQG1BdvWKsa' where username = 'admin'; // district
+update users set disabled = false where username = 'admin';
 
 update users set password = '$2a$10$ygJzpL.g054Z9RSPF1w6Y.SI3FhlqpPO4Hut690n6aHQG1BdvWKsa' where username = 'DHIS2 SUPPORT'; // district
 DHIS2 SUPPORT 
@@ -416,7 +542,7 @@ dataset mera-data - read and data - read and write
 
 update dataset set  publicaccess = 'r-rw----';
 
-rwrw----  // write access  204275
+rwrw----  // write access data and meta data  204275
 update dataelementcategoryoption set publicaccess = 'rwrw----'
 
 public access no access update dataset set publicaccess = '--------';
@@ -464,6 +590,8 @@ SELECT *  FROM information_schema.columns WHERE table_schema = 'public'  AND tab
 
 ="update organisationunit set shortname  = '"&F2&"' where uid = '"&D2&"';"
 
+="update organisationunit set uid = '"&F2&"' where uid = '"&B2&"';"
+
 ="update organisationunit set featuretype = '"&F2&"', coordinates  = '"&G2&"' where uid = '"&B2&"';"
 
 ="update organisationunit set name  = '"&B2&"' where organisationunitid = "&A2&";"
@@ -486,9 +614,14 @@ select * from 	organisationunit where geometry is   null
 
 update organisationunit set geometry = null
 
+update organisationunit set closeddate = null
+
 ="update attributevalue set value  = '"&B2&"', lastupdated  = '2018-11-30' where attributevalueid = "&C2&" and attributeid = "&D2&";"
 
+="update dataelement set optionsetid = "&C2&" where uid = '"&A2&"';"
 ="update dataelement set code = '"&C1&"' where uid = '"&B1&"';"
+
+="update dataelement set categorycomboid = "&D2&" where uid = '"&A2&"';"
 
 ="update dataelement set domaintype = '"&C2&"' where uid = '"&A2&"';"
 
@@ -497,6 +630,8 @@ update organisationunit set geometry = null
 ="update dataelement set name  = '"&C2&"' where dataelementid = "&A2&" and uid = '"&B2&"';"
 
 ="update dataelement set name  = '"&D2&"', shortname  = '"&E2&"', formname  = '"&F2&"', code  = '"&C2&"' where dataelementid = "&A2&" and uid = '"&B2&"';"
+="update dataelement set name  = '"&B2&"',  formname  = '"&E2&"' where uid = '"&A2&"';"
+
 ="update dataelement set aggregationtype  = '"&B2&"', valuetype  = '"&C2&"' where  uid = '"&A2&"';"	
 
 ="update dataelement set name  = '"&C2&"', valuetype = '"&D2&"' where dataelementid = "&A2&" and uid = '"&B2&"';"
@@ -505,6 +640,10 @@ update organisationunit set geometry = null
 
 
 ="update dataelementcategoryoption set code = '"&B2&"' where uid = '"&A2&"';"	
+="update dataelementcategoryoption set uid = '"&C2&"' where uid = '"&D2&"';"
+
+="update dataelementcategoryoption set shortname = '"&D2&"' where categoryoptionid = "&A2&" and uid = '"&B2&"';"
+
 
 ="update programstagedataelement set sort_order  = "&D2&" where programstagedataelementid = "&A2&" and dataelementid = "&C2&";"
 
@@ -527,8 +666,18 @@ update datavalue set lastupdated = now()::timestamp where lastupdated ='2019-02-
 INSERT INTO datavalue (dataelementid,periodid,sourceid,categoryoptioncomboid,VALUE,storedby,lastupdated,followup) VALUES
 ="("&A2&","&D2&","&B2&","&C2&",'"&E2&"','hispdev','2020-07-16',false),"
 
+
+
+="update trackedentityattributevalue set value  = '"&D2&"' where trackedentityinstanceid = "&B2&" and trackedentityattributeid = "&C2&";"
+
 insert into trackedentityattributevalue (trackedentityinstanceid,trackedentityattributeid,created,lastupdated,value) values
 ="("&A2&",93,'2018-04-27','2018-04-27','"&C2&"'),"
+
+insert into trackedentityattributevalue (trackedentityinstanceid,trackedentityattributeid,created,lastupdated,value,storedby) values
+="("&B2&","&C2&",'2021-06-29','2021-06-29','"&D2&"','"&E2&"'),"
+
+update trackedentityattributevalue set created = now()::timestamp where created = '2021-06-29';
+update trackedentityattributevalue set lastupdated = now()::timestamp where lastupdated = '2021-06-29';
 
 insert into trackedentityattributevalue (trackedentityinstanceid,trackedentityattributeid,created,lastupdated,value) values
 ="("&B2&",8374,'2020-01-31','2020-01-31','"&C2&"'),"
@@ -648,6 +797,10 @@ update dataelement  set created = now()::timestamp where created ='2020-05-27';
 update dataelement  set lastupdated = now()::timestamp where lastupdated ='2020-05-27';
 
 
+
+insert into categories_categoryoptions(categoryoptionid,categoryid,sort_order) values
+="("&C2&","&D2&","&E2&"),"
+
 insert into indicator (indicatorid, created, lastupdated, lastupdatedby, name, shortname, annualized, indicatortypeid, numerator,numeratordescription, denominator, denominatordescription, userid, publicaccess) values
 ="(nextval('hibernate_sequence'), '2019-06-04', '2019-06-04', 50, '"&A2&"','"&B2&"',false,"&H2&",'"&D2&"','"&C2&"', '"&F2&"','"&E2&"', 50,'rw------'),"
 	
@@ -685,6 +838,7 @@ INSERT INTO programindicator(programindicatorid, uid, created, lastupdated, name
 update programindicator set created = now()::timestamp where created ='2021-02-26';
 update programindicator set lastupdated = now()::timestamp where lastupdated ='2021-02-26';
 
+update programindicator set decimals = null where decimals = 0;
 
 INSERT INTO periodboundary(periodboundaryid, uid, created, lastupdated, boundarytarget, analyticsperiodboundarytype, programindicatorid ) VALUES 
 ="(nextval('hibernate_sequence'),'"&A2&"','2020-02-06','2020-02-06','"&C2&"','"&D2&"',"&A2&"),"
@@ -728,6 +882,12 @@ insert into datasetusergroupaccesses (datasetid,usergroupaccessid) values
 
 insert into completedatasetregistration (datasetid, periodid, sourceid, attributeoptioncomboid, date, storedby) values
 ="("&A2&","&B2&","&C2&","&D2&",'2019-09-27','hisp'),"
+
+
+="update completedatasetregistration set  date  = '"&E2&"', storedby  = '"&F2&"', lastupdatedby  = '"&G2&"', lastupdated  = '"&H2&"', completed  = '"&I2&"' where datasetid = "&A2&" and periodid =  "&B2&" and sourceid =  "&C2&" and attributeoptioncomboid =  "&D2&";"
+
+insert into completedatasetregistration (datasetid, periodid, sourceid, attributeoptioncomboid, date, storedby,lastupdatedby,lastupdated,completed) values
+="("&A2&","&B2&","&C2&","&F2&",'"&D2&"','"&E2&"','"&G2&"','"&H2&"','"&I2&"'),"
 
 
 insert into userrolemembers (userroleid,userid) values
@@ -807,6 +967,7 @@ update organisationunit set lastupdated = now()::timestamp where lastupdated ='2
 update organisationunit set created = now()::timestamp where created ='2018-12-13';
 update organisationunit set lastupdated = now()::timestamp where lastupdated ='2018-12-13';
 
+select * from organisationunit where translations = '[]';
 
 update programindicator set lastupdated = now()::timestamp where lastupdated ='2018-12-06';
 
@@ -874,6 +1035,13 @@ insert into optionvalue (optionvalueid, uid, code, name, created, lastupdated, s
 update optionvalue set created = now()::timestamp where created ='2019-06-12';
 update optionvalue set lastupdated = now()::timestamp where lastupdated ='2019-06-12';
 
+insert into optiongroupmembers ( optiongroupid, optionid ) values
+="("&K2&", "&L2&"),"
+
+
+
+
+
 insert into period ( periodid, periodtypeid, startdate, enddate ) values
 ="(nextval('hibernate_sequence'),"&C2&",'"&A2&"','"&B2&"'),"
 
@@ -900,6 +1068,11 @@ update datavalue set lastupdated = now()::timestamp where lastupdated ='2019-06-
 insert into datavalue (dataelementid,periodid,sourceid,categoryoptioncomboid,attributeoptioncomboid,value,storedby,created,lastupdated,deleted) values
 ="("&H2&","&K2&","&C2&","&I2&","&J2&",'"&G2&"','priyanka','2019-07-02','2019-07-02',false),"
 
+
+="delete from datavalue where dataelementid = "&A2&" and categoryoptioncomboid = "&B2&" and attributeoptioncomboid = "&C2&" and sourceid = "&D2&" and periodid = "&F2&" ;"
+
+="delete from datavalueaudit where dataelementid = "&A2&" and categoryoptioncomboid = "&B2&" and attributeoptioncomboid = "&C2&" and organisationunitid = "&D2&" and periodid = "&F2&";"
+
 insert into attributevalue ( attributevalueid, value, attributeid ) values
 ="("&A2&",'"&B2&"',"&C2&"),"
 
@@ -916,6 +1089,8 @@ update dataelement set  publicaccess = 'rw------'
 =TEXT(E2,"YYYY-MM-DD")
 
 =LEFT(B2,FIND(",",B2)-1)
+
+=LEFT(G2, LEN(G2)-2)
 
 =RIGHT(H2,FIND("-",H2)-1)
 
@@ -938,6 +1113,10 @@ test string	=RIGHT( B2, LEN( B2 ) - FIND( ",", B2 ) )	  - returns the result   "
 
 =RIGHT(A1, LEN(A1)-14)
 
+// split in postgres SQL
+pe.startdate,split_part(pe.startdate::TEXT,'-', 1) as year
+,pe.enddate, split_part(pe.enddate::TEXT,'-', 2) as month,
+CONCAT (split_part(pe.startdate::TEXT,'-', 1), split_part(pe.enddate::TEXT,'-', 2)) 
 
 MY-SQL District1 -- 59ef69feca1a172a17384b14a7a8529a
 
@@ -1649,6 +1828,13 @@ psql  -U postgres -d kyrgyzstan_234_11_08_2020  <
 pg_dump -U postgres -d kyrgyzstan_2.34_11_08_2020  > "C:\Users\Mithilesh Thakur\Desktop\kyrgyzstan_234_data_base.sql"
 
 
+fhi_merge_11_06_2021
+psql  -U postgres -d fhi_merge_11_06_2021  < 
+pg_dump -U postgres -d fhi_merge_11_06_2021  > "C:\Users\Mithilesh Thakur\Desktop\fhi_v234_05072021.sql"
+
+
+
+
 
 fhi360_merge_21_07_2020
 
@@ -1687,6 +1873,11 @@ hiv_tracker_232_27_05_2020
 
 hiv_tracker_234_21_12_2020
 
+hiv_tracker_234_18_06_2021
+psql  -U postgres -d hiv_tracker_234_18_06_2021 < 
+
+pg_dump -U postgres -d hiv_tracker_234_18_06_2021 > "C:\Users\Mithilesh Thakur\Desktop\hiv_tracker_234_18062021.sql"
+
 hiv_tracker_234_30_01_2021
 
 psql  -U postgres -d hiv_tracker_234_30_01_2021 < C:\Users\HISP\Desktop\sqlview_14_04_2016.sql
@@ -1706,6 +1897,14 @@ psql  -U postgres -d mp_13_11_2015_v20 -t sqlview < C:\Users\HISP\Desktop\sqlvie
 pg_dump -U dbuser -d dbname -t tablename > outputfilename.sql
 psql  -U postgres -d hp_07_04_2016_2.20 -t sqlview < 
 
+
+mizoram_covid_236_07_09_2021
+psql  -U postgres -d mizoram_covid_236_07_09_2021 < 
+pg_dump -U postgres -d mizoram_covid_236_07_09_2021 > "C:\Users\Mithilesh Thakur\Desktop\mizoram_covid_236_16092021.sql"
+
+nipi_jk_demo_234_24_07_2021
+psql  -U postgres -d nipi_jk_demo_234_24_07_2021 < 
+pg_dump -U postgres -d nipi_jk_demo_234_24_07_2021 > "C:\Users\Mithilesh Thakur\Desktop\nipi_jk_demo_236_24072021.sql"
 
 nipi_234_03_09_2020
 
@@ -1803,6 +2002,9 @@ psql -U postgres tanzania_31_07_2019 <
 
 PUNJAB_hmis
 
+punjab_portal_v25_01_06_2021
+psql -U postgres punjab_portal_v25_01_06_2021 <  
+
 psql -U postgres tb_demo_22_05_2019 <  
 
 tb_demo_22_05_2019
@@ -1827,6 +2029,23 @@ psql -U postgres training_land_22_07_2019 <
 
 psql -U postgres punjab_hmis_22_07_2019 <
 
+
+
+syria_wfp_v35_07072021
+psql -U postgres syria_wfp_v35_07072021 < 
+
+
+ICMR-Nikushta 
+
+icmr_nikushta_v228_08_07_2021
+psql -U postgres icmr_nikushta_v228_08_07_2021 < 
+
+icmr_nikushta_v236_13_08_2021
+psql -U postgres icmr_nikushta_v236_13_08_2021 < 
+
+icmr_nikushta_v228_23062021
+psql -U postgres icmr_nikushta_v228_23062021 < 
+pg_dump -U postgres -d icmr_nikushta_v228_23062021 > "C:\Users\Mithilesh Thakur\Desktop\icmr_nikushta_v236_13082021.sql"
 
 INTPART 
 
@@ -1881,8 +2100,13 @@ libya_06_03_2019
 
 libya_230_23_07_2019
 
-libya_230_17_02_2021
-psql -U postgres libya_230_17_02_2021 < "C:\Users\Mithilesh Thakur\Desktop\dhis_libya_Jun-04-18.sql"
+libya_232_training_31_03_2021
+
+psql -U postgres libya_232_training_31_03_2021 < "C:\Users\Mithilesh Thakur\Desktop\dhis_libya_Jun-04-18.sql"
+
+libya_232_pro_01_04_2021
+psql -U postgres libya_232_pro_01_04_2021 < "C:\Users\Mithilesh Thakur\Desktop\dhis_libya_Jun-04-18.sql"
+
 
 pg_dump -U postgres -d libya_230_17_02_2021 > "C:\Users\Mithilesh Thakur\Desktop\libya_db_232_01032021.sql"
 
@@ -1902,6 +2126,13 @@ psql -U postgres libia_2.29_30_04_2018 < C:\Users\HISP\Desktop\dhis_libya_Apr-30
 cvstatus_230_09_03_2020
 
 psql -U postgres cvstatus_230_09_03_2020 < 
+
+etbreg upgrade from 2.32 to 2.35 direct not 2.33 and 2.34
+
+etbreg_11_05_2021
+psql -U postgres etbreg_11_05_2021 < "C:\Users\Mithilesh Thakur\Desktop\etbreg_22_May_2019.sql"
+pg_dump -U postgres -d etbreg_11_05_2021 > "C:\Users\Mithilesh Thakur\Desktop\etbreg_235_11052021.sql"
+
 
 etbreg_24_05_2019
 
@@ -1925,11 +2156,26 @@ imis_233_17_04_2020
 psql -U postgres imis_233_17_04_2020 < 
 pg_dump -U postgres -d imis_233_17_04_2020 > "C:\Users\Mithilesh Thakur\Desktop\imis_233_17_04_2020.sql"
 
+who_leprosy_16_07_2021
+psql -U postgres who_leprosy_16_07_2021 < 
+
+
+who_leprosy_236_14_09_2021
+psql -U postgres who_leprosy_236_14_09_2021  < 
+pg_dump -U postgres -d who_leprosy_236_14_09_2021  > "C:\Users\Mithilesh Thakur\Desktop\who_leprosy_236_14092021.sql"
+
+
 who_leprosy_20_08_2020
 
 psql -U postgres who_leprosy_20_08_2020 < 
 
 pg_dump -U postgres -d who_leprosy_25_03_2020 > "C:\Users\Mithilesh Thakur\Desktop\who_leprosy_233_31_03_2020.sql"
+
+
+who_measles_236_03_06_2021
+psql -U postgres who_measles_236_03_06_2021 < 
+
+pg_dump -U postgres -d who_measles_236_03_06_2021 > "C:\Users\Mithilesh Thakur\Desktop\who_measles_236_24062021.sql"
 
 who_measles_233_08_03_2021
 psql -U postgres who_measles_233_08_03_2021 < 
@@ -1964,6 +2210,17 @@ C:\Users\Mithilesh Thakur\Downloads>pg_restore -U postgres -d who_leprosy_03_04_
 
 // HP
 
+hp_upgraded_232_15_07_2021
+psql -U postgres hp_upgraded_232_15_07_2021 < 
+
+psql  -U postgres -d hp_upgraded_232_15_07_2021 -t datavalue  < 
+psql  -U postgres -d hp_upgraded_232_15_07_2021 -t datavalueaudit  < 
+
+pg_dump -U postgres  -d hp_upgraded_232_22_07_2020 -t datavalue > "C:\Users\Mithilesh Thakur\Desktop\hp_upgraded_datavalue.sql"
+pg_dump -U postgres  -d hp_upgraded_232_22_07_2020 -t datavalueaudit > "C:\Users\Mithilesh Thakur\Desktop\hp_upgraded_datavalueaudit.sql"
+
+
+
 hp_upgraded_232_22_07_2020
 
 psql -U postgres hp_upgraded_232_22_07_2020 < 
@@ -1991,8 +2248,26 @@ psql -U postgres icmr_leprosy_28_08_2019 <
 pg_dump -U postgres -d icmr_leprosy_27_08_2019 > "C:\Users\Mithilesh Thakur\Desktop\icmr_leprosy_232.sql"
 
 
+combat_amr_asella_236_16092021
+psql -U postgres combat_amr_asella_236_16092021 <
+
+pg_dump -U postgres  -d test_234_v6 -t color > "C:\Users\Mithilesh Thakur\Desktop\color.sql"
+pg_dump -U postgres  -d test_234_v6 -t colorset > "C:\Users\Mithilesh Thakur\Desktop\color.sql"
+pg_dump -U postgres  -d test_234_v6 -t colorset_colors > "C:\Users\Mithilesh Thakur\Desktop\color.sql"
+
+psql  -U postgres -d saint_lucia_234_14_04_2021  -t flyway_schema_history < 
+
+
+
 amr_hp_dev_230_15_05_2020
 psql -U postgres amr_hp_dev_230_15_05_2020 <
+
+
+amrhp_pilot_v234_25_08_2021
+psql -U postgres amrhp_pilot_v234_25_08_2021 <
+pg_dump -U postgres -d amrhp_pilot_v234_25_08_2021 > "C:\Users\Mithilesh Thakur\Desktop\amrhp_pilot_v234_26042021.sql"
+
+
 
 amr_base_line_234_03_02_2021
 psql -U postgres amr_base_line_234_03_02_2021 <
@@ -2027,16 +2302,32 @@ psql -U postgres who_leprosy_08_08_2107 < C:\Users\HISP\Desktop\leprosy_2017-08-
 psql -U postgres test233_26_11_2020 <  
 
 
+
+psql -U postgres rwanda_v233 < 
 psql -U postgres bhutan_maleria <
 
+bhutan_hmis_meta_234_07_08_2021
+psql -U postgres bhutan_hmis_meta_234_07_08_2021 < 
+pg_dump -U postgres -d bhutan_hmis_meta_234_07_08_2021 > "C:\Users\Mithilesh Thakur\Desktop\bhutan_hmis_meta_234_07082021.sql"
+
+bhutan_hmis_234_05_06_2021
+psql -U postgres bhutan_hmis_234_05_06_2021 < 
+pg_dump -U postgres -d bhutan_hmis_234_05_06_2021 > "C:\Users\Mithilesh Thakur\Desktop\bhutan_hmis_234_05062021.sql"
 
 
+bhutan_hmis_234_02_06_2021
+psql -U postgres bhutan_hmis_234_02_06_2021 < 
+pg_dump -U postgres -d bhutan_hmis_234_02_06_2021 > "C:\Users\Mithilesh Thakur\Desktop\bhutan_hmis_234_102062021.sql"
 
-bhutan_hmis_234_15_03_2021
 
-psql -U postgres bhutan_hmis_234_15_03_2021 <  
+bhutan_hmis_234_10_05_2021
 
-pg_dump -U postgres -d bhutan_hmis_234_15_03_2021 > "C:\Users\Mithilesh Thakur\Desktop\bhutan_hmis_234_metadata.sql"
+psql -U postgres bhutan_hmis_234_10_05_2021 <  
+
+bhutan_hmis_234_11_05_2021
+psql -U postgres bhutan_hmis_234_11_05_2021 <  
+
+pg_dump -U postgres -d bhutan_hmis_234_10_05_2021 > "C:\Users\Mithilesh Thakur\Desktop\bhutan_hmis_234_14052021.sql"
 
 pg_dump -U postgres -d bhutan_hmis_26_11_2020 -T analytics* > "C:\Users\Mithilesh Thakur\Desktop\bhutan_hmis_234_with_out_analytics.sql"
 
@@ -2166,8 +2457,9 @@ tibet_pro_30_09_2020
 
 psql -U postgres tibet_pro_30_09_2020 < C:\Users\HISP\Desktop\tibet_pro_Apr-12-18_1.sql
 
+tibet_pro_v227_15_04_2021
 
-psql -U postgres tibet_pro_09_01_2018 < C:\Users\HISP\Desktop\tibet_pro_Jan-09-18.sql
+psql -U postgres tibet_pro_v227_15_04_2021 < C:\Users\HISP\Desktop\tibet_pro_Jan-09-18.sql
 
 pg_dump -U postgres -d tibet_pro_09_01_2018 > C:\Users\HISP\Desktop\tibet_pro_updated.sql
 
@@ -2332,9 +2624,14 @@ pg_dump -U postgres -d saint_lucia_234_17_03_2021 > "C:\Users\Mithilesh Thakur\D
 
 saint_lucia_235_25_03_2021
 psql -U postgres saint_lucia_235_25_03_2021 < 
+pg_dump -U postgres -d saint_lucia_235_25_03_2021 > "C:\Users\Mithilesh Thakur\Desktop\saint_lucia_235_10062021.sql"
+
 
 saint_lucia_235_25_03_2021_update
 psql -U postgres saint_lucia_235_25_03_2021_update < 
+
+
+
 
 pg_dump -U postgres  -d saint_lucia_235_25_03_2021_update -t flyway_schema_history > "C:\Users\Mithilesh Thakur\Desktop\flyway_schema_history_235.sql"
 psql  -U postgres -d saint_lucia_235_25_03_2021  -t flyway_schema_history < 
@@ -2355,6 +2652,27 @@ emro_v234_21_02_2021
 psql -U postgres emro_v234_21_02_2021 < 
 pg_dump -U postgres -d emro_v234_21_02_2021  > "C:\Users\Mithilesh Thakur\Desktop\emro_234_21022021.sql"
 
+// openimisdemo_v233_09042021
+
+// direct run from 2.33.4 to 2.35.3
+openimisdemo_v233_10_05_2021
+psql -U postgres openimisdemo_v233_10_05_2021 < 
+
+openimisdemo_v235_10_05_2021
+psql -U postgres openimisdemo_v235_10_05_2021 < 
+
+pg_dump -U postgres -d openimisdemo_v233_10_05_2021 > "C:\Users\Mithilesh Thakur\Desktop\eopenimisdemo_v235_10052021.sql"
+
+openimisdemo_v233_09_04_2021
+psql -U postgres openimisdemo_v233_09_04_2021 < 
+
+
+
+pg_dump -U postgres -d openimisdemo_v233_09_04_2021 > "C:\Users\Mithilesh Thakur\Desktop\eopenimisdemo_v235_09042021.sql"
+openimisdemo_v235_09_04_2021
+psql -U postgres openimisdemo_v235_09_04_2021 < 
+
+
 
 
 
@@ -2366,6 +2684,10 @@ ippf_pro_2.27_06_03_2019
 ippf_pro_08_05_2019
 ippf_afga_26_06_2019
 
+ippf_afga_06_07_2021
+psql -U postgres ippf_afga_06_07_2021 < 
+
+
 ippf_234_fpan_25_12_2020
 psql -U postgres ippf_234_fpan_25_12_2020 < 
 
@@ -2376,6 +2698,23 @@ ippf_pro_227_29_12_2010
 psql -U postgres ippf_pro_227_29_12_2010 < 
 
 pg_dump -U postgres -d ippf_pro_227_29_12_2010 > "C:\Users\Mithilesh Thakur\Desktop\ippf_234_weeklyPeriod.sql"
+
+// IPPF India
+
+ippf_234_fpai_13082021
+psql -U postgres ippf_234_fpai_13082021 <
+pg_dump -U postgres -d ippf_234_fpai_13082021 > "C:\Users\Mithilesh Thakur\Desktop\ippf_234_fpai_08092021.sql"
+
+
+ippf_227_fpai_01052021
+psql -U postgres ippf_227_fpai_01052021 < C:\Users\HISP\Desktop\fpan_pro_Apr-23-18_1.sql
+pg_dump -U postgres -d ippf_227_fpai_01052021 > "C:\Users\Mithilesh Thakur\Desktop\ippf_234_fpai_with_weekly_dataSet_05052021.sql"
+
+ippf_234_fpai_05052021
+psql -U postgres ippf_234_fpai_05052021 < C:\Users\HISP\Desktop\fpan_pro_Apr-23-18_1.sql
+pg_dump -U postgres -d ippf_234_fpai_05052021 > "C:\Users\Mithilesh Thakur\Desktop\ippf_234_fpai_with_monthly_dataSet_12052021.sql"
+
+
 
 // IPPF Bangladesh
 ippf_234_fpab_18_02_2021
@@ -2399,6 +2738,11 @@ pg_dump -U postgres -d ippf_234_fpasl_21_02_2021 > "C:\Users\Mithilesh Thakur\De
 
 // ippf nepal
 
+ippf_234_fpan_22_06_2021
+psql -U postgres ippf_234_fpan_22_06_2021 < 
+pg_dump -U postgres -d ippf_234_fpan_22_06_2021  > "C:\Users\Mithilesh Thakur\Desktop\ippf_234_fpan__without_datavalue_22062021.sql"
+
+
 ippf_227_fpan_01_03_2021
 psql -U postgres ippf_227_fpan_01_03_2021 < C:\Users\HISP\Desktop\fpan_pro_Apr-23-18_1.sql
 pg_dump -U postgres -d ippf_227_fpan_01_03_2021  > "C:\Users\Mithilesh Thakur\Desktop\ippf_234_fpan_with_weekly_dataSet_02032021.sql"
@@ -2411,12 +2755,22 @@ psql -U postgres ippf_234_fpan_07_12_2020 < C:\Users\HISP\Desktop\fpan_pro_Apr-2
 pg_dump -U postgres -d ippf_234_fpan_07_12_2020 > "C:\Users\Mithilesh Thakur\Desktop\ippf_234_21_12_2020.sql"
 
 // ippf Afganistan
+
+ippf_234_afga_29_06_2021
+psql -U postgres ippf_234_afga_29_06_2021 < 
+
+
 ippf_227_afga_22_03_2021
 psql -U postgres ippf_227_afga_22_03_2021 < 
 pg_dump -U postgres -d ippf_227_afga_22_03_2021  > "C:\Users\Mithilesh Thakur\Desktop\ippf_234_afga_with_weekly_dataSet_23032021.sql"
 
 pg_dump -U postgres -d ippf_227_afga_22_03_2021  > "C:\Users\Mithilesh Thakur\Desktop\ippf_234_afga_with_monthly_weekly_dataSet_23032021.sql"
 pg_dump -U postgres -d ippf_227_afga_22_03_2021  > "C:\Users\Mithilesh Thakur\Desktop\ippf_234_afga_with_monthly_dataSet_26032021.sql"
+
+
+ippf_234_afga_30_03_2021
+psql -U postgres ippf_234_afga_30_03_2021 < 
+pg_dump -U postgres -d ippf_234_afga_30_03_2021  > "C:\Users\Mithilesh Thakur\Desktop\ippf_234_afga_monthly_31032021.sql"
 
 
 psql -U postgres ippf_pro_08_05_2019 < C:\Users\HISP\Desktop\fpan_pro_Apr-23-18_1.sql
@@ -2514,6 +2868,12 @@ pg_dump -U postgres  -d nap_233_23_12_2020 > "C:\Users\Mithilesh Thakur\Desktop\
 pmtct_233_13_05_2020
 psql -U postgres pmtct_233_13_05_2020 < 
 
+myanmar_hmis_233_21_09_2021
+psql -U postgres myanmar_hmis_233_21_09_2021 < 
+
+myanmar_hmis_233_21092021
+psql -U postgres myanmar_hmis_233_21092021 < 
+
 myanmar_227_28_02_2020
 
 pg_dump -U postgres  -d rwanda_nut_233_13_06_2020 -t keyjsonvalue > "C:\Users\Mithilesh Thakur\Desktop\keyjsonvalue.sql"
@@ -2524,6 +2884,9 @@ myanmar_hmis_28_10_2020
 
 myanmar_hmis_20_01_2021
 
+myanmar_hmis_20_05_2021
+psql -U postgres myanmar_hmis_20_05_2021 < 
+
 myanmar_covid_epi_25_01_2021
 
 myanmar_covid_epi2_26_01_2021
@@ -2531,6 +2894,12 @@ myanmar_covid_epi2_26_01_2021
 myanmar_covid_epi_26_01_2021
 
 psql -U postgres myanmar_covid_epi_26_01_2021 < 
+
+
+myanmar_covax_v233_27_07_2021
+psql -U postgres myanmar_covax_v233_27_07_2021 < 
+
+pg_dump -U postgres  -d myanmar_covax_v233_27_07_2021 > "C:\Users\Mithilesh Thakur\Desktop\myanmar_covax_v236_27072021.sql"
 
 psql -U postgres -d myanmar_covid_epi2_26_01_2021 -t organisationunit < 
 
@@ -2558,14 +2927,25 @@ pg_dump -U postgres -d pmtct_233_16_06_2020  > "C:\Users\Mithilesh Thakur\Deskto
 
 
 
-myanmar_atm_01_06_2020
-psql -U postgres myanmar_atm_01_06_2020  < 
+myanmar_atm_v233_07_05_2021
+psql -U postgres myanmar_atm_v233_07_05_2021  < 
+
+myanmar_atm_v233_07052021   // new
+psql -U postgres myanmar_atm_v233_07052021 < 
 
 pg_dump -U postgres -d myanmar_atm_14_04_2020   > "C:\Users\Mithilesh Thakur\Desktop\myanmar_atm_233.sql"
+
+myanmar_atm_01_06_2020
 
 
 psql -U postgres myanmar_227_28_02_2020  < C:\Users\HISP\Desktop\uphmis_225.sql
 pg_dump -U postgres -d myanmar_23_09_2019 > C:\Users\HISP\Desktop\myanmar232_23_09_2019.sql
+
+
+psql -U postgres etbreg_01_04-2021  < C:\Users\HISP\Desktop\hp_v220_06-Apr-2016_1504.sql
+
+pg_dump -U postgres -d etbreg_01_04-2021 > "C:\Users\Mithilesh Thakur\Desktop\etbreg_updated_01042021.sql"
+
 
 UP-HMIS
 
@@ -2665,6 +3045,8 @@ psql -U postgres hp_test_22_06_2016_2.20 < C:\Users\HISP\Desktop\hp_v220_testing
 
 
 
+
+
 psql -U postgres hp_07_04_2016_2.20 < C:\Users\HISP\Desktop\hp_v220_06-Apr-2016_1504.sql
 
 psql -U postgres hp_04_03_2016_2.20 < C:\Users\HISP\Desktop\hp_v220_04-Mar-2016.sql
@@ -2698,15 +3080,38 @@ em_pro_230_18_05_2020
 
 psql -U postgres em_pro_230_18_05_2020 <
 
+
+lebnon 
+lebnon_235_10_08_2021
+psql -U postgres lebnon_235_10_08_2021 < 
+pg_dump -U postgres -d lebnon_235_10_08_2021> "C:\Users\Mithilesh Thakur\Desktop\lebnon_235_11082021.sql"
+
+
+
 pg_dump -U postgres -d em_pro_230_18_05_2020 > "C:\Users\Mithilesh Thakur\Desktop\em_pro_233_without_analytics.sql"
 
 plan
 
-plan_pro_aws_232_03_02_2021
+plan_pro_aws_232_04_08_2021
+psql -U postgres plan_pro_aws_232_04_08_2021 < 
+pg_dump -U postgres -d plan_pro_aws_232_04_08_2021 > "C:\Users\Mithilesh Thakur\Desktop\plan_pro_232_04082021.sql"
 
-psql -U postgres plan_pro_aws_232_03_02_2021 < 
 
-pg_dump -U postgres -d plan_pro_aws_232_03_02_2021 > "C:\Users\Mithilesh Thakur\Desktop\plan_pro_232_indonesia.sql"
+plan_235_production_02092021
+psql -U postgres plan_235_production_02092021 < 
+pg_dump -U postgres -d plan_235_production_02092021 > "C:\Users\Mithilesh Thakur\Desktop\plan_pro_aws_235_03092021.sql"
+
+plan_pro_aws_236_04_08_2021
+psql -U postgres plan_pro_aws_236_04_08_2021 < 
+pg_dump -U postgres -d plan_pro_aws_236_04_08_2021 > "C:\Users\Mithilesh Thakur\Desktop\plan_pro_aws_236_10082021.sql"
+
+
+
+plan_pro_aws_232_09_06_2021
+
+psql -U postgres plan_pro_aws_232_09_06_2021 < 
+
+pg_dump -U postgres -d plan_pro_aws_232_04_08_2021 > "C:\Users\Mithilesh Thakur\Desktop\plan_pro_232_indonesia.sql"
 
 psql -U postgres plan_232_24_04_2020 < "C:\Users\Mithilesh Thakur\Desktop\plan_updated_db.sql"
 
@@ -3776,6 +4181,23 @@ inner join datasetelement dsm on dsm.dataelementid = de.dataelementid
 inner join dataset ds on ds.datasetid = dsm.datasetid 
 order by de.name,cc.name,cocname.categoryoptioncomboname;
 
+
+
+// dataSet wise dataElement list
+select ds.name as dataSetName, ds.uid as dataSetUid, de.dataelementid as deid,de.uid as deUID,de.name as deName,cc.uid as categoryUID,
+cc.name as categoryName,coc.categoryoptioncomboid as categoryoptioncomboid,coc.uid as categoryoptionComboUID,cocname.categoryoptioncomboname as categoryOptionComboName
+from dataelement  as de  
+inner join categorycombo as cc on cc.categorycomboid = de.categorycomboid 
+inner join categorycombos_optioncombos as cc_coc on cc_coc.categorycomboid = de.categorycomboid
+inner join categoryoptioncombo as coc on coc.categoryoptioncomboid = cc_coc.categoryoptioncomboid
+inner join _categoryoptioncomboname as cocname on coc.categoryoptioncomboid = cocname.categoryoptioncomboid
+inner join datasetelement dsm on dsm.dataelementid = de.dataelementid
+inner join dataset ds on ds.datasetid = dsm.datasetid
+order by ds.name,cc.name,cocname.categoryoptioncomboname;
+
+
+
+
 // dataSet element
 
 select ds.uid dataSetUid, ds.name dataSetNane,dse.datasetid, dse.dataelementid, 
@@ -3895,6 +4317,31 @@ INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.category
 INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
 WHERE dv.periodid = 385;
 
+// HP -2.7 mysql datavalue query with isoperiod
+
+SELECT de.uid AS dataElementUID, coc.uid AS categoryoptioncomboUID, org.uid AS organisationunitUID, 
+dv.value AS dataValue, dv.lastupdated AS lastUpdated , dv.storedby AS storedBy , 
+CONCAT(SUBSTRING_INDEX(startdate,'-', 1),SUBSTRING_INDEX(SUBSTRING_INDEX(startdate, '-', 2), '-', -1) ) AS isoPeriod
+FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+INNER JOIN `period` pe ON pe.periodid = dv.periodid
+WHERE dv.periodid = 417 and dv.dataelementid in ( 5978,6073,6028,6081,130,6053,12,10,3,4,6091,7,
+6080,6118,6024,6054,1485,6124,68,6078,5954,6233,5953,6038,6040,6037,6070,5976,62,6228,6001,6088,
+6018);
+
+
+//datavalue query
+
+SELECT de.valuetype, de.uid AS dataElementUID, coc.uid AS categoryOptionComboUID, 
+attcoc.uid AS attributeOptionComboUID,org.uid AS organisationunitUID, dv.value, 
+dv.storedby,dv.periodid FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+WHERE dv.attributeoptioncomboid = 3996518 and dv.periodid = 3974457;
 
 
 // atm datavalue query
@@ -3909,11 +4356,68 @@ INNER JOIN datasetelement dse ON dse.dataelementid = dv.dataelementid
 INNER JOIN dataset ds ON ds.datasetid = dse.datasetid
 WHERE dv.periodid = 10225460 and org.uid = 'iUAqcdUW1WD' and ds.uid = 'ad3DGuQmgQi';
 
+// dataValue query
+
+SELECT de.uid AS dataElementUID,de.name AS dataElementName, coc.uid AS categoryOptionComboUID, 
+coc.name AS categoryOptionComboName, attcoc.uid AS attributeOptionComboUID,attcoc.name AS
+attributeOptionComboName, org.uid AS organisationunitUID, org.name AS organisationunitName, 
+dv.value, dv.storedby, CONCAT (split_part(pe.startdate::TEXT,'-', 1), split_part(pe.enddate::TEXT,'-', 2)) 
+as isoPeriod FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+inner join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+WHERE dv.value is not null;
+
+
+select distinct ( dv.periodid ),pe.startdate,split_part(pe.startdate::TEXT,'-', 1) as year
+,pe.enddate, split_part(pe.enddate::TEXT,'-', 2) as month,
+CONCAT (split_part(pe.startdate::TEXT,'-', 1), split_part(pe.enddate::TEXT,'-', 2)) 
+as isoPeriod, pe.periodtypeid from datavalue dv 
+inner join period pe ON pe.periodid = dv.periodid
+where attributeoptioncomboid = 3996518 order by pe.periodtypeid;
+
+
+SELECT de.valuetype, de.uid AS dataElementUID, coc.uid AS categoryOptionComboUID, attcoc.uid AS attributeOptionComboUID,
+org.uid AS organisationunitUID, dv.value, dv.storedby, split_part(pe.startdate::TEXT,'-', 1) as isoPeriod FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+inner join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+INNER JOIN datasetelement dse ON dse.dataelementid = dv.dataelementid
+INNER JOIN dataset ds ON ds.datasetid = dse.datasetid
+WHERE  ds.uid = 'jiu1tOn9kTi' and dv.value is not null;
+
+
+
 // complusery_count_dataElements_for dataStatus app
 
 select dse.datasetelementid from datasetelement dse
 INNER JOIN categorycombos_optioncombos ccombo on ccombo.categorycomboid = dse.categorycomboid
 where dse.datasetid='${datasetelementid}'
+
+// relationship query
+relationshipitem, relationship
+
+select relationshipitemid, trackedentityinstanceid from relationshipitem where 
+trackedentityinstanceid in ( 356957 );
+
+select relationshipitemid, trackedentityinstanceid from relationshipitem where relationshipitemid in(
+select to_relationshipitemid from relationship where from_relationshipitemid in(
+select relationshipitemid from relationshipitem where 
+trackedentityinstanceid in ( 356957 ) ));
+
+// final query	
+select rels.from_relationshipitemid,rels.to_relationshipitemid,rel1.relationshipitemid, rel1.trackedentityinstanceid
+as from_tei,rel2.relationshipitemid, rel2.trackedentityinstanceid as to_tei from relationshipitem rel1
+INNER JOIN relationship rels ON rels.from_relationshipitemid = rel1.relationshipitemid
+INNER JOIN relationshipitem rel2 ON rel2.relationshipitemid = rels.to_relationshipitemid	
+where rel1.trackedentityinstanceid in ( 356957 )
+order by rel1.trackedentityinstanceid;	
+
+
 
 
 // Query for Levelwise OrgUnit
@@ -4001,6 +4505,12 @@ order by us.username desc;
 select 	urm.userid,us.username, urm.userroleid,ur.name,ur.uid from  userrolemembers urm
 INNER JOIN users us ON us.userid = urm.userid
 INNER JOIN userrole ur on ur.userroleid = urm.userroleid
+
+select us.uid userUID,	urm.userid userID, us.username userName,ur.uid userRoleUID, urm.userroleid userRoleID
+,ur.name userRoleName from  userrolemembers urm
+INNER JOIN users us ON us.userid = urm.userid
+INNER JOIN userrole ur on ur.userroleid = urm.userroleid
+order by ur.name
 
 // user-outPut org list
 
@@ -5325,6 +5835,26 @@ git merge origin/SAINT-LUCIA-EHIS-2.35 origin/2.35 -m "Merge and update SAINT-LU
 git push origin SAINT-LUCIA-EHIS-2.35
 
 
+// for ICMR-LEP-Nikushta-2.36
+git branch ICMR-LEP-Nikushta-2.36 // for create new branch
+git checkout ICMR-LEP-Nikushta-2.36
+git push origin ICMR-LEP-Nikushta-2.36
+git worktree add /e/scm/git_icmr_lep_nikushta_2.36 ICMR-LEP-Nikushta-2.36
+git merge origin/ICMR-LEP-Nikushta-2.36 origin/2.36 -m "Merge and update ICMR-LEP-Nikushta-2.36 Branch with parent branch"
+git push origin ICMR-LEP-Nikushta-2.36
+
+
+
+// Mizoram COVID19 Analytics  // create new branch 07/09/2021
+// for MIZORAM-COVID19-2.36
+git branch MIZORAM-COVID19-2.36 // for create new branch
+git checkout MIZORAM-COVID19-2.36
+git push origin MIZORAM-COVID19-2.36
+git worktree add /e/scm/git_mizoram_covid19_2.36 MIZORAM-COVID19-2.36
+git merge origin/MIZORAM-COVID19-2.36 origin/2.36 -m "Merge and update MIZORAM-COVID19-2.36 Branch with parent branch"
+git push origin MIZORAM-COVID19-2.36
+
+
 
 
 
@@ -5725,6 +6255,58 @@ git push origin SAINT-LUCIA-EHIS-v35
 
 
 
+
+// PLAN-v35  for tracker-capture // 03/09/2021
+git branch PLAN-v35  // for create new branch for tracker capture of plan yesme 2.35
+git checkout PLAN-v35 
+git push origin PLAN-v35 
+git worktree add /e/gitHub_source_code/plan_tracker_capture_v35 PLAN-v35 
+git merge origin/PLAN-v35    origin/v35 -m "Merge PLAN-v35 Tracker Capture App with parent branch"
+git push origin PLAN-v35 
+
+
+
+// PLAN-v36  for tracker-capture // 11/08/2021
+git branch PLAN-v36 // for create new branch for tracker capture of plan yesme 2.36
+git checkout PLAN-v36
+git push origin PLAN-v36
+git worktree add /e/gitHub_source_code/plan_tracker_capture_v36 PLAN-v36
+git merge origin/PLAN-v36   origin/v36 -m "Merge PLAN-v36 Tracker Capture App with parent branch"
+git push origin PLAN-v36
+
+
+// for plan-v36 build not done
+
+git branch PLAN-v36 // / for create new branch for tracker capture PLAN-v36 build
+git checkout PLAN-v36
+git push origin PLAN-v36
+git pull origin PLAN-v36
+git worktree add /e/gitHub_source_code/tracker_build/plan-tracker_build-v36 PLAN-v36
+git merge origin/PLAN-v36  origin/v36 -m "Merge PLAN-v36 Tracker Capture App with parent branch"
+git push origin PLAN-v36
+
+
+
+// ICMR-LEP-Nikushta-2.36  for tracker-capture // 11/08/2021
+git branch ICMR-LEP-Nikushta-v36 // for create new branch for tracker capture of ICMR-LEP-Nikushta-v36
+git checkout ICMR-LEP-Nikushta-v36
+git push origin ICMR-LEP-Nikushta-v36
+git worktree add /e/gitHub_source_code/icmr_lep_nikushta_tracker_capture_v36 ICMR-LEP-Nikushta-v36
+git merge origin/ICMR-LEP-Nikushta-v36   origin/v36 -m "Merge ICMR-LEP-Nikushta-v36 Tracker Capture App with parent branch"
+git push origin ICMR-LEP-Nikushta-v36
+
+
+// for ICMR-LEP-Nikushta-2.36 build not done
+
+git branch ICMR-LEP-Nikushta-v36 // / for create new branch for tracker capture PLAN-v36 build
+git checkout ICMR-LEP-Nikushta-v36
+git push origin ICMR-LEP-Nikushta-v36
+git pull origin ICMR-LEP-Nikushta-v36
+git worktree add /e/gitHub_source_code/tracker_build/icmr_lep_nikushta_tracker_build_v36 ICMR-LEP-Nikushta-v36
+git merge origin/ICMR-LEP-Nikushta-v36  origin/v36 -m "Merge ICMR-LEP-Nikushta-v36 Tracker Capture App with parent branch"
+git push origin ICMR-LEP-Nikushta-v36
+
+
 // event-capture
 
 tibet-event-capture-2.27
@@ -5977,6 +6559,24 @@ yarn build
 yarn start
 
 
+// for dataSet-Report standar report core 
+https://github.com/dhis2/reports-app
+hisp-india fork link - https://github.com/hispindia/reports-app-dhis2-Core.git
+
+yarn or yarn install
+yarn build
+
+// create branch for ippf-v234 clone of /tree/patch/2.34.5 // 21/09/2021 
+
+git branch ippf-v234 // for create new branch
+git checkout ippf-v234
+git commit -a -m "add feature for downlods as XLS in dataSet report in standard report"
+git push origin ippf-v234
+git push origin ippf-v234
+
+
+
+
 
 // amr tanda react app build
 
@@ -6002,13 +6602,49 @@ yarn start
 // dhis-web-excel-import app aggregated
 
 
+git branch dhis-web-excel-import-app-default-v32
+git checkout dhis-web-excel-import-app-default-v32
+git push origin dhis-web-excel-import-app-default-v32
+
 git branch dhis-web-excel-import-app-default-v34
 git checkout dhis-web-excel-import-app-default-v34
 git push origin dhis-web-excel-import-app-default-v34
 
+
+git branch dhis-web-excel-import-app-default-v36
+git checkout dhis-web-excel-import-app-default-v36
+git push origin dhis-web-excel-import-app-default-v36
+
+
 git branch kyrgyzstan-aggregate-dhis-web-excel-import-2.34
 git checkout kyrgyzstan-aggregate-dhis-web-excel-import-2.34
 git push origin kyrgyzstan-aggregate-dhis-web-excel-import-2.34
+
+create meta attribute
+1) name - Excel Import DataSet Filter
+shortName - Excel Import DataSet Filter
+code - Excel_Import_DataSet_Filter
+valyeType - Yes/No
+attributeType - Data Set
+
+2) name - Excel Import Org Unit Group Filter
+shortName - Excel Import Org Unit Group Filter
+code - Excel_Import_OrgUnitGrp_Filter
+valyeType - Yes/No
+attributeType - Organisation Unit Group
+
+// tracker-data-import multistage
+https://github.com/hispindia/dhis-app-excel-import
+git branch Multistage-Excel-Import-v35
+git checkout Multistage-Excel-Import-v35
+git push origin Multistage-Excel-Import-v35
+
+
+// tracker-data-import with event/single-event // 18/08/2021
+https://github.com/hispindia/dhis-app-excel-import
+git branch tracker-date-excel-import-v36
+git checkout tracker-date-excel-import-v36
+git push origin tracker-date-excel-import-v36
 
 
 // tracker-event-report
@@ -6041,7 +6677,24 @@ git checkout hp-tracker-event-enrollment-report-v32
 git push origin hp-tracker-event-enrollment-report-v32
 
 
+// create branch for Plan-Tracker-Event-Report-V2.35  // 21/09/2021
+git branch Plan-Tracker-Event-Report-V2.35
+git checkout Plan-Tracker-Event-Report-V2.35
+git commit -a -m "update for read response json for eventDatavalue in sql-view"
+git push origin Plan-Tracker-Event-Report-V2.35
+
+
 // for app development
+
+// Integrated-Public-Health-Dashboard-Maharashtra on recat-js
+create branch for maharashtra custom-dashboard home-page in sample js with 2.27 default header // 21/09/2021
+
+git branch Integrated-Public-Health-Dashboard-Maharashtra-sample-js
+git checkout Integrated-Public-Health-Dashboard-Maharashtra-sample-js
+git commit -a -m "create branch for maharashtra custom-dashboard home-page in sample js with 2.27 default header"
+git push origin Integrated-Public-Health-Dashboard-Maharashtra-sample-js
+
+
 
 create branch for who measles excel-import ( tracker and aggregation ) -v33
 
@@ -6177,7 +6830,6 @@ https://github.com/hispindia/interactive-dashboard-vuejs
 
 // AMR-Data-Entry-Tanda-2.34
 
-
 git branch AMR-Data-Entry-Tanda-2.34
 git checkout AMR-Data-Entry-Tanda-2.34
 git push origin AMR-Data-Entry-Tanda-2.34
@@ -6234,6 +6886,14 @@ mvn clean install deploy
 
 // delete from sonatype
 curl -X DELETE -u mithilesh.hisp:hisp123 http://hospdev.hispindia.org/nexus/content/repositories/org.hispindia.dhis2/org/hisp/dhis/dhis-app-tracker-capture-plan
+
+
+// cross issue resolved
+
+CORSProxy setup link of git
+https://github.com/Brayden967/CORSProxy
+https://github.com/Freeboard/thingproxy
+http://172.105.47.158:3000/fetch/https://github.com/hispindia
 
 
 // revert command
@@ -7098,6 +7758,45 @@ INNER JOIN dataelement de ON de.dataelementid = psde.dataelementid where  de.dat
 203837,
 174673);
 
+// for saint-lucia programstage dataelements with optionset
+select pg.programid programID,pg.uid programUID,pg.name programName, ps.programstageid programstageID, 
+ps.uid programstageUID,ps.name as ps_name, pss.programstagesectionid programStageSectionID, pss.uid programStageSectionUID, pss.name 
+as section_name ,de.name as de_name, de.dataelementid,  de.uid deUID, de.optionsetid, ops.name from programstagesection pss
+INNER JOIN programstage ps ON ps.programstageid = pss.programstageid
+INNER JOIN program pg ON pg.programid = ps.programid
+INNER JOIN programstagedataelement psde on psde.programstageid = pss.programstageid
+INNER JOIN dataelement de ON de.dataelementid = psde.dataelementid 
+INNER JOIN optionset ops ON ops.optionsetid = de.optionsetid
+where ps.name Ilike '%Inspection%' and ops.name ilike '%Inspection item result%';
+
+// for Food Establishments and inspection stage
+SELECT pg.name as programName, pg.programid,pg.uid as pg_uid, ps.name as programStageName, 
+ps.programstageid,ps.uid as programStage_uid, 
+ps_de.dataelementid, de.uid as dataElement_uid, de.name as dataElementName, de.shortname
+FROM programstagedataelement ps_de
+LEFT JOIN dataelement de On de.dataelementid = ps_de.dataelementid
+LEFT JOIN programstage ps ON ps.programstageid = ps_de.programstageid
+LEFT JOIN program pg ON pg.programid = ps.programid 
+where pg.uid = 'tITlMGNJTbJ' and ps.programstageid = 130 
+and de.name not ilike '%Comment%' order by ps.name;
+
+
+
+
+
+select * from optionvalue where optionsetid = 2295;
+
+select ops.optionsetid optionSETID, ops.uid optionsetUID, ops.name optionsetName,
+opv.optionvalueid, opv.uid optionUID, opv.name optionName,opv.code optionCode from optionvalue opv 
+INNER JOIN optionset ops ON ops.optionsetid = opv.optionsetid
+where ops.name ilike '%Inspection item result%'
+order by ops.name;
+
+
+select ops.optionsetid optionSETID, ops.uid optionsetUID, ops.name optionsetName,
+opv.optionvalueid, opv.uid optionUID, opv.name optionName,opv.code optionCode from optionvalue opv 
+INNER JOIN optionset ops ON ops.optionsetid = opv.optionsetid
+
 // section wise dataelements list
 
 SELECT pg.name as programName,pg.uid as programUID, ps.name as programStageName, 
@@ -7241,6 +7940,12 @@ pe.startdate = '${startDate}' and pe.enddate = '${endDate}'
 group by dv.sourceid,org1.name,org1.uid,org.name,org.uid order by org1.name;
 
 
+// binary data read query in systemseeting table
+// https://www.postgresql.org/docs/9.4/functions-binarystring.html
+select systemsettingid, name, encode(value::bytea, 'escape') from systemsetting;
+
+select systemsettingid, name, encode(value::bytea, 'escape') from systemsetting
+where systemsettingid in (1577570,1092872, 1092873 );
 
 
 Excel import & Report app db key migration from systemsetting table to keyjsonvalue table
@@ -7678,7 +8383,9 @@ https://yesme.plan-yes.online/yesme/api/trackedEntityInstances.json?program=y6lX
 
 https://yesme.plan-yes.online/yesme/api/trackedEntityInstances.json?program=y6lXVg8TdOj&ou=qaKyG3zWNO4&paging=false&fields=*
 
+// filter by tei attribute value
 https://yesme.plan-yes.online/yesme/api/trackedEntityInstances.json?program=y6lXVg8TdOj&ou=qaKyG3zWNO4&paging=false&filter=KLSVjftH2xS:eq:ID-GNO
+https://links.hispindia.org/amr_asella/api/trackedEntityInstances?paging=false&fields=trackedEntityInstance&filter=uo3FuH69WXH:eq:2222&ou=b3aCK1PTn5S&trackedEntityType=osuAV8VCTWd
 
 
 https://esu.moph.gov.lb/dhis/api/trackedEntityInstances.json?program=XXWPM2S82r3&ou=JicJugg3ml6&ouMode=DESCENDANTS&paging=false&filter=weNyDxJdZRc:eq:U07.1
@@ -7692,7 +8399,8 @@ https://esu.moph.gov.lb/dhis/api/trackedEntityInstances.json?program=XXWPM2S82r3
 
 http://127.0.0.1:8092/dhis234/api/events.json?program=dWPcV6EiVB1&orgUnit=hRFwxAbtA83&&ouMode=DESCENDANTS&status=ACTIVE&filter=S1sDvEir5Ur:eq:Test%20school&paging=false
 https://esu.moph.gov.lb/dhis/api/events.json?program=dWPcV6EiVB1&ou=hRFwxAbtA83&ouMode=DESCENDANTS&paging=false&filter=MSLCahN2VTO:eq:no&paging=false
-
+https://esu.moph.gov.lb/dhis/api/optionSets.json?paging=false&fields=id,name,code,options[id,name]
+https://esu.moph.gov.lb/dhis/api/optionSets/Zfcf9NVll0x.json?paging=false&fields=id,name,code,options[id,name]
 
 // for one tei
 https://yesme.plan-yes.online/yesme/api/trackedEntityInstances/JJ8pwI1u4dx.json?program=y6lXVg8TdOj&ou=qaKyG3zWNO4&paging=false&fields=*,attributes,enrollments
@@ -7740,6 +8448,24 @@ http://127.0.0.1:8092/dhis234/api/events.json?program=dWPcV6EiVB1&orgUnit=hRFwxA
 http://127.0.0.1:8092/dhis234/api/events/query.json?orgUnit=hRFwxAbtA83&programStage=d1rVH5boEKJ&dataElement=S1sDvEir5Ur
 http://127.0.0.1:8092/dhis234/api/events.json?program=dWPcV6EiVB1&orgUnit=hRFwxAbtA83&ouMode=DESCENDANTS&paging=false
 
+
+
+http://afgamis.org/afga/dhis-web-tracker-capture/index.html#/?program=HhujKqJsy2V
+
+// at afgalishtan
+http://afgamis.org/afga/api/events.json?program=MeiwgtORFDJ&orgUnit=Kg7auU6OEcY&ouMode=DESCENDANTS&filter=GyOOqWkPEjd:eq:true&paging=false
+
+http://afgamis.org/afga/api/events.json?program=MeiwgtORFDJ&orgUnit=yOvuzmMJd6V&ouMode=DESCENDANTS&filter=GyOOqWkPEjd:eq:true&paging=false
+http://afgamis.org/afga/api/events.json?fields=trackedEntityInstance&program=MeiwgtORFDJ&orgUnit=W5qY2X0vWEW&ouMode=DESCENDANTS&paging=false
+http://afgamis.org/afga/api/events.json?fields=trackedEntityInstance&program=MeiwgtORFDJ&orgUnit=yOvuzmMJd6V&ouMode=DESCENDANTS&paging=false
+http://afgamis.org/afga/api/events.json?fields=trackedEntityInstance&program=MeiwgtORFDJ&orgUnit=W5qY2X0vWEW&ouMode=DESCENDANTS&paging=false
+http://afgamis.org/afga/api/trackedEntityInstances/omq7IMGTO3o.json
+http://afgamis.org/afga/api/trackedEntityInstances/WRRpPFZUxDn.json // correct
+
+http://afgamis.org/afga/api/relationships.json?tei=sisbq7t38pA
+http://afgamis.org/afga/api/relationships.json?tei=sisbq7t38pA
+
+
 http://127.0.0.1:8092/dhis234/api/trackedEntityInstances/yaYoqHhILId.json?fields=enrollments,attributes
 http://127.0.0.1:8092/dhis234/api/trackedEntityInstances/yaYoqHhILId.json?fields=*&paging=false
 http://127.0.0.1:8092/dhis234/api/enrollments.json?&ou=hRFwxAbtA83&program=dWPcV6EiVB1&trackedEntityInstance=yaYoqHhILId&paging=false
@@ -7751,6 +8477,9 @@ http://127.0.0.1:8092/dhis234/api/trackedEntityInstances.json?program=dWPcV6EiVB
 https://yesme.plan-yes.online/yesme/api/enrollments.json?program=VscnMM6g6Ow&ou=sdQOJ7uN5tO&status=COMPLETED&paging=false
 
 https://yesme.plan-yes.online/yesme/api/trackedEntityInstances.json?program=y6lXVg8TdOj&ou=qaKyG3zWNO4&paging=false&fields=enrollments[filter=status=COMPLETED],attributes
+
+https://li1637-34.members.linode.com/epi/api/trackedEntityInstances.json?program=yDuAzyqYABS&ou=AnO97v1hLDU&paging=false&ouMode=DESCENDANTS&filter=trackedEntityAtribure.attribute.id:eq:Ewi7FUfcHAD
+
 
 ENiP4wEAm9t
 
@@ -8020,3 +8749,41 @@ http://172.105.47.158/hp/api/enrollments.json?paging=false&ou=xRN5jWz1GaX&progra
 // dataValueSet
 
 https://links.hispindia.org/covid/api/dataValueSets.json?orgUnit=gFFMTnEdaxl&period=20210212&dataSet=gsOeVPTGXj1
+
+
+
+// users post
+
+http://127.0.0.1:8092/ippf/api/users
+method -- POST
+
+{id: "VUofPhWiRRu",…}
+attributeValues: []
+dataViewOrganisationUnits: [{id: "ubaTjvCDAPc"}]
+0: {id: "ubaTjvCDAPc"}
+id: "ubaTjvCDAPc"
+firstName: "testfirst name"
+id: "VUofPhWiRRu"
+organisationUnits: [{id: "ubaTjvCDAPc"}]
+surname: "testsurname"
+teiSearchOrganisationUnits: [{id: "ubaTjvCDAPc"}]
+0: {id: "ubaTjvCDAPc"}
+id: "ubaTjvCDAPc"
+userCredentials: {id: "gZQFdtwoSPO", userInfo: {id: "VUofPhWiRRu"}, cogsDimensionConstraints: [],…}
+catDimensionConstraints: []
+cogsDimensionConstraints: []
+id: "gZQFdtwoSPO"
+password: "District@1"
+userInfo: {id: "VUofPhWiRRu"}
+id: "VUofPhWiRRu"
+userRoles: [{id: "u73vLuF3JYJ"}, {id: "M8RlLBVLu2A"}]
+0: {id: "u73vLuF3JYJ"}
+id: "u73vLuF3JYJ"
+1: {id: "M8RlLBVLu2A"}
+id: "M8RlLBVLu2A"
+username: "test123"
+userGroups: [{id: "bxaJQt02Ixw"}, {id: "Z6cZ2zqEy3r"}]
+0: {id: "bxaJQt02Ixw"}
+id: "bxaJQt02Ixw"
+1: {id: "Z6cZ2zqEy3r"}
+id: "Z6cZ2zqEy3r"
