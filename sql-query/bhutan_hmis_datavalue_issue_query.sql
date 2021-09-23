@@ -23,18 +23,8 @@ INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
 INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
 INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
 INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
-WHERE dv.attributeoptioncomboid = 3996518 and dv.deleted = false and dv.value is not null;	
+WHERE dv.attributeoptioncomboid = 3996518 and dv.value is not null;	
 
-
-select * from datavalue where attributeoptioncomboid = 3996518
-and deleted = true and value is null;
-
-
--- 05/06/2021 production database 
-datavalue -- attributeoptioncomboid = 3996518 -- 94846   --- impCount - 93128 upCount - 1693 igCount - 25
--- total datavalue count -- 6610025  6608329
-
-select * from completedatasetregistration  where attributeoptioncomboid = 3996518; -- 2113
 
 old coc  -- DwpNKCL4Rfy
 wrong coc -- HllvX50cXC0
@@ -85,7 +75,7 @@ select * from categoryoptioncombo where name = 'default';
 delete from datavalue where  attributeoptioncomboid = 3996518; 
 and periodid = 3974457 and value is not null;
 
-select * from datavalue where  categoryoptioncomboid = 15 and attributeoptioncomboid = 3996518;
+select * from datavalue where  categoryoptioncomboid = 3996518;
 --update  datavalue set attributeoptioncomboid = 15 where  attributeoptioncomboid = 3996518;
 
 select * from datavalue where dataelementid = 1209 and periodid = 3974457

@@ -42,10 +42,13 @@ begin;
 	  delete from programinstanceaudit;	
       delete from programinstance;
 
--- 11) trackedentityinstance
+-- 11) programownershiphistory
+     delete from programownershiphistory;	 
+	 
+-- 12) trackedentityprogramowner
      delete from trackedentityprogramowner;	  
 	  
--- 12) trackedentityinstance
+-- 13) trackedentityinstance
      delete from trackedentityinstance;	 
 	 
 end;

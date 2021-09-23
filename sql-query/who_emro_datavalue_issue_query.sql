@@ -29,3 +29,5 @@ INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
 INNER JOIN datasetelement dse ON dse.dataelementid = dv.dataelementid
 INNER JOIN dataset ds ON ds.datasetid = dse.datasetid
 WHERE  ds.uid = 'jiu1tOn9kTi' and dv.value is not null;
+
+
