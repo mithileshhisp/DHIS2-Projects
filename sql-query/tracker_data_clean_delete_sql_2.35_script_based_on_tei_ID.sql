@@ -1,0 +1,81 @@
+begin;
+-- delete tracker data 
+-- 1) trackedentityattributevalueaudit
+
+	delete from trackedentityattributevalueaudit where trackedentityinstanceid in ( 426937,
+426938,426939,426940,426941,426942,426943,426944,426945,426946,426947,426948,
+426949,426950,426951,426952,426953,426954,426955,426956,426957,426958,426959,
+426960,426961,426962,426963,426964,426965);
+-- 2) trackedentityattributevalue
+
+	delete from trackedentityattributevalue where trackedentityinstanceid in ( 426937,
+426938,426939,426940,426941,426942,426943,426944,426945,426946,426947,426948,
+426949,426950,426951,426952,426953,426954,426955,426956,426957,426958,426959,
+426960,426961,426962,426963,426964,426965);
+
+-- 3) relationship
+
+	update relationshipitem set trackedentityinstanceid = null where relationshipid in ( select relationshipid from 
+	relationship where to_relationshipitemid in ( select relationshipitemid from 
+	relationshipitem where trackedentityinstanceid in ( 426937,
+426938,426939,426940,426941,426942,426943,426944,426945,426946,426947,426948,
+426949,426950,426951,426952,426953,426954,426955,426956,426957,426958,426959,
+426960,426961,426962,426963,426964,426965)));
+	
+-- 4) trackedentitydatavalue
+
+-- 5) trackedentitydatavalueaudit 
+
+	delete from trackedentitydatavalueaudit where programstageinstanceid in (select programstageinstanceid
+	from programstageinstance where programinstanceid in 
+	(select programinstanceid from programinstance where 
+	trackedentityinstanceid in ( 426937,
+426938,426939,426940,426941,426942,426943,426944,426945,426946,426947,426948,
+426949,426950,426951,426952,426953,426954,426955,426956,426957,426958,426959,
+426960,426961,426962,426963,426964,426965)));
+
+
+-- 5) programstageinstancecomments 
+
+	delete from programstageinstancecomments where programstageinstanceid in (select programstageinstanceid
+	from programstageinstance where programinstanceid in 
+	(select programinstanceid from programinstance where 
+	trackedentityinstanceid in ( 426937,
+426938,426939,426940,426941,426942,426943,426944,426945,426946,426947,426948,
+426949,426950,426951,426952,426953,426954,426955,426956,426957,426958,426959,
+426960,426961,426962,426963,426964,426965)));
+
+-- 6) programstageinstance 
+	delete from programstageinstance where programinstanceid in 
+	(select programinstanceid from programinstance where 
+	trackedentityinstanceid in ( 426937,
+426938,426939,426940,426941,426942,426943,426944,426945,426946,426947,426948,
+426949,426950,426951,426952,426953,426954,426955,426956,426957,426958,426959,
+426960,426961,426962,426963,426964,426965));
+
+-- 7) programstageinstance 
+	delete from programinstance where trackedentityinstanceid in ( 426937,
+426938,426939,426940,426941,426942,426943,426944,426945,426946,426947,426948,
+426949,426950,426951,426952,426953,426954,426955,426956,426957,426958,426959,
+426960,426961,426962,426963,426964,426965);
+
+
+delete from programinstancecomments where programinstanceid in (select programinstanceid
+from programinstance where trackedentityinstanceid in ( 426937,
+426938,426939,426940,426941,426942,426943,426944,426945,426946,426947,426948,
+426949,426950,426951,426952,426953,426954,426955,426956,426957,426958,426959,
+426960,426961,426962,426963,426964,426965));
+
+-- 8) trackedentityprogramowner
+     delete from trackedentityprogramowner where trackedentityinstanceid in ( 426937,
+426938,426939,426940,426941,426942,426943,426944,426945,426946,426947,426948,
+426949,426950,426951,426952,426953,426954,426955,426956,426957,426958,426959,
+426960,426961,426962,426963,426964,426965);
+	  
+-- 9) trackedentityinstance
+     delete from trackedentityinstance where trackedentityinstanceid in ( 426937,
+426938,426939,426940,426941,426942,426943,426944,426945,426946,426947,426948,
+426949,426950,426951,426952,426953,426954,426955,426956,426957,426958,426959,
+426960,426961,426962,426963,426964,426965 );
+	 
+end;

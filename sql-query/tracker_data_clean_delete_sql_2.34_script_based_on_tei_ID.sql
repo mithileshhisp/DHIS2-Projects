@@ -11,7 +11,7 @@ begin;
 
 	update relationshipitem set trackedentityinstanceid = null where relationshipid in ( select relationshipid from 
 	relationship where to_relationshipitemid in ( select relationshipitemid from 
-	relationshipitem where trackedentityinstanceid in ( 305265, 287791);
+	relationshipitem where trackedentityinstanceid in ( 305265, 287791)));
 	
 -- 4) trackedentitydatavalue
 
@@ -20,12 +20,12 @@ begin;
 	delete from trackedentitydatavalueaudit where programstageinstanceid in (select programstageinstanceid
 	from programstageinstance where programinstanceid in 
 	(select programinstanceid from programinstance where 
-	trackedentityinstanceid in ( 305265,287791);
+	trackedentityinstanceid in ( 305265,287791)));
 
 -- 6) programstageinstance 
 	delete from programstageinstance where programinstanceid in 
 	(select programinstanceid from programinstance where 
-	trackedentityinstanceid in ( 305265, 287791);
+	trackedentityinstanceid in ( 305265, 287791));
 
 -- 7) programstageinstance 
 	delete from programinstance where trackedentityinstanceid in ( 305265,287791);
