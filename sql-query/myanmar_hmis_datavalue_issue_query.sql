@@ -42,6 +42,24 @@ inner join period pe ON pe.periodid = dv.periodid
 INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
 WHERE coc.uid = 'HllvX50cXC0' and dv.value is not null and dv.deleted = false;
 
+-- yearly period
+SELECT de.uid AS dataElementUID,coc.uid AS categoryOptionComboUID, 
+attcoc.uid AS attributeOptionComboUID,org.uid AS organisationunitUID,
+dv.value, dv.storedby, CONCAT (split_part(pe.startdate::TEXT,'-', 1)) 
+as isoPeriod FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+inner join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+WHERE de.uid in( 'xvjPwasBh1i','FSkYfwz16Be','B3ohAQdMJ4i','q9lywYkRdta')
+and dv.value is not null and dv.deleted = false;
+
+-- fro delete dataValue
+SELECT ds.uid dataSetUID ,de.uid as deUID from datasetelement dse
+INNER JOIN dataset ds ON ds.datasetid = dse.datasetid
+INNER JOIN dataelement de ON de.dataelementid = dse.dataelementid
+where de.uid in( 'xvjPwasBh1i','FSkYfwz16Be','B3ohAQdMJ4i','q9lywYkRdta');
 
 
 SELECT de.uid AS dataElementUID,coc.uid AS categoryOptionComboUID, 

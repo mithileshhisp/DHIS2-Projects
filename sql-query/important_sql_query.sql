@@ -649,6 +649,10 @@ inner join usergroup urg ON urg.usergroupid = ugm.usergroupid
 order by us.username desc;
 
 
+-- usergroupmembers
+select * from usergroupmembers where usergroupid in(
+select usergroupid from usergroup where uid = 'zJTLD2Gxqf9');
+
 // user-role list
 
 select 	urm.userid,us.username, urm.userroleid,ur.name,ur.uid from  userrolemembers urm
@@ -728,7 +732,7 @@ psi.status = 'COMPLETED' and pi.programid != 522061;
 delete from datavalue where periodid in (21859684,21858736,21841507,21832298);
 delete from datavalueaudit where periodid in (21859684,21858736,21841507,21832298);
 
-// based on program
+-- based on program
 
 SELECT org.uid as orgUnit, tei.uid as tei, pi.uid AS enrollment, psi.uid as event, psi.created, 
 psi.status, psi.duedate, psi.executiondate as eventDate from programstageinstance psi
@@ -753,7 +757,7 @@ INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.tracked
 INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
 WHERE tei.uid = 'zNOsV68KsIa' and psi.deleted is false order by psi.created desc LIMIT 2;
 
-// event list
+--event list
 
 SELECT org.uid as orgUnit, tei.uid as tei, pi.uid AS enrollment, psi.uid as event, psi.created, 
 psi.organisationunitid, psi.status, psi.duedate, psi.executiondate as eventDate from programstageinstance psi
@@ -764,7 +768,7 @@ INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunit
 WHERE prg.uid = 'L78QzNqadTV' and org.uid = 'UcFtqIBF6dF' and psi.deleted is false 
 order by psi.created desc LIMIT 2;
 
-//
+-- eventdatavalues
 
 SELECT tei.uid  as tei_uid,  psi.uid as event, psi.created::date,  psi.status ,
 eventdatavalues -> 'WpBa1L6xxPC' ->> 'value' as art_status FROM programstageinstance psi
@@ -776,7 +780,7 @@ WHERE org.uid =  'aXquUzlrYYv' and prg.uid = 'L78QzNqadTV' and psi.deleted is fa
 eventdatavalues -> 'WpBa1L6xxPC' is not null  and 
 eventdatavalues -> 'WpBa1L6xxPC' ->> 'value' = 'transfer_out' order by psi.created desc;
 
-// event -data-value
+-- event -data-value
 
 SELECT org.uid as orgUnit, tei.uid as tei, pi.uid AS enrollment, psi.uid as event, psi.created,
 psi.status, eventdatavalues -> 'WpBa1L6xxPC' ->> 'value' as art_status, psi.duedate, psi.executiondate as eventDate from programstageinstance psi
@@ -788,7 +792,7 @@ WHERE prg.uid = '${program}' and tei.uid = '${tei}' and
 eventdatavalues -> 'WpBa1L6xxPC' ->> 'value' = 'transfer_out'
 and psi.deleted is false order by psi.executiondate desc LIMIT 1 ; 
 
-// based on enrollmentdate
+-- based on enrollmentdate
 
 SELECT distinct tei.uid  as tei_uid FROM programstageinstance psi
 INNER JOIN programinstance pi ON psi.programinstanceid = pi.programinstanceid
@@ -822,7 +826,7 @@ and pi.enrollmentdate::date <= '2020-12-31';
 
 
 
-// dataelement list based on dataelementGroup;
+-- dataelement list based on dataelementGroup;
 select deg.dataelementgroupid as deGrpID, deg.uid as deGrpUID, deg.name as deGrpName,
 de.dataelementid as deID, de.uid as deUID, de.name as deName from dataelement de
 INNER JOIN dataelementgroupmembers deGrpm ON deGrpm.dataelementid = de.dataelementid
@@ -1629,7 +1633,7 @@ where eventdatavalues -> 'ooIQeHbhH61' is not null
 ORDER BY eventdatavalues -> 'ooIQeHbhH61' ->> 'value';
 
 
-// json query for AMR-2.34
+-- json query for AMR-2.34
 
 
 SELECT e.uid, eventdatavalues -> 'ooIQeHbhH61' ->> 'value' as amrid
