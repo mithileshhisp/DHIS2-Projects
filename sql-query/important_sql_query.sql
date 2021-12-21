@@ -209,7 +209,7 @@ INNER JOIN datasetelement  ON  datasetelement.dataelementid = dataelement.datael
 order by dataelement.dataelementid
 
 
-// categorycombo and categoryoptioncombo map
+-- categorycombo and categoryoptioncombo map
 
 SELECT cc.uid as categorycombo_uid,cc.categorycomboid as categorycomboid,cc.name as categorycombo_name, _categoryoptioncomboname.categoryoptioncomboid, categoryoptioncombo.uid,  _categoryoptioncomboname.categoryoptioncomboname 
 FROM _categoryoptioncomboname
@@ -219,7 +219,7 @@ INNER JOIN categorycombo cc ON cc.categorycomboid = coc_cc.categorycomboid;
 
 
 
-// final categorycombo name uid query
+--final categorycombo name uid query
 
 SELECT _categoryoptioncomboname.categoryoptioncomboid, categoryoptioncombo.uid,  
 _categoryoptioncomboname.categoryoptioncomboname FROM _categoryoptioncomboname
@@ -234,7 +234,7 @@ INNER JOIN categorycombos_optioncombos ccombo on ccombo.categorycomboid = dse.ca
 where dse.datasetid=6191
 
 
-// dataelement-category-and combination
+-- dataelement-category-and combination
 
 
 select de.dataelementid as dataElementID,de.uid as dataElementUID,de.name as dataElementName,cc.uid as categoryUID,
@@ -271,7 +271,7 @@ group by de.dataelementid,de.uid,cc.uid,de.name,cc.name,coc.categoryoptioncomboi
 order by de.name,cc.name,cocname.categoryoptioncomboname
 
 
-// catrgory-combo-and category-and option dataset-element-wise
+-- catrgory-combo-and category-and option dataset-element-wise
 
 SELECT ds.datasetid as dataSetId, ds.uid as datasetUID, ds.name ad datasetName,de.dataelementid as dataElementID,
 de.uid as dataElementUID,de.name as dataElementName,cc.uid as categoryUID,
@@ -505,7 +505,7 @@ INNER JOIN datasetelement dse ON dse.dataelementid = dv.dataelementid
 INNER JOIN dataset ds ON ds.datasetid = dse.datasetid
 WHERE dv.periodid = 10225460 and org.uid = 'iUAqcdUW1WD' and ds.uid = 'ad3DGuQmgQi';
 
-// dataValue query
+-- dataValue query
 
 SELECT de.uid AS dataElementUID,de.name AS dataElementName, coc.uid AS categoryOptionComboUID, 
 coc.name AS categoryOptionComboName, attcoc.uid AS attributeOptionComboUID,attcoc.name AS
@@ -519,6 +519,59 @@ inner join period pe ON pe.periodid = dv.periodid
 INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
 WHERE dv.value is not null;
 
+
+ -- yearly datavalue
+ 
+SELECT de.uid AS dataElementUID,coc.uid AS categoryOptionComboUID, org.uid AS organisationunitUID,
+org.name AS organisationunitName,dv.value, dv.storedby, CONCAT (split_part(pe.startdate::TEXT,'-', 1)) 
+as isoPeriod FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+inner join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+WHERE de.uid in ('xl4EXfRMBrK','evXyDr6c7eu','evXyDr6c7eu') 
+and pe.startdate >= '2019-01-01' and pe.enddate <= '2021-12-31'
+and dv.value is not null and dv.deleted = false order by pe.startdate;
+
+
+-- include datavalue comment and datavalue NULL
+SELECT de.uid AS dataElementUID,coc.uid AS categoryOptionComboUID, org.uid AS organisationunitUID,
+org.name AS organisationunitName,dv.value,dv.comment dataValueComment, dv.storedby, CONCAT (split_part(pe.startdate::TEXT,'-', 1)) 
+as isoPeriod FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+inner join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+WHERE de.uid in ('xl4EXfRMBrK','evXyDr6c7eu','evXyDr6c7eu') 
+and pe.startdate >= '2019-01-01' and pe.enddate <= '2021-12-31'
+and  dv.deleted = false order by pe.startdate;
+
+
+SELECT de.uid AS dataElementUID,coc.uid AS categoryOptionComboUID, org.uid AS organisationunitUID,
+org.name AS organisationunitName,dv.value, dv.storedby, CONCAT (split_part(pe.startdate::TEXT,'-', 1)) 
+as isoPeriod FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN datasetelement dse ON dse.dataelementid = dv.dataelementid
+INNER JOIN dataset ds ON ds.datasetid = dse.datasetid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+inner join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+WHERE ds.uid in ('m4Hy2QZbW9p', 'c8Q3QiX5He3') and org.uid = 'eNKiuyk8bOB'
+and pe.startdate >= '2019-01-01' and pe.enddate <= '2021-12-31'
+and dv.value is not null and dv.deleted = false order by pe.startdate;
+
+SELECT de.uid AS dataElementUID,coc.uid AS categoryOptionComboUID, org.uid AS organisationunitUID,
+org.name AS organisationunitName,dv.value, dv.storedby, CONCAT (split_part(pe.startdate::TEXT,'-', 1)) 
+as isoPeriod FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN datasetelement dse ON dse.dataelementid = dv.dataelementid
+INNER JOIN dataset ds ON ds.datasetid = dse.datasetid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+inner join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+WHERE ds.uid in ('m4Hy2QZbW9p', 'c8Q3QiX5He3') 
+and pe.startdate >= '2019-01-01' and pe.enddate <= '2021-12-31'
+and dv.value is not null and dv.deleted = false order by pe.startdate;
 
 select distinct ( dv.periodid ),pe.startdate,split_part(pe.startdate::TEXT,'-', 1) as year
 ,pe.enddate, split_part(pe.enddate::TEXT,'-', 2) as month,
@@ -541,7 +594,7 @@ WHERE  ds.uid = 'jiu1tOn9kTi' and dv.value is not null;
 
 
 
-// complusery_count_dataElements_for dataStatus app
+-- complusery_count_dataElements_for dataStatus app
 
 select dse.datasetelementid from datasetelement dse
 INNER JOIN categorycombos_optioncombos ccombo on ccombo.categorycomboid = dse.categorycomboid
