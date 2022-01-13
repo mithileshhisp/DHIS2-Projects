@@ -533,6 +533,18 @@ WHERE de.uid in ('xl4EXfRMBrK','evXyDr6c7eu','evXyDr6c7eu')
 and pe.startdate >= '2019-01-01' and pe.enddate <= '2021-12-31'
 and dv.value is not null and dv.deleted = false order by pe.startdate;
 
+-- with coc
+SELECT de.uid AS dataElementUID,coc.uid AS categoryOptionComboUID, 
+attcoc.uid AS attributeOptionComboUID,org.uid AS organisationunitUID,
+dv.value, dv.storedby, CONCAT (split_part(pe.startdate::TEXT,'-', 1)) 
+as isoPeriod FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+inner join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+WHERE de.uid in( 'EnQPW5xZDPX') and coc.uid in ('Ei6fwK40fzN','grw5pufOjWU')
+and dv.value is not null and dv.deleted = false;
 
 -- include datavalue comment and datavalue NULL
 SELECT de.uid AS dataElementUID,coc.uid AS categoryOptionComboUID, org.uid AS organisationunitUID,
@@ -611,7 +623,7 @@ select to_relationshipitemid from relationship where from_relationshipitemid in(
 select relationshipitemid from relationshipitem where 
 trackedentityinstanceid in ( 356957 ) ));
 
-// final query	
+-- final query	
 select rels.from_relationshipitemid,rels.to_relationshipitemid,rel1.relationshipitemid, rel1.trackedentityinstanceid
 as from_tei,rel2.relationshipitemid, rel2.trackedentityinstanceid as to_tei from relationshipitem rel1
 INNER JOIN relationship rels ON rels.from_relationshipitemid = rel1.relationshipitemid
@@ -619,7 +631,19 @@ INNER JOIN relationshipitem rel2 ON rel2.relationshipitemid = rels.to_relationsh
 where rel1.trackedentityinstanceid in ( 356957 )
 order by rel1.trackedentityinstanceid;	
 
+-- tei list bsed on program
 
+SELECT tei.uid tei_uid,tei.trackedentityinstanceid, tei.created tei_created,
+tei.lastupdated tei_lastupdated,pi.enrollmentdate pi_enrollmentdate from trackedentityinstance tei
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+where prg.uid = 'SuvMxhyPK5l' and pi.enrollmentdate::date != tei.created::date;
+
+SELECT tei.uid tei_uid,tei.trackedentityinstanceid, tei.created tei_created,
+tei.lastupdated tei_lastupdated,pi.enrollmentdate pi_enrollmentdate from trackedentityinstance tei
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+where prg.uid = 'SuvMxhyPK5l' and pi.enrollmentdate::date != tei.created::date;
 
 
 // Query for Levelwise OrgUnit
@@ -656,7 +680,7 @@ where level < 5
 order by level;
 
 
-// user import query
+-- user import query
 
 select 	ui.firstname, ui.surname, us.username,org.uid, ui.uid  from userinfo ui
 INNER JOIN users us ON us.userid = ui.userinfoid
@@ -670,7 +694,7 @@ inner join userinfo usinf ON usinf.userinfoid = us.userid;
 
 select * from userinfo
 
-// user list with userinfo and member-orgUnit
+-- user list with userinfo and member-orgUnit
 select us.uid as userUID, us.username, us.created as usercreated, us.lastupdated as userlastupdated, 
 usinf.uid as userInfoUID, usinf.created as userInfocreated, usinf.lastupdated as userInfolastupdated,
 usinf.firstname, usinf.surname, org.uid as userOrgUID from  usermembership usm
@@ -686,6 +710,16 @@ usinf.firstname, usinf.surname from  users us
 INNER JOIN userinfo usinf ON usinf.userinfoid = us.userid
 order by us.lastupdated desc;
 
+
+-- user-attributevalue and user list with userinfo and member-orgUnit
+SELECT usinf.firstname first_name, usinf.surname sur_name,
+cast(userAttribute.value::json ->> 'value' AS VARCHAR) 
+AS userAttribute_value, org.uid as user_org_uid FROM userinfo usinf
+JOIN json_each_text(usinf.attributevalues::json) userAttribute ON TRUE 
+INNER JOIN usermembership usm ON usinf.userinfoid = usm.userinfoid
+inner join organisationunit org ON org.organisationunitid = usm.organisationunitid
+INNER JOIN attribute attr ON attr.uid = userAttribute.key
+WHERE attr.uid = 'FeCWLipdN3o';
 
 
 select us.uid as userUID, us.username, us.created as usercreated, us.lastupdated as userlastupdated, 
@@ -739,7 +773,7 @@ inner join organisationunit org ON org.organisationunitid = um.organisationuniti
 select count(*) from _orgunitstructure
 where level < 5
 
-// list of tei based of program and orgUnit ( all decendent )
+-- list of tei based of program and orgUnit ( all decendent )
 
 SELECT 	tei.uid as tei, prg.uid as program, pi.uid as enrollment, pi.status 
 from programinstance pi INNER JOIN program prg ON prg.programid = pi.programid
@@ -1105,7 +1139,7 @@ where ops.name ilike '%Inspection item result%'
 order by ops.name;
 
 
-// section wise dataelements list
+-- program wise section wise dataelements list
 
 SELECT pg.name as programName,pg.uid as programUID, ps.name as programStageName, 
 ps.uid as programStageUid, ps_se.name as sectionName, ps_se.uid as sectionUid,
@@ -1116,7 +1150,7 @@ INNER JOIN dataelement de On de.dataelementid = ps_de.dataelementid
 INNER JOIN programstage ps ON ps.programstageid = ps_se.programstageid
 INNER JOIN program pg ON pg.programid = ps.programid
 
-// section wise dataelements list based on program and its stage
+-- section wise dataelements list based on program and its stage
 
 SELECT pg.name as programName,pg.uid as programUID, ps.name as programStageName, 
 ps.uid as programStageUid, ps_se.name as sectionName, ps_se.uid as sectionUid,
@@ -1129,7 +1163,21 @@ INNER JOIN program pg ON pg.programid = ps.programid
 where pg.uid = 'luutVY8uc84' and ps.uid in ( 'Dur8ctsCSXD' , 'Sas5iXkJLG3' ) ;
 
 
-// program dataElement List
+-- program wise programstage section wise dataElement List
+SELECT pg.name as programName, pg.uid as programUID, ps.uid programStageUID, ps.name programStageName, 
+ps_se.uid programStageSectionUID, ps_se.name programStageSectionName, de.uid as deUID,
+de.name as dataElementName,de.shortname AS dataElementShortName,de.formname dataElementFormName
+FROM public.programstagesection_dataelements ps_de
+INNER JOIN programstagesection ps_se ON ps_se.programstagesectionid = ps_de.programstagesectionid
+INNER JOIN dataelement de On de.dataelementid = ps_de.dataelementid
+INNER JOIN programstage ps ON ps.programstageid = ps_se.programstageid
+INNER JOIN program pg ON pg.programid = ps.programid
+WHERE pg.uid = 'ecIoUziI2Gb' order by pg.name;
+
+
+
+
+-- program wise dataElement List
 
 SELECT pg.name as programName, pg.uid as programUID, pg.programid as programId, 
 ps.uid programStageUID, ps.programstageid programStageID, ps.name programStageName, 
@@ -1222,11 +1270,17 @@ order by pg.name
 
 
 select ops.optionsetid optionSETID, ops.uid optionsetUID, ops.name optionsetName,
-opv.optionvalueid, opv.uid optionUID, opv.name optionName,opv.code optionCode from optionvalue opv 
+opv.optionvalueid, opv.uid optionUID, opv.name optionName, opv.code optionCode from optionvalue opv 
 INNER JOIN optionset ops ON ops.optionsetid = opv.optionsetid
 order by ops.name;
 
-//  who_leprosy reporting rate query
+-- option value with option set
+select ops.uid optionsetUID, ops.name optionsetName, opv.uid optionUID, opv.name optionName, 
+opv.code optionCode from optionvalue opv 
+INNER JOIN optionset ops ON ops.optionsetid = opv.optionsetid
+order by ops.name;
+
+ -- who_leprosy reporting rate query
 
 SELECT dv.sourceid,org1.name as Region_Name ,org.name as country_name,count( dv.sourceid ) 
 from datavalue dv
@@ -1586,7 +1640,7 @@ LEFT JOIN programstagesection pss ON pss.programstagesectionid = pra.programstag
 LEFT JOIN programrule pr ON pr.programruleid = pra.programruleid
 LEFT JOIN dataelement de on de.dataelementid = pra.dataelementid
 
-// program rule list program wise
+-- program rule list program wise
 select pg.name programName, pg.uid programUID,pr.programid programId,pr.name programRuleName, 
 pr.uid programRuleUID,pr.rulecondition, pr.priority from programrule pr
 INNER JOIN program pg on pg.programid = pr.programid 
@@ -1655,6 +1709,19 @@ INNER JOIN dataelement de ON de.uid = data.key
 where prg.uid = 'dzizG8i1cmP' and psi.executiondate between '2021-08-01' and '2021-08-31'
 order by psi.programstageinstanceid;
 
+
+SELECT psi.uid eventID,psi.storedby, psi.status, psi.executiondate::date,
+psi.completedby, psi.completeddate::date,psi.deleted,data.key as de_uid,
+cast(data.value::json ->> 'value' AS VARCHAR) AS de_value, de.name AS dataElementName,
+prg.uid AS prgUID,org.uid AS orgUnit_uid FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN organisationunit org ON org.organisationunitid = pi.organisationunitid
+INNER JOIN dataelement de ON de.uid = data.key
+where de.uid = 'dKZsEnR8s9C'
+order by psi.programstageinstanceid;
+
 -- event list with dataelement-value with trackedentityattributevalue
 SELECT psi.uid eventID,psi.executiondate::date, data.key as de_uid,
 cast(data.value::json ->> 'value' AS VARCHAR) AS de_value, 
@@ -1665,6 +1732,20 @@ INNER JOIN program prg ON prg.programid = pi.programid
 INNER JOIN dataelement de ON de.uid = data.key
 INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
 where psi.executiondate between '2021-08-01' and '2021-11-30' and teav.trackedentityattributeid = 3418;
+
+
+
+-- tei list based on tea attribute uid
+SELECT tei.uid AS tei_uid, pi.uid AS enrollment_uid, prg.uid AS program_uid,
+org.uid AS orgUnit_uid,teav.value AS care_mother_id from trackedentityattributevalue teav
+INNER JOIN trackedentityattribute tea ON tea.trackedentityattributeid = teav.trackedentityattributeid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav.trackedentityinstanceid 
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = teav.trackedentityinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = pi.organisationunitid
+INNER JOIN program prg ON prg.programid = pi.programid
+where tea.uid = 'yDaWsAZcr8K';
+
+
 
 -- for all events dataelement and its value and programstageinstanceid , UID
 SELECT data.key as de_uid,
@@ -1807,13 +1888,18 @@ delete from trackedentitydatavalue;
 
 // end
 
-// parent wise orgList
+-- parent wise orgList
 SELECT ou.organisationunitid as orgUnitID , ou.uid as orgUnid, ou.name as orgunit_name, parent.name as orgunit_parent, ous.level as orgunit_level, ou.code as orgunit_code from organisationunit ou 
 inner join organisationunit parent on ou.parentid=parent.organisationunitid 
 inner join _orgunitstructure ous on ou.organisationunitid=ous.organisationunitid 
 order by ous.level, ou.name;
 
-// orgUnit hierarchy Query
+
+select organisationunitid,uid,name,shortname,code,path from organisationunit 
+where path like '%Kg7auU6OEcY%' and hierarchylevel = 6;
+
+
+-- orgUnit hierarchy Query
 
 select
 ou1.uid as uid1,max(ou1.name) as Level1,
@@ -2187,7 +2273,7 @@ group by ou3.uid,ou4.uid,ou5.uid,ou6.uid,ou7.uid,ou8.uid,ou9.uid;
 
 
 
-// orgUnit herarchy by uid and complete path_name
+-- orgUnit herarchy by uid and complete path_name
 
 select
 ous.organisationunituid as orgunituid,

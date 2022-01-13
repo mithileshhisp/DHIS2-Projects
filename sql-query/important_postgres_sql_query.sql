@@ -121,6 +121,14 @@ select table_name from information_schema.tables where table_name like 'analytic
 select table_name from information_schema.tables where table_name like 'analytics%' and table_type = 'BASE TABLE'
 select table_name from information_schema.tables where table_name like 'analytics_enrollment%' and table_type = 'BASE TABLE'
 
+
+// binary data read query in systemseeting table
+// https://www.postgresql.org/docs/9.4/functions-binarystring.html
+select systemsettingid, name, encode(value::bytea, 'escape') from systemsetting;
+
+select systemsettingid, name, encode(value::bytea, 'escape') from systemsetting
+where systemsettingid in (1577570,1092872, 1092873 );
+
 -- table name for sequential number counter for tracked entity attribute sequentialnumbercounter
 -- owneruid( means trackedentityattribute UID)
 SELECT id, owneruid, key, counter
@@ -139,6 +147,9 @@ SELECT pg_size_pretty( pg_database_size('icmr_nikushta_v228_23062021') ); // 106
 
 SELECT pg_size_pretty (pg_total_relation_size (' programinstanceaudit '));
 select pg_relation_size('dataelement');
+
+select pg_relation_size('audit');
+SELECT pg_size_pretty (pg_total_relation_size (' audit '));
 
 -- all tables list with sizes
 
