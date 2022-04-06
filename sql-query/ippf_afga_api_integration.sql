@@ -4,7 +4,19 @@ KAP-CBD-15
 -- fDUINIR160n,  value type numner to text
 
 -- PNC -- uF84mQtvlmR,S289YKm0YVI,CLAR667oKdA -- yes/no to text,
--- dG5Lxn3OIVf,fXUJMeK0Y2T,XCVF4Od77tB,Z2KCGcpPyHB, -- value type numner to text
+-- dG5Lxn3OIVf,fXUJMeK0Y2T,XCVF4Od77tB,Z2KCGcpPyHB, JwC0Yyo18U1,RNrGHYHaeXN -- value type numner to text
+
+-- afga orgUnit list and CBD group members of afga orgUnit
+
+select org.uid,org.name,org.shortname from organisationunit org
+INNER JOIN orgunitgroupmembers orgGrpM ON orgGrpM.organisationunitid = org.organisationunitid
+where org.path like '%Kg7auU6OEcY%' and org.hierarchylevel = 6
+and orgGrpM.orgunitgroupid = 490;	
+
+-- afga orgUnit list
+select uid,name,shortname,code from organisationunit 
+where path like '%Kg7auU6OEcY%' and hierarchylevel = 6;
+
 
 select * from trackedentityinstance where trackedentityinstanceid in(
 select trackedentityinstanceid from trackedentityattributevalue where 
@@ -15,6 +27,9 @@ select * from trackedentityattribute order by trackedentityattributeid desc;
 select * from program where uid = 'EAY7CYYkrpi';
 
 select * from programstage where programid = 2930728;
+
+select count(*) from programinstance where programid = 2930728
+and created::date = '2022-01-31';
 
 select * from programinstance where programid = 2930728;
 
@@ -33,6 +48,10 @@ select * from programstageinstance where programinstanceid in (
 select programinstanceid from programinstance where programid = 2930728) 
 and programstageid in( 2930857 );
 
+select * from trackedentitydatavalueaudit where programstageinstanceid in (
+select programstageinstanceid from programstageinstance where programstageid 
+in( 2930725,2930726,2930727 ));
+
 out - 2930857 -  ,his 2930724 -  anc - 2930725 mother-PNC 2930726 child-PNC 2930727
 
 
@@ -49,6 +68,20 @@ and programstageid in( 2930726,2930727,2930725);
 select * from programstageinstance where programinstanceid in (
 select programinstanceid from programinstance where programid = 2930728) 
 and programstageid = 2930725;
+
+-- as on 14/02/2022
+select * from programstageinstance where programinstanceid in (
+select programinstanceid from programinstance where programid = 2930728) 
+and programstageid in( 2930724,2930857 ) -- 16166;
+
+select * from programinstance where programid = 2930728 -- 13568 ;
+
+select * from programstageinstance where programinstanceid in (
+select programinstanceid from programinstance where programid = 2930728) 
+and programstageid in( 2930725,2930726,2930727 ) -- 207 ;
+
+
+
 
 update trackedentityattribute set uid = 'yDaWsAZcr8K' where uid = 'jrboI161yqv';
 
@@ -100,6 +133,27 @@ delete from programstageinstance where programstageid in( 2930726,2930727);
 
 delete from trackedentitydatavalueaudit where programstageinstanceid in (
 select programstageinstanceid from programstageinstance where programstageid in( 2930726,2930727));
+
+-- as on 14/02/2022
+delete from trackedentitydatavalueaudit where programstageinstanceid in (
+select programstageinstanceid from programstageinstance where programstageid 
+in( 2930725,2930726,2930727 ));
+
+delete from programstageinstance where programinstanceid in (
+select programinstanceid from programinstance where programid = 2930728) 
+and programstageid in( 2930725,2930726,2930727 );
+
+
+-- update dataelement valuetype for import tracker-data aggregation to dataset 
+
+select * from dataelement where dataelementid in (
+select dataelementid from datasetelement where datasetid = 3141857);
+
+update dataelement set valuetype = 'NUMBER' where dataelementid in (
+select dataelementid from datasetelement where datasetid = 3141857);
+
+update dataelement set valuetype = 'INTEGER_POSITIVE' where dataelementid in (
+select dataelementid from datasetelement where datasetid = 3141857);
 
 
 begin;

@@ -23,13 +23,13 @@ select * from datavalueaudit where dataelementid in (
 select dataelementid from datasetelement where datasetid in (
 select datasetid from dataset where uid = 'rnayK9uGowo')) and
 periodid in (select periodid from period where periodtypeid = 3 and startdate between 
-'2021-12-17' and '2021-12-22');
+'2021-10-25' and '2021-10-31');
 
 select * from datavalue where dataelementid in (
 select dataelementid from datasetelement where datasetid in (
 select datasetid from dataset where uid = 'rnayK9uGowo')) and
 periodid in (select periodid from period where periodtypeid = 3 and startdate between 
-'2021-12-17' and '2021-12-22'); 
+'2021-10-25' and '2021-10-31'); 
  
  
 select * from datavalue where dataelementid in (
@@ -80,6 +80,9 @@ select count(*) from programstageinstance; 139275
 
 select * from programinstance where enrollmentdate::date = '1970-01-01';
 
+update programinstance set enrollmentdate = '2022-01-24 05:30:00'::timestamp 
+where enrollmentdate::date = '1970-01-01';
+
 update programinstance set enrollmentdate = '2021-11-22 12:45:15.255'::timestamp 
 where enrollmentdate::date = '2021-12-27';
 
@@ -95,5 +98,14 @@ update programinstance set enrollmentdate = '2021-12-27' where enrollmentdate::d
 update programinstance set enrollmentdate = '2021-12-27 12:45:15.255'::timestamp 
 where enrollmentdate::date = '2021-12-27';
 
+select * from trackedentityattributevalue where trackedentityattributeid = 22745; -- serial no
 
 
+SELECT psi.programstageinstanceid, psi.uid eventID, psi.executiondate::date,
+prg.uid AS prgUID, ps.uid AS programStageUID,teav.value AS serial_no FROM programstageinstance psi
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+where psi.executiondate = '2022-01-18' and teav.trackedentityattributeid = 22745
+and prg.uid = 'CTUqdqhrb46' and ps.uid = 'xikrKb0k2Eg';

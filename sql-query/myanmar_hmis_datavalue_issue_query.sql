@@ -40,6 +40,19 @@ INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.category
 INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
 inner join period pe ON pe.periodid = dv.periodid
 INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+WHERE de.uid = 'MIck76UldLx' and dv.periodid in (select periodid from period where startdate >= '2021-01-01' 
+and enddate <= '2021-12-31' and periodtypeid = 3 )and dv.value is not null and dv.deleted = false;
+
+
+SELECT de.uid AS dataElementUID,coc.uid AS categoryOptionComboUID, 
+attcoc.uid AS attributeOptionComboUID,org.uid AS organisationunitUID,
+dv.value, dv.storedby, CONCAT (split_part(pe.startdate::TEXT,'-', 1), split_part(pe.enddate::TEXT,'-', 2)) 
+as isoPeriod FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+inner join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
 WHERE coc.uid = 'HllvX50cXC0' and dv.value is not null and dv.deleted = false;
 
 -- yearly period

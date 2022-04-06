@@ -30,7 +30,7 @@ old coc  -- DwpNKCL4Rfy
 wrong coc -- HllvX50cXC0
 
 // as on 02/06/2021 database
-impCount - 70506 upCount - 5677 igCount - 0 conflictsDetails - undefined
+-- impCount - 70506 upCount - 5677 igCount - 0 conflictsDetails - undefined
 
 SELECT de.uid AS dataElementUID, coc.uid AS categoryOptionComboUID, 
 attcoc.uid AS attributeOptionComboUID,org.uid AS organisationunitUID, dv.value, 
@@ -104,3 +104,48 @@ update datasetelement set categorycomboid = null where datasetid = 156740 and
 dataelementid in( 156641,156663) 
 delete from datavalueaudit where  attributeoptioncomboid = 3996518;
 select * from dataelement;
+
+
+-- update tei/enrollment/event organisationunitid 28/02/2022
+
+
+select * from trackedentityinstance where trackedentityinstanceid in (
+select trackedentityinstanceid from programinstance where organisationunitid in (1826554 )
+and programid = 4104966 );
+
+update trackedentityinstance set organisationunitid = 466 where trackedentityinstanceid in (
+select trackedentityinstanceid from programinstance where organisationunitid in (1826554 )
+and programid = 4104966 );
+
+
+select * from programinstance where organisationunitid in (1826554 )
+and programid = 4104966;
+
+update programinstance set organisationunitid = 466 where organisationunitid in (1826554 )
+and programid = 4104966; -- 1447
+
+select * from programstageinstance where organisationunitid in (1826554 )
+and programstageid in (select programstageid from programstage where programid = 4104966 );
+
+update programstageinstance set organisationunitid = 466 where organisationunitid in (1826554 )
+and programstageid in (select programstageid from programstage where programid = 4104966 ); -- 5882
+
+select * from trackedentityprogramowner where  organisationunitid in (1826554 )
+and programid = 4104966;
+
+update trackedentityprogramowner set organisationunitid = 466 where  organisationunitid in (1826554 )
+and programid = 4104966;
+
+SELECT psi.uid eventID,psi.executiondate::date, data.key as de_uid,
+cast(data.value::json ->> 'value' AS VARCHAR) AS de_value, 
+prg.uid AS prgUID,de.name AS dataElementName, teav.value AS CR_Number, 
+org.uid AS orgUnitUID, org.name AS orgUnitName FROM programstageinstance psi 
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = pi.organisationunitid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN dataelement de ON de.uid = data.key
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+where prg.uid = 'SuvMxhyPK5l' and teav.trackedentityattributeid = 3987324;
+
+
