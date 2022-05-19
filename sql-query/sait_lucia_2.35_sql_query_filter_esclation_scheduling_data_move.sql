@@ -135,3 +135,20 @@ INNER JOIN (SELECT programstageinstanceid FROM programstageinstance
 WHERE eventdatavalues -> 'oYNscX4WRDk' ->> 'value'  ILIKE '2' ) evdatavalue1 
 on evdatavalue1.programstageinstanceid = psi.programstageinstanceid  
 WHERE ps.name ILIKE 'Escalation'
+
+-- user related query delete userroles
+
+delete from userrolemembers where userroleid 
+in ( 360,9961,9962,14984,14985,14990);
+
+select * from users where userid not in ( select userid from 
+usergroupmembers);	
+
+select * from userinfo where userinfoid in (
+select userid from users where userid not in ( select userid from 
+usergroupmembers));
+
+select usr.username, usrinfo.surname, usrinfo.firstname from users usr
+LEFT JOIN userinfo usrinfo ON usrinfo.userinfoid = usr.userid
+where usr.userid not in ( select userid from 
+usergroupmembers);

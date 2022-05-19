@@ -100,6 +100,14 @@ where enrollmentdate::date = '2021-12-27';
 
 select * from trackedentityattributevalue where trackedentityattributeid = 22745; -- serial no
 
+-- run on 18/04/2022
+
+select * from programinstance where enrollmentdate::date = '1970-01-01';
+
+update programinstance set enrollmentdate = '2022-04-13 05:30:00'::timestamp 
+where enrollmentdate::date = '1970-01-01';
+
+-- 
 
 SELECT psi.programstageinstanceid, psi.uid eventID, psi.executiondate::date,
 prg.uid AS prgUID, ps.uid AS programStageUID,teav.value AS serial_no FROM programstageinstance psi

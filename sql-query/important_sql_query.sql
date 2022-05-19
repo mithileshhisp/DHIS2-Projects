@@ -451,12 +451,37 @@ group by de.dataelementid,de.uid,cc.uid,de.name,cc.name,cc.categorycomboid,coc.c
 order by de.name,cc.name,cocname.categoryoptioncomboname;
 
 
+-- period wise some datavalue
+
+SELECT de.uid AS dataElementUID, coc.uid AS categoryoptioncomboUID, org.uid AS organisationunitUID, 
+SUM( cast( dv.value as numeric) ) FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+INNER JOIN period pe ON pe.periodid = dv.periodid
+WHERE dv.periodid in ( select periodid from period where periodtypeid = 8 
+and startdate >= '2017-04-01' and enddate <='2018-03-31') and de.uid in (
+'jRuV3gFk8oL','N5qx0mV9BHN') GROUP BY de.uid,coc.uid ,org.uid;
+
+--
+
+SELECT de.name AS dataElementName, coc.name AS categoryoptioncomboName, org.name AS organisationunitName, 
+org.uid AS organisationunitUID,SUM( cast( dv.value as numeric) ) FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+INNER JOIN period pe ON pe.periodid = dv.periodid
+WHERE dv.periodid in ( select periodid from period where periodtypeid = 8 
+and startdate >= '2019-04-01' and enddate <='2020-03-31') and de.uid in ('jRuV3gFk8oL','N5qx0mV9BHN')
+GROUP BY de.name,coc.name ,org.uid,org.name;
+
+
 
 
 select de.dataelementid as deid,de.uid as deUID,de.name as deName,cc.categoryid as categoryID,cc.uid as categoryUID, cc.name as categoryName,coc.categoryoptioncomboid as categoryoptioncomboid,coc.uid as categoryoptionUID,cocname.categoryoptioncomboname as categoryOptionName from dataelement as de inner join categorycombo as cc on cc.categorycomboid = de.categorycomboid inner join categorycombos_optioncombos as cc_coc on cc_coc.categorycomboid = de.categorycomboid inner join categoryoptioncombo as coc on coc.categoryoptioncomboid = cc_coc.categoryoptioncomboid inner join _categoryoptioncomboname as cocname on coc.categoryoptioncomboid = cocname.categoryoptioncomboid group by de.dataelementid,de.uid,cc.uid,cc.categoryid,de.name,cc.name,coc.categoryoptioncomboid ,coc.uid,cocname.categoryoptioncomboname order by de.name,cc.name,cocname.categoryoptioncomboname
 
 select de.dataelementid as deid,de.uid as deUID,de.name as deName,cc.categoryid as categoryID,cc.uid as categoryUID, cc.name as categoryName,coc.categoryoptioncomboid as categoryoptioncomboid,coc.uid as categoryoptionUID,cocname.categoryoptioncomboname as categoryOptionName from dataelement as de inner join categorycombo as cc on cc.categorycomboid = de.categorycomboid inner join categorycombos_optioncombos as cc_coc on cc_coc.categorycomboid = de.categorycomboid inner join categoryoptioncombo as coc on coc.categoryoptioncomboid = cc_coc.categoryoptioncomboid inner join _categoryoptioncomboname as cocname on coc.categoryoptioncomboid = cocname.categoryoptioncomboid group by de.dataelementid,de.uid,cc.uid,cc.categoryid,de.name,cc.name,coc.categoryoptioncomboid ,coc.uid,cocname.categoryoptioncomboname order by de.name,cc.name,cocname.categoryoptioncomboname
-// for datavalue of HP 2.7 my-sql
+ -- for datavalue of HP 2.7 my-sql
 
 SELECT de.uid AS dataElementUID,dv.dataelementid, dv.periodid, dv.sourceid, org.uid AS organisationunitUID, 
 dv.categoryoptioncomboid, coc.uid AS ategoryoptioncomboUID, dv.value, dv.lastupdated FROM datavalue dv
@@ -465,7 +490,7 @@ INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.category
 INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
 WHERE dv.periodid = 385;
 
-// HP -2.7 mysql datavalue query with isoperiod
+-- HP -2.7 mysql datavalue query with isoperiod
 
 SELECT de.uid AS dataElementUID, coc.uid AS categoryoptioncomboUID, org.uid AS organisationunitUID, 
 dv.value AS dataValue, dv.lastupdated AS lastUpdated , dv.storedby AS storedBy , 
@@ -480,7 +505,7 @@ WHERE dv.periodid = 417 and dv.dataelementid in ( 5978,6073,6028,6081,130,6053,1
 6018);
 
 
-//datavalue query
+-- datavalue query
 
 SELECT de.valuetype, de.uid AS dataElementUID, coc.uid AS categoryOptionComboUID, 
 attcoc.uid AS attributeOptionComboUID,org.uid AS organisationunitUID, dv.value, 
@@ -1197,6 +1222,21 @@ WHERE trackedentityattributeid = 2617 ) teav3
 on teav2.trackedentityinstanceid = teav3.trackedentityinstanceid
 WHERE teav1.value = 'true' AND teav1.trackedentityattributeid = 2618;
 
+
+--  multiple TEA value in one query with orgUnit name and uid
+
+SELECT teav1.trackedentityinstanceid, teav2.value as name ,teav1.value as dateValue, 
+teav3.value AS CID_number,org.uid AS orgUID,org.name AS orgName FROM trackedentityattributevalue teav1
+INNER JOIN ( SELECT trackedentityinstanceid,value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid = 140561 ) teav2
+on teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
+INNER JOIN ( SELECT trackedentityinstanceid, value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid = 3987324 ) teav3
+on teav2.trackedentityinstanceid = teav3.trackedentityinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = tei.organisationunitid
+WHERE teav1.trackedentityattributeid =  3987326 AND teav1.value ILIKE '%0000-%';
+
 -- eventdatavalues related queries
 
 SELECT pi.trackedentityinstanceid, psi.organisationunitid, 
@@ -1886,6 +1926,16 @@ where prg.uid = 'dzizG8i1cmP' and psi.executiondate between '2021-08-01' and '20
 order by psi.programstageinstanceid;
 
 -- eventdatavalue based on dataelement value and uid
+
+SELECT psi.uid eventID, data.key as de_uid,
+cast(data.value::json ->> 'value' AS VARCHAR) AS de_value, 
+prg.uid AS prgUID FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN dataelement de ON de.uid = data.key
+where de.uid = 'vHA2T42pAQz' and prg.uid = 'SuvMxhyPK5l' ;
+
 SELECT psi.programstageinstanceid, psi.uid eventID, data.key as de_uid,
 cast(data.value::json ->> 'value' AS VARCHAR) 
 AS de_value FROM programstageinstance psi
@@ -1942,7 +1992,18 @@ INNER JOIN dataelement de ON de.uid = data.key
 INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
 where prg.uid = 'SuvMxhyPK5l' and teav.trackedentityattributeid = 3987324;
 
-
+-- bhutan Gastric Cancer Management data list with CID attribute with orgUnit name and uid
+SELECT psi.uid eventID, org.uid AS orgUnitUID, org.name AS orgUnitName, data.key as de_uid,
+cast(data.value::json ->> 'value' AS VARCHAR) AS de_value, prg.uid AS prgUID, 
+de.name AS dataElementName, teav.value AS CID_Number FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN trackedentityattribute tea ON tea.trackedentityattributeid = teav.trackedentityattributeid
+INNER JOIN organisationunit org ON org.organisationunitid = pi.organisationunitid
+INNER JOIN dataelement de ON de.uid = data.key
+where tea.uid = 'cae0w7Dh8q2' and de.uid = 't1BdYeCTz8Y' and prg.uid = 'VuoSamZ3qrE';
 
 SELECT psi.programstageinstanceid, psi.uid eventID, psi.executiondate::date,
 prg.uid AS prgUID, ps.uid AS programStageUID,teav.value AS serial_no FROM programstageinstance psi
@@ -1952,6 +2013,20 @@ INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
 INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
 where psi.executiondate = '2022-01-18' and teav.trackedentityattributeid = 22745
 and prg.uid = 'CTUqdqhrb46' and ps.uid = 'xikrKb0k2Eg';
+
+
+SELECT psi.uid eventID,psi.executiondate::date as eventdate, org.uid AS orgUnitUID, org.name AS orgUnitName, 
+data.key as de_uid, cast(data.value::json ->> 'value' AS VARCHAR) AS de_value, prg.uid AS prgUID, 
+de.name AS dataElementName, teav.value AS CID_Number FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN trackedentityattribute tea ON tea.trackedentityattributeid = teav.trackedentityattributeid
+INNER JOIN organisationunit org ON org.organisationunitid = pi.organisationunitid
+INNER JOIN dataelement de ON de.uid = data.key
+where tea.uid = 'cae0w7Dh8q2' and de.uid = 'pi92syhlS8p' and prg.uid = 'VuoSamZ3qrE';
+
 
 -- tei list based on tea attribute uid
 SELECT tei.uid AS tei_uid, pi.uid AS enrollment_uid, prg.uid AS program_uid,
