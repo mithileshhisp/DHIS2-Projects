@@ -224,3 +224,34 @@ WHERE teav1.trackedentityattributeid =  3987326 AND teav1.value ILIKE '%0000-%';
 select * from flyway_schema_history where installed_rank = 115;	
 
 delete from flyway_schema_history where installed_rank = 115;	
+
+
+SELECT teav1.trackedentityinstanceid, teav2.value as name ,teav1.value as dateValue, 
+teav3.value AS CID_number,org.uid AS orgUID,org.name AS orgName FROM trackedentityattributevalue teav1
+INNER JOIN ( SELECT trackedentityinstanceid,value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid = 140561 ) teav2
+on teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
+INNER JOIN ( SELECT trackedentityinstanceid, value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid = 3987324 ) teav3
+on teav2.trackedentityinstanceid = teav3.trackedentityinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = tei.organisationunitid
+WHERE teav1.trackedentityattributeid =  3987326 AND teav1.value ILIKE '%0000-%';
+
+SELECT teav1.trackedentityinstanceid, teav2.value as name,teav1.value as dateValue, 
+teav3.value AS CID_number,org.uid AS orgUID,org.name AS orgName, teav1.storedby
+FROM trackedentityattributevalue teav1
+INNER JOIN ( SELECT trackedentityinstanceid,value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid = 140561 ) teav2
+on teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
+INNER JOIN ( SELECT trackedentityinstanceid, value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid = 3987324 ) teav3
+on teav2.trackedentityinstanceid = teav3.trackedentityinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = tei.organisationunitid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+WHERE teav1.trackedentityattributeid =  3987326 and teav1.value ILIKE '0%' and prg.uid = 'SuvMxhyPK5l';
+
+
+select * from trackedentityattribute where trackedentityattributeid = 3987326;

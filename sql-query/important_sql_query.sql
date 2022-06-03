@@ -1237,6 +1237,25 @@ INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trac
 INNER JOIN organisationunit org ON org.organisationunitid = tei.organisationunitid
 WHERE teav1.trackedentityattributeid =  3987326 AND teav1.value ILIKE '%0000-%';
 
+--  multiple TEA value in one query with orgUnit name and uid and based on program
+
+SELECT teav1.trackedentityinstanceid, teav2.value as name,teav1.value as dateValue, 
+teav3.value AS CID_number,org.uid AS orgUID,org.name AS orgName, teav1.storedby
+FROM trackedentityattributevalue teav1
+INNER JOIN ( SELECT trackedentityinstanceid,value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid = 140561 ) teav2
+on teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
+INNER JOIN ( SELECT trackedentityinstanceid, value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid = 3987324 ) teav3
+on teav2.trackedentityinstanceid = teav3.trackedentityinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = tei.organisationunitid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+WHERE teav1.trackedentityattributeid =  3987326 and prg.uid = 'SuvMxhyPK5l';
+
+
+
 -- eventdatavalues related queries
 
 SELECT pi.trackedentityinstanceid, psi.organisationunitid, 
@@ -2400,6 +2419,13 @@ INNER JOIN orgunitgroup orgGrp on orgGrp.orgunitgroupid = grpm.orgunitgroupid
 INNER JOIN organisationunit org ON org.organisationunitid = grpm.organisationunitid;
 
 
+SELECT orgGrp.name orgGrpName, orgGrp.uid orgGrpUID, grpm.orgunitgroupid, grpm.organisationunitid,
+org.uid orgUID,org.name orgName,org.geometry, org.featuretype, org.coordinates from orgunitgroupmembers grpm
+INNER JOIN orgunitgroup orgGrp on orgGrp.orgunitgroupid = grpm.orgunitgroupid
+INNER JOIN organisationunit org ON org.organisationunitid = grpm.organisationunitid
+where orgGrp.uid = 'pW6owR4oRKb';
+
+
 SELECT grpSetm.orgunitgroupid, orgGrp.uid orgGrpUID, orgGrp.name orgGrpName, 
 grpSetm.orgunitgroupsetid, orgGrpSet.uid orgGrpSetUID, orgGrpSet.name orgGrpSetName
 from orgunitgroupsetmembers grpSetm
@@ -2804,6 +2830,21 @@ period where periodtypeid = 8 )
 
 -- queries for dataValueSet
 
+-- maharashtra datavalueset query for no of bed for period april-2021 to march-2022
+SELECT de.uid AS dataElementUID,de.name AS dataElementName, coc.uid AS categoryOptionComboUID, 
+coc.name AS categoryOptionComboName, attcoc.uid AS attributeOptionComboUID,attcoc.name AS
+attributeOptionComboName, org.uid AS organisationunitUID, org.name AS organisationunitName, 
+dv.value, dv.storedby, dv.created, dv.lastupdated, pe.startdate,pe.enddate,pety.name FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+INNER join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+INNER join periodtype pety ON pety.periodtypeid = pe.periodtypeid
+WHERE de.uid = 'fePK3YQItlG' and dv.periodid in ( select periodid from period where startdate >= '2021-04-01' 
+and enddate <= '2022-03-31' and periodtypeid = 9 ) and 
+dv.value is not null and dv.deleted is not true;
+
 SELECT de.uid AS dataElementUID,coc.uid AS categoryOptionComboUID, 
 attcoc.uid AS attributeOptionComboUID,org.uid AS organisationunitUID,
 dv.value, dv.storedby, CONCAT (split_part(pe.startdate::TEXT,'-', 1), split_part(pe.enddate::TEXT,'-', 2)) 
@@ -2815,6 +2856,21 @@ inner join period pe ON pe.periodid = dv.periodid
 INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
 WHERE de.uid = 'MIck76UldLx' and dv.periodid in (select periodid from period where startdate >= '2021-01-01' 
 and enddate <= '2021-12-31' and periodtypeid = 3 )and dv.value is not null and dv.deleted = false;
+ 
+-- monthly data 
+SELECT de.uid AS dataElementUID,de.name AS dataElementName, coc.uid AS categoryOptionComboUID, 
+coc.name AS categoryOptionComboName, attcoc.uid AS attributeOptionComboUID,attcoc.name AS
+attributeOptionComboName, org.uid AS organisationunitUID, org.name AS organisationunitName, 
+dv.value, dv.storedby, CONCAT (split_part(pe.startdate::TEXT,'-', 1), split_part(pe.startdate::TEXT,'-', 2)) 
+as isoPeriod, pety.name FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+INNER join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+INNER join periodtype pety ON pety.periodtypeid = pe.periodtypeid
+WHERE dv.value is not null and dv.deleted is not true; 
+ 
  
 SELECT de.uid AS dataElementUID,de.name AS dataElementName, coc.uid AS categoryOptionComboUID, 
 coc.name AS categoryOptionComboName, attcoc.uid AS attributeOptionComboUID,attcoc.name AS

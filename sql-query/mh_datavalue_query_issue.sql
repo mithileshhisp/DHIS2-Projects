@@ -1,4 +1,21 @@
 
+-- maharashtra datavalueset query for no of bed for period april-2021 to march-2022
+SELECT de.uid AS dataElementUID,de.name AS dataElementName, coc.uid AS categoryOptionComboUID, 
+coc.name AS categoryOptionComboName, attcoc.uid AS attributeOptionComboUID,attcoc.name AS
+attributeOptionComboName, org.uid AS organisationunitUID, org.name AS organisationunitName, 
+dv.value, dv.storedby, dv.created, dv.lastupdated, pe.startdate,pe.enddate,pety.name FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+INNER join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+INNER join periodtype pety ON pety.periodtypeid = pe.periodtypeid
+WHERE de.uid = 'fePK3YQItlG' and dv.periodid in ( select periodid from period where startdate >= '2021-04-01' 
+and enddate <= '2022-03-31' and periodtypeid = 9 ) and 
+dv.value is not null and dv.deleted is not true;
+
+
+
 select * from period where startdate = '2021-04-01'
 
 select * from dataset where uid = 'dewVc85OtXn';
