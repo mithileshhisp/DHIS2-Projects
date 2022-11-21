@@ -117,3 +117,520 @@ INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
 INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
 where psi.executiondate = '2022-01-18' and teav.trackedentityattributeid = 22745
 and prg.uid = 'CTUqdqhrb46' and ps.uid = 'xikrKb0k2Eg';
+
+
+
+--- mizorun IPA
+
+-- program/program-stage/ program-stage-section without dataelement
+
+SELECT pg.name as programName, pg.programid,pg.uid as pg_uid, ps.name as programStageName, 
+ps.programstageid,ps.uid as programStage_uid, ps_se.name as sectionName, 
+ps_se.programstagesectionid, ps_se.uid as programstagesection_uid
+FROM programstagesection ps_se 
+INNER JOIN programstage ps ON ps.programstageid = ps_se.programstageid
+INNER JOIN program pg ON pg.programid = ps.programid 
+WHERE pg.uid = 'KHvMmIe88PQ' order by pg.name;
+
+-- program/program-stage/ program-stage-section wise dataelement-list
+SELECT pg.name as programName, pg.programid,pg.uid as pg_uid, ps.name as programStageName, 
+ps.programstageid,ps.uid as programStage_uid, ps_se.name as sectionName, 
+ps_se.programstagesectionid, ps_se.uid as programstagesection_uid, 
+ps_de.dataelementid, de.uid as dataElement_uid, de.name as dataElementName, ps_de.sort_order
+FROM public.programstagesection_dataelements ps_de
+INNER JOIN programstagesection ps_se ON ps_se.programstagesectionid = ps_de.programstagesectionid
+INNER JOIN dataelement de On de.dataelementid = ps_de.dataelementid
+INNER JOIN programstage ps ON ps.programstageid = ps_se.programstageid
+INNER JOIN program pg ON pg.programid = ps.programid 
+WHERE pg.uid = 'k6OM7dIb2X6' order by pg.name;
+
+SELECT pg.name as programName, pg.programid,pg.uid as pg_uid, ps.name as programStageName, 
+ps.programstageid,ps.uid as programStage_uid, ps_se.name as sectionName, 
+ps_se.programstagesectionid, ps_se.uid as programstagesection_uid, 
+ps_de.dataelementid, de.uid as dataElement_uid, de.name as dataElementName, ps_de.sort_order
+FROM public.programstagesection_dataelements ps_de
+INNER JOIN programstagesection ps_se ON ps_se.programstagesectionid = ps_de.programstagesectionid
+INNER JOIN dataelement de On de.dataelementid = ps_de.dataelementid
+INNER JOIN programstage ps ON ps.programstageid = ps_se.programstageid
+INNER JOIN program pg ON pg.programid = ps.programid 
+WHERE pg.uid ( 'OoVJA33zyQY', 'E5Iai5pZBOI','NStri4nXf16','clexs6sWeOl','SH5rbquuI7L','mXBbntd7peT','yisMZUE85x5')
+order by pg.name;
+
+
+-- programstagedataelement list witout section
+SELECT pg.name as programName, pg.programid,pg.uid as pg_uid, ps.name as programStageName, 
+ps.programstageid,ps.uid as programStage_uid, ps_de.sort_order,
+ps_de.dataelementid, de.uid as dataElement_uid, de.name as dataElementName, de.shortname
+FROM programstagedataelement ps_de
+LEFT JOIN dataelement de On de.dataelementid = ps_de.dataelementid
+LEFT JOIN programstage ps ON ps.programstageid = ps_de.programstageid
+LEFT JOIN program pg ON pg.programid = ps.programid 
+where  ps.uid in( 't0tWNua9VQL','R8Yvu2xBGIz','stpGlwydi7Z');
+ 
+ -- program  wise dataelement count
+select pg.name,pg.programid, count(psde.dataelementid) from programstagedataelement psde
+INNER JOIN programstage ps ON ps.programstageid = psde.programstageid
+INNER JOIN program pg ON pg.programid = ps.programid
+group by pg.name,pg.programid;
+
+-- program /stage wise dataelement count
+select pg.name,pg.programid,psde.programstageid, ps.name, 
+count(psde.dataelementid) from programstagedataelement psde
+INNER JOIN programstage ps ON ps.programstageid = psde.programstageid
+INNER JOIN program pg ON pg.programid = ps.programid
+group by pg.name,pg.programid,psde.programstageid,ps.name;
+
+SELECT prg.programid,prg.uid as program_UID, prg.name AS program_name,ps.programstageid, 
+ps.uid AS stage_UID, ps.name as stage_name,pss.programstagesectionid, pss.uid AS section_UID,
+pss.name AS section_name from programstagesection pss
+INNER JOIN programstage ps ON ps.programstageid = pss.programstageid
+INNER JOIN program prg ON prg.programid = ps.programid;
+
+select * from optionset where uid = 'dZADjoohpK8';
+
+update optionset set valuetype = 'BOOLEAN' where uid = 'dZADjoohpK8';
+
+select * from dataelement where valuetype = 'BOOLEAN';
+
+update dataelement set valuetype = 'NUMBER' where valuetype = 'BOOLEAN';
+
+update dataelement set optionsetid = 386219 where valuetype = 'NUMBER';
+
+select * from dataelement where optionsetid= 131;
+
+update dataelement set optionsetid = 131 where valuetype = 'NUMBER'
+
+select * from programstagesection_dataelements where programstagesectionid in (
+select programstagesectionid from programstagesection where name in (
+'6.0 Hand-washing','7.0 Toilets','8.0 Shower Facilities for Patients','9.0 Medical Waste Handling','5.0 Cleanliness of Wards'));
+
+update dataelement set optionsetid = 386219 where valuetype = 'NUMBER'
+and  dataelementid in (
+1445,103674);
+
+delete from programrulevariable where uid in ('aA38eZbu2Pq','aArpCyDgBNv');
+delete from programrule where uid in ('aA38eZbu2Pq','aArpCyDgBNv');
+delete from programruleaction where programruleid in (select programruleid from programrule where uid in ('aA38eZbu2Pq','aArpCyDgBNv'));
+
+
+
+select programstagedataelementid, uid, programstageid, dataelementid, 
+compulsory, allowprovidedelsewhere, sort_order, displayinreports, allowfuturedate, renderoptionsasradio, 
+skipsynchronization, skipanalytics from programstagedataelement where programstageid in (4005)
+order by sort_order;
+
+
+select * from programstagesection_dataelements where programstagesectionid 
+in ( 102390,341878,102397,102393,341877,102394,102395,102396,416241,416242)
+order by sort_order;
+
+select * from programstagedataelement where 
+programstageid in (11121,5860,56461,131447,182659,1482,173088);
+
+
+select prg.name,ps.* from programstage ps
+INNER JOIN program prg ON prg.programid = ps.programid 
+where ps.programid in(
+349540,349548,349503,349572,349532,349521,349556,349564);
+
+
+select programstagesectionid,dataelementid,sort_order from programstagesection_dataelements
+where programstagesectionid in (341877) order by sort_order;
+
+-- section list 102390,341878,102397,102393,341877,102394,102395,102396,416241,416242
+
+-- 
+
+select programstagedataelementid, programstageid, dataelementid, rendertype 
+from programstagedataelement where dataelementid in (
+select dataelementid from dataelement where optionsetid is not null) and
+programstageid in (select programstageid from programstage where programid = 349503);
+
+
+UPDATE programstagedataelement
+SET rendertype = jsonb_pretty('{"MOBILE": {"type": "HORIZONTAL_CHECKBOXES"}}')::jsonb
+WHERE programstagedataelementid in(431412,431281,431284);
+
+
+
+UPDATE programstagedataelement SET rendertype = jsonb_pretty('{"MOBILE": {"type": "HORIZONTAL_CHECKBOXES"}}')::jsonb
+WHERE programstagedataelementid in(431412,431281,431284);
+
+
+="update programstagedataelement set SET rendertype = jsonb_pretty('{"MOBILE": {"type": "HORIZONTAL_CHECKBOXES"}}')::jsonb where programstagedataelementid = "&A2&";"
+
+
+select * from programstagedataelement where programstageid in (5860,11121,56461,131447,1482,173088,182659)
+and dataelementid in (1436,388058,1472,341867);
+
+
+-- 01/07/2022
+
+select programstagedataelementid, uid, created, lastupdated, programstageid, dataelementid, 
+compulsory, allowprovidedelsewhere, sort_order, displayinreports, allowfuturedate, 
+renderoptionsasradio, skipsynchronization, skipanalytics,rendertype from 
+programstagedataelement where programstageid in(173088);
+
+select * from programstagedataelement where programstageid in 
+(249457);  -- 256
+262
+select * from programstagedataelement where programstageid in 
+(249465); -- 245
+
+select * from programstagedataelement order by programstagedataelementid desc; --453777
+
+select * from programstagedataelement where programstagedataelementid > 453777;
+
+-- 14/09/2022
+select * from programstagedataelement where programstageid in 
+(select programstageid from programstage where uid in (
+'y47jycLM4Zf','ZcueVAt15bf','IhgmHzWLtdD','UC0HBBPXtn3',
+'xlFBXDzoNsp','xzulp49cjax','LAtXB6WXmMR'));
+
+select uid,programstageid,name from programstage where uid in (
+'y47jycLM4Zf','ZcueVAt15bf','IhgmHzWLtdD','UC0HBBPXtn3',
+'xlFBXDzoNsp','xzulp49cjax','LAtXB6WXmMR')
+
+select programstagedataelementid, uid, created, lastupdated, programstageid, dataelementid, 
+compulsory, allowprovidedelsewhere, sort_order, displayinreports, allowfuturedate, 
+renderoptionsasradio, skipsynchronization, skipanalytics,rendertype from 
+programstagedataelement where programstageid 
+in(select programstageid from programstage where uid in (
+'fU8LWbcPjS6'));
+
+select programstageid,uid,name from programstage where uid in ('PhqMTB0eOhE');
+
+select * from programstagedataelement where programstageid in (347595,754131,570515);
+
+select * from programstagedataelement order by programstagedataelementid desc; -- 1043318
+
+select * from programstagedataelement where programstagedataelementid > 1043318;
+
+update programstagedataelement set created = now()::timestamp where created = '2022-10-16';
+update programstagedataelement set lastupdated = now()::timestamp where lastupdated = '2022-10-16';
+
+update programstagedataelement set created = now()::timestamp where created = '2022-09-14';
+update programstagedataelement set lastupdated = now()::timestamp where lastupdated = '2022-09-14';
+
+update programstagedataelement set created = now()::timestamp where created = '2022-09-20';
+update programstagedataelement set lastupdated = now()::timestamp where lastupdated = '2022-09-20';
+
+update programstagedataelement set created = now()::timestamp where created = '2022-09-29';
+update programstagedataelement set lastupdated = now()::timestamp where lastupdated = '2022-09-29';
+
+insert into programstagedataelement (programstagedataelementid, uid, created, lastupdated, programstageid, dataelementid, compulsory, allowprovidedelsewhere, sort_order, displayinreports, allowfuturedate, renderoptionsasradio, skipsynchronization, skipanalytics,rendertype) values
+="(nextval('hibernate_sequence'),'"&A2&"', '2022-09-29', '2022-09-29', "&C2&", "&D2&", '"&E2&"', '"&F2&"', "&G2&", '"&H2&"', '"&I2&"', '"&J2&"','"&K2&"','"&L2&"','"&M2&"'),"
+
+
+select programstagesectionid, uid, created, lastupdated, lastupdatedby, name, 
+rendertype, programstageid, sortorder from 
+programstagesection where programstageid 
+in(select programstageid from programstage where uid in (
+'fU8LWbcPjS6'));
+
+select  uid,lastupdatedby, name, 
+rendertype,sortorder,programstageid,programstagesectionid from 
+programstagesection where programstageid 
+in(select programstageid from programstage where uid in (
+'ufk3NFIBbNv'));
+
+select * from  programstagesection where programstageid in( 347595,754131,570515);
+
+select * from programstagesection_dataelements where programstagesectionid in (
+select programstagesectionid from programstagesection
+where programstageid in( 347595,754131,570515));
+
+
+insert into programstagesection (programstagesectionid, uid, created, lastupdated, lastupdatedby, name, rendertype, programstageid, sortorder ) values
+="(nextval('hibernate_sequence'),'"&D2&"', '2022-07-12', '2022-07-12', "&F2&",'"&G2&"','"&I2&"', "&H2&","&J2&"),"
+
+select * from programstagesection order by programstagesectionid desc; ---978320
+select * from programstagesection where programstagesectionid > 978320
+
+update programstagesection set created = now()::timestamp where created = '2022-10-16';
+update programstagesection set lastupdated = now()::timestamp where lastupdated = '2022-10-16';
+
+update programstagesection set created = now()::timestamp where created = '2022-09-14';
+update programstagesection set lastupdated = now()::timestamp where lastupdated = '2022-09-14';
+
+
+update programstagesection set created = now()::timestamp where created = '2022-09-20';
+update programstagesection set lastupdated = now()::timestamp where lastupdated = '2022-09-20';
+
+
+select * from  programstagesection where programstageid in( 347595,754131,570515)
+order by programstagesectionid desc;
+
+
+select * from programstagesection_dataelements where programstagesectionid in (
+select programstagesectionid from programstagesection
+where programstageid in( 347595,754131,570515));
+
+select * from programstagesection_dataelements where 
+programstagesectionid in( select programstagesectionid 
+from programstagesection where uid = 'TQy1RYUHPdA');
+
+select * from programstagesection_dataelements where 
+programstagesectionid in( select programstagesectionid 
+from programstagesection where programstageid in (select programstageid
+from programstage where uid = 'om7NH0wMt2L'));
+
+select * from programstagesection_dataelements where 
+programstagesectionid in( select programstagesectionid 
+from programstagesection where programstageid in (
+347595,754131,570515));
+
+
+select pss.programstageid, pssde.programstagesectionid,pssde.sort_order,
+pssde.dataelementid from programstagesection_dataelements pssde
+INNER join programstagesection pss ON pss.programstagesectionid = pssde.programstagesectionid
+where pss.programstageid in ( select programstageid from 
+programstage where uid in ('ufk3NFIBbNv'));
+
+insert into programstagesection_dataelements (programstagesectionid, sort_order, dataelementid) values
+="("&B2&", "&G2&", "&E2&" ),"
+
+ -- 04/07/2022
+select * from programrulevariable order by programrulevariableid desc where programid in (select programid from program
+where uid = 'xil8ellyMgi');
+
+select * from program where uid = 'xil8ellyMgi'; -- PHC 07 - Quality Management G + IPA Assessment -- 349564
+
+select * from programrulevariable where  programrulevariableid > 455332;
+
+
+select * from programrulevariable order by programrulevariableid desc
+
+
+insert into programrulevariable (programrulevariableid,uid,created,lastupdated,name,programid,dataelementid,sourcetype,usecodeforoptionset,valuetype) values
+="(nextval('hibernate_sequence'),'"&A2&"', '2022-07-04', '2022-07-04','"&E2&"',"&D2&","&G2&",'"&F2&"','"&H2&"','"&I2&"'),"
+
+-- 08/07/2022
+
+select * from programrulevariable  where programid in (select programid from program
+where uid = 'xil8ellyMgi');
+
+select * from program where uid = 'go6Fw0IRk6Z'; -- 349556 -- PHC 06 - Infection Control F + IPA Assessment
+
+
+select programrulevariableid,uid,created,lastupdated,name,programid,dataelementid,
+sourcetype,usecodeforoptionset,valuetype from programrulevariable where programid 
+in (select programid from program where uid = 'k6OM7dIb2X6');
+
+
+update programrulevariable set created = now()::timestamp where created ='2022-10-19';
+update programrulevariable set lastupdated = now()::timestamp where lastupdated ='2022-10-19';
+
+update programrulevariable set created = now()::timestamp where created ='2022-10-17';
+update programrulevariable set lastupdated = now()::timestamp where lastupdated ='2022-10-17';
+
+update programrulevariable set created = now()::timestamp where created ='2022-10-16';
+update programrulevariable set lastupdated = now()::timestamp where lastupdated ='2022-10-16';
+
+
+update programrulevariable set created = now()::timestamp where created ='2022-10-11';
+update programrulevariable set lastupdated = now()::timestamp where lastupdated ='2022-10-11';
+
+update programrulevariable set created = now()::timestamp where created ='2022-10-13';
+update programrulevariable set lastupdated = now()::timestamp where lastupdated ='2022-10-13';
+
+
+
+
+insert into programrule (programruleid,uid,created,lastupdated,lastupdatedby,name,programid,rulecondition,priority) values
+="(nextval('hibernate_sequence'),'"&A2&"', '2022-07-05', '2022-07-05',"&E2&",'"&F2&"',"&G2&",'"&I2&"',"&J2&"),"
+
+select programruleid,uid,created,lastupdated,lastupdatedby,name,programid,programstageid,rulecondition,priority
+ from programrule where programid 
+in (select programid from program where uid = 'k6OM7dIb2X6');
+
+
+select * from programrule order by  programruleid desc; -- 501532
+select * from programrule where  programruleid > 501532;
+
+insert into programrule (programruleid,uid,created,lastupdated,lastupdatedby,name,programid,programstageid,rulecondition,priority) values
+="(nextval('hibernate_sequence'),'"&A2&"', '2022-07-05', '2022-07-05',"&D2&",'"&E2&"',"&F2&","&G2&",'"&H2&"',"&I2&"),"
+
+
+update programrule set created = now()::timestamp where created ='2022-10-16';
+update programrule set lastupdated = now()::timestamp where lastupdated ='2022-10-16';
+
+update programrule set created = now()::timestamp where created ='2022-10-13';
+update programrule set lastupdated = now()::timestamp where lastupdated ='2022-10-13';
+
+
+select programruleactionid,uid,created,lastupdated,lastupdatedby,actiontype,programruleid,dataelementid,content, data,evaluationtime,environments
+ from programruleaction where programruleid 
+in (select programruleid from programrule where programid = 349503);
+
+insert into programruleaction (programruleactionid,uid,created,lastupdated,lastupdatedby,actiontype,programruleid,dataelementid,content, data,evaluationtime,environments) values
+="(nextval('hibernate_sequence'),'"&A2&"', '2022-07-08', '2022-07-08',"&C2&",'"&D2&"',"&F2&","&G2&",'"&H2&"','"&I2&"','"&J2&"','"&K2&"'),"
+
+update programstagedataelement set created = now()::timestamp where created ='2022-07-11';
+update programstagedataelement set lastupdated = now()::timestamp where lastupdated ='2022-07-11';
+
+
+-- 12/07/2022
+
+insert into programstagesection (programstagesectionid, uid, created, lastupdated, lastupdatedby, name, rendertype, programstageid, sortorder ) values
+="(nextval('hibernate_sequence'),'"&D2&"', '2022-07-12', '2022-07-12', "&F2&",'"&G2&"','"&I2&"', "&H2&","&J2&"),"
+
+
+update programstagesection set created = now()::timestamp where created ='2022-07-12';
+update programstagesection set lastupdated = now()::timestamp where lastupdated ='2022-07-12';
+
+
+select * from programstagesection_dataelements where 
+programstagesectionid in( select programstagesectionid 
+from programstagesection where uid = 'TQy1RYUHPdA');
+
+select * from programrulevariable  where programid in (select programid from program
+where uid in('kZ1sTUuqdbJ','wpQQKp9Hy5E','PJogjQhf9rJ'));
+
+select * from programrulevariable  order by programrulevariableid desc; -- 890285
+select * from programrulevariable where programrulevariableid > 890285;
+
+
+select * from program where uid in('kZ1sTUuqdbJ','wpQQKp9Hy5E','PJogjQhf9rJ');
+
+update programrulevariable  set created = now()::timestamp where created ='2022-07-15';
+update programrulevariable  set lastupdated = now()::timestamp where lastupdated ='2022-07-15';
+
+update programrulevariable  set created = now()::timestamp where created ='2022-08-25';
+update programrulevariable  set lastupdated = now()::timestamp where lastupdated ='2022-08-25';
+
+update programrulevariable  set created = now()::timestamp where created ='2022-09-26';
+update programrulevariable  set lastupdated = now()::timestamp where lastupdated ='2022-09-26';
+
+-- 16/07/2022
+
+01 Total Score (Ex-Ante) Max 1000
+01 Total Score (Ex-Post) Max 1000
+
+
+select name,programid,programstageid from programstage 
+where programid in ( 349503,349572) order by name;
+
+update programrule  set created = now()::timestamp where created ='2022-07-16';
+update programrule  set lastupdated = now()::timestamp where lastupdated ='2022-07-16';
+
+
+update programrule  set created = now()::timestamp where created ='2022-09-08';
+update programrule  set lastupdated = now()::timestamp where lastupdated ='2022-09-08';
+
+
+update programruleaction  set created = now()::timestamp where created ='2022-09-08';
+update programruleaction  set lastupdated = now()::timestamp where lastupdated ='2022-09-08';
+
+select * from programruleaction order by programruleactionid desc;
+select * from programruleaction where programruleactionid > 1085929;
+
+
+update programruleaction  set created = now()::timestamp where created ='2022-10-13';
+update programruleaction  set lastupdated = now()::timestamp where lastupdated ='2022-10-13';
+
+update programruleaction  set created = now()::timestamp where created ='2022-10-16';
+update programruleaction  set lastupdated = now()::timestamp where lastupdated ='2022-10-16';
+
+update programruleaction set content = null where content = 'NULL';
+
+select * from programruleaction where content = 'NULL';
+
+update programruleaction set content = null where content = 'NULL';
+-- for EPI YEMEN
+select * from trackedentityinstance where deleted is true;
+
+delete from trackedentityinstance where deleted is true;
+
+delete from programinstance where trackedentityinstanceid in (
+select trackedentityinstanceid from trackedentityinstance where deleted is true);
+
+delete from programstageinstance where programinstanceid in (
+select programinstanceid from programinstance where trackedentityinstanceid in (
+select trackedentityinstanceid from trackedentityinstance where deleted is true));
+
+delete from programmessage where programstageinstanceid in (select 
+programstageinstanceid from programstageinstance where programinstanceid in (
+select programinstanceid from programinstance where trackedentityinstanceid in (
+select trackedentityinstanceid from trackedentityinstance where deleted is true)));
+
+
+-- 10/08/2022
+
+select programstagedataelementid, uid, created, lastupdated, programstageid, dataelementid, 
+compulsory, allowprovidedelsewhere, sort_order, displayinreports, allowfuturedate, 
+renderoptionsasradio, skipsynchronization, skipanalytics,rendertype from 
+programstagedataelement where programstageid in(173088);
+
+
+-- for analytics issue
+select * from dataelement where optionsetid is not null;
+
+select * from dataelement where optionsetid in (131,
+417507,392667,386219,281566);
+
+select * from optionset where optionsetid in (
+select optionsetid from dataelement where optionsetid is not null);
+
+update optionset set valuetype = 'INTEGER_ZERO_OR_POSITIVE' where optionsetid in (131,
+417507,392667,386219,281566);
+
+update dataelement set valuetype = 'INTEGER_ZERO_OR_POSITIVE' where optionsetid in (131,
+417507,392667,386219,281566);
+
+update optionset set valuetype = 'INTEGER_POSITIVE' where optionsetid in (131,
+417507,392667,386219,281566);
+
+update dataelement set valuetype = 'INTEGER_POSITIVE' where optionsetid in (131,
+417507,392667,386219,281566);
+
+update dataelement set zeroissignificant = true where optionsetid in (131,
+417507,392667,386219,281566);
+
+-- http://127.0.0.1:8091/ipa/api/events/IW8mCfproQP.json
+
+delete from programstageinstance where uid = 'IW8mCfproQP';
+
+select * from program where uid = 'CZLfL0vYlpl';
+
+select * from optionset where uid = 'uysm1lQPUN7';
+update optionset set valuetype = 'TEXT' where uid = 'uysm1lQPUN7';
+
+select * from programstagedataelement where programstageid in (
+select programstageid from programstage where programid in (
+select programid from program where uid = 'CZLfL0vYlpl'));
+
+select * from dataelement where dataelementid in (
+select dataelementid from programstagedataelement where programstageid in (
+select programstageid from programstage where programid in (
+select programid from program where uid = 'CZLfL0vYlpl')));
+
+update dataelement set valuetype = 'TEXT'  where dataelementid in (
+select dataelementid from programstagedataelement where programstageid in (
+select programstageid from programstage where programid in (
+select programid from program where uid = 'CZLfL0vYlpl')));
+
+select * from programrulevariable where programid in (
+select programid from program where uid = 'CZLfL0vYlpl');
+
+update programrulevariable set valuetype = 'TEXT' where programid in (
+select programid from program where uid = 'CZLfL0vYlpl');
+
+
+select * from dataelement where dataelementid in (
+select dataelementid from programstagedataelement where programstageid in (
+select programstageid from programstage where programid in (
+select programid from program where uid = 'lf1lggOFGsR'))) and name not in (
+'Total NQAS score', 'Total NQAS score (%)');
+
+update dataelement set valuetype = 'TEXT'  where dataelementid in (
+select dataelementid from programstagedataelement where programstageid in (
+select programstageid from programstage where programid in (
+select programid from program where uid = 'lf1lggOFGsR'))) and name not in (
+'Total NQAS score', 'Total NQAS score (%)');
+
+select * from programrulevariable where programid in (
+select programid from program where uid = 'lf1lggOFGsR') and dataelementid is not null;
+
+update programrulevariable set valuetype = 'TEXT' where programid in (
+select programid from program where uid = 'lf1lggOFGsR') and dataelementid is not null;

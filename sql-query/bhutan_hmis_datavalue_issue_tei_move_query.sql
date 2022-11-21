@@ -3,6 +3,47 @@ SELECT pg_size_pretty( pg_database_size('bhutan_hmis_234_02_06_2021') );
 
 pg_dump -U hmis -d hmis_v234 -T analytics* > C:\Users\HISP\Desktop\msf_updated_db.sql
 
+-- 22/08/2022
+
+SELECT de.uid AS dataElementUID,de.name AS dataElementName, coc.uid AS categoryOptionComboUID, 
+coc.name AS categoryOptionComboName, attcoc.uid AS attributeOptionComboUID,attcoc.name AS
+attributeOptionComboName, org.uid AS organisationunitUID, org.name AS organisationunitName, 
+dv.value, dv.storedby, CONCAT (split_part(pe.startdate::TEXT,'-', 1), split_part(pe.enddate::TEXT,'-', 2)
+,split_part(pe.enddate::TEXT,'-', 3)) as isoPeriod,pet.name AS periodType, pe.periodtypeid FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+inner join period pe ON pe.periodid = dv.periodid
+inner join periodtype pet ON pet.periodtypeid = pe.periodtypeid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+WHERE dv.value is not null and de.dataelementid in(select dataelementid from datasetelement
+where datasetid = 4012560);
+
+SELECT tei.uid AS teiUID, org.name AS orgUnitName,prg.uid AS prgUID,
+prg.name AS programName,teav.value , teav.lastupdated::date from programinstance pi
+INNER JOIN organisationunit org ON org.organisationunitid = pi.organisationunitid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+where teav.value like '0%'
+and teav.trackedentityattributeid = 3987326 order by teav.lastupdated desc;
+
+select * from dataset where datasetid = 4012560	
+
+select * from datavalue where deleted = false;
+
+select count(*) from datavalue; -- 7416406
+
+
+select * from trackedentityattribute where 
+trackedentityattributeid = 3987326
+
+select * from trackedentityattributevalue where value like '%0000-07-12%' and 
+trackedentityattributeid = 3987326;
+
+select * from trackedentityattributevalue where value like '0%'
+and trackedentityattributeid = 3987326;
+
 
 
 // 
@@ -118,23 +159,89 @@ select trackedentityinstanceid from programinstance where organisationunitid in 
 and programid = 4104966 );
 
 
+select * from trackedentityinstance where trackedentityinstanceid in (
+select trackedentityinstanceid from programinstance where organisationunitid in ( 661 )
+and programid in(4105553,4105808) );
+
+update trackedentityinstance set organisationunitid = 482 where trackedentityinstanceid in (
+select trackedentityinstanceid from programinstance where organisationunitid in (661 )
+and programid in(4105553,4105808) ); -- 205
+
+select trackedentityinstanceid, uid,organisationunitid from trackedentityinstance where uid in ();
+
+="update trackedentityinstance set organisationunitid  = "&G2&" where trackedentityinstanceid = "&A2&" and organisationunitid = "&F2&";"
+
+="update trackedentityinstance set organisationunitid  = "&D2&" where uid = '"&A2&"' and trackedentityinstanceid = "&B2&";"
+
 select * from programinstance where organisationunitid in (1826554 )
 and programid = 4104966;
+
+select * from programinstance where organisationunitid in (661 )
+and programid in(4105553,4105808);
 
 update programinstance set organisationunitid = 466 where organisationunitid in (1826554 )
 and programid = 4104966; -- 1447
 
+update programinstance set organisationunitid = 482 where organisationunitid in (661 )
+and programid  in(4105553,4105808); -- 323
+
+="update programinstance set organisationunitid  = "&G2&" where uid = '"&C2&"' and programinstanceid = "&B2&" and programid = "&I2&" and organisationunitid = "&F2&";"
+
+="update programinstance set organisationunitid  = "&E2&" where programinstanceid = "&A2&" and trackedentityinstanceid = "&C2&" and programid = "&D2&" and organisationunitid = "&B2&";"
+
+
+
 select * from programstageinstance where organisationunitid in (1826554 )
 and programstageid in (select programstageid from programstage where programid = 4104966 );
 
+
 update programstageinstance set organisationunitid = 466 where organisationunitid in (1826554 )
 and programstageid in (select programstageid from programstage where programid = 4104966 ); -- 5882
+
+update programstageinstance set organisationunitid = 482 where organisationunitid in (661 )
+and programstageid in (select programstageid from programstage where programid in(4105553,4105808) ); -- 323
+
+="update programstageinstance set organisationunitid  = "&G2&" where uid = '"&E2&"' and programstageinstanceid = "&D2&" and programinstanceid = "&B2&" and organisationunitid = "&F2&";"
+
+="update programstageinstance set organisationunitid  = "&D2&" where programstageinstanceid = "&A2&" and programinstanceid = "&B2&" and organisationunitid = "&C2&";"
+
+="update programstageinstance set organisationunitid  = "&E2&" where uid = '"&B2&"' and programstageinstanceid = "&A2&";"
+
+select * from trackedentityprogramowner where trackedentityinstanceid = 3933747 
+and programid = 4104966 and organisationunitid = 56768;
 
 select * from trackedentityprogramowner where  organisationunitid in (1826554 )
 and programid = 4104966;
 
 update trackedentityprogramowner set organisationunitid = 466 where  organisationunitid in (1826554 )
 and programid = 4104966;
+
+
+select * from trackedentityprogramowner where  organisationunitid in (661 )
+and programid in(4105553,4105808);
+
+update trackedentityprogramowner set organisationunitid = 482 where  organisationunitid in (661 )
+and programid in(4105553,4105808); -- 326
+
+
+="update trackedentityprogramowner set organisationunitid  = "&G2&" where trackedentityinstanceid = "&A2&" and programid = "&I2&" and organisationunitid = "&F2&";"
+
+="update trackedentityprogramowner set organisationunitid  = "&B2&" where trackedentityinstanceid = "&A2&" and programid = "&C2&";"
+
+-- 16/06/2022
+
+
+select * from programinstance where programid = 4104966 and 
+trackedentityinstanceid in (3987324,3987324,39873240);
+
+select * from programstageinstance where programinstanceid in (select programinstanceid from 
+programinstance where programid = 4104966 and trackedentityinstanceid in (3987324,3987324,39873240));
+
+select * from programstageinstance where organisationunitid = 604  
+and programinstanceid in (select programinstanceid from 
+programinstance where programid = 4104966 and trackedentityinstanceid in (3987324,3987324,39873240 ));
+
+
 
 SELECT psi.uid eventID,psi.executiondate::date, data.key as de_uid,
 cast(data.value::json ->> 'value' AS VARCHAR) AS de_value, 
@@ -255,3 +362,53 @@ WHERE teav1.trackedentityattributeid =  3987326 and teav1.value ILIKE '0%' and p
 
 
 select * from trackedentityattribute where trackedentityattributeid = 3987326;
+
+select * from programstageinstance where programstageid in 
+(select programstageid from programstage where programid = 4104966 )
+and programinstanceid in (select programinstanceid from 
+programinstance where programid = 4104966 and trackedentityinstanceid in (3933747,3933748));
+
+select psi.programstageinstanceid, psi.uid AS eventUID, psi.organisationunitid AS eventOrgID,
+tei.trackedentityinstanceid AS teiID from programstageinstance psi
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE pi.programid = 4104966 and 
+tei.trackedentityinstanceid in (3933747,3933748,3933749);
+
+
+select * from trackedentityattribute where uid = 'G493m4FEXf1';
+
+="update sequentialnumbercounter set counter = "&D2&" where id = "&A2&";"
+="update sequentialnumbercounter set counter = "&D2&" where key = '"&C2&"';"
+
+update trackedentityattributevalue set created = now()::timestamp where created = '2022-06-30';
+update trackedentityattributevalue set lastupdated = now()::timestamp where lastupdated = '2022-06-30';
+
+select * from sequentialnumbercounter where id = 4219910;
+
+update sequentialnumbercounter set counter = 122501 where
+id = 4219910 and key = 'BC_SEQUENTIAL(#######)';
+
+
+update sequentialnumbercounter set counter = 122501 where
+id = 4219910 and key = 'BC_SEQUENTIAL(#######)';
+
+select * from trackedentityattribute where uid = 'FsS0is04ZjF';
+
+select * from trackedentityattributevalue where trackedentityattributeid = 4105473
+and trackedentityinstanceid = 4017641;
+
+select * from sequentialnumbercounter where id = 4219839;
+
+select * from trackedentityattributevalue where trackedentityattributeid = 4104926
+and trackedentityinstanceid in(3882571,4024046);
+
+update sequentialnumbercounter set counter = 156105 where
+id = 4219839 and key = 'CC_SEQUENTIAL(#######)';
+
+-- update on date 11/07/2022
+update sequentialnumbercounter set counter = 394181 where
+id = 4188236 and key = 'GC_SEQUENTIAL(#######)';
+
+update trackedentityattributevalue set created = now()::timestamp where created = '2022-07-11';
+update trackedentityattributevalue set lastupdated = now()::timestamp where lastupdated = '2022-07-11';

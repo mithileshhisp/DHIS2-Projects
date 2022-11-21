@@ -1,5 +1,8 @@
 
-
+-- links -- 172.105.47.164
+-- M!th!lesh@123
+-- Dh!sUs3Rp@SS1
+-- ln2  172.104.173.245  96
 
  -- create user on poatgres
 CREATE USER fpaidbpro WITH PASSWORD fpaidbpro@9876; 
@@ -171,4 +174,11 @@ AND nspname !~ '^pg_toast'
 ORDER BY
     pg_total_relation_size (X .oid) desc
 LIMIT 10;
+
+-- AMR HP - Pilot as on 15/08/2022
+delete from audit; -- 1259 MB
+select * from trackedentityinstanceaudit;
+delete from trackedentityinstanceaudit; -- 96 GB
+
+select count(*) from trackedentityinstanceaudit; --996913473
 
