@@ -893,6 +893,16 @@ WHERE tei.uid = 'zNOsV68KsIa' and psi.deleted is false order by psi.created desc
 
 --event list
 
+
+SELECT psi.uid eventID, psi.executiondate::date,org.uid AS orgUnitUID,
+org.name AS orgUnitName,prg.uid AS prgUID,prg.name AS prgName,
+ps.uid AS programStageUID,ps.name AS programStageName FROM programstageinstance psi
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+where psi.executiondate = '2022-04-01' and prg.uid = 'a7e2Yf1OdI5';
+
 SELECT org.uid as orgUnit, tei.uid as tei, pi.uid AS enrollment, psi.uid as event, psi.created, 
 psi.organisationunitid, psi.status, psi.duedate, psi.executiondate as eventDate from programstageinstance psi
 INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
@@ -1337,6 +1347,16 @@ INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi
 INNER JOIN dataelement de ON de.uid = data.key
 WHERE psi.programstageid = 2485 and de.dataelementid = 2378
 and teav.trackedentityattributeid = 2618 and teav.value = 'true';
+
+
+SELECT psi.uid as eventUID,de.uid as dataElementUID,
+cast(data.value::json ->> 'value' AS VARCHAR) AS de_value FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON  pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN dataelement de ON de.uid = data.key
+
+
 
 
 SELECT psi.organisationunitid, de.dataelementid, 

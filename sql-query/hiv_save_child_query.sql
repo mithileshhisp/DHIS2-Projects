@@ -15,6 +15,10 @@ delete from flyway_schema_history where installed_rank = 131;
 select * from jobconfiguration where jobtype = 'CUSTOM_SMS_TASK';	
 
 delete from jobconfiguration where jobtype = 'CUSTOM_SMS_TASK';
+
+update users set disabled = false where username = 'admin';
+
+update users set disabled = false where username = 'hispdev';
 	
 -- from 2.35.1 - Add teav btree index to 2.35.46 -- Add index trackedentityprogramowner program orgunit
 
@@ -38,11 +42,111 @@ delete from jobconfiguration where jobtype = 'CUSTOM_SMS_TASK';
 -- from 2.38.1 - Add column shortName to group sets to 2.38.46 -- Potential Duplicate Update ALL Status
 
 	
+-- for data insert in 2.34 from 2.38 01/12/2022
+
+
+select * from trackedentityinstance where trackedentityinstanceid > 4669497;
+
+select * from trackedentityattributevalue where trackedentityinstanceid > 4669497;
+
+select tea.valuetype,teav.trackedentityinstanceid,teav.trackedentityattributeid,teav.value,
+teav.created,teav.lastupdated,teav.storedby from trackedentityattributevalue teav
+INNER JOIN trackedentityattribute tea ON tea.trackedentityattributeid = teav.trackedentityattributeid
+where teav.trackedentityinstanceid > 4669497;
+
+
+-- hispdev -- 5560
+insert into trackedentityinstance (trackedentityinstanceid,uid,created,lastupdated,organisationunitid,trackedentitytypeid,inactive,lastupdatedby,createdatclient,lastupdatedatclient,deleted,lastsynchronized,storedby) values
+="(nextval('hibernate_sequence'),'"&B2&"', '"&C2&"','"&D2&"',"&E2&", "&F2&",'"&G2&"', "&H2&", '"&I2&"','"&J2&"','"&K2&"','"&L2&"','"&M2&"' ),"
 	
+insert into trackedentityattributevalue (trackedentityinstanceid,trackedentityattributeid,value,created,lastupdated,storedby) values
+="("&C2&","&D2&",'"&E2&"','"&F2&"','"&G2&"','"&H2&"'),"	
+
+
+insert into programinstance (programinstanceid, uid, created, lastupdated, enrollmentdate,  status, trackedentityinstanceid, programid, incidentdate, organisationunitid, createdatclient,lastupdatedatclient, deleted, storedby ) values
+="(nextval('hibernate_sequence'),'"&B2&"', '"&C2&"', '"&D2&"', '"&E2&"', '"&H2&"', "&J2&", "&K2&",'"&L2&"', "&M2&", '"&O2&"','"&P2&"','"&Q2&"','"&R2&"' ),"
+
+="update programinstance set geometry  = '"&D2&"' where programinstanceid = "&B2&" and uid = '"&A2&"';"
+
+insert into programstageinstance (programstageinstanceid,uid,created,lastupdated,programinstanceid,programstageid,duedate,organisationunitid,status,attributeoptioncomboid,storedby,deleted,lastsynchronized,createdbyuserinfo,lastupdatedbyuserinfo ) values
+="(nextval('hibernate_sequence'),'"&B2&"', '"&C2&"', '"&D2&"', "&F2&", "&G2&",'"&H2&"', "&J2&", '"&K2&"', "&M2&", '"&N2&"','"&O2&"','"&R2&"' ,'"&T2&"' ,'"&U2&"'),"
+
+
+
+
+
+
+
+
+select * from programinstance order by programinstanceid desc;
+
+select * from programinstance  where programinstanceid > 4659040; -- 4659040 4668421
+
+SELECT programownershiphistoryid, programid, trackedentityinstanceid, startdate, enddate, createdby
+	FROM public.programownershiphistory order by programownershiphistoryid desc;
+	
+select * from programownershiphistory where programownershiphistoryid > 5479692;	
+
+
+SELECT trackedentityprogramownerid, trackedentityinstanceid, programid, created, lastupdated, organisationunitid, createdby
+	FROM public.trackedentityprogramowner;
+	
+select * from trackedentityprogramowner where trackedentityprogramownerid > 5479697;
+
+insert into trackedentityprogramowner (trackedentityprogramownerid, trackedentityinstanceid, programid, created, lastupdated, organisationunitid, createdby) values
+="(nextval('hibernate_sequence'),"&C2&", "&D2&",'"&E2&"','"&F2&"',"&G2&",'"&H2&"' ),"
+
+-- trackedentityprogramowner -- 23724
+	
+-- programownershiphistory -- 139
+
+insert into programownershiphistory (programownershiphistoryid, programid, trackedentityinstanceid, startdate, enddate, createdby) values
+="(nextval('hibernate_sequence'),"&B2&", "&D2&",'"&E2&"','"&F2&"','"&G2&"' ),"
+	
+select count(*) from programstageinstance order by programstageinstanceid desc;	
+select * from programstageinstance order by programstageinstanceid desc;
+select * from programstageinstance where programstageinstanceid > 	5353800
+	
+	
+SELECT de.uid AS dataElementUID,de.name AS dataElementName, coc.uid AS categoryOptionComboUID, 
+coc.name AS categoryOptionComboName, attcoc.uid AS attributeOptionComboUID,attcoc.name AS
+attributeOptionComboName, org.uid AS organisationunitUID, org.name AS organisationunitName, 
+dv.value, dv.storedby,TEXT(dv.created::timestamp) ,dv.lastupdated::timestamp,  
+CONCAT (split_part(pe.startdate::TEXT,'-', 1), split_part(pe.enddate::TEXT,'-', 2)
+,split_part(pe.enddate::TEXT,'-', 3)) as isoPeriod,pet.name AS periodType, 
+pe.periodtypeid FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+inner join period pe ON pe.periodid = dv.periodid
+inner join periodtype pet ON pet.periodtypeid = pe.periodtypeid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+WHERE dv.value is not null and dv.created::date >= '2022-10-19';
+	
+	
+SELECT psi.uid as eventUID,de.uid as dataElementUID,
+cast(data.value::json ->> 'value' AS VARCHAR) AS de_value FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON  pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN dataelement de ON de.uid = data.key
+WHERE psi.programstageinstanceid > 	5353800;
+
+="update programstageinstance set eventdatavalues  = '"&B2&"' where uid = '"&A2&"';"
 	
 -- for mete-data and data-value/event/enromment/tei count	
 select * from usergroup; -- 40
-select count(*) from trackedentityinstance; -- 152985
+select count(*) from trackedentityinstance; -- 152927
+select count(*) from trackedentityinstance where deleted is false; -- 152924
+
+select count(*) from trackedentityinstance; -- 176729
+select count(*) from trackedentityinstance where deleted is false; -- 176716 different -- 23792
+
+select count(*) from trackedentityattributevalue;
+
+select * from datavalue where created::date >= '2022-10-19' order by created desc;
+select * from datavalue order by created desc;
+
 select * from program;	 -- 2
 select * from period;	 -- 1120
 select * from map; -- 34
@@ -59,8 +163,15 @@ select * from indicatortype; -- 5
 select count(*) from programinstance; -- 150270
 select count(*) from programinstance where deleted is false; --150206
 
-select count(*) from programstageinstance; -- 937465
-select count(*) from programstageinstance where deleted is true; -- 260
+select count(*) from programinstance; -- 173919
+select count(*) from programinstance where deleted is false; --173906 different -- 23700
+
+select count(*) from programstageinstance; --   937207
+select count(*) from programstageinstance where deleted is false; -- 937207
+
+select count(*) from programstageinstance; -- 1087336
+select count(*) from programstageinstance where deleted is false; -- 1087234 different -- 150,129
+select count(*) from programstageinstance where created::date > '2022-10-20'; 
 
 select count(*) from datavalue; -- 2739
 select count(*) from datavalue where deleted is true; -- 1

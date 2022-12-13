@@ -82,6 +82,11 @@ select * from programinstance where trackedentityinstanceid = 13049154;
 
 select * from trackedentityinstance where trackedentityinstanceid = 13049154;
 
+update programinstance set organisationunitid = 57 where trackedentityinstanceid = 3530087;
+update trackedentityinstance set organisationunitid = 57 where trackedentityinstanceid = 3530087;
+
+update programinstance set organisationunitid = 70 where trackedentityinstanceid = 9146255;
+update trackedentityinstance set organisationunitid = 70 where trackedentityinstanceid = 9146255;
 
 SELECT  org.organisationunitid,teav.trackedentityinstanceid, teav.value 
 FROM trackedentityattributevalue teav
@@ -122,3 +127,46 @@ delete from usersetting where userinfoid in ( 536506,536509);
 delete from usersetting where userinfoid in ( 536506 );	
 delete from userkeyjsonvalue where namespace = 'trackerCaptureGridColumns' 
 and userid in ( 536506,536509);	
+
+-- 22/11/2022
+
+-- user harkrishanagar
+-- password -- 
+
+select * from users where username = 'harkrishanagar';
+
+select * from userkeyjsonvalue where namespace = 'trackerCaptureGridColumns' 
+and userid in ( 536509 );	
+
+
+-- delete from systemsetting where name = 'keyTrackerDashboardDefaultLayout';
+delete from usersetting where userinfoid in ( 536509 );	
+delete from usersetting where userinfoid in ( 536509 );	
+delete from usersetting where userinfoid in ( 536509 );	
+delete from userkeyjsonvalue where namespace = 'trackerCaptureGridColumns' 
+and userid in ( 536509 );
+
+
+-- as on 02/12/2022
+
+select * from users where username = 'jagera';
+
+select * from usersetting where userinfoid in ( 536498 );	
+delete from usersetting where userinfoid in ( 536498 );	
+delete from usersetting where userinfoid in ( 536498 );	
+delete from usersetting where userinfoid in ( 536498 );	
+delete from userkeyjsonvalue where namespace = 'trackerCaptureGridColumns' 
+and userid in ( 536498 );
+
+delete from programinstance where deleted is true;
+
+delete from programinstanceaudit where programinstanceid in (
+select programinstanceid from programinstance where deleted is true);
+
+delete from programstageinstance where programinstanceid in (
+select programinstanceid from programinstance where deleted is true);
+
+delete from trackedentitydatavalueaudit where programstageinstanceid in (
+select programstageinstanceid from programstageinstance where programinstanceid in (
+select programinstanceid from programinstance where deleted is true));
+

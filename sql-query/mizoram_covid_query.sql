@@ -109,6 +109,18 @@ where enrollmentdate::date = '1970-01-01';
 
 -- 
 
+--event list 22/11/2022
+
+
+SELECT psi.uid eventID, psi.executiondate::date,org.uid AS orgUnitUID,
+org.name AS orgUnitName,prg.uid AS prgUID,prg.name AS prgName,
+ps.uid AS programStageUID,ps.name AS programStageName FROM programstageinstance psi
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+where psi.executiondate = '2022-04-01' and prg.uid = 'a7e2Yf1OdI5';
+
 SELECT psi.programstageinstanceid, psi.uid eventID, psi.executiondate::date,
 prg.uid AS prgUID, ps.uid AS programStageUID,teav.value AS serial_no FROM programstageinstance psi
 INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
@@ -118,7 +130,13 @@ INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi
 where psi.executiondate = '2022-01-18' and teav.trackedentityattributeid = 22745
 and prg.uid = 'CTUqdqhrb46' and ps.uid = 'xikrKb0k2Eg';
 
-
+SELECT psi.programstageinstanceid, psi.uid eventID, 
+tei.trackedentityinstanceid AS teiID FROM programstageinstance psi
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+where tei.trackedentityinstanceid in (311,309,303);
 
 --- mizorun IPA
 
@@ -405,6 +423,16 @@ select * from programrulevariable order by programrulevariableid desc
 insert into programrulevariable (programrulevariableid,uid,created,lastupdated,name,programid,dataelementid,sourcetype,usecodeforoptionset,valuetype) values
 ="(nextval('hibernate_sequence'),'"&A2&"', '2022-07-04', '2022-07-04','"&E2&"',"&D2&","&G2&",'"&F2&"','"&H2&"','"&I2&"'),"
 
+-- 12/12/2022
+
+select * from programrulevariable where  programrulevariableid > 1222470;
+select * from programrulevariable order by programrulevariableid desc;
+
+update programrulevariable set created = now()::timestamp where created ='2022-12-12';
+update programrulevariable set lastupdated = now()::timestamp where lastupdated ='2022-12-12';
+
+="update programrulevariable set programid  = "&D2&" where programrulevariableid = "&B2&";"
+
 -- 08/07/2022
 
 select * from programrulevariable  where programid in (select programid from program
@@ -634,3 +662,23 @@ select programid from program where uid = 'lf1lggOFGsR') and dataelementid is no
 
 update programrulevariable set valuetype = 'TEXT' where programid in (
 select programid from program where uid = 'lf1lggOFGsR') and dataelementid is not null;
+
+
+-- pccds
+
+="update trackedentityinstance set organisationunitid  = "&F2&" where trackedentityinstanceid = "&C2&";"
+
+="update programinstance set organisationunitid  = "&C2&" where trackedentityinstanceid = "&A2&";"
+
+="update trackedentityprogramowner set organisationunitid  = "&C2&" where trackedentityinstanceid = "&A2&";"
+
+-- event list for move
+SELECT psi.programstageinstanceid, psi.uid eventID, 
+tei.trackedentityinstanceid AS teiID FROM programstageinstance psi
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+where tei.trackedentityinstanceid in (311,309,303);
+
+="update programstageinstance set organisationunitid  = "&D2&" where uid = '"&B2&"' and programstageinstanceid = "&A2&";"
