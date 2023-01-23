@@ -1,4 +1,48 @@
 
+-- 14/12/2022 -- delete datavalue for OU Group ID : KZrndomu4ju Dataset ID : FBxQzVU8IuI Period from : April 2022
+SELECT de.uid AS dataElementUID,de.name AS dataElementName, coc.uid AS categoryOptionComboUID, 
+coc.name AS categoryOptionComboName, attcoc.uid AS attributeOptionComboUID,attcoc.name AS
+attributeOptionComboName, org.uid AS organisationunitUID, org.name AS organisationunitName, 
+dv.value, dv.storedby, CONCAT (split_part(pe.startdate::TEXT,'-', 1), split_part(pe.enddate::TEXT,'-', 2)
+,split_part(pe.enddate::TEXT,'-', 3)) as isoPeriod,pet.name AS periodType, pe.periodtypeid FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+inner join period pe ON pe.periodid = dv.periodid
+inner join periodtype pet ON pet.periodtypeid = pe.periodtypeid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+WHERE dv.value is not null and de.dataelementid in(select dataelementid from datasetelement
+where datasetid = 35923) and dv.periodid in ( select periodid from period 
+where periodtypeid = 3 and startdate >= '2022-04-01' and enddate <= '2022-12-31') and dv.sourceid in (
+select organisationunitid from orgunitgroupmembers where orgunitgroupid in (
+select orgunitgroupid from orgunitgroup where uid = 'KZrndomu4ju' ));
+
+
+select * from dataset where uid = 'FBxQzVU8IuI' 
+35923
+
+select * from datasetelement where datasetid = 35923;
+
+select * from orgunitgroup where uid = 'KZrndomu4ju';
+92824815
+
+select * from orgunitgroupmembers where orgunitgroupid in (
+select orgunitgroupid from orgunitgroup where uid = 'KZrndomu4ju' );
+
+select * from periodtype;
+select * from period where periodtypeid = 3 and startdate >= '2022-04-01'
+and enddate <= '2022-12-31';
+
+select * from datavalue where periodid in (select periodid from period where 
+periodtypeid = 3 and startdate >= '2022-04-01'and enddate <= '2022-12-31') and
+dataelementid in ( select dataelementid from datasetelement where datasetid = 35923)
+and sourceid in ( select organisationunitid from orgunitgroupmembers where orgunitgroupid in (
+select orgunitgroupid from orgunitgroup where uid = 'KZrndomu4ju' ) );
+
+
+------- 
+
+
 -- maharashtra datavalueset query for no of bed for period april-2021 to march-2022
 SELECT de.uid AS dataElementUID,de.name AS dataElementName, coc.uid AS categoryOptionComboUID, 
 coc.name AS categoryOptionComboName, attcoc.uid AS attributeOptionComboUID,attcoc.name AS
@@ -13,7 +57,6 @@ INNER join periodtype pety ON pety.periodtypeid = pe.periodtypeid
 WHERE de.uid = 'fePK3YQItlG' and dv.periodid in ( select periodid from period where startdate >= '2021-04-01' 
 and enddate <= '2022-03-31' and periodtypeid = 9 ) and 
 dv.value is not null and dv.deleted is not true;
-
 
 
 select * from period where startdate = '2021-04-01'

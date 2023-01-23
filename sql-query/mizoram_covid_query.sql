@@ -148,7 +148,7 @@ ps_se.programstagesectionid, ps_se.uid as programstagesection_uid
 FROM programstagesection ps_se 
 INNER JOIN programstage ps ON ps.programstageid = ps_se.programstageid
 INNER JOIN program pg ON pg.programid = ps.programid 
-WHERE pg.uid = 'KHvMmIe88PQ' order by pg.name;
+WHERE pg.uid = 'KHvMmIe88PQ' order by ps_se.name, ps_de.sort_order;
 
 -- program/program-stage/ program-stage-section wise dataelement-list
 SELECT pg.name as programName, pg.programid,pg.uid as pg_uid, ps.name as programStageName, 
@@ -160,7 +160,7 @@ INNER JOIN programstagesection ps_se ON ps_se.programstagesectionid = ps_de.prog
 INNER JOIN dataelement de On de.dataelementid = ps_de.dataelementid
 INNER JOIN programstage ps ON ps.programstageid = ps_se.programstageid
 INNER JOIN program pg ON pg.programid = ps.programid 
-WHERE pg.uid = 'k6OM7dIb2X6' order by pg.name;
+WHERE pg.uid = 'k6OM7dIb2X6' order by ps_se.name, ps_de.sort_order;
 
 SELECT pg.name as programName, pg.programid,pg.uid as pg_uid, ps.name as programStageName, 
 ps.programstageid,ps.uid as programStage_uid, ps_se.name as sectionName, 
@@ -431,6 +431,9 @@ select * from programrulevariable order by programrulevariableid desc;
 update programrulevariable set created = now()::timestamp where created ='2022-12-12';
 update programrulevariable set lastupdated = now()::timestamp where lastupdated ='2022-12-12';
 
+update programrulevariable set created = now()::timestamp where created ='2023-01-16';
+update programrulevariable set lastupdated = now()::timestamp where lastupdated ='2023-01-16';
+
 ="update programrulevariable set programid  = "&D2&" where programrulevariableid = "&B2&";"
 
 -- 08/07/2022
@@ -461,6 +464,10 @@ update programrulevariable set lastupdated = now()::timestamp where lastupdated 
 
 update programrulevariable set created = now()::timestamp where created ='2022-10-13';
 update programrulevariable set lastupdated = now()::timestamp where lastupdated ='2022-10-13';
+
+
+update programrulevariable set created = now()::timestamp where created ='2022-12-27';
+update programrulevariable set lastupdated = now()::timestamp where lastupdated ='2022-12-27';
 
 
 

@@ -670,6 +670,53 @@ INNER JOIN relationshipitem rel2 ON rel2.relationshipitemid = rels.to_relationsh
 where rel1.trackedentityinstanceid in ( 356957 )
 order by rel1.trackedentityinstanceid;	
 
+
+-- tei list bsed on event programstageinstance
+
+SELECT tei.uid AS tei_uid, pi.uid AS enrollment_uid, psi.uid AS event_uid 
+from trackedentityinstance tei
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+where prg.uid = 'L78QzNqadTV' and ps.uid = 'xYcDpATOc1y' 
+and org.uid = 'vXdngpv3PzI' and psi.executiondate::date >= '2022-01-01' 
+and psi.executiondate::date <= '2022-12-31';
+
+-- unique tei list bsed on event programstageinstance
+
+SELECT distinct(tei.uid) AS tei_uid from trackedentityinstance tei
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+where prg.uid = 'L78QzNqadTV' and ps.uid = 'xYcDpATOc1y' 
+and org.uid = 'vXdngpv3PzI' and psi.executiondate::date >= '2022-01-01' 
+and psi.executiondate::date <= '2022-12-31';
+
+SELECT distinct(tei.uid) AS tei_uid from trackedentityinstance tei
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+where prg.uid = 'L78QzNqadTV' and ps.uid in( 'xYcDpATOc1y' )
+and org.uid = 'vXdngpv3PzI' and psi.executiondate::date >= '2022-01-01' 
+and psi.executiondate::date <= '2022-12-31';
+
+SELECT distinct(tei.uid) AS tei_uid from trackedentityinstance tei
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+where prg.uid = 'L78QzNqadTV' and ps.uid in( 'xYcDpATOc1y' )
+and org.path like '%cCTQiGkKcTk%' and psi.executiondate::date >= '2022-01-01' 
+and psi.executiondate::date <= '2022-12-31';
+
+
 -- tei list bsed on program
 
 SELECT tei.uid tei_uid,tei.trackedentityinstanceid, tei.created tei_created,
@@ -786,6 +833,15 @@ order by us.username desc;
 -- usergroupmembers
 select * from usergroupmembers where usergroupid in(
 select usergroupid from usergroup where uid = 'zJTLD2Gxqf9');
+
+
+select urg.name as userGRPName, usinf.uid, usinf.username,
+usinf.firstname, usinf.surname from userinfo usinf
+inner join usergroupmembers ugm ON usinf.userinfoid = ugm.userid
+inner join usergroup urg ON urg.usergroupid = ugm.usergroupid
+where urg.uid = 'vvJpMDhWonz';
+
+
 
 --user-role list
 
@@ -1427,7 +1483,7 @@ INNER JOIN programstage ps ON ps.programstageid = pss.programstageid
 INNER JOIN program pg ON pg.programid = ps.programid
 INNER JOIN programstagedataelement psde on psde.programstageid = pss.programstageid
 INNER JOIN dataelement de ON de.dataelementid = psde.dataelementid 
-where ps.uid = 'WCgcN8eovPv';
+where ps.uid = 'WCgcN8eovPv' order by ps_se.name, ps_de.sort_order;
 
 -- for saint-lucia programstage dataelements with optionset
 select pg.programid programID,pg.uid programUID,pg.name programName, ps.programstageid programstageID, 
@@ -1449,7 +1505,7 @@ LEFT JOIN dataelement de On de.dataelementid = ps_de.dataelementid
 LEFT JOIN programstage ps ON ps.programstageid = ps_de.programstageid
 LEFT JOIN program pg ON pg.programid = ps.programid 
 where pg.uid = 'tITlMGNJTbJ' and ps.programstageid = 130 
-and de.name not ilike '%Comment%' order by ps.name;
+and de.name not ilike '%Comment%' order by ps_se.name, ps_de.sort_order;
 
 -- programstagedataelement list witout section
 SELECT pg.name as programName, pg.programid,pg.uid as pg_uid, ps.name as programStageName, 
@@ -2987,6 +3043,25 @@ left join organisationunit ou4 on ou4.organisationunitid = ous.idlevel4
 group by ou1.organisationunitid,ou2.organisationunitid,ou3.organisationunitid,
 ou4.organisationunitid,ou1.uid,ou2.uid,ou3.uid,ou4.uid;
 
+
+-- Organisation Unit Hierarchy Level-4
+
+select
+ou1.uid as Level1uid1, ou1.organisationunitid as ou1Id, max(ou1.code) as Level1Code, max(ou1.name) as Level1Name,
+ou2.uid as Level2uid2, ou2.organisationunitid as ou2Id, max(ou2.code) as Level2Code, max(ou2.name) as Level2Name,
+ou3.uid as Level3uid3, ou3.organisationunitid as ou3Id, max(ou3.code) as Level3Code, max(ou3.name) as Level3Name,
+ou4.uid as Level4uid4, ou4.organisationunitid as ou4Id, max(ou4.code) as Level4Code, max(ou4.name) as Level4Name
+from _orgunitstructure ous
+
+LEFT  join organisationunit ou1 on ou1.organisationunitid = ous.idlevel1
+LEFT  join organisationunit ou2 on ou2.organisationunitid = ous.idlevel2
+LEFT  join organisationunit ou3 on ou3.organisationunitid = ous.idlevel3
+LEFT  join organisationunit ou4 on ou4.organisationunitid = ous.idlevel4
+
+group by ou1.uid,ou1.organisationunitid,ou2.uid,ou2.organisationunitid,ou3.uid,ou3.organisationunitid,
+ou4.uid,ou4.organisationunitid;
+
+
 // indicator list 
 
 SELECT 	indicatorid, ind.uid, ind.name, shortname, description, annualized, decimals, 
@@ -3187,6 +3262,36 @@ INNER join periodtype pety ON pety.periodtypeid = pe.periodtypeid
 WHERE de.uid = 'gyhLpZ4Dh0R' and dv.periodid in ( select periodid from period where startdate >= '2017-01-01' 
 and enddate <= '2022-12-31' and periodtypeid = 3 ) and 
 dv.value is not null and dv.deleted is not true;
+
+
+	
+SELECT de.uid AS dataElementUID,de.name AS dataElementName, coc.uid AS categoryOptionComboUID, 
+coc.name AS categoryOptionComboName, attcoc.uid AS attributeOptionComboUID,attcoc.name AS
+attributeOptionComboName, org.uid AS organisationunitUID, org.name AS organisationunitName, 
+dv.value, dv.storedby, dv.created, dv.lastupdated, pe.startdate,pe.enddate, 
+CONCAT (split_part(pe.startdate::TEXT,'-', 1), split_part(pe.enddate::TEXT,'-', 2)) 
+as isoPeriod,pety.name FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+INNER join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+INNER join periodtype pety ON pety.periodtypeid = pe.periodtypeid
+WHERE de.uid = 'ilJHhsHQ7sA' and dv.value is not null and dv.deleted is not true;	
+	
+SELECT de.uid AS dataElementUID,coc.uid AS categoryOptionComboUID, 
+attcoc.uid AS attributeOptionComboUID, org.uid AS organisationunitUID, 
+dv.value,  dv.created, dv.lastupdated, dv.storedby, 
+CONCAT (split_part(pe.startdate::TEXT,'-', 1), split_part(pe.enddate::TEXT,'-', 2)) 
+as isoPeriod,pety.name, pe.startdate,pe.enddate FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+INNER join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+INNER join periodtype pety ON pety.periodtypeid = pe.periodtypeid
+WHERE de.uid = 'ilJHhsHQ7sA' and dv.value is not null and dv.deleted is not true;
+
 
 -- with orgUnit path
 SELECT de.uid AS dataElementUID,de.name AS dataElementName, coc.uid AS categoryOptionComboUID, 

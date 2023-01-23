@@ -1,4 +1,11 @@
 
+-- https://hivtracker.hispindia.org/hivtracker/dhis-web-dashboard/#/
+-- new linode server created
+
+-- startup command : sudo -u dhis /home/dhis/tomcat_hivtracker/bin/startup.sh
+
+-- pg_dump -U dhis -d mannual_save_child_2_38 -T analytics* > /home/ubuntu/dbbackup.sql
+
 -- upgrade from 2.34  to 2.37/2.38 
 
 -- 1) from 2.34 to 2.35 run dhis2-stable-2.35.14.war
@@ -41,6 +48,110 @@ update users set disabled = false where username = 'hispdev';
 
 -- from 2.38.1 - Add column shortName to group sets to 2.38.46 -- Potential Duplicate Update ALL Status
 
+	
+-- 	-- for data insert in 2.34 from 2.38 14/12/2022
+
+--trackedentityinstance
+select * from trackedentityinstance order by trackedentityinstanceid desc;
+select * from trackedentityinstance where trackedentityinstanceid > 4696613; -- -- 10314
+	
+-- 	trackedentityattributevalue
+select tea.valuetype,teav.trackedentityinstanceid,teav.trackedentityattributeid,teav.value,
+teav.created,teav.lastupdated,teav.storedby from trackedentityattributevalue teav
+INNER JOIN trackedentityattribute tea ON tea.trackedentityattributeid = teav.trackedentityattributeid
+where teav.trackedentityinstanceid > 4696613; -- 186897
+
+-- programinstance
+select * from programinstance order by programinstanceid desc;
+select * from programinstance  where programinstanceid > 4683891; -- 10261
+
+--	programownershiphistory
+select * from programownershiphistory order by programownershiphistoryid desc;
+select * from programownershiphistory where programownershiphistoryid > 5574807; -- 89
+
+SELECT programownershiphistoryid, programid, trackedentityinstanceid, startdate, enddate, createdby
+FROM public.programownershiphistory where programownershiphistoryid > 5574807;
+	
+	
+-- 	trackedentityprogramowner
+select * from trackedentityprogramowner order by trackedentityprogramownerid desc;
+select * from trackedentityprogramowner where trackedentityprogramownerid > 5574949; -- 10259
+
+SELECT trackedentityprogramownerid, trackedentityinstanceid, programid, created, 
+lastupdated, organisationunitid, createdby
+FROM public.trackedentityprogramowner;	
+	
+-- 	programstageinstance
+select * from programstageinstance order by programstageinstanceid desc;
+select * from programstageinstance where programstageinstanceid > 	5506085; -- 79429
+-- eventdatavalues -- 75667 null -- 3762
+
+
+select programstageinstanceid,uid, eventdatavalues from programstageinstance where uid in (
+'qYVjBL0joDl','qWT7l3rcpdH' )and eventdatavalues != '{}';
+
+select programstageinstanceid,uid,created,lastupdated,programinstanceid,programstageid,
+duedate,organisationunitid,status,attributeoptioncomboid,storedby,deleted,lastsynchronized,
+createdbyuserinfo,lastupdatedbyuserinfo from programstageinstance where programstageinstanceid > 5506085;
+
+select programstageinstanceid,uid,created,lastupdated,programinstanceid,
+programstageid,duedate,executiondate,organisationunitid,status,completeddate,
+attributeoptioncomboid,storedby,completedby,deleted,code,createdatclient,
+lastupdatedatclient,lastsynchronized,geometry,assigneduserid,longitude,latitude,
+createdbyuserinfo,lastupdatedbyuserinfo from programstageinstance where 
+programstageinstanceid > 5506085;
+	
+	
+	
+select * from trackedentityattributevalue where trackedentityattributeid = 28357
+and trackedentityinstanceid in (
+select trackedentityinstanceid from trackedentityattributevalue where value = 'NCASC');
+
+-- attribute_value
+select tei.trackedentityinstanceid AS teiID,tei.uid AS teiUID,
+tea.trackedentityattributeid AS teaID,tea.uid AS teaUID,
+teav.value from trackedentityattributevalue teav 
+INNER JOIN trackedentityattribute tea ON tea.trackedentityattributeid = teav.trackedentityattributeid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav.trackedentityinstanceid
+where tea.uid in ( 'PWdxGAN3OCD')
+and teav.created::date >= '2022-10-20'
+and tei.uid in ( 'KgGdOh1XTaD');	
+
+select tei.trackedentityinstanceid AS teiID,tei.uid AS teiUID,
+tea.trackedentityattributeid AS teaID,tea.uid AS teaUID,
+teav.value from trackedentityattributevalue teav 
+INNER JOIN trackedentityattribute tea ON tea.trackedentityattributeid = teav.trackedentityattributeid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = pi.organisationunitid
+where tea.uid in ( 'PWdxGAN3OCD')
+and teav.created::date >= '2022-10-20' and org.organisationunitid in(
+select organisationunitid from orgunitgroupmembers where orgunitgroupid =4742863);
+
+
+select tei.trackedentityinstanceid AS teiID,tei.uid AS teiUID,
+tea.trackedentityattributeid AS teaID,tea.uid AS teaUID,
+teav.value from trackedentityattributevalue teav 
+INNER JOIN trackedentityattribute tea ON tea.trackedentityattributeid = teav.trackedentityattributeid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = pi.organisationunitid
+where tea.uid in ( 'PWdxGAN3OCD') and org.organisationunitid in(
+select organisationunitid from orgunitgroupmembers where orgunitgroupid =4742863);
+
+
+-- implementing agency -- PWdxGAN3OCD
+-- client_code -- drKkLxaGFwv
+	
+-- 2.34 -- 		
+
+select count(*) from datavalue; -- 2738
+
+
+-- 2.38 -- 	
+select count(*) from datavalue; -- 2827
+
+	
 	
 -- for data insert in 2.34 from 2.38 01/12/2022
 
@@ -122,6 +233,50 @@ inner join period pe ON pe.periodid = dv.periodid
 inner join periodtype pet ON pet.periodtypeid = pe.periodtypeid
 INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
 WHERE dv.value is not null and dv.created::date >= '2022-10-19';
+	
+	
+SELECT de.uid AS dataElementUID,de.name AS dataElementName, coc.uid AS categoryOptionComboUID, 
+coc.name AS categoryOptionComboName, attcoc.uid AS attributeOptionComboUID,attcoc.name AS
+attributeOptionComboName, org.uid AS organisationunitUID, org.name AS organisationunitName, 
+dv.value, dv.storedby,TEXT(dv.created::timestamp) ,dv.lastupdated::timestamp,  
+CONCAT (split_part(pe.startdate::TEXT,'-', 1), split_part(pe.startdate::TEXT,'-', 2)) 
+as isoPeriod,pet.name AS periodType, pe.periodtypeid FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+inner join period pe ON pe.periodid = dv.periodid
+inner join periodtype pet ON pet.periodtypeid = pe.periodtypeid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+WHERE dv.value is not null and dv.created::date >= '2022-10-19';
+	
+	
+SELECT de.uid AS dataElementUID,de.name AS dataElementName, coc.uid AS categoryOptionComboUID, 
+coc.name AS categoryOptionComboName, attcoc.uid AS attributeOptionComboUID,attcoc.name AS
+attributeOptionComboName, org.uid AS organisationunitUID, org.name AS organisationunitName, 
+dv.value, dv.storedby, dv.created, dv.lastupdated, pe.startdate,pe.enddate, 
+CONCAT (split_part(pe.startdate::TEXT,'-', 1), split_part(pe.enddate::TEXT,'-', 2)) 
+as isoPeriod,pety.name FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+INNER join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+INNER join periodtype pety ON pety.periodtypeid = pe.periodtypeid
+WHERE de.uid = 'ilJHhsHQ7sA' and dv.value is not null and dv.deleted is not true;	
+	
+SELECT de.uid AS dataElementUID,coc.uid AS categoryOptionComboUID, 
+attcoc.uid AS attributeOptionComboUID, org.uid AS organisationunitUID, 
+dv.value,  dv.created, dv.lastupdated, dv.storedby, 
+CONCAT (split_part(pe.startdate::TEXT,'-', 1), split_part(pe.enddate::TEXT,'-', 2)) 
+as isoPeriod,pety.name, pe.startdate,pe.enddate FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+INNER join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+INNER join periodtype pety ON pety.periodtypeid = pe.periodtypeid
+WHERE de.uid = 'ilJHhsHQ7sA' and dv.value is not null and dv.deleted is not true;	
+	
 	
 	
 SELECT psi.uid as eventUID,de.uid as dataElementUID,
@@ -314,8 +469,12 @@ update programstageinstance set geometry = null, longitude = null, latitude = nu
 ="update trackedentityinstance set organisationunitid  = "&D2&" where uid = '"&A2&"' and trackedentityinstanceid = "&C2&" and organisationunitid = "&B2&";"
 ="update programinstance set organisationunitid  = "&F2&" where uid = '"&A2&"' and programinstanceid = "&B2&" and trackedentityinstanceid = "&C2&" and programid = "&D2&" and organisationunitid = "&E2&";"
 
-="update trackedentityprogramowner set organisationunitid  = "&D2&" where trackedentityinstanceid = "&A2&" and programid = "&B2&" and organisationunitid = "&C2&";"
 
+
+="update programinstance set organisationunitid  = "&F2&" where uid = '"&C2&"' and programinstanceid = "&D2&" and trackedentityinstanceid = "&B2&";"
+="update trackedentityprogramowner set organisationunitid  = "&F2&" where trackedentityinstanceid = "&B2&" and programid = "&G2&";"
+
+="update trackedentityprogramowner set organisationunitid  = "&D2&" where trackedentityinstanceid = "&A2&" and programid = "&B2&" and organisationunitid = "&C2&";"
 ="update programstageinstance set organisationunitid  = "&E2&" where uid = '"&A2&"' and programstageinstanceid = "&B2&" and programinstanceid = "&C2&" and organisationunitid = "&D2&";"
 
 -- 18/10/2022

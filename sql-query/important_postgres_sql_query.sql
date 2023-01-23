@@ -1,19 +1,4 @@
 
--- links -- 172.105.47.164
--- M!th!lesh@123
--- Dh!sUs3Rp@SS1
--- ln2  172.104.173.245  96
-
- -- create user on poatgres
-CREATE USER fpaidbpro WITH PASSWORD fpaidbpro@9876; 
-ALTER USER fpidbpro WITH SUPERUSER;
-GRANT ALL PRIVILEGES ON DATABASE fpaidb_pro to fpaidbpro;
-
-
-CREATE USER fpidbpro WITH PASSWORD fpaidbpro@9876
-ALTER USER fpidbpro WITH SUPERUSER;
-
-GRANT ALL PRIVILEGES ON DATABASE fpaidb_pro to fpidbpro;
 
 
 -- import database for plan
