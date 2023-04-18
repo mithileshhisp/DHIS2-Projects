@@ -1,5 +1,51 @@
 
 KAP-CBD-15
+
+-- 23/02/2022
+
+select * from organisationunit where uid = 'AmrbwMo8a3S';
+
+select * from organisationunit where parentid = 2062693;
+select organisationunitid from organisationunit where parentid = 2062693;
+
+update datavalue set sourceid = 3560921 where sourceid = 1996768 and periodid in ( 3240495,3282262,3354237,3363239,3367729,3379193,3391085,3399681,3404502,3422967,3429435,3500866); 
+
+
+select startdate,enddate, periodid from period where startdate >= '2022-01-01' and enddate <= '2022-12-31'
+and periodtypeid = 3
+
+
+select * from datavalue where sourceid = 3561875 and periodid in ( 3240495,3282262,
+3354237,3363239,3367729,3379193,3391085,3399681,3404502,3422967,3429435,3500866);
+
+update datavalue set sourceid = 1996768 where sourceid = 2045411 and periodid in ( 3240495,3282262,3354237,3363239,3367729,3379193,3391085,3399681,3404502,3422967,3429435,3500866);
+
+
+="update datavalue set sourceid = "&D2&" where sourceid = "&B2&" and periodid in ( 3240495,3282262,3354237,3363239,3367729,3379193,3391085,3399681,3404502,3422967,3429435,3500866);"
+
+-- sum aggregated data based on orgUnit
+
+SELECT de.uid AS deUID, de.name AS deName, coc.uid AS categoryOptionComboUID, 
+coc.name AS categoryOptionComboName,dv.categoryoptioncomboid, attcoc.uid AS attributeOptionComboUID,attcoc.name AS
+attributeOptionComboName, dv.attributeoptioncomboid,
+CONCAT (split_part(pe.startdate::TEXT,'-', 1), split_part(pe.enddate::TEXT,'-', 2)
+,split_part(pe.enddate::TEXT,'-', 3)) as isoPeriod,pet.name AS periodType, pe.periodtypeid,dv.periodid,
+SUM( cast( value as numeric) ) FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+INNER JOIN organisationunit org On org.organisationunitid = dv.sourceid
+inner join period pe ON pe.periodid = dv.periodid
+inner join periodtype pet ON pet.periodtypeid = pe.periodtypeid
+WHERE dv.sourceid IN (select organisationunitid from organisationunit 
+where path like '%AmrbwMo8a3S%') AND dv.periodid IN 
+(select periodid from period where startdate >= '2022-01-01' and enddate <= '2022-12-31'
+and periodtypeid = 3) GROUP BY de.uid,de.name,isoPeriod,pe.periodtypeid,dv.periodid,pet.name,
+coc.uid,categoryOptionComboName,attributeOptionComboName,attcoc.uid,dv.categoryoptioncomboid,
+dv.attributeoptioncomboid;
+
+
+
 -- ANC -- lyV4xaK35cS,dKZsEnR8s9C,lyV4xaK35cS,nYxitbqPTef,GPnKb9raUcp,eabkOm49r3O,NWAbJmZi5ey,OSIhs30rFQK
 -- fDUINIR160n,  value type numner to text
 
@@ -206,3 +252,24 @@ begin;
 	( select trackedentityinstanceid from programinstance where programid = 2930728 ); 
 
 end;
+
+-- 28/03/2023 issue is soft delete for trackedentityinstance
+
+delete from trackedentityinstance where deleted is true;
+
+delete from trackedentityprogramowner where 
+trackedentityinstanceid in (select trackedentityinstanceid
+from trackedentityinstance where deleted is true);
+
+delete from relationshipitem where trackedentityinstanceid in
+(select trackedentityinstanceid from trackedentityinstance where deleted is true );
+
+select * from relationship where from_relationshipitemid in (
+select relationshipitemid from relationshipitem where trackedentityinstanceid in
+(select trackedentityinstanceid from trackedentityinstance where deleted is true ) );
+
+update relationship set from_relationshipitemid = null where 
+from_relationshipitemid in (
+select relationshipitemid from relationshipitem where trackedentityinstanceid in
+(select trackedentityinstanceid from trackedentityinstance where deleted is true ) );
+

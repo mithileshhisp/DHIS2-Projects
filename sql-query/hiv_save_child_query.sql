@@ -1,4 +1,29 @@
 
+-- 14/03/2023
+-- postgres SQL Query alter the database sequence id
+
+SELECT c.relname FROM pg_class c WHERE c.relkind = 'S';
+
+SELECT last_value FROM hibernate_sequence;
+
+ALTER SEQUENCE hibernate_sequence RESTART WITH 4412;
+
+ALTER SEQUENCE hibernate_sequence RESTART WITH 8394001;8393989
+
+
+SELECT c.relname FROM pg_class c WHERE c.relkind = 'S';
+
+-- run on HIV production as on 14/03/2023
+SELECT last_value FROM programstageinstance_sequence;
+
+ALTER SEQUENCE programstageinstance_sequence RESTART WITH 7779001;
+
+-- 28/02/2023
+
+update programinstance set geometry = null; -- empty co-ordinate of all enrollment
+
+
+
 -- https://hivtracker.hispindia.org/hivtracker/dhis-web-dashboard/#/
 -- new linode server created
 
@@ -384,6 +409,23 @@ WHERE trackedentityattributeid = 28357  ) teav2
 ON teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
 WHERE teav1.trackedentityattributeid = 28358 order by teav1.trackedentityinstanceid desc;
 
+-- https://tracker.hivaids.gov.np/save-child-2.27/api/29/sqlViews/NHCQz7jhFzk/data.json?paging=false
+
+
+-- all 
+select * from trackedentityattributevalue where 
+trackedentityattributeid in (select trackedentityattributeid
+from trackedentityattribute where uid = 'uiOMHu4LtAP');
+
+select * from trackedentityattributevalue where 
+trackedentityattributeid in (select trackedentityattributeid
+from trackedentityattribute where uid = 'UHoTGT1dtjj');
+
+
+
+
+
+
 -- count as on 16/12/2021 on production
 select count(*) from trackedentityinstance; -- 36664 21/12/2021 -- 36712
 select count(*) from programinstance; -- 35850 21/12/2021 -- 35877
@@ -618,3 +660,82 @@ select trackedentityinstanceid from trackedentityinstance where deleted is true 
 
 select * from trackedentityattributevalue where value = ''
 
+
+
+-- HIV-tracker SMS program sms send details query 
+SELECT prgmsg.created, prgmsg.lastupdated, prgmsg.text, prgmsg.subject, 
+prgmsg.processeddate, prgmsg.messagestatus,
+prgmsg.trackedentityinstanceid,prgmsg.programinstanceid, prgmsg.programstageinstanceid, 
+prgmsg.lastupdatedby,ur.username, prgmsg_phone.phonenumber recevier_phone_number
+from programmessage prgmsg
+INNER JOIN programmessage_phonenumbers prgmsg_phone ON prgmsg_phone.programmessagephonenumberid = prgmsg.id
+INNER JOIN users ur ON ur.userid = prgmsg.lastupdatedby;
+
+
+select programmessagephonenumberid, phonenumber from 
+programmessage_phonenumbers;
+
+-- 13/04/2023
+-- convert gemotery to Longitude, Latitude
+
+SELECT organisationunitid,uid,name,geometry,
+ST_X(ST_Transform (geometry, 4326)) AS "Longitude",
+ST_Y(ST_Transform (geometry, 4326)) AS "Latitude"
+FROM organisationunit where uid = 'WLBxL2ClHIC';
+
+SELECT organisationunitid,uid,name,geometry,
+ST_X(ST_Transform (geometry, 4326)) AS "Longitude",
+ST_Y(ST_Transform (geometry, 4326)) AS "Latitude"
+FROM organisationunit where organisationunitid in (
+select organisationunitid from orgunitgroupmembers where orgunitgroupid in (
+select orgunitgroupid from orgunitgroup where uid ='pW6owR4oRKb'));
+
+SELECT organisationunitid,uid,name,geometry,
+ST_X(ST_SetSRID (geometry, 4326)) AS "Longitude",
+ST_Y(ST_SetSRID (geometry, 4326)) AS "Latitude"
+FROM organisationunit where organisationunitid in (
+select organisationunitid from orgunitgroupmembers where orgunitgroupid in (
+select orgunitgroupid from orgunitgroup where uid ='pW6owR4oRKb'));
+
+select * from trackedentityattributevalue where 
+trackedentityattributeid in (select trackedentityattributeid
+from trackedentityattribute where uid = 'uiOMHu4LtAP');
+
+select * from trackedentityattributevalue where 
+trackedentityattributeid in (select trackedentityattributeid
+from trackedentityattribute where uid = 'UHoTGT1dtjj');
+
+-- 18/04/2023
+
+
+select count(*) from programstageinstance where 
+programstageid in ( 2537, 2485, 9682, 2697, 2577 ) 
+and geometry is null;
+
+
+select count(*) from programstageinstance where 
+programstageid in ( 2537, 2485, 9682, 2697, 2577 ) 
+and geometry is  not null;
+
+
+select * from programstageinstance where 
+programstageid in ( 2537, 2485, 9682, 2697, 2577 ) 
+and geometry is  not null;
+
+SELECT uid eventUID,geometry,
+ST_X(ST_Transform (geometry, 4326)) AS "Longitude",
+ST_Y(ST_Transform (geometry, 4326)) AS "Latitude"
+FROM programstageinstance where programstageid in 
+( 2537, 2485, 9682, 2697, 2577 ) and geometry is not null;
+
+SELECT uid eventUID,geometry,
+ST_X(ST_SetSRID  (geometry, 4326)) AS "Longitude",
+ST_Y(ST_SetSRID  (geometry, 4326)) AS "Latitude"
+FROM programstageinstance where programstageid in 
+( 2537, 2485, 9682, 2697, 2577, 2439, 4729067) 
+and geometry is not null;
+
+SELECT uid eventUID,programstageinstanceid,programstageid,geometry,
+ST_X(ST_SetSRID  (geometry, 4326)) AS "Longitude",
+ST_Y(ST_SetSRID  (geometry, 4326)) AS "Latitude"
+FROM programstageinstance where geometry is  not null;

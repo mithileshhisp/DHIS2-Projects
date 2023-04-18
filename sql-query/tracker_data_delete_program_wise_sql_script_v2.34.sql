@@ -17,7 +17,9 @@ begin;
 	
 	
 -- 4) trackedentitydatavalue
-
+     delete from trackedentitydatavalue where programstageinstanceid in (
+     select programstageinstanceid from programstageinstance where programstageid in 
+	( select programstageid from programstage where programid = 456215 ));
 
 -- 5) trackedentitydatavalueaudit 
     delete from trackedentitydatavalueaudit where programstageinstanceid in 

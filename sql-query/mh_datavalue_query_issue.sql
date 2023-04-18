@@ -1,4 +1,338 @@
 
+-- 06/03/2023  delete datavalue from last to 2016
+
+-- https://links.hispindia.org/mh/dhis-web-commons/security/login.action
+-- tracker data
+
+select * from programinstance; -- 3
+select * from programstageinstance; -- 7
+select * from trackedentityattributevalue; -- 0
+select * from trackedentitydatavalue; -- 13
+select * from trackedentityinstance; -- 0
+
+
+select count(*)	from datavalue; -- 917959966
+
+select count(*) from datavalue where periodid in(
+select periodid from period where startdate >= '1707-12-31' and 
+enddate <= '2016-12-31'); -- 529309476;
+
+select count(*) from datavalue where periodid in(
+select periodid from period where 
+enddate <= '2016-12-31') -- 529309476;
+
+select count(*) from datavalue where periodid in(
+select periodid from period where startdate >= '2017-01-01' and 
+enddate <= '2023-12-31'); -- 388649624
+
+select count(*) from datavalue where periodid in(
+select periodid from period where startdate >= '2017-01-01'); -- 388649624
+
+select * from period where startdate >= '2017-01-01' and 
+enddate <= '2017-12-31' order by startdate;
+
+-- total -- 529309476 + 388649624 = 917,959,100
+
+
+-- 2017 period count -- 22
+select * from period where startdate >= '2017-01-01' and 
+enddate <= '2017-12-31' order by startdate; -- period count -- 22
+
+select count(*) from datavalue where periodid in(
+select periodid from period where startdate >= '2017-01-01' and 
+enddate <= '2017-12-31'); -- 67239932
+
+select count(*) from datavalueaudit where periodid in(
+select periodid from period where startdate >= '2017-01-01' and 
+enddate <= '2017-12-31'); -- 17630941
+
+select count(*) from completedatasetregistration where periodid in(
+select periodid from period where startdate >= '2017-01-01' and 
+enddate <= '2017-12-31'; -- 120420;
+	
+select count(*) from lockexception where periodid in(
+select periodid from period where startdate >= '2017-01-01' and 
+enddate <= '2017-12-31') -- 64722;
+
+
+-- 2018 
+select * from period where startdate >= '2018-01-01' and 
+enddate <= '2018-12-31' order by startdate; -- period count -- 33
+
+select count(*) from datavalue where periodid in(
+select periodid from period where startdate >= '2018-01-01' and 
+enddate <= '2018-12-31'); -- 75565500
+
+select count(*) from datavalueaudit where periodid in(
+select periodid from period where startdate >= '2018-01-01' and 
+enddate <= '2018-12-31'); -- 23593432
+
+select count(*) from completedatasetregistration where periodid in
+(select periodid from period where startdate >= '2018-01-01' and 
+enddate <= '2018-12-31'); -- 303345;
+	
+select count(*) from lockexception where periodid in
+(select periodid from period where startdate >= '2018-01-01' and 
+enddate <= '2018-12-31'); -- 118329;
+
+-- 2019 period count -- 80
+
+select * from period where startdate >= '2019-01-01' and 
+enddate <= '2019-12-31' order by startdate; -- period count -- 80
+
+select count(*) from datavalue where periodid in(
+select periodid from period where startdate >= '2019-01-01' and 
+enddate <= '2019-12-31'); -- 70741962
+
+select count(*) from datavalueaudit where periodid in(
+select periodid from period where startdate >= '2019-01-01' and 
+enddate <= '2019-12-31'); -- 11922822
+
+select count(*) from completedatasetregistration where periodid in
+(select periodid from period where startdate >= '2019-01-01' and 
+enddate <= '2019-12-31'); -- 264206;
+	
+select count(*) from lockexception where periodid in
+(select periodid from period where startdate >= '2019-01-01' and 
+enddate <= '2019-12-31'); -- 201900;
+
+
+-- 2020 period count -- 80
+
+select * from period where startdate >= '2020-01-01' and 
+enddate <= '2020-12-31' order by startdate; -- period count -- 80
+
+select count(*) from datavalue where periodid in(
+select periodid from period where startdate >= '2020-01-01' and 
+enddate <= '2020-12-31'); -- 52622006
+
+select count(*) from datavalueaudit where periodid in(
+select periodid from period where startdate >= '2020-01-01' and 
+enddate <= '2020-12-31') -- 2043569;
+
+select count(*) from completedatasetregistration where periodid in
+(select periodid from period where startdate >= '2020-01-01' and 
+enddate <= '2020-12-31'); -- 231629;
+	
+select count(*) from lockexception where periodid in
+(select periodid from period where startdate >= '2020-01-01' and 
+enddate <= '2020-12-31'); -- 152816;
+
+
+-- 2021 period count -- 80
+
+select * from period where startdate >= '2021-01-01' and 
+enddate <= '2021-12-31' order by startdate; -- period count -- 80
+
+select count(*) from datavalue where periodid in(
+select periodid from period where startdate >= '2021-01-01' and 
+enddate <= '2021-12-31'); -- 48515414
+
+select count(*) from datavalueaudit where periodid in(
+select periodid from period where startdate >= '2021-01-01' and 
+enddate <= '2021-12-31') -- 1472168;
+
+select count(*) from completedatasetregistration where periodid in
+(select periodid from period where startdate >= '2021-01-01' and 
+enddate <= '2021-12-31'); -- 195129;
+	
+select count(*) from lockexception where periodid in
+(select periodid from period where startdate >= '2021-01-01' and 
+enddate <= '2021-12-31'); -- 351496;
+
+-- 2022 period count -- 84
+
+select * from period where startdate >= '2022-01-01' and 
+enddate <= '2022-12-31' order by startdate; -- period count -- 84
+
+select count(*) from datavalue where periodid in(
+select periodid from period where startdate >= '2022-01-01' and 
+enddate <= '2022-12-31'); -- 64079771
+
+select count(*) from datavalueaudit where periodid in(
+select periodid from period where startdate >= '2022-01-01' and 
+enddate <= '2022-12-31'); -- 2227569;
+
+select count(*) from completedatasetregistration where periodid in
+(select periodid from period where startdate >= '2022-01-01' and 
+enddate <= '2022-12-31'); -- 231878;
+	
+select count(*) from lockexception where periodid in
+(select periodid from period where startdate >= '2022-01-01' and 
+enddate <= '2022-12-31'); -- 378337;
+
+
+-- 2023 period count -- 28
+select * from period where startdate >= '2023-01-01' and 
+enddate <= '2023-12-31' order by startdate; -- period count -- 28
+
+select count(*) from datavalue where periodid in(
+select periodid from period where startdate >= '2023-01-01' and 
+enddate <= '2023-12-31'); -- 9712632
+
+select count(*) from datavalueaudit where periodid in(
+select periodid from period where startdate >= '2023-01-01' and 
+enddate <= '2023-12-31'); -- 275886;
+
+select count(*) from completedatasetregistration where periodid in
+(select periodid from period where startdate >= '2023-01-01' and 
+enddate <= '2023-12-31'); -- 34927;
+	
+select count(*) from lockexception where periodid in
+(select periodid from period where startdate >= '2023-01-01' and 
+enddate <= '2023-12-31'); -- 8022;
+
+select count(*) from lockexception where periodid in
+(select periodid from period where startdate >= '2023-01-01' and 
+enddate <= '2023-12-31');
+
+select * from period order by startdate;
+
+select count(*) from datavalue where 
+periodid in(select periodid from period where startdate >= '2010-01-01' and 
+enddate <= '2010-12-31'); 13438
+
+select count(*) from datavalue where 
+periodid in(select periodid from period where startdate >= '2009-01-01' and 
+enddate <= '2009-12-31')-- 7827;
+
+
+select count(*) from datavalue where 
+periodid in(select periodid from period where startdate >= '2008-01-01' and 
+enddate <= '2008-12-31')-- 9466;
+
+select count(*) from datavalue where 
+periodid in(select periodid from period where startdate >= '2007-01-01' and 
+enddate <= '2007-12-31')-- 3567;
+
+select count(*) from datavalue where 
+periodid in(select periodid from period where startdate >= '2006-01-01' and 
+enddate <= '2006-12-31')-- 3534;
+
+select count(*) from datavalue where 
+periodid in(select periodid from period where startdate >= '2005-01-01' and 
+enddate <= '2005-12-31')-- 4744;
+
+select count(*) from datavalue where 
+periodid in(select periodid from period where startdate >= '2004-01-01' and 
+enddate <= '2004-12-31')-- 19505;
+
+select count(*) from datavalue where 
+periodid in(select periodid from period where startdate >= '1999-01-01' and 
+enddate <= '1999-12-31')-- 0;
+
+select count(*) from datavalue where 
+periodid in(select periodid from period where startdate >= '1998-01-01' and 
+enddate <= '1998-12-31')-- 0;
+
+
+---- for weekly and financialyApril period
+select * from period where periodid in (
+65262903,46793325,80564579,38145986,32530595,
+42725651,80623595,89872952,38114639,90497697);
+
+select * from periodtype;
+
+select count(*) from datavalue where periodid in(
+select periodid from period where startdate >= '2017-01-01' and 
+enddate <= '2023-12-31'); -- 20485
+
+select count(*) from datavalueaudit where periodid in(
+select periodid from period where startdate >= '2017-01-01' and 
+enddate <= '2023-12-31'); -- 5243
+
+select count(*) from completedatasetregistration where periodid in(
+select periodid from period where startdate >= '2017-01-01' and 
+enddate <= '2023-12-31'); -- 5049 
+
+select count(*) from lockexception where periodid in(
+select periodid from period where startdate >= '2017-01-01' and 
+enddate <= '2023-12-31'); -- 1393; 
+
+
+
+
+
+
+
+SELECT
+    relname AS "tables",
+    pg_size_pretty (
+        pg_total_relation_size (X .oid)
+    ) AS "size"
+FROM
+    pg_class X
+LEFT JOIN pg_namespace Y ON (Y.oid = X .relnamespace)
+WHERE
+    nspname NOT IN (
+        'pg_catalog',
+        'information_schema'
+    )
+AND X .relkind <> 'i'
+AND nspname !~ '^pg_toast'
+ORDER BY
+    pg_total_relation_size (X .oid) desc
+	
+	
+
+--15/02/2023
+
+SELECT de.uid AS dataElementUID,de.name AS dataElementName, coc.uid AS categoryOptionComboUID, 
+coc.name AS categoryOptionComboName, attcoc.uid AS attributeOptionComboUID,attcoc.name AS
+attributeOptionComboName, org.uid AS organisationunitUID, org.name AS organisationunitName, 
+dv.value, dv.storedby, CONCAT (split_part(pe.startdate::TEXT,'-', 1), split_part(pe.enddate::TEXT,'-', 2)
+,split_part(pe.enddate::TEXT,'-', 3)) as isoPeriod,pet.name AS periodType, pe.periodtypeid FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+inner join period pe ON pe.periodid = dv.periodid
+inner join periodtype pet ON pet.periodtypeid = pe.periodtypeid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+WHERE dv.value is not null and de.uid = 'cRyTk6K7BEi' and coc.uid = 'DLr4VIEGNIo';
+
+-- 16/02/2023
+SELECT de.uid AS dataElementUID,de.name AS dataElementName, dv.dataelementid,coc.uid AS categoryOptionComboUID, 
+coc.name AS categoryOptionComboName,dv.categoryoptioncomboid, attcoc.uid AS attributeOptionComboUID,attcoc.name AS
+attributeOptionComboName, dv.attributeoptioncomboid, org.uid AS organisationunitUID, org.name AS organisationunitName,
+dv.sourceid,dv.value, dv.storedby, CONCAT (split_part(pe.startdate::TEXT,'-', 1), split_part(pe.enddate::TEXT,'-', 2)
+,split_part(pe.enddate::TEXT,'-', 3)) as isoPeriod,pet.name AS periodType, pe.periodtypeid,dv.periodid FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+inner join period pe ON pe.periodid = dv.periodid
+inner join periodtype pet ON pet.periodtypeid = pe.periodtypeid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+WHERE dv.value is not null and de.uid = 'cRyTk6K7BEi' and coc.uid = 'DLr4VIEGNIo';
+
+
+="update datavalue set dataelementid = "&B2&", categoryoptioncomboid = "&D2&", attributeoptioncomboid = "&E2&"  where dataelementid = "&A2&" and periodid = "&K2&" and categoryoptioncomboid = "&C2&" and attributeoptioncomboid = "&E2&" and sourceid = "&G2&";"
+
+
+
+
+
+-- 23/01/2023
+SELECT org.uid AS orgUnitUid, org.name AS orgUnitName, de.uid AS deUID, de.name AS deName, 
+SUM( cast( value as numeric) ) FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN organisationunit org On org.organisationunitid = dv.sourceid
+WHERE dv.dataelementid IN ( select dataelementid from dataelement where uid in (
+'QJXDS374FL7', 'O0LVG8R8UPi', 'WqLhMox6u5s', 'uDEe2DLpNf4', 'pfBSJgGzmUT', 'lSmRsc4EX4u', 
+'KVdjXOnhbGq', 'ejB5Wtu3kVJ', 'E3QKzVDQE5B', 'CofKyFHumWx', 'ZouGfFRrpse', 'YsGEPZpQe6I', 
+'FHU3UYSbHKJ', 'E3xhEA1oeJd', 'cYOeeJikhrK', 'iDZL9StfKBp', 'FXGyhXPbGf4', 'eQLgQnRthFy', 
+'kgUqFmv4gEM', 'yz99h1xdt4V', 'GmsqnhxaZJa', 'IkOkQJMOrdj', 'AtkwRd4KZy8', 'yaos4Jzbp7Q', 
+'cKtRhs9xC1H', 'sT5qVbr2iCf', 'l3w3WwUpXca', 'ZLoDeEmpypb', 'MHAmn8Lrbud', 'ikw26VrSnHH', 
+'hITgdvklyDS', 'F75Ofi034Vc', 'yRxgzTOaHpQ', 'sA0OnoEtmIN', 'IsaEep9Rro7', 'S8v99VpXaVm', 
+'SYMC85nGD4q', 'ZbhYKew0RAn', 'x9bxR6p7fvQ', 'lJC6GiZYFLI')) 
+AND dv.sourceid IN (select organisationunitid from organisationunit 
+where path like '%b3vBdsycgAD%') AND dv.periodid IN 
+(select periodid from period where startdate >= '2022-01-01' and enddate <= '2022-12-31'
+and periodtypeid = 3) GROUP BY org.uid,org.name,de.uid,de.name order by org.name;
+
+
+
+
+
 -- 14/12/2022 -- delete datavalue for OU Group ID : KZrndomu4ju Dataset ID : FBxQzVU8IuI Period from : April 2022
 SELECT de.uid AS dataElementUID,de.name AS dataElementName, coc.uid AS categoryOptionComboUID, 
 coc.name AS categoryOptionComboName, attcoc.uid AS attributeOptionComboUID,attcoc.name AS

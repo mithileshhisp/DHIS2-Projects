@@ -412,3 +412,31 @@ id = 4188236 and key = 'GC_SEQUENTIAL(#######)';
 
 update trackedentityattributevalue set created = now()::timestamp where created = '2022-07-11';
 update trackedentityattributevalue set lastupdated = now()::timestamp where lastupdated = '2022-07-11';
+
+
+
+-- 02/02/2023 update TEI registration and enrollment organisationunit
+
+select * from trackedentityinstance where uid = 'WNt8bwgeGUc'; -- 4335240
+select * from trackedentityinstance where uid = 'ZuR1412sfSo';  -- 4018142
+
+select * from trackedentityinstance where uid = 'HcAE9eG7ogy'; -- 4231465
+
+update trackedentityinstance set organisationunitid = 1826511
+where uid = 'HcAE9eG7ogy';
+
+select * from programinstance where trackedentityinstanceid = 4231465
+and programid = 138448
+
+update programinstance set organisationunitid = 1826511
+where trackedentityinstanceid = 4231465 and programid = 138448
+
+-- Gelegphu HISC. -- n55w7zTh8hR -- 1826473
+
+--368-TP-15-26/05/14 -  phuntsholing HISC. -- Ur5UyDTV3Yz -- 1826511
+
+select * from organisationunit where uid = 'NGEI6rFwznX';
+select * from program where uid = 'sa5481ZXKW2'; -- 138448
+
+
+-- tei=WNt8bwgeGUc&program=sa5481ZXKW2&ou=NGEI6rFwznX&fromAudit

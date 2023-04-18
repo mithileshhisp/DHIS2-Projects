@@ -1,6 +1,9 @@
 
 -- 07/12/2022 program programstagedataelement insert query
 
+-- 25/01/2023 program programstagedataelement insert query
+
+-- https://me.yesdigital.org/yesdigital/api/system/id.csv?limit=105
 
 select programstagedataelementid, uid, created, lastupdated, programstageid, dataelementid, 
 compulsory, allowprovidedelsewhere, sort_order, displayinreports, allowfuturedate, 
@@ -17,6 +20,10 @@ insert into programstagedataelement (programstagedataelementid, uid, created, la
 ="(nextval('hibernate_sequence'),'"&A2&"', '2022-12-07', '2022-12-07', "&C2&", "&D2&", '"&E2&"', '"&F2&"', "&G2&", '"&H2&"', '"&I2&"', '"&J2&"','"&K2&"'),"
 
 
+update programstagedataelement set created = now()::timestamp where created = '2023-01-25';
+update programstagedataelement set lastupdated = now()::timestamp where lastupdated = '2023-01-25';
+
+
 update programstagedataelement set created = now()::timestamp where created = '2022-12-07';
 update programstagedataelement set lastupdated = now()::timestamp where lastupdated = '2022-12-07';
 
@@ -30,13 +37,16 @@ insert into programstagesection (programstagesectionid, uid, created, lastupdate
 ="(nextval('hibernate_sequence'),'"&A2&"', '2022-12-07', '2022-12-07', "&D2&",'"&E2&"', '"&G2&"',"&F2&","&H2&"),"
 
 
-select * from programstagesection order by programstagesectionid desc; -- 1762260
-select * from programstagesection where programstagesectionid > 1762260;
+select * from programstagesection order by programstagesectionid desc; -- 1803723
+select * from programstagesection where programstagesectionid > 1803723;
+
+
+update programstagesection set created = now()::timestamp where created = '2023-01-25';
+update programstagesection set lastupdated = now()::timestamp where lastupdated = '2023-01-25';
 
 
 update programstagesection set created = now()::timestamp where created = '2022-12-07';
 update programstagesection set lastupdated = now()::timestamp where lastupdated = '2022-12-07';
-
 
 select * from programstagesection_dataelements where 
 programstagesectionid in( select programstagesectionid 

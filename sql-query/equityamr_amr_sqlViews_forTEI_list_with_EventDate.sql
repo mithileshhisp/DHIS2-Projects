@@ -77,3 +77,26 @@ INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanc
 INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
 WHERE teav1.trackedentityattributeid =  3418 and org.uid in ( 'bLfOUtl4eZd','SalGKJqIV3t')
 and psi.status = 'COMPLETED';
+
+
+-- all eventDataValue
+
+SELECT psi.uid eventID,psi.created::date,psi.lastupdated::date,psi.executiondate::date as eventdate, 
+psi.storedby,psi.status,psi.completeddate::date,psi.completedby,org.uid AS orgUID,org.name AS orgName,
+prg.uid AS prgUID, prg.name AS prgName,ps.uid AS prgStageUID, ps.name AS prgStageName,
+de.name AS dataElementName, data.key as de_uid,cast(data.value::json ->> 'value' AS VARCHAR) AS de_value 
+FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN dataelement de ON de.uid = data.key;
+
+
+-- de optionSet optionValue
+SELECT de.name deName,de.uid deUid ,os.name optionsetName,
+os.uid optionsetUid ,ov.uid optionValueUid ,ov.name optionValueName,
+ov.code optionValueCode FROM optionvalue ov
+INNEr JOIN optionset os ON os.optionsetid = ov.optionsetid
+INNER JOIN dataelement de ON de.optionsetid = os.optionsetid;

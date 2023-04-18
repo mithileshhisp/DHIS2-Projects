@@ -1,4 +1,21 @@
 
+-- links -- 172.105.47.164
+-- M!th!lesh@123
+-- Dh!sUs3Rp@SS1
+-- ln2  172.104.173.245  96
+-- ln1  139.162.61.147   96  dhis@hisp
+
+-- 
+ -- create user on poatgres
+CREATE USER fpaidbpro WITH PASSWORD fpaidbpro@9876; 
+ALTER USER fpidbpro WITH SUPERUSER;
+GRANT ALL PRIVILEGES ON DATABASE fpaidb_pro to fpaidbpro;
+
+
+CREATE USER fpidbpro WITH PASSWORD fpaidbpro@9876
+ALTER USER fpidbpro WITH SUPERUSER;
+
+GRANT ALL PRIVILEGES ON DATABASE fpaidb_pro to fpidbpro;
 
 
 -- import database for plan
@@ -139,6 +156,90 @@ select pg_relation_size('dataelement');
 select pg_relation_size('audit');
 SELECT pg_size_pretty (pg_total_relation_size (' audit '));
 
+
+// -- postgres SQL Query alter the database sequence id
+
+SELECT c.relname FROM pg_class c WHERE c.relkind = 'S';
+
+SELECT last_value FROM hibernate_sequence;
+
+ALTER SEQUENCE hibernate_sequence RESTART WITH 4412;
+
+ALTER SEQUENCE hibernate_sequence RESTART WITH 8394001;8393989
+
+
+SELECT c.relname FROM pg_class c WHERE c.relkind = 'S';
+
+-- run on HIV production as on 14/03/2023
+SELECT last_value FROM programstageinstance_sequence;
+
+ALTER SEQUENCE programstageinstance_sequence RESTART WITH 7779001;
+
+
+SELECT EXTRACT(year FROM age(current_date,'2014-01-01')) :: int as age 
+
+SELECT age(timestamp '2014-01-01');
+
+select extract (epoch from (t1.logout_date - t1.login_date))::integer/60
+
+select extract 
+(epoch from (timestamp '2014-04-25 09:44:21' - timestamp '2014-04-25 08:32:21'))::integer/60
+
+SELECT psi.uid, psi.created,psi.lastupdated,de.uid,de.name,
+age(psi.lastupdated,psi.created) as diffrence,
+extract (epoch from (psi.lastupdated - psi.created))::integer/86400 as dayDiffrence
+FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON  pi.programinstanceid = psi.programinstanceid
+INNER JOIN dataelement de ON de.uid = data.key
+WHERE de.uid in ( 'ClQvB8MujQx','fXJHjkEcmqI','UaL6A0omgMc','UBi3kSHgRus'
+'TmadZ2ohtdd','EGZc2y8f8bf','WrP1BUHvpr9','JqZhUuUaLIm');
+
+
+
+SELECT tei.uid teiUID, teav1.value as dob, 
+EXTRACT(year FROM AGE(current_date,teav1.value::date))::int as age ,
+org.uid AS orgUID,org.name AS orgName 
+FROM trackedentityattributevalue teav1
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN ( SELECT trackedentityinstanceid FROM trackedentityattributevalue 
+WHERE trackedentityattributeid = 139 AND value = 'Female') teav2
+ON teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
+INNER JOIN programinstance pi  on pi.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = pi.organisationunitid
+INNER JOIN program prg on prg.programid = pi.programid
+WHERE teav1.trackedentityattributeid =  138 
+and EXTRACT(year FROM AGE(current_date,teav1.value::date))::int between 12 and 19 
+and prg.uid = 'TcaMMqHJxK5';
+
+-- convert gemotery to Longitude, Latitude
+
+SELECT organisationunitid,uid,name,geometry,
+ST_X(ST_Transform (geometry, 4326)) AS "Longitude",
+ST_Y(ST_Transform (geometry, 4326)) AS "Latitude"
+FROM organisationunit where uid = 'WLBxL2ClHIC';
+
+SELECT organisationunitid,uid,name,geometry,
+ST_X(ST_Transform (geometry, 4326)) AS "Longitude",
+ST_Y(ST_Transform (geometry, 4326)) AS "Latitude"
+FROM organisationunit where organisationunitid in (
+select organisationunitid from orgunitgroupmembers where orgunitgroupid in (
+select orgunitgroupid from orgunitgroup where uid ='pW6owR4oRKb'));
+
+SELECT organisationunitid,uid,name,geometry,
+ST_X(ST_SetSRID (geometry, 4326)) AS "Longitude",
+ST_Y(ST_SetSRID (geometry, 4326)) AS "Latitude"
+FROM organisationunit where organisationunitid in (
+select organisationunitid from orgunitgroupmembers where orgunitgroupid in (
+select orgunitgroupid from orgunitgroup where uid ='pW6owR4oRKb'));
+
+SELECT uid eventUID,geometry,
+ST_X(ST_SetSRID  (geometry, 4326)) AS "Longitude",
+ST_Y(ST_SetSRID  (geometry, 4326)) AS "Latitude"
+FROM programstageinstance where programstageid in 
+( 2537, 2485, 9682, 2697, 2577, 2439, 4729067) 
+and geometry is not null;
+
 -- all tables list with sizes
 
 SELECT
@@ -167,3 +268,9 @@ delete from trackedentityinstanceaudit; -- 96 GB
 
 select count(*) from trackedentityinstanceaudit; --996913473
 
+delete from audit;
+delete from messageconversation_messages;	
+delete from messageconversation_usermessages;
+delete from usermessage;
+delete from messageconversation;
+delete from message;
