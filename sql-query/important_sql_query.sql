@@ -22,6 +22,13 @@ from organisationunit org
 INNER JOIN organisationunit parent on parent.organisationunitid = org.parentid
 where org.hierarchylevel = 4;
 
+select org.organisationunitid, org.uid orgUID, org.code orgCode, org.name orgName, org.shortname, 
+org.hierarchylevel, parent.name parentName, parent.parentid, parent.uid parentUID ,parent.code parentCode,
+parent.hierarchylevel parenthierarchylevel
+from organisationunit org
+INNER JOIN organisationunit parent on parent.organisationunitid = org.parentid
+where org.hierarchylevel = 4;
+
 select parent.organisationunitid parentID, parent.uid parentUID,parent.name parentName, 
 org.organisationunitid, org.uid orgUID, org.name orgName, org.shortname orgShortName, org.hierarchylevel orgLevel,
 parent.hierarchylevel parentLevel from  organisationunit org
@@ -142,8 +149,22 @@ WHERE dv.periodid = 417 and dv.dataelementid in ( 5978,6073,6028,6081,130,6053,1
 6080,6118,6024,6054,1485,6124,68,6078,5954,6233,5953,6038,6040,6037,6070,5976,62,6228,6001,6088,
 6018);
 
---- 
+--- 31/05/2023
+select pi.programindicatorid, pi.uid programindicatorUID,pi.name 
+programindicatorName,pb.periodboundaryid, pb.uid, pb.created, 
+pb.lastupdated, pb.boundarytarget, pb.analyticsperiodboundarytype from periodboundary pb
+INNER JOIN programindicator pi ON pi.programindicatorid = pb.programindicatorid
+order by pi.programindicatorid;
 
+
+select prg.name prgName,prg.uid prgUID,pi.programindicatorid, 
+pi.uid programindicatorUID,pi.name programindicatorName,
+pi.expression,pi.filter,pi.aggregationtype,pi.analyticstype,
+pb.periodboundaryid, pb.uid, pb.boundarytarget, 
+pb.analyticsperiodboundarytype from periodboundary pb
+INNER JOIN programindicator pi ON pi.programindicatorid = pb.programindicatorid
+INNER JOIN program prg ON prg.programid = pi.programid
+order by pi.programindicatorid;
 
 adding date column in sql query making in excel
 
@@ -794,6 +815,12 @@ order by level;
 
 -- user import query
 
+-- ui.firstname, ui.surname, us.username,
+select 	us.uid userUID,ui.firstname, ui.surname, us.username, 
+ui.uid userinfoUID  from userinfo ui
+INNER JOIN users us ON us.userid = ui.userinfoid;
+
+
 select 	ui.firstname, ui.surname, us.username,org.uid, ui.uid  from userinfo ui
 INNER JOIN users us ON us.userid = ui.userinfoid
 INNER JOIN usermembership um ON um.userinfoid = ui.userinfoid
@@ -1002,7 +1029,23 @@ INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunit
 WHERE prg.uid = 'L78QzNqadTV' and org.uid = 'UcFtqIBF6dF' and psi.deleted is false 
 order by psi.created desc LIMIT 2;
 
--- eventdatavalues
+-- hiv-tracker eventdatavalues with dataelement value
+
+-- hiv-tracker eventdatavalues with dataelement value and TEI and trackedentityattributevalue
+SELECT tei.uid  as tei_uid,  psi.uid as event, psi.executiondate::date, 
+eventdatavalues -> 'fVVUM6blNja' ->> 'value' as sample_collection_date,  
+teav.value AS client_code FROM programstageinstance psi
+INNER JOIN programinstance pi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN program prg ON pi.programid = prg.programid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN organisationunit org ON psi.organisationunitid = org .organisationunitid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE  prg.uid = 'L78QzNqadTV' and ps.uid = 'YRSdePjzzfs' and psi.deleted is false and 
+eventdatavalues -> 'fVVUM6blNja' is not null and 
+eventdatavalues -> 'fVVUM6blNja' ->> 'value' between '2022-01-01'
+AND '2022-12-31' and teav.trackedentityattributeid = 2602 order by psi.created desc;
+
 
 SELECT tei.uid  as tei_uid,  psi.uid as event, psi.created::date,  psi.status ,
 eventdatavalues -> 'WpBa1L6xxPC' ->> 'value' as art_status FROM programstageinstance psi
@@ -1620,7 +1663,19 @@ INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
 INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
 INNER JOIN dataelement de ON de.uid = data.key;
 
-
+-- all eventDataValue with TEI attribueValue
+SELECT org.name AS orgName,tei.uid AS teiUID,teav.value as SEX,psi.uid eventID,
+psi.executiondate::date,psi.status,psi.completeddate::date,psi.completedby,
+de.name AS dataElementName, data.key as de_uid,cast(data.value::json ->> 'value' AS VARCHAR) AS de_value 
+FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN dataelement de ON de.uid = data.key
+where org.uid in ( 'SalGKJqIV3t')
+and teav.trackedentityattributeid =  3420;
 
 SELECT psi.organisationunitid, de.dataelementid, 
 cast(data.value::json ->> 'value' AS VARCHAR) AS de_value FROM programstageinstance psi
@@ -1738,7 +1793,7 @@ where  ps.uid in( 'WCgcN8eovPv','','');
 SELECT os.uid AS optionSetUID,os.name AS optionSetName,opv.uid AS optionUID
 ,opv.name AS optionName, opv.code AS optionCode from optionvalue opv
 INNER JOIN optionset os ON os.optionsetid = opv.optionsetid
-where os.uid 'tdtBR9OdXMJ';
+where os.uid = 'tdtBR9OdXMJ';
 
 select os.optionsetid,opv.optionvalueid,opv.uid,opv.name,opv.code 
 from optionvalue opv
@@ -1751,6 +1806,22 @@ select ops.optionsetid optionSETID, ops.uid optionsetUID, ops.name optionsetName
 opv.optionvalueid, opv.uid optionUID, opv.name optionName,opv.code optionCode from optionvalue opv 
 INNER JOIN optionset ops ON ops.optionsetid = opv.optionsetid
 where ops.name ilike '%Inspection item result%'
+order by ops.name;
+
+
+select ops.optionsetid optionSETID, ops.uid optionsetUID, ops.name optionsetName,
+opv.optionvalueid, opv.uid optionUID, opv.name optionName,opv.code optionCode from optionvalue opv 
+INNER JOIN optionset ops ON ops.optionsetid = opv.optionsetid
+where ops.uid in (
+'s1UF1wpUrpB','pdt5glVYQL5','c5unlpfGaog','tdtBR9OdXMJ')
+order by ops.name;
+
+select ops.optionsetid optionSETID, ops.uid optionsetUID, ops.name optionsetName,
+opv.optionvalueid, opv.uid optionUID, opv.name optionName,opv.code optionCode,
+opv.sort_order from optionvalue opv 
+INNER JOIN optionset ops ON ops.optionsetid = opv.optionsetid
+where ops.uid in (
+'s1UF1wpUrpB','pdt5glVYQL5','c5unlpfGaog','tdtBR9OdXMJ')
 order by ops.name;
 
 
@@ -1991,9 +2062,15 @@ INNER JOIN programstage ps ON ps.programstageid = ps_se.programstageid
 INNER JOIN program pg ON pg.programid = ps.programid
 WHERE pg.uid = 'aYkLHnoPNo5'  order by pg.name;
 
+SELECT de.name deName,de.uid deUid,de.valuetype as deValueType,
+os.name optionsetName,os.uid optionsetUid ,ov.uid optionValueUid ,
+ov.name optionValueName,ov.code optionValueCode FROM optionvalue ov
+INNEr JOIN optionset os ON os.optionsetid = ov.optionsetid
+INNER JOIN dataelement de ON de.optionsetid = os.optionsetid;
 
 
-SELECT de.name deName,de.uid deUid ,os.name optionsetName,os.uid optionsetUid ,ov.uid optionValueUid ,ov.name optionValueName,ov.code optionValueCode FROM optionvalue ov
+SELECT de.name deName,de.uid deUid ,os.name optionsetName,os.uid optionsetUid,
+ov.uid optionValueUid ,ov.name optionValueName,ov.code optionValueCode FROM optionvalue ov
 INNEr JOIN optionset os ON os.optionsetid = ov.optionsetid
 INNER JOIN dataelement de ON de.optionsetid = os.optionsetid;
 
@@ -2009,11 +2086,21 @@ INNER JOIN programstage ps ON ps.programstageid = pss.programstageid
 INNER JOIN program pg ON pg.programid = ps.programid
 order by pg.name
 
-
+-- optionset and options 
 select ops.optionsetid optionSETID, ops.uid optionsetUID, ops.name optionsetName,
 opv.optionvalueid, opv.uid optionUID, opv.name optionName, opv.code optionCode from optionvalue opv 
 INNER JOIN optionset ops ON ops.optionsetid = opv.optionsetid
 order by ops.name;
+
+-- optiongroup and optiongroupmembers 	
+select opg.optiongroupid optionGrpID, opg.uid optionGrpUID, opg.name optionGrpName,
+opv.optionvalueid, opv.uid optionUID, opv.name optionName, opv.code optionCode from optiongroup opg
+INNER JOIN optiongroupmembers opgm ON opgm.optiongroupid = opg.optiongroupid
+INNER JOIN optionvalue opv ON opv.optionvalueid = opgm.optionid
+order by opg.name;
+
+
+
 
 SELECT tea.name teaName,tea.uid teaUid ,os.name optionsetName,os.uid optionsetUid 
 ,ov.uid optionValueUid ,ov.name optionValueName,ov.code optionValueCode FROM optionvalue ov
@@ -2239,6 +2326,18 @@ $$ LANGUAGE sql;
 
 
 // maharashtra advance analysis report query
+
+-- dataSet source with its parent and parentparent name
+SELECT  dss.datasetid,ds.name, dss.sourceid,
+org.uid orgUID,org.name orgName, parentOrg.name parentName,
+parentParentOrg.name parentParentName from datasetsource dss
+INNER JOIN dataset ds ON ds.datasetid = dss.datasetid
+INNER JOIN organisationunit org ON org.organisationunitid = dss.sourceid
+INNER JOIN organisationunit parentOrg ON parentOrg.organisationunitid = org.parentid 
+INNER JOIN organisationunit parentParentOrg ON parentParentOrg.organisationunitid = parentOrg.parentid 
+where dss.datasetid in ( 1987,1991,1989,1978 )
+order by ds.name;
+
 
 SELECT  dss.datasetid,ds.name, count( dss.sourceid ) from datasetsource dss
 INNER JOIN dataset ds ON ds.datasetid = dss.datasetid
@@ -2505,6 +2604,16 @@ JOIN json_each_text(eventdatavalues::json) data ON TRUE
 
 -- json query for eventdatavalues in programstageinstance table
 
+
+-- eventDataValue update dataElement-value
+ 
+UPDATE programstageinstance SET 
+eventdatavalues = jsonb_set(eventdatavalues,'{FmDPRFXrMaG, value}', '"2021-08-17T20:53:08.000Z"',true) 
+WHERE programstageinstanceid = '123621';
+
+
+
+
 -- for all events dataelement and its value
 SELECT data.key as de_uid,
 cast(data.value::json ->> 'value' AS VARCHAR) AS de_value
@@ -2601,6 +2710,18 @@ INNER JOIN dataelement de ON de.uid = data.key
 where psi.eventdatavalues -> 'nPcT1HabdNa' ->> 'value' < '2022-12-31'
 and de.uid = 'nPcT1HabdNa' order by psi.programstageinstanceid;
 
+select psi.uid eventID,psi.programstageinstanceid, psi.executiondate::date,
+psi.duedate::date,org.uid orgUID,org.name orgName,data.key as dataElement_uid,
+cast(data.value::json ->> 'value' AS VARCHAR) AS ADMISSION_NUMBER from programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN dataelement de ON de.uid = data.key
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+where de.uid = 'VxScEPPSjq8' and 
+(EXTRACT(year from psi.executiondate) < 1990 
+or EXTRACT(year from psi.executiondate) > 2029) 
+order by psi.executiondate;
+
+
 
 SELECT psi.uid eventID,psi.storedby, psi.status, psi.executiondate::date,
 psi.completedby, psi.completeddate::date,psi.deleted,data.key as de_uid,
@@ -2683,6 +2804,52 @@ INNER JOIN trackedentityattribute tea ON tea.trackedentityattributeid = teav.tra
 INNER JOIN organisationunit org ON org.organisationunitid = pi.organisationunitid
 INNER JOIN dataelement de ON de.uid = data.key
 where tea.uid = 'cae0w7Dh8q2' and de.uid = 'pi92syhlS8p' and prg.uid = 'VuoSamZ3qrE';
+
+-- event list with trackedentityattributevalue
+SELECT org.name AS orgName,tei.uid AS teiUID,teav.value as CR_Number,psi.uid eventID,
+psi.executiondate::date,psi.status,psi.completeddate::date,psi.completedby 
+FROM programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = tei.trackedentityinstanceid
+where psi.status = 'COMPLETED' and org.uid in ( 'bLfOUtl4eZd','SalGKJqIV3t')
+and teav.trackedentityattributeid =  3418;
+
+
+-- event list with multiple TEA value trackedentityattributevalue
+SELECT teav2.value as Patient_Name ,teav1.value as CR_Number, 
+org.name AS orgName,psi.executiondate::date as Event_date,
+psi.status AS Event_Status, psi.completeddate::date AS Completed_Date,
+psi.completedby AS Completed_By FROM trackedentityattributevalue teav1
+INNER JOIN ( SELECT trackedentityinstanceid,value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid = 474720 ) teav2
+on teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+WHERE teav1.trackedentityattributeid =  3418 and org.uid in ( 'bLfOUtl4eZd','SalGKJqIV3t')
+and psi.status = 'COMPLETED';
+
+
+-- event list with multiple TEA value trackedentityattributevalue
+SELECT psi.uid AS eventUID,teav2.value as Patient_Name ,teav1.value as CR_Number, 
+org.name AS orgName,psi.executiondate::date as Event_date,
+psi.status AS Event_Status, psi.completeddate::date AS Completed_Date,
+psi.completedby AS Completed_By FROM trackedentityattributevalue teav1
+INNER JOIN ( SELECT trackedentityinstanceid,value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid = 474720 ) teav2
+on teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+WHERE teav1.trackedentityattributeid =  3418 and org.uid in ( 'bLfOUtl4eZd','SalGKJqIV3t')
+and psi.status = 'COMPLETED' and psi.executiondate 
+between '2023-06-01' and '2023-06-30' and prg.uid not in ('L7bu48EI54J');
+
 
 
 -- tei list based on tea attribute uid
@@ -3513,6 +3680,19 @@ sourceid in (select organisationunitid from organisationunit where uid = 'IMLk5Z
 
 
 -- queries for dataValueSet
+-- who-lep population data sql-query
+SELECT de.uid AS dataElementUID,de.name AS dataElementName, coc.uid AS categoryOptionComboUID, 
+coc.name AS categoryOptionComboName, attcoc.uid AS attributeOptionComboUID,attcoc.name AS
+attributeOptionComboName, org.uid AS organisationunitUID, org.name AS organisationunitName, 
+dv.value, dv.storedby, split_part(pe.startdate::TEXT,'-', 1) as isoPeriod FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+inner join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+WHERE dv.value is not null and de.uid = 'd1d6EWQZJGB';
+
+
 
 SELECT de.uid AS deUID, de.name AS deName, coc.uid AS categoryOptionComboUID, 
 coc.name AS categoryOptionComboName,dv.categoryoptioncomboid, attcoc.uid AS attributeOptionComboUID,attcoc.name AS
@@ -3910,6 +4090,131 @@ select systemsettingid, name, encode(value::bytea, 'escape') from systemsetting;
 
 select systemsettingid, name, encode(value::bytea, 'escape') from systemsetting
 where systemsettingid in (1577570,1092872, 1092873 );
+
+
+-- delete training instance tracker-data nad tracker-meta data
+-- 170.187.252.160 22  root 3gWR#EFq1e@G# 1212 -- libya libya
+-- 25/07/2023
+
+delete from eventchart;
+
+delete from eventchart_rows 
+where eventchartid in ( select eventchartid
+from eventchart where programid =310090 );
+
+delete from eventreport
+where programid =310090;
+
+delete from eventreport_rows 
+where eventreportid in ( select eventreportid
+from eventreport where programid =310090 );
+
+delete from program_organisationunits
+where programid =310090;
+
+delete from programindicator
+where programid =310090;
+
+delete from periodboundary 
+where periodboundary in ( select periodboundary
+from programindicator where programid =310090 );
+
+delete from programstagesection_dataelements
+where programstagesectionid in (
+select programstagesectionid from programstagesection 
+where programstageid in ( select programstageid
+from programstage where programid =310090 ));
+
+delete from programstagesection 
+where programstageid in ( select programstageid
+from programstage where programid =310090 );
+
+delete from programstagedataelement 
+where programstageid in ( select programstageid
+from programstage where programid =310090 );
+
+delete from trackedentitydataelementdimension 
+where programstageid in ( select programstageid
+from programstage where programid =310090 );
+
+delete from programstageusergroupaccesses 
+where programstageid in ( select programstageid
+from programstage where programid =310090 );
+
+delete from programstage
+where programid =310090;
+
+delete from program_attributes
+where programid =310090;
+
+delete from programusergroupaccesses
+where programid = 310090;
+
+delete from program;
+
+delete from trackedentityattribute;
+delete from trackedentityattributeusergroupaccesses;
+delete from trackedentityattributelegendsets;
+delete from trackedentityattributedimension;
+
+delete from dataelement;
+delete from dataelementusergroupaccesses;
+delete from trackedentitydataelementdimension;
+
+delete from indicator;
+
+delete from optionset;
+delete from optiongroupset;
+delete from optiongroup;
+delete from optiongroupsetmembers;
+delete from optionvalue;
+delete from optiongroupmembers;
+
+delete from attribute;
+
+
+
+-- unfpa_239 academy 18/09/2023
+
+delete from datavalue where dataelementid in(
+select dataelementid from dataelement where uid = 'AaIqiIX2qxH')
+and categoryoptioncomboid = 24;
+
+select * from datavalue where dataelementid in(
+select dataelementid from dataelement where uid = 'qqc4NnWVFL9')
+and categoryoptioncomboid = 24;
+
+delete from datavalueaudit where dataelementid in(
+select dataelementid from dataelement where uid = 'AaIqiIX2qxH')
+and categoryoptioncomboid = 24;
+
+
+select * from datavalueaudit where dataelementid in(
+select dataelementid from dataelement where uid = 'qqc4NnWVFL9')
+and categoryoptioncomboid = 24;
+
+delete from datavalueaudit where dataelementid in(
+select dataelementid from dataelement where uid = 'qqc4NnWVFL9')
+and categoryoptioncomboid = 24;
+
+delete from datavalue where dataelementid in(
+select dataelementid from dataelement where uid = 'qqc4NnWVFL9')
+and categoryoptioncomboid = 24; -- 55338
+
+SELECT de.uid AS dataElementUID,de.name AS dataElementName, coc.uid AS categoryOptionComboUID, 
+coc.name AS categoryOptionComboName, attcoc.uid AS attributeOptionComboUID,attcoc.name AS
+attributeOptionComboName, org.uid AS organisationunitUID, org.name AS organisationunitName, 
+dv.value, dv.storedby, dv.created, dv.lastupdated, pe.startdate,pe.enddate, 
+CONCAT (split_part(pe.startdate::TEXT,'-', 1), split_part(pe.enddate::TEXT,'-', 2)) 
+as isoPeriod,pety.name FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+INNER join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+INNER join periodtype pety ON pety.periodtypeid = pe.periodtypeid
+WHERE de.uid = 'AaIqiIX2qxH' and dv.value is not null and dv.deleted is not true;	
+
 
 
 

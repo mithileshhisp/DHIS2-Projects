@@ -440,3 +440,17 @@ select * from program where uid = 'sa5481ZXKW2'; -- 138448
 
 
 -- tei=WNt8bwgeGUc&program=sa5481ZXKW2&ou=NGEI6rFwznX&fromAudit
+
+
+-- 24/08/2023 bhutan HMIS Maternal Health Program 
+--- trackerCaptureGridColumns issue multiple widget shows
+
+
+select * from users where username = 'YoeseltseBHU';
+
+select * from usersetting where userinfoid in ( 1655246 );	
+delete from usersetting where userinfoid in ( 1655246 );	
+delete from usersetting where userinfoid in ( 1655246 );	
+delete from usersetting where userinfoid in ( 1655246 );	
+delete from userkeyjsonvalue where namespace = 'trackerCaptureGridColumns' 
+and userid in ( 1655246 );

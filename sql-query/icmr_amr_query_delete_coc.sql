@@ -573,3 +573,8 @@ delete from categoryoptiongroupset where categoryoptiongroupsetid in (
 
 
 end;
+
+-- 16/05/2023
+
+
+select * from categorycombo where uid = 'PvoQryFqDr1';

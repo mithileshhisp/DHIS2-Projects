@@ -297,3 +297,176 @@ delete from indicator where name like 'ASR%';
 
 select * from dataelement where name like 'ASR%'
 delete from dataelement where name like 'ASR%';
+
+-- 05/06/2023
+
+select * from dataelement where domaintype = 'TRACKER'
+and valuetype = 'INTEGER_POSITIVE';
+
+update dataelement set valuetype = 'TRUE_ONLY' 
+where domaintype = 'TRACKER' and valuetype = 'INTEGER_POSITIVE';
+
+
+
+
+-- prep_tracker_Myanmar 19/06/2023
+
+select * from program;
+
+select * from programindicator order by programindicator desc;
+
+select * from programindicator where programindicatorid > 150401;
+
+
+INSERT INTO programindicator(programindicatorid, uid, created, lastupdated, name, shortname, programid, expression, filter, aggregationtype, analyticstype) VALUES
+="(nextval('hibernate_sequence'),'"&A2&"','2023-06-19','2023-06-19','"&D2&"','"&E2&"',"&C2&",'"&H2&"','"&I2&"','"&F2&"','"&G2&"'),"
+
+delete from programindicator where
+uid = 'EimethzR9gD'
+
+update programindicator  set created = now()::timestamp where created ='2023-06-19';
+update programindicator  set lastupdated = now()::timestamp where lastupdated ='2023-06-19';
+
+
+INSERT INTO periodboundary(periodboundaryid, uid, created, lastupdated, boundarytarget, analyticsperiodboundarytype, programindicatorid ) VALUES
+="(nextval('hibernate_sequence'),'"&A2&"','2023-06-19','2023-06-19','"&D2&"','"&F2&"',"&C2&"),"
+
+
+select * from periodboundary order by periodboundaryid desc;
+
+select * from periodboundary where periodboundaryid > 153799;
+
+update periodboundary  set created = now()::timestamp where created ='2023-06-19';
+update periodboundary  set lastupdated = now()::timestamp where lastupdated ='2023-06-19';
+
+update programindicator set expression = 'V{tei_count}'
+where lastupdated::date ='2023-06-19';
+
+-- 28/03/2023 issue is soft delete for trackedentityinstance
+
+delete from trackedentityinstance where deleted is true;
+
+delete from trackedentityprogramowner where 
+trackedentityinstanceid in (select trackedentityinstanceid
+from trackedentityinstance where deleted is true);
+
+delete from relationshipitem where trackedentityinstanceid in
+(select trackedentityinstanceid from trackedentityinstance where deleted is true );
+
+select * from relationship where from_relationshipitemid in (
+select relationshipitemid from relationshipitem where trackedentityinstanceid in
+(select trackedentityinstanceid from trackedentityinstance where deleted is true ) );
+
+update relationship set from_relationshipitemid = null where 
+from_relationshipitemid in (
+select relationshipitemid from relationshipitem where trackedentityinstanceid in
+(select trackedentityinstanceid from trackedentityinstance where deleted is true ) );
+
+
+-- ippf custom id generation SHE Maldives
+
+-- sql-view -- TEI Count on OrgUnit Program and Enrollment Date -- CLFhvw5bXhl
+SELECT COUNT(pi.trackedentityinstanceid) from programinstance pi
+INNER JOIN organisationunit orgUnit ON orgUnit.organisationunitid = pi.organisationunitid
+INNER JOIN program prg ON prg.programid = pi.programid
+WHERE pi.deleted is false and orgUnit.uid = '${orgUnitUid}'  and prg.uid = '${programUid}' 
+and pi.enrollmentdate::date = '${enrollmentDate}';
+
+update sqlview set uid = 'CLFhvw5bXhl'
+where name = 'TEI Count on OrgUnit Program and Enrollment Date';
+
+SELECT COUNT(pi.trackedentityinstanceid) from programinstance pi
+INNER JOIN organisationunit orgUnit ON orgUnit.organisationunitid = pi.organisationunitid
+INNER JOIN program prg ON prg.programid = pi.programid
+WHERE pi.deleted is false and orgUnit.uid = 'SOtfI3u1Qk8'  and prg.uid = 'M1SdQvObog0' 
+and pi.enrollmentdate::date = '2023-06-27';
+
+
+let param = "var=orgUnitUid:" + org_uid + "&var=programUid:" + $scope.selectedProgram.id + "&var=enrollmentDate:" + $scope.selectedEnrollment.enrollmentDate;
+$.getJSON("../api/sqlViews/CLFhvw5bXhl/data?"+param+"&paging=false", function (teiCountResponse) {
+	let count = teiCountResponse.listGrid.rows[0];
+	let countTeiByOrgUnit = count[0];
+	let teiCount = countTeiByOrgUnit;
+	var prefix = "";
+	let totalTei = parseInt(teiCount) + 1;
+	if( totalTei <10) prefix="00";
+	else if (totalTei >9 && totalTei<100) prefix="0";
+
+	$scope.finalTEICount = prefix + totalTei;
+});
+
+
+
+
+-- custom id code attributesById[k].code === 'custom_id'
+-- custom id -- name attribute uid - tsBbDQe3sGo
+
+let firstNameProfile = "";
+if ($scope.selectedTei.tsBbDQe3sGo !== undefined) {
+	let strP = $scope.selectedTei.tsBbDQe3sGo;
+	firstNameProfile = strP.substr(0, 2).toUpperCase();
+}
+
+let customEnrollmentDate = $scope.selectedEnrollment.enrollmentDate.split("-")[2]+$scope.selectedEnrollment.enrollmentDate.split("-")[1]+$scope.selectedEnrollment.enrollmentDate.split("-")[0];
+-- let firstString = strParentName + serviceDeliveryPoint + $scope.parentOrgUnitCode;
+let firstString = $scope.selectedOrgUnit.code;
+let secondString = firstNameProfile;
+let thirdString = customEnrollmentDate;
+let fourthString = $scope.finalTEICount;
+$scope.generatedCustomId =  firstString+ "/" + secondString + "/" + thirdString + "/" + fourthString;
+
+-- ippf fpanpro delete default COC
+
+
+delete from categorycombos_optioncombos
+where categoryoptioncomboid = 9492538;
+
+delete from categoryoptioncombos_categoryoptions
+where categoryoptioncomboid = 9492538;
+
+update programstageinstance set attributeoptioncomboid = 15
+where attributeoptioncomboid = 9492538;
+
+delete from categoryoptioncombo where 
+categoryoptioncomboid = 9492538;
+
+-- delete categorycombo
+
+delete from categorycombos_categories
+where categorycomboid = 9492537;
+
+update dataelement set categorycomboid =14 
+where categorycomboid = 9492537;
+
+delete from categorycombo where 
+categorycomboid = 9492537;
+
+-- delete dataelementcategory
+
+delete from categories_categoryoptions
+where categoryid = 9492536;
+
+delete from dataelementcategory where
+categoryid = 9492536;
+
+-- dataelementcategoryoption
+
+delete from dataelementcategoryoption
+where categoryoptionid = 9492535;
+
+-- delete tracker data/aggregateddata/users from fpanpro links for ippf bhutan 
+
+
+select * from users where username in (
+'sumit', 'hispdev', 'admin', 'testing');
+
+select * from userinfo where userinfoid in (
+select userid from users where username in (
+'sumit', 'hispdev', 'admin', 'testing'));
+
+-- for all meta data
+update dataelementgroup 
+set userid = 45 
+
+update dataelement 
+set lastupdatedby = 45

@@ -273,3 +273,105 @@ from_relationshipitemid in (
 select relationshipitemid from relationshipitem where trackedentityinstanceid in
 (select trackedentityinstanceid from trackedentityinstance where deleted is true ) );
 
+
+-- ippf custom id generation SHE Maldives
+
+-- sql-view -- TEI Count on OrgUnit Program and Enrollment Date -- CLFhvw5bXhl
+SELECT COUNT(pi.trackedentityinstanceid) from programinstance pi
+INNER JOIN organisationunit orgUnit ON orgUnit.organisationunitid = pi.organisationunitid
+INNER JOIN program prg ON prg.programid = pi.programid
+WHERE pi.deleted is false and orgUnit.uid = '${orgUnitUid}'  and prg.uid = '${programUid}' 
+and pi.enrollmentdate::date = '${enrollmentDate}';
+
+update sqlview set uid = 'CLFhvw5bXhl'
+where name = 'TEI Count on OrgUnit Program and Enrollment Date';
+
+update trackedentityattribute set uid = 'EWQRiVxnLH2'
+where uid = 'GnPRSF9cV3r';
+
+update trackedentityattribute set uid = 'tsBbDQe3sGo'
+where uid = 'Ju7MEdETxsV';
+
+update trackedentityattribute set uid = 'GnPRSF9cV3r'
+where uid = 'tsBbDQe3sGo';
+
+SELECT COUNT(pi.trackedentityinstanceid) from programinstance pi
+INNER JOIN organisationunit orgUnit ON orgUnit.organisationunitid = pi.organisationunitid
+INNER JOIN program prg ON prg.programid = pi.programid
+WHERE pi.deleted is false and orgUnit.uid = 'SOtfI3u1Qk8'  and prg.uid = 'M1SdQvObog0' 
+and pi.enrollmentdate::date = '2023-06-27';
+
+
+let param = "var=orgUnitUid:" + org_uid + "&var=programUid:" + $scope.selectedProgram.id + "&var=enrollmentDate:" + $scope.selectedEnrollment.enrollmentDate;
+$.getJSON("../api/sqlViews/CLFhvw5bXhl/data?"+param+"&paging=false", function (teiCountResponse) {
+	let count = teiCountResponse.listGrid.rows[0];
+	let countTeiByOrgUnit = count[0];
+	let teiCount = countTeiByOrgUnit;
+	var prefix = "";
+	let totalTei = parseInt(teiCount) + 1;
+	if( totalTei <10) prefix="00";
+	else if (totalTei >9 && totalTei<100) prefix="0";
+
+	$scope.finalTEICount = prefix + totalTei;
+});
+
+
+
+
+-- custom id code attributesById[k].code === 'custom_id'
+-- custom id -- name attribute uid - tsBbDQe3sGo
+
+let firstNameProfile = "";
+if ($scope.selectedTei.tsBbDQe3sGo !== undefined) {
+	let strP = $scope.selectedTei.tsBbDQe3sGo;
+	firstNameProfile = strP.substr(0, 2).toUpperCase();
+}
+
+let customEnrollmentDate = $scope.selectedEnrollment.enrollmentDate.split("-")[2]+$scope.selectedEnrollment.enrollmentDate.split("-")[1]+$scope.selectedEnrollment.enrollmentDate.split("-")[0];
+-- let firstString = strParentName + serviceDeliveryPoint + $scope.parentOrgUnitCode;
+let firstString = $scope.selectedOrgUnit.code;
+let secondString = firstNameProfile;
+let thirdString = customEnrollmentDate;
+let fourthString = $scope.finalTEICount;
+$scope.generatedCustomId =  firstString+ "/" + secondString + "/" + thirdString + "/" + fourthString;
+
+-- ippf fpanpro delete default COC
+
+
+delete from categorycombos_optioncombos
+where categoryoptioncomboid = 9492538;
+
+delete from categoryoptioncombos_categoryoptions
+where categoryoptioncomboid = 9492538;
+
+update programstageinstance set attributeoptioncomboid = 15
+where attributeoptioncomboid = 9492538;
+
+delete from categoryoptioncombo where 
+categoryoptioncomboid = 9492538;
+
+-- delete categorycombo
+
+delete from categorycombos_categories
+where categorycomboid = 9492537;
+
+update dataelement set categorycomboid =14 
+where categorycomboid = 9492537;
+
+delete from categorycombo where 
+categorycomboid = 9492537;
+
+-- delete dataelementcategory
+
+delete from categories_categoryoptions
+where categoryid = 9492536;
+
+delete from dataelementcategory where
+categoryid = 9492536;
+
+-- dataelementcategoryoption
+
+delete from dataelementcategoryoption
+where categoryoptionid = 9492535;
+
+

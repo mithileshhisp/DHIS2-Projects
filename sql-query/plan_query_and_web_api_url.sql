@@ -4982,3 +4982,14 @@ insert into organisationunit (organisationunitid,name,shortname,code,parentid,op
 (65366,'Libtong','Libtong','087808025',60972,'1990-01-01',46),
 (65367,'Padre Sergio Eamiguel','Padre Sergio Eamiguel','087808026',60972,'1990-01-01',46),
 (65368,'Sabang','Sabang','087808027',60972,'1990-01-01',46);
+
+
+
+-- 02/09/2023 coordinate type dataelement event-dataValue issue in wrong coorodate
+
+SELECT psi.uid eventID,psi.executiondate,psi.created, data.key as de_uid,de.name,
+cast(data.value::json ->> 'value' AS VARCHAR) AS de_value
+FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN dataelement de ON de.uid = data.key
+where de.uid in ( 'qDpbbFooMvK','X4SzKj7unAE');

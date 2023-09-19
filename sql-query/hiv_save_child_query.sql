@@ -22,6 +22,22 @@ ALTER SEQUENCE programstageinstance_sequence RESTART WITH 7779001;
 
 update programinstance set geometry = null; -- empty co-ordinate of all enrollment
 
+-- 31/05/2023
+
+select pi.programindicatorid, pi.uid programindicatorUID,pi.name 
+programindicatorName,pb.periodboundaryid, pb.uid, pb.created, 
+pb.lastupdated, pb.boundarytarget, pb.analyticsperiodboundarytype from periodboundary pb
+INNER JOIN programindicator pi ON pi.programindicatorid = pb.programindicatorid
+order by pi.programindicatorid;
+
+select prg.name prgName,prg.uid prgUID,pi.programindicatorid, 
+pi.uid programindicatorUID,pi.name programindicatorName,
+pi.expression,pi.filter,pi.aggregationtype,pi.analyticstype,
+pb.periodboundaryid, pb.uid, pb.boundarytarget, 
+pb.analyticsperiodboundarytype from periodboundary pb
+INNER JOIN programindicator pi ON pi.programindicatorid = pb.programindicatorid
+INNER JOIN program prg ON prg.programid = pi.programid
+order by pi.programindicatorid;
 
 
 -- https://hivtracker.hispindia.org/hivtracker/dhis-web-dashboard/#/
@@ -384,6 +400,11 @@ select count(*)	 from audit; -- 1450509
 -- http://localhost:8091/hiv/api/trackedEntityInstances/query.json?ouMode=ALL&attribute=uiOMHu4LtAP&attribute=UHoTGT1dtjj&program=L78QzNqadTV&skipPaging=true
 
  -- http://localhost:8091/hiv/api/trackedEntityInstances/query.json?ouMode=ALL&attribute=uiOMHu4LtAP&attribute=UHoTGT1dtjj&program=L78QzNqadTV&skipPaging=true
+ 
+ -- https://tracker.hivaids.gov.np/save-child-2.27/api/trackedEntityInstances/query.json?ouMode=ALL&attribute=uiOMHu4LtAP&attribute=UHoTGT1dtjj&program=L78QzNqadTV&skipPaging=true&includeAllAttributes=false
+
+
+-- http://localhost:8091/hiv/api/trackedEntityInstances/query.json?ou=cCTQiGkKcTk&attribute=uiOMHu4LtAP&attribute=UHoTGT1dtjj&program=L78QzNqadTV&skipPaging=true&includeAllAttributes=false
 
 select tei.trackedentityinstanceid ,teav.value from  trackedentityinstance tei
 inner join trackedentityattributevalue teav 
@@ -408,6 +429,57 @@ INNER JOIN ( SELECT trackedentityinstanceid, value FROM trackedentityattributeva
 WHERE trackedentityattributeid = 28357  ) teav2
 ON teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
 WHERE teav1.trackedentityattributeid = 28358 order by teav1.trackedentityinstanceid desc;
+
+
+
+-- tei count based on SEX and risk-group
+SELECT teav2.value sex , count( teav2.value)
+FROM trackedentityattributevalue teav1
+INNER JOIN ( SELECT trackedentityinstanceid, value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid = 2613 and value ilike 'Male' ) teav2
+ON teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
+WHERE teav1.trackedentityattributeid = 2619 and teav1.value ilike
+'PWID'  and teav1.created::date
+between '2022-01-01' and '2022-12-31' group by teav2.value;
+
+
+SELECT teav2.value sex , count( teav2.value)
+FROM trackedentityattributevalue teav1
+INNER JOIN ( SELECT trackedentityinstanceid, value FROM trackedentityattributevalue
+WHERE trackedentityattributeid = 2613 and value ilike 'Male' ) teav2
+ON teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = pi.organisationunitid
+WHERE teav1.trackedentityattributeid = 2619 and teav1.value ilike
+'PWID'  and teav1.created::date
+between '2022-01-01' and '2022-12-31' and org.uid = 'tsNnfqj2ODf'
+group by teav2.value;
+
+
+SELECT teav2.value sex , count( teav2.value)
+FROM trackedentityattributevalue teav1
+INNER JOIN ( SELECT trackedentityinstanceid, value FROM trackedentityattributevalue
+WHERE trackedentityattributeid = 2613 and value ilike 'Male' ) teav2
+ON teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = pi.organisationunitid
+WHERE teav1.trackedentityattributeid = 2619 and teav1.value ilike
+'PWID'  and teav1.created::date
+between '2022-01-01' and '2022-12-31' and org.path like '%cCTQiGkKcTk%'
+group by teav2.value;
+
+
+SELECT teav2.value sex , teav1.created::date, count( teav2.value)
+FROM trackedentityattributevalue teav1
+INNER JOIN ( SELECT trackedentityinstanceid, value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid = 2613 and value ilike 'Male' ) teav2
+ON teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = pi.organisationunitid
+WHERE teav1.trackedentityattributeid = 2619 and teav1.value ilike
+'PWID'  and teav1.created::date
+between '2022-01-01' and '2022-12-31' and org.path like '%cCTQiGkKcTk%'
+group by teav2.value,teav1.created::date;
 
 -- https://tracker.hivaids.gov.np/save-child-2.27/api/29/sqlViews/NHCQz7jhFzk/data.json?paging=false
 
@@ -660,7 +732,46 @@ select trackedentityinstanceid from trackedentityinstance where deleted is true 
 
 select * from trackedentityattributevalue where value = ''
 
+-- for viral load 
+-- -- hiv-tracker eventdatavalues with dataelement value
 
+-- hiv-tracker eventdatavalues with dataelement value and TEI and trackedentityattributevalue
+SELECT tei.uid  as tei_uid,  psi.uid as event, psi.executiondate::date, 
+eventdatavalues -> 'fVVUM6blNja' ->> 'value' as sample_collection_date,  
+teav.value AS client_code FROM programstageinstance psi
+INNER JOIN programinstance pi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN program prg ON pi.programid = prg.programid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN organisationunit org ON psi.organisationunitid = org .organisationunitid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE  prg.uid = 'L78QzNqadTV' and ps.uid = 'YRSdePjzzfs' and psi.deleted is false and 
+eventdatavalues -> 'fVVUM6blNja' is not null and 
+eventdatavalues -> 'fVVUM6blNja' ->> 'value' between '2022-01-01'
+AND '2022-12-31' and teav.trackedentityattributeid = 2602 order by psi.created desc;
+
+
+SELECT tei.uid  as tei_uid,  psi.uid as event, psi.created::date,  psi.status ,
+eventdatavalues -> 'WpBa1L6xxPC' ->> 'value' as art_status FROM programstageinstance psi
+INNER JOIN programinstance pi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN program prg ON pi.programid = prg.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN organisationunit org ON psi.organisationunitid = org .organisationunitid
+WHERE org.uid =  'aXquUzlrYYv' and prg.uid = 'L78QzNqadTV' and psi.deleted is false and 
+eventdatavalues -> 'WpBa1L6xxPC' is not null and 
+eventdatavalues -> 'WpBa1L6xxPC' ->> 'value' = 'transfer_out' order by psi.created desc;
+
+-- event -data-value
+
+SELECT org.uid as orgUnit, tei.uid as tei, pi.uid AS enrollment, psi.uid as event, psi.created,
+psi.status, eventdatavalues -> 'WpBa1L6xxPC' ->> 'value' as art_status, psi.duedate, psi.executiondate as eventDate from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE prg.uid = '${program}' and tei.uid = '${tei}' and 
+eventdatavalues -> 'WpBa1L6xxPC' ->> 'value' = 'transfer_out'
+and psi.deleted is false order by psi.executiondate desc LIMIT 1 ; 
 
 -- HIV-tracker SMS program sms send details query 
 SELECT prgmsg.created, prgmsg.lastupdated, prgmsg.text, prgmsg.subject, 
@@ -739,3 +850,1448 @@ SELECT uid eventUID,programstageinstanceid,programstageid,geometry,
 ST_X(ST_SetSRID  (geometry, 4326)) AS "Longitude",
 ST_Y(ST_SetSRID  (geometry, 4326)) AS "Latitude"
 FROM programstageinstance where geometry is  not null;
+
+
+-- 20/04/2023
+
+select trackedentityinstanceid, pi.uid enrollment,pi.enrollmentdate::date,org.organisationunitid,
+org.uid,org.name from programinstance pi 
+INNER JOIN organisationunit org ON org.organisationunitid = pi.organisationunitid
+where trackedentityinstanceid in ( 351056,182247,619422,527319 );
+
+select * from trackedentityattributevalue where trackedentityattributeid in (
+select trackedentityattributeid from trackedentityattribute where uid in 
+( 'drKkLxaGFwv')) and trackedentityinstanceid in (351056,182247,619422);
+
+
+select * from trackedentityinstance 
+where organisationunitid = 5063210;
+
+select * from programinstance 
+where organisationunitid = 5063210
+and programid = 2437;
+
+select * from programstageinstance 
+where organisationunitid = 5063210;
+
+select * from trackedentityprogramowner
+where organisationunitid = 5063210;
+
+
+update trackedentityinstance set organisationunitid  = 5063225 where organisationunitid = 5063210;
+
+update programinstance set organisationunitid  = 5063225 where organisationunitid = 5063210;
+
+update programstageinstance set organisationunitid  = 5063225 where organisationunitid = 5063210;
+
+update trackedentityprogramowner set organisationunitid  = 5063225 where organisationunitid = 5063210;
+
+
+-- wrong hua hai ka solution
+select * from programstage 
+where uid in('WXPWqQYa9iW', 'goEnnJeZzyf'); from  == uyKpmKIrXqA to -- fGbVmsr4ESE
+
+select * from organisationunit 
+where organisationunitid in( 5063210,5063225);
+
+
+select * from programstage 
+where uid in('WXPWqQYa9iW', 'goEnnJeZzyf');
+
+select * from programstageinstance where organisationunitid = 5063225
+and programstageid in (4729067, 4729128);
+
+
+SELECT psi.uid as eventUID, psi.programstageinstanceid, pi.programinstanceid, tei.uid as teiUID,
+tei.trackedentityinstanceid from programstageinstance psi
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+where psi.programstageid in (4729067, 4729128) and psi.organisationunitid in( 5063225);
+
+="update trackedentityprogramowner set organisationunitid  = "&B2&" where trackedentityprogramownerid = "&A2&";"
+
+="update programinstance set organisationunitid = "&B2&" where programinstanceid = "&A2&";"
+
+="update trackedentityinstance set organisationunitid = "&B2&" where trackedentityinstanceid = "&A2&";"
+
+="update programstageinstance set organisationunitid = "&G2&" where programstageinstanceid = "&B2&";"
+
+
+select * from dataelement where uid in (
+'iZh9grkk98m','wuAHX0gKS8l','cy6AxDBfWgm');
+
+select * from datavalue where dataelementid in (
+select dataelementid from dataelement where uid in (
+'iZh9grkk98m','wuAHX0gKS8l','cy6AxDBfWgm'));
+
+select * from datavalue where dataelementid in (
+select dataelementid from dataelement where uid in (
+'iZh9grkk98m','wuAHX0gKS8l','cy6AxDBfWgm','Nqz2LEa84pr'
+,'whNGhkNYojJ','cv1wldOLAbg'));
+
+delete from datavalue where dataelementid in (
+select dataelementid from dataelement where uid in (
+'iZh9grkk98m','wuAHX0gKS8l','cy6AxDBfWgm','Nqz2LEa84pr'
+,'whNGhkNYojJ','cv1wldOLAbg'));
+
+select 	visualizationid, uid, name, type, code from visualization
+where name like '%Clients currently on ART Treatment%'
+order by name;
+ 
+ select * from datavalue where lastupdated::date = '2023-05-18';
+select * from datavalue where created::date = '2023-05-18';
+
+
+SELECT de.uid AS dataElementUID,de.name AS dataElementName, coc.uid AS categoryOptionComboUID, 
+coc.name AS categoryOptionComboName, attcoc.uid AS attributeOptionComboUID,attcoc.name AS
+attributeOptionComboName, org.uid AS organisationunitUID, org.name AS organisationunitName, 
+dv.value, dv.storedby, CONCAT (split_part(pe.startdate::TEXT,'-', 1), split_part(pe.enddate::TEXT,'-', 2)
+,split_part(pe.enddate::TEXT,'-', 3)) as isoPeriod,pet.name AS periodType, pe.periodtypeid FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+inner join period pe ON pe.periodid = dv.periodid
+inner join periodtype pet ON pet.periodtypeid = pe.periodtypeid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+WHERE dv.value is not null and de.uid in ( 'iZh9grkk98m','wuAHX0gKS8l','cy6AxDBfWgm','Nqz2LEa84pr'
+,'whNGhkNYojJ','cv1wldOLAbg','Ouk8sB3PCU6','htXIyKnPaQz',
+'y47OoshMQng','HgSvEDaTyzq','n9pWTkiYULy','TOUZfqReUPu',
+'Hn9cWLDKmr6','frUFQSXODIK','plrzgSRj7OA','M1tsYF0eHE5','vkZcRDkxasp',
+'Dkkl36QPTWx','kc75U36i2Vj','gmopPGmd2rN',
+'PnCOWMowhui',
+'HhlIxx20SPl',
+'MlY2pYIgm3D',
+'P11699CuVkh',
+'H4GU541AAef',
+'BeeFuXaAjie',
+'ZVmxGzlkFvN',
+'FU49Pc9Tyaq',
+'aLgLsdeu07e',
+'bfh2WjGhQ08',
+'xFYJU5CJmI6',
+'jMlg8QSuAMh',
+'RNDk8gWSraw',
+'snwz8udE7as',
+'gxWEr97IomA',
+'bB7KjCqTYfY',
+'qzbL7xYqKfo',
+'N5S19sjLWZd',
+'vEPjn9Eb7Gv',
+'yO3ZplCAT3L',
+'hX2T1IU7tiG',
+'XJHbhXT9Zdi',
+'pfnQc3jlat5',
+'kiu4dvo7YbU',
+'ph9YGz5tufO',
+'FSWVz62latm',
+'ODluoy202LX',
+'TZ06VP24ycE',
+'qDJ8JcLQFdc',
+'dluJhxXrT8E',
+'xWmGgza2rQj',
+'xeh8vFeFpT0',
+'gpiRO9euTAv',
+'pUf592WXCNt',
+'SFzpwTBWsq4',
+'YJDoHAzzqAU',
+'rtjtdfc0hcg',
+'jb5ljM3gYYV',
+'IUoS2RxSsBL',
+'psxGf5KM96K',
+'leD9CzK4lQw',
+'u3ZSEq6ckU5',
+'vn2pFlzAyEw',
+'lyBBs3y92TB',
+'Zzh65mXK9Xh',
+'p2z7Ih7pp5n',
+'RmMcljIsZBM',
+'haeTTf4OmFk',
+'zGfpU6KZKny',
+'DfHaVJtzhCJ',
+'tanSlcNaySO',
+'zCvS6P0xh8w',
+'Orb9owbvv1C',
+'yMN9G0ZE7yw',
+'OyIQwKOu630',
+'udryvKHIOPK',
+'QjCk0MD16Wm',
+'dIggGgQtame',
+'NwBqkr2vi6T',
+'nukGVZA4awi',
+'nKOct1wUuzr',
+'WaudCFZzOTB',
+'tNlYpDigS1N',
+'JKxSg7tSHCy',
+'dacshaWvdjs',
+'mPyMOReCV1y',
+'qMWFobcoUoD')
+
+
+--https://links.hispindia.org/hivtracker/api/32/analytics/dataValueSet.json?di--mension=dx%3AVtMffWN7ZIM&dimension=ou%3AUSER_ORGUNIT_CHILDREN&dimension=pe%3ATHIS_MONTH&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+-- http://127.0.0.1:8091/hiv/api/32/analytics/dataValueSet.json?dimension=dx:LJeA97Qxve6&dimension=ou:USER_ORGUNIT&dimension=pe:THIS_MONTH&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+
+
+
+--- https://links.hispindia.org/hivtracker/api/32/analytics/dataValueSet.json?dimension=dx:LJeA97Qxve6&dimension=ou%3AUSER_ORGUNIT_CHILDREN&dimension=pe%3ATHIS_MONTH&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+-- https://links.hispindia.org/hivtracker/api/32/analytics/dataValueSet.json?dimension=dx%3AVtMffWN7ZIM&dimension=ou%3AUSER_ORGUNIT_CHILDREN&dimension=pe%3ATHIS_MONTH&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+
+-- https://docs.dhis2.org/archive/en/2.32/developer/html/webapi_predictors.html
+
+-- http://202.63.242.59:13014/save-child-2.27/dhis-web-commons/security/login.action#/
+
+-- Clients currently on ART Treatment (by sex)
+-- /api/analytics/dataValueSet.json?dimension=dx:dyVaodqebsx;FT9oYMkFHQp;GmgNmZqqmQh&dimension=ou:USER_ORGUNIT&dimension=pe:THIS_MONTH&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+-- Clients currently on ART treatment  (Female) ---- dyVaodqebsx 
+-- Clients currently on ART treatment (Male) -- FT9oYMkFHQp
+-- Clients currently on ART treatment (Other sex) -- GmgNmZqqmQh
+
+// 20230512152609
+// https://links.hispindia.org/hivtracker/api/32/analytics/dataValueSet.json?dimension=dx%3AdyVaodqebsx%3BFT9oYMkFHQp%3BGmgNmZqqmQh&dimension=ou%3AUSER_ORGUNIT&dimension=pe%3ATHIS_MONTH&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+
+{
+  "dataValues": [
+    {
+      "dataElement": "dyVaodqebsx",
+      "period": "202305",
+      "orgUnit": "cCTQiGkKcTk",
+      "value": "11231",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-12",
+      "lastUpdated": "2023-05-12",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "FT9oYMkFHQp",
+      "period": "202305",
+      "orgUnit": "cCTQiGkKcTk",
+      "value": "12658",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-12",
+      "lastUpdated": "2023-05-12",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "GmgNmZqqmQh",
+      "period": "202305",
+      "orgUnit": "cCTQiGkKcTk",
+      "value": "410.0",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-12",
+      "lastUpdated": "2023-05-12",
+      "comment": "[aggregated]"
+    }
+  ]
+}
+
+
+
+
+
+
+
+
+
+
+
+-- /api/analytics/dataValueSet.json?dimension=dx:dyVaodqebsx;FT9oYMkFHQp;GmgNmZqqmQh&dimension=ou:USER_ORGUNIT_CHILDREN&dimension=pe:THIS_MONTH&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+
+// 20230512155336
+// https://links.hispindia.org/hivtracker/api/32/analytics/dataValueSet.json?dimension=dx%3AdyVaodqebsx%3BFT9oYMkFHQp%3BGmgNmZqqmQh&dimension=ou%3AUSER_ORGUNIT_CHILDREN&dimension=pe%3ATHIS_MONTH&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+
+{
+  "dataValues": [
+    {
+      "dataElement": "dyVaodqebsx",
+      "period": "202305",
+      "orgUnit": "RVc3XoVoNRf",
+      "value": "958",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-12",
+      "lastUpdated": "2023-05-12",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "dyVaodqebsx",
+      "period": "202305",
+      "orgUnit": "a6W190BanBu",
+      "value": "1523",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-12",
+      "lastUpdated": "2023-05-12",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "dyVaodqebsx",
+      "period": "202305",
+      "orgUnit": "hi16ZuHEWaY",
+      "value": "2711",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-12",
+      "lastUpdated": "2023-05-12",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "dyVaodqebsx",
+      "period": "202305",
+      "orgUnit": "GvgqqErqwFP",
+      "value": "1375",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-12",
+      "lastUpdated": "2023-05-12",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "dyVaodqebsx",
+      "period": "202305",
+      "orgUnit": "Zx3boDXh1Q5",
+      "value": "2293",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-12",
+      "lastUpdated": "2023-05-12",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "dyVaodqebsx",
+      "period": "202305",
+      "orgUnit": "fvN7GZvNAOB",
+      "value": "344",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-12",
+      "lastUpdated": "2023-05-12",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "dyVaodqebsx",
+      "period": "202305",
+      "orgUnit": "wtU6v09Kbe0",
+      "value": "2023",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-12",
+      "lastUpdated": "2023-05-12",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "dyVaodqebsx",
+      "period": "202305",
+      "orgUnit": "J7GNAdygPV4",
+      "value": "4",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-12",
+      "lastUpdated": "2023-05-12",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "FT9oYMkFHQp",
+      "period": "202305",
+      "orgUnit": "RVc3XoVoNRf",
+      "value": "1266",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-12",
+      "lastUpdated": "2023-05-12",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "FT9oYMkFHQp",
+      "period": "202305",
+      "orgUnit": "a6W190BanBu",
+      "value": "2268",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-12",
+      "lastUpdated": "2023-05-12",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "FT9oYMkFHQp",
+      "period": "202305",
+      "orgUnit": "hi16ZuHEWaY",
+      "value": "3452",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-12",
+      "lastUpdated": "2023-05-12",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "FT9oYMkFHQp",
+      "period": "202305",
+      "orgUnit": "GvgqqErqwFP",
+      "value": "1416",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-12",
+      "lastUpdated": "2023-05-12",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "FT9oYMkFHQp",
+      "period": "202305",
+      "orgUnit": "Zx3boDXh1Q5",
+      "value": "2377",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-12",
+      "lastUpdated": "2023-05-12",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "FT9oYMkFHQp",
+      "period": "202305",
+      "orgUnit": "fvN7GZvNAOB",
+      "value": "299",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-12",
+      "lastUpdated": "2023-05-12",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "FT9oYMkFHQp",
+      "period": "202305",
+      "orgUnit": "wtU6v09Kbe0",
+      "value": "1567",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-12",
+      "lastUpdated": "2023-05-12",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "FT9oYMkFHQp",
+      "period": "202305",
+      "orgUnit": "J7GNAdygPV4",
+      "value": "13",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-12",
+      "lastUpdated": "2023-05-12",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "GmgNmZqqmQh",
+      "period": "202305",
+      "orgUnit": "RVc3XoVoNRf",
+      "value": "41.0",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-12",
+      "lastUpdated": "2023-05-12",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "GmgNmZqqmQh",
+      "period": "202305",
+      "orgUnit": "a6W190BanBu",
+      "value": "203.0",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-12",
+      "lastUpdated": "2023-05-12",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "GmgNmZqqmQh",
+      "period": "202305",
+      "orgUnit": "hi16ZuHEWaY",
+      "value": "56.0",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-12",
+      "lastUpdated": "2023-05-12",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "GmgNmZqqmQh",
+      "period": "202305",
+      "orgUnit": "GvgqqErqwFP",
+      "value": "8.0",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-12",
+      "lastUpdated": "2023-05-12",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "GmgNmZqqmQh",
+      "period": "202305",
+      "orgUnit": "Zx3boDXh1Q5",
+      "value": "62.0",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-12",
+      "lastUpdated": "2023-05-12",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "GmgNmZqqmQh",
+      "period": "202305",
+      "orgUnit": "fvN7GZvNAOB",
+      "value": "2.0",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-12",
+      "lastUpdated": "2023-05-12",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "GmgNmZqqmQh",
+      "period": "202305",
+      "orgUnit": "wtU6v09Kbe0",
+      "value": "37.0",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-12",
+      "lastUpdated": "2023-05-12",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "GmgNmZqqmQh",
+      "period": "202305",
+      "orgUnit": "J7GNAdygPV4",
+      "value": "1.0",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-12",
+      "lastUpdated": "2023-05-12",
+      "comment": "[aggregated]"
+    }
+  ]
+}
+
+
+-- Clients currently on ART Treatment (by age)
+-- /api/analytics/dataValueSet.json?dimension=dx:rcKdW3PTGEb;FmZpfzqE8rL&dimension=ou:USER_ORGUNIT&dimension=pe:THIS_MONTH&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+
+-- Clients currently on ART treatment 0-14 Yrs Total -- rcKdW3PTGEb
+-- Clients currently on ART treatment 15+ yrs Total  -- FmZpfzqE8rL
+
+-- /api/analytics/dataValueSet.json?dimension=dx:rcKdW3PTGEb;FmZpfzqE8rL&dimension=ou:USER_ORGUNIT_CHILDREN&dimension=pe:THIS_MONTH&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+
+
+
+
+-- Clients currently on ART Treatment (by risk group)
+-- /api/analytics/dataValueSet.json?dimension=dx:xt1SLd4ZRQ5;W9ZQbalepaj;TUmKWp2LRrk;JvLU38fLEqW;dvVvavpocYv;MMEYNfSWifO;qMvQsZMejyJ;FLn1VLKIgd8;LnEYG01WE7F;bEK1432OO9G;L2OlQdRnBLM&dimension=ou:USER_ORGUNIT&dimension=pe:THIS_MONTH&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+
+
+-- Clients currently on ART (Sex workers) -- xt1SLd4ZRQ5
+-- Clients currently on ART (MSM) -- W9ZQbalepaj
+-- Clients currently on ART (Risk group TG) -- TUmKWp2LRrk
+-- Clients currently on ART (Client sex worker) -- JvLU38fLEqW
+-- Clients currently on ART (Migrants) -- dvVvavpocYv
+-- Clients currently on ART (Spouse migrants) -- MMEYNfSWifO
+-- Clients currently on ART (People who inject drug) -- qMvQsZMejyJ
+-- Clients currently on ART (Blood organ Recipient) -- FLn1VLKIgd8
+-- Clients currently on ART (Prison inmates) -- LnEYG01WE7F
+-- Clients currently on ART (Vertical transmission) -- bEK1432OO9G
+-- Clients currently on ART (Other risk group) -- L2OlQdRnBLM
+
+
+
+-- /api/analytics/dataValueSet.json?dimension=dx:xt1SLd4ZRQ5;W9ZQbalepaj;TUmKWp2LRrk;JvLU38fLEqW;dvVvavpocYv;MMEYNfSWifO;qMvQsZMejyJ;FLn1VLKIgd8;LnEYG01WE7F;bEK1432OO9G;L2OlQdRnBLM&dimension=ou:USER_ORGUNIT_CHILDREN&dimension=pe%3ATHIS_MONTH&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+
+
+
+-- /api/analytics/dataValueSet.json?dimension=dx:zjmnw7ofdzG&dimension=ou:USER_ORGUNIT&dimension=pe:THIS_MONTH&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+-- /api/analytics/dataValueSet.json?dimension=dx:zjmnw7ofdzG&dimension=ou:USER_ORGUNIT_CHILDREN&dimension=pe:THIS_MONTH&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+
+
+-- Viral load test performed among PLHIV on ART at the end of reporting period
+
+-- PI - zjmnw7ofdzG -- Viral load test performed among PLHIV on ART during the reporting period
+
+
+
+-- Viral load test performed among PLHIV on ART at the end of reporting period (by sex)
+
+-- -- /api/analytics/dataValueSet.json?dimension=dx:mdLbmu8dUpY;xjrwG3agtFO;p0wTMpztiqg&dimension=pe:THIS_MONTH&dimension=ou:USER_ORGUNIT&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+-- /api/analytics/dataValueSet.json?dimension=dx:mdLbmu8dUpY;xjrwG3agtFO;p0wTMpztiqg&dimension=pe:THIS_MONTH&dimension=ou:USER_ORGUNIT_CHILDREN&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+
+-- mdLbmu8dUpY -- Viral load test performed among PLHIV on ART at the end of reporting period (Male)
+-- xjrwG3agtFO -- Viral load test performed among PLHIV on ART at the end of reporting period (Female)
+-- p0wTMpztiqg -- Viral load test performed among PLHIV on ART at the end of reporting period (Other)
+
+
+-- Viral load test performed among PLHIV on ART at the end of reporting period (by age)
+
+-- /api/analytics/dataValueSet.json?dimension=dx:sPcUxHnZD5S;nY6dwGOr0Sy&dimension=pe:THIS_MONTH&dimension=ou:USER_ORGUNIT&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+-- /api/analytics/dataValueSet.json?dimension=dx:sPcUxHnZD5S;nY6dwGOr0Sy&dimension=pe:THIS_MONTH&dimension=ou:USER_ORGUNIT_CHILDREN&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+
+
+
+-- sPcUxHnZD5S -- Viral load test performed among PLHIV on ART at the end of reporting period (0-14 years)
+-- nY6dwGOr0Sy -- Viral load test performed among PLHIV on ART at the end of reporting period (> 15 years)
+
+-- PLHIV on ART with Suppressed Viral Load during the reporting period SVL (by province)
+-- PLHIV on ART with Suppressed Viral Load during the reporting period SVL
+
+-- /api/analytics/dataValueSet.json?dimension=dx:wrGwqu0ybBh&dimension=ou:USER_ORGUNIT&dimension=pe:THIS_YEAR&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+-- /api/analytics/dataValueSet.json?dimension=dx:wrGwqu0ybBh&dimension=ou:USER_ORGUNIT_CHILDREN&dimension=pe:THIS_YEAR&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+
+
+-- pi -- wrGwqu0ybBh -- PLHIV on ART with Suppressed Viral Load during the reporting period SVL
+
+-- PLHIV on ART screened for TB
+
+-- /api/analytics/dataValueSet.json?dimension=dx:A0eBDBqFBHR&dimension=pe:THIS_YEAR&dimension=ou:USER_ORGUNIT&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+-- /api/analytics/dataValueSet.json?dimension=dx:A0eBDBqFBHR&dimension=pe:THIS_YEAR&dimension=ou:USER_ORGUNIT_CHILDREN&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+
+-- A0eBDBqFBHR -- PLHIV on ART screened for TB
+
+-- People living with HIV who started TB preventive therapy among total ART during the reporting Period
+
+-- People living with HIV who started TB preventive therapy among total ART during the reporting Period (by province)
+-- People living with HIV who started TB preventive therapy among total ART during the reporting Period
+
+-- /api/analytics/dataValueSet.json?dimension=dx:PFRK0hsXRDS&dimension=pe:THIS_YEAR&dimension=ou:USER_ORGUNIT&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+-- /api/analytics/dataValueSet.json?dimension=dx:PFRK0hsXRDS&dimension=pe:THIS_YEAR&dimension=ou:USER_ORGUNIT_CHILDREN&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+
+-- PFRK0hsXRDS -- People living with HIV who started TB preventive therapy among total on ART during the reporting Period
+
+-- HIV O-12 Percentage of people living with HIV and on ART who are virologically suppressed during the reporting period
+-- /api/analytics/dataValueSet.json?dimension=dx:Q6yYYsXS4jB&dimension=ou:cCTQiGkKcTk;OU_GROUP-pW6owR4oRKb&dimension=pe:2022&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&completedOnly=false
+
+-- Q6yYYsXS4jB -- HIV O-12 Percentage of people living with HIV and on ART who are virologically suppressed during the reporting period
+
+
+{
+  "dataValues": [
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "mIZ7UfitSfF",
+      "value": "26.9",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "mrjraHkF3r7",
+      "value": "68.3",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "Bm39oMfSNir",
+      "value": "31.7",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "vNpX4nuwSQ4",
+      "value": "73.6",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "J6GqvSHE3ql",
+      "value": "77.0",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "RkDkH6DBxHZ",
+      "value": "80.8",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "mL4Cbzwq1T7",
+      "value": "45.0",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "gyF1IWxbNdU",
+      "value": "69.6",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "YZEW9zco5wp",
+      "value": "0.93",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "SlJVRDSnSs7",
+      "value": "61.6",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "Jyk5lg7lSJE",
+      "value": "49.2",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "YoKkWEKk8Vs",
+      "value": "61.6",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "StYGSnQkGYd",
+      "value": "66.2",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "PPy8McaEWmP",
+      "value": "71.1",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "Hip7Iiwe0Zw",
+      "value": "85.4",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "wW6BjmcZPTE",
+      "value": "59.6",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "DEV82n2a57B",
+      "value": "41.4",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "cLAmxlnT75s",
+      "value": "54.7",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "PaPESMnNmGS",
+      "value": "47.5",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "mPO6LgjseUd",
+      "value": "3.9",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "UcFtqIBF6dF",
+      "value": "47.6",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "Eps9XCDyPWJ",
+      "value": "73.5",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "sp7Kp98AgiY",
+      "value": "59.1",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "xQ9yCoUNMvb",
+      "value": "64.5",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "ZBkM8lmhvSR",
+      "value": "74.7",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "RiNRNy2QrbG",
+      "value": "57.9",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "EySK9sIwopW",
+      "value": "76.3",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "vcjdAdENK6U",
+      "value": "65.7",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "mkjer41pShd",
+      "value": "4.0",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "bZ0QNxepVDm",
+      "value": "16.7",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "PJdV5nECQnS",
+      "value": "15.3",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "igUB7D4ujIp",
+      "value": "42.4",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "pLGBXoHij8l",
+      "value": "85.7",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "M0h4xQCnr5Q",
+      "value": "5.3",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "TXvMmNVpTbV",
+      "value": "22.8",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "iAqA94CYN5T",
+      "value": "54.3",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "X1XpOXDu4i1",
+      "value": "56.7",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "sTpP9XtNNIq",
+      "value": "80.8",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "fZcTJkUmgnD",
+      "value": "45.9",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "vZ2BOsyGD6k",
+      "value": "78.7",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "FfqjUkvHaq2",
+      "value": "75.3",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "NMZDc62VkUu",
+      "value": "79.7",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "u11K0KqXoo4",
+      "value": "55.2",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "qf1SFbsoO5U",
+      "value": "75.0",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "OZGBcyvt0Eq",
+      "value": "67.0",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "uhP4XuZMhmP",
+      "value": "81.8",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "V4Mdjx4dLU6",
+      "value": "73.1",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "GR1K45ToRLP",
+      "value": "73.4",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "popAWkAUmV7",
+      "value": "52.8",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "ICouwFuLi6e",
+      "value": "70.9",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "HII00nHXHSr",
+      "value": "61.3",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "DYcRiFnkTeh",
+      "value": "89.7",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "gYWUCbDn7W9",
+      "value": "65.0",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "NbSwp2REKl2",
+      "value": "47.9",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "eEJjlb96A9S",
+      "value": "73.6",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "z4jth5bBeTQ",
+      "value": "75.8",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "t0fTpHGj4pA",
+      "value": "55.0",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "kenJxBny3sm",
+      "value": "55.5",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "E7KRzq0nI80",
+      "value": "80.0",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "FSMALlcEMN1",
+      "value": "67.1",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "e8msu3rYPr7",
+      "value": "65.9",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "TG9xwiyOzFy",
+      "value": "69.9",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "kDfTb2xmcJq",
+      "value": "68.6",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "pKR0mkabc8U",
+      "value": "81.8",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "kgYQV9tV9Ep",
+      "value": "82.2",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "k2gEfAppdDa",
+      "value": "0.9",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "gmBf8LmHER8",
+      "value": "38.1",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "Bqbp4RSh59F",
+      "value": "61.4",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "hOBq8ofsGIA",
+      "value": "38.7",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "enCNn7DBvEe",
+      "value": "87.4",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "bJprtQeaalg",
+      "value": "67.9",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "ZWwcPbXbh7A",
+      "value": "78.6",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "WLBxL2ClHIC",
+      "value": "41.9",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "CZSqk9wH36L",
+      "value": "70.1",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "nPv9ZSw7DU3",
+      "value": "52.0",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "EoD53fBetjK",
+      "value": "71.3",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "aXquUzlrYYv",
+      "value": "84.7",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "Put4ZMYsdZf",
+      "value": "80.6",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "BiBfVGxLkLE",
+      "value": "54.3",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "WaY0NFhl8Y3",
+      "value": "64.2",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    },
+    {
+      "dataElement": "Q6yYYsXS4jB",
+      "period": "2022",
+      "orgUnit": "yIw4RH3Pdwi",
+      "value": "32.2",
+      "storedBy": "[aggregated]",
+      "created": "2023-05-17",
+      "lastUpdated": "2023-05-17",
+      "comment": "[aggregated]"
+    }
+  ]
+}
+
+-- PLHIV on ART with Suppressed Viral Load during the reporting period SVL (by Sex)
+
+-- /api/analytics/dataValueSet.json?dimension=dx:tHEAHM2JGDr;DjQzl4fes17;nkbQbqUuons&dimension=ou:USER_ORGUNIT&dimension=pe:THIS_YEAR&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+-- /api/analytics/dataValueSet.json?dimension=dx:tHEAHM2JGDr;DjQzl4fes17;nkbQbqUuons&dimension=ou:USER_ORGUNIT_CHILDREN&dimension=pe:THIS_YEAR&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+
+-- tHEAHM2JGDr -- PLHIV on ART with Suppressed Viral Load during the reporting period SVL (Female)
+-- DjQzl4fes17 -- PLHIV on ART with Suppressed Viral Load during the reporting period SVL (Male)
+-- nkbQbqUuons -- PLHIV on ART with Suppressed Viral Load during the reporting period SVL (Other sex)
+
+
+-- ART treatment initiated during reporting period
+-- /api/analytics/dataValueSet.json?dimension=dx:ikyD4ElBnY6&dimension=pe:THIS_MONTH&dimension=ou:USER_ORGUNIT&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+
+-- /api/analytics/dataValueSet.json?dimension=dx:ikyD4ElBnY6&dimension=pe:THIS_MONTH&dimension=ou:USER_ORGUNIT_CHILDREN&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+
+-- ikyD4ElBnY6 -- ART treatment initiated during reporting period
+
+
+-- ART treatment initiated during reporting period (by risk group)
+
+-- /api/analytics/dataValueSet.json?dimension=dx:SeqGBOy7Wh6;KvigUWjoSvM;I6ZMnMP684A;Xi9xEomUGBZ;uPfF4Kat1oG;ULbXn4nJYYt;A0jVfNZUW5f;T2OpeejXpuL&dimension=pe:THIS_MONTH&dimension=ou:USER_ORGUNIT&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+-- /api/analytics/dataValueSet.json?dimension=dx:SeqGBOy7Wh6;KvigUWjoSvM;I6ZMnMP684A;Xi9xEomUGBZ;uPfF4Kat1oG;ULbXn4nJYYt;A0jVfNZUW5f;T2OpeejXpuL&dimension=pe:THIS_MONTH&dimension=ou:USER_ORGUNIT_CHILDREN&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+
+
+-- SeqGBOy7Wh6 -- ART treatment initiated during reporting period (Blood organ Recipient)
+-- KvigUWjoSvM -- ART treatment initiated during reporting period (Client sex worker)
+-- I6ZMnMP684A -- ART treatment initiated during reporting period (Prison inmates)
+-- Xi9xEomUGBZ -- ART treatment initiated during reporting period (Risk Group Other)
+-- uPfF4Kat1oG -- ART treatment initiated during reporting period (Spouse migrants)
+-- ULbXn4nJYYt -- ART treatment initiated during reporting period (Vertical transmission)
+-- A0jVfNZUW5f -- ART treatment initiated during reporting period (tg)
+-- T2OpeejXpuL -- ART treatment initiated (MSM/TG) during reporting period
+
+
+-- ART treatment initiated during reporting period (by sex)
+-- /api/analytics/dataValueSet.json?dimension=dx:GpiKTSMr9cT;ks2XmKnTumm;NgYO0OJ1oAG&dimension=pe:THIS_MONTH&dimension=ou:USER_ORGUNIT&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+-- /api/analytics/dataValueSet.json?dimension=dx:GpiKTSMr9cT;ks2XmKnTumm;NgYO0OJ1oAG&dimension=pe:THIS_MONTH&dimension=ou:USER_ORGUNIT_CHILDREN&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
+
+-- GpiKTSMr9cT -- ART treatment initiated (female) during reporting period
+-- ks2XmKnTumm -- ART treatment initiated (male) during reporting period
+-- NgYO0OJ1oAG -- ART treatment initiated (other sex) during reporting period

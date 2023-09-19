@@ -380,9 +380,71 @@ select * from programstagesection where  programstagesectionid > 1481568;
 update programstagesection set created = now()::timestamp where created = '2023-03-24';
 update programstagesection set lastupdated = now()::timestamp where lastupdated = '2023-03-24';
 
+-- 15/05/2023
+
+select programstagedataelementid, uid, created, lastupdated, programstageid, dataelementid, 
+compulsory, allowprovidedelsewhere, sort_order, displayinreports, allowfuturedate, 
+renderoptionsasradio, skipsynchronization, skipanalytics,rendertype from 
+programstagedataelement where programstageid in(select programstageid 
+from programstage where uid = 'wPM1AethMll');
+
+
+select * from programstage where uid in(
+'M8zBHKN6XWn', 'EVfyMqCh7fk','om7NH0wMt2L'); 
+
+select * from programstage where uid in(
+'WRW0lyez5Sh', 'tz4pgzuoOg7','PhqMTB0eOhE'); 
+
+select * from programstage where uid in(
+'wPM1AethMll', 'hSKwFuUpKrr','ireu7zDmPCq'); 
+
+
+delete from 
+programstagedataelement where programstageid in(select programstageid 
+from programstage where uid in('M8zBHKN6XWn', 'EVfyMqCh7fk', 'tz4pgzuoOg7','PhqMTB0eOhE',
+'hSKwFuUpKrr','ireu7zDmPCq'));
+
+select * from programstagedataelement order by programstagedataelementid desc; -- 1661117
+select * from programstagedataelement where programstagedataelementid > 1661117;
+
+update programstagedataelement set created = now()::timestamp where created = '2023-05-13';
+update programstagedataelement set lastupdated = now()::timestamp where lastupdated = '2023-05-13';
 
 
 
+
+---   programstagesection
+
+select  uid,lastupdatedby, name, 
+rendertype,sortorder,programstageid,programstagesectionid from 
+programstagesection where programstageid 
+in(select programstageid from programstage where uid in (
+'ufk3NFIBbNv'));
+
+select * from programstagesection order by programstagesectionid desc; ---1659015
+select * from programstagesection where programstagesectionid > 1659015
+
+update programstagesection set created = now()::timestamp where created = '2023-05-13';
+update programstagesection set lastupdated = now()::timestamp where lastupdated = '2023-05-13';
+
+delete from programstagesection_dataelements
+where programstagesectionid in ( select programstagesectionid
+from programstagesection where programstageid in(select programstageid 
+from programstage where uid in('M8zBHKN6XWn', 'EVfyMqCh7fk', 'tz4pgzuoOg7','PhqMTB0eOhE',
+'hSKwFuUpKrr','ireu7zDmPCq')));
+
+delete from 
+programstagesection where programstageid in(select programstageid 
+from programstage where uid in('M8zBHKN6XWn', 'EVfyMqCh7fk', 'tz4pgzuoOg7','PhqMTB0eOhE',
+'hSKwFuUpKrr','ireu7zDmPCq'));
+
+--- programstagesection_dataelements
+
+select pss.programstageid, pssde.programstagesectionid,pssde.sort_order,
+pssde.dataelementid from programstagesection_dataelements pssde
+INNER join programstagesection pss ON pss.programstagesectionid = pssde.programstagesectionid
+where pss.programstageid in ( select programstageid from 
+programstage where uid in ('ufk3NFIBbNv'));
 
 --
 
@@ -674,14 +736,14 @@ update programrulevariable  set created = now()::timestamp where created ='2022-
 update programrulevariable  set lastupdated = now()::timestamp where lastupdated ='2022-09-26';
 
 
--- 20/03/2023
-select * from programrulevariable  order by programrulevariableid desc; -- 1502546
-select * from programrulevariable where programrulevariableid > 1502546;
+-- 20/03/2023 24/04/2023
+select * from programrulevariable  order by programrulevariableid desc; -- 1625937
+select * from programrulevariable where programrulevariableid > 1625937;
 
 update programrulevariable  set created = now()::timestamp where created ='2023-03-20';
 update programrulevariable  set lastupdated = now()::timestamp where lastupdated ='2023-03-20';
 
--- 28/03/2023
+-- 28/03/2023 -- 24/04/2023
 
 select programrulevariableid,uid,created,lastupdated,name,programid,dataelementid,
 sourcetype,usecodeforoptionset,valuetype from programrulevariable where programid 
@@ -700,11 +762,11 @@ select programruleid,uid,created,lastupdated,lastupdatedby,name,programid,progra
 in (select programid from program where uid = 'HoSWGbzZxF9');
 
 
-select * from programrule order by  programruleid desc; -- 501532
-select * from programrule where  programruleid > 501532;
+select * from programrule order by  programruleid desc; -- 1647307
+select * from programrule where  programruleid > 1647307;
 
-update programrule  set created = now()::timestamp where created ='2023-03-28';
-update programrule  set lastupdated = now()::timestamp where lastupdated ='2023-03-28';
+update programrule set created = now()::timestamp where created ='2023-04-24';
+update programrule  set lastupdated = now()::timestamp where lastupdated ='2023-04-24';
 
 
 
@@ -713,6 +775,11 @@ data,evaluationtime,environments
  from programruleaction where programruleid 
 in (select programruleid from programrule where programid in
 ( select programid from program where uid = 'HoSWGbzZxF9'));
+
+
+select * from programruleaction order by  programruleactionid desc; -- 1647306
+select * from programruleaction where  programruleactionid > 1647306;
+
 
 update programruleaction  set created = now()::timestamp where created ='2023-03-28';
 update programruleaction  set lastupdated = now()::timestamp where lastupdated ='2023-03-28';
@@ -981,6 +1048,21 @@ update periodboundary  set created = now()::timestamp where created ='2023-03-10
 update periodboundary  set lastupdated = now()::timestamp where lastupdated ='2023-03-10';
 
 
+select pi.programindicatorid, pi.uid programindicatorUID,pi.name 
+programindicatorName,pb.periodboundaryid, pb.uid, pb.created, 
+pb.lastupdated, pb.boundarytarget, pb.analyticsperiodboundarytype from periodboundary pb
+INNER JOIN programindicator pi ON pi.programindicatorid = pb.programindicatorid
+order by pi.programindicatorid;
+
+select prg.name prgName,prg.uid prgUID,pi.programindicatorid, 
+pi.uid programindicatorUID,pi.name programindicatorName,
+pi.expression,pi.filter,pi.aggregationtype,pi.analyticstype,
+pb.periodboundaryid, pb.uid, pb.boundarytarget, 
+pb.analyticsperiodboundarytype from periodboundary pb
+INNER JOIN programindicator pi ON pi.programindicatorid = pb.programindicatorid
+INNER JOIN program prg ON prg.programid = pi.programid
+order by pi.programindicatorid;
+
 -- 30/03/2023
 
 -- delete programstagesection
@@ -1094,3 +1176,519 @@ select programid from program where uid in (
 delete from program where uid in (
 'KHvMmIe88PQ', 'KgLaG1OfLJK','Z6cnbLH3QB5');
 
+-- 28/04/2023
+-- dataelementid not in programstagedataelement
+select * from programstagedataelement where dataelementid not in (
+select dataelementid from programstagesection_dataelements where 
+programstagesectionid in( select programstagesectionid 
+from programstagesection where programstageid in (select programstageid
+from programstage where uid = 'ZZv0TcoyTmd'))) and programstageid = 798740;
+
+select pg.name,pg.programid, count(psde.dataelementid) from programstagedataelement psde
+INNER JOIN programstage ps ON ps.programstageid = psde.programstageid
+INNER JOIN program pg ON pg.programid = ps.programid
+group by pg.name,pg.programid;
+
+ -- 29/04/2023
+select * from program where uid = 'tpJxjhgNDtm';	
+select * from organisationunit where uid = 'tpJxjhgNDtm'
+
+select programstageinstanceid,uid,eventdatavalues from programstageinstance 
+where programstageinstanceid > 1199 and programstageid = 798740
+order by programstageinstanceid desc;
+
+
+select * from program where uid = 'Bihax2WaaSW';
+
+delete from programstageinstance where uid = 'psJdeGH2LNY'
+
+delete from trackedentitydatavalueaudit where programstageinstanceid
+in ( select programstageinstanceid from programstageinstance where uid = 'psJdeGH2LNY');
+
+-- ipa production
+
+select * from datavalue where dataelementid in (
+select dataelementid from dataelement where 
+uid in( 'wLKGbYJXIKt', 'UjFfCQfJuti','gi6F0xlOeeX'));
+
+
+-- dht_azle -- District@1
+
+-- ipa_accounts -- District@1
+
+-- both return and approve
+select * from datavalue where dataelementid in (
+select dataelementid from dataelement where 
+uid in( 'wLKGbYJXIKt','wvdLqBPTxc7',
+'kxPDBQIDg9e','gtOLCmylDgQ',
+'UjFfCQfJuti','KvAzOkhB4j4',
+'xvkraRAS9AE','Bh3BFeqo3ug',
+'gi6F0xlOeeX','Beyw9vymtEN',
+'fByaGToLvi9','U8obBdkP2uh'));
+
+-- return 
+select * from datavalue where dataelementid in (
+select dataelementid from dataelement where 
+uid in( 'wvdLqBPTxc7',
+'gtOLCmylDgQ','KvAzOkhB4j4','Bh3BFeqo3ug',
+'Beyw9vymtEN','U8obBdkP2uh' ));
+
+-- approve
+select * from datavalue where dataelementid in (
+select dataelementid from dataelement where 
+uid in( 'wLKGbYJXIKt','kxPDBQIDg9e','UjFfCQfJuti',
+'xvkraRAS9AE','gi6F0xlOeeX','fByaGToLvi9'));
+
+-- return 
+select * from datavalue where dataelementid in (
+select dataelementid from dataelement where 
+uid in( 'wvdLqBPTxc7','gtOLCmylDgQ','KvAzOkhB4j4',
+'Bh3BFeqo3ug','Beyw9vymtEN','U8obBdkP2uh'));
+
+
+
+-- http://127.0.0.1:8091/ipa/api/dataValues.json?de=wLKGbYJXIKt&pe=2023Q1&ou=s00pgmqXHcB
+-- api/dataValueSets.json?orgUnit=s00pgmqXHcB&dataSet=XV12eKZar28&period=2023Q1
+-- https://ipamis.mzhssp.in/mizoramipa/api/analytics/dataValueSet.json?dimension=dx:wLKGbYJXIKt;UjFfCQfJuti;gi6F0xlOeeX&dimension=pe:2023Q1&dimension=ou:s00pgmqXHcB
+
+-- -- myanmar - HMIS 
+-- https://mm.dhis2.net/hmis
+-- write query for dataElement value  de -- ART_Risk Factor for HIV_Injecting Drug Use {Gender}
+
+SELECT de.uid AS dataElementUID,de.name AS dataElementName, coc.uid AS categoryOptionComboUID, 
+coc.name AS categoryOptionComboName, attcoc.uid AS attributeOptionComboUID,attcoc.name AS
+attributeOptionComboName, org.uid AS organisationunitUID, org.name AS organisationunitName, 
+dv.value, dv.storedby,dv.created::date, dv.lastupdated::date, CONCAT (split_part(pe.startdate::TEXT,'-', 1), 
+split_part(pe.startdate::TEXT,'-', 2)) as isoPeriod, pety.name FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+INNER join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+INNER join periodtype pety ON pety.periodtypeid = pe.periodtypeid
+WHERE dv.value is not null and dv.deleted is not true
+and de.uid = 'gPGpPqF7UdG';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- myanmar - events
+
+delete from periodtype where 
+periodtypeid = 14901193 and
+name = 'QuarterlyNov';
+
+select * from optionset where uid = 'i9QjkBofI82';
+
+select * from optionvalue where 
+optionsetid = 584899 and code = 'H17.9';
+
+update optionvalue set code = 'H17.9' 
+where optionsetid = 584899 and code = 'H17.9 ';
+
+select * from periodtype 
+where name = 'QuarterlyNov';
+
+delete from periodtype 
+where name = 'QuarterlyNov';
+
+
+delete from programstageinstance  where 
+uid = 'mzj0ZW3DOTX' and programstageinstanceid = 14830837;
+
+delete from trackedentitydatavalueaudit where 
+programstageinstanceid = 14830837;
+
+
+
+-- A way to confirm the list of current existing years that are used during the Analytics Export process is running this query:
+
+(
+select
+	distinct (extract(year
+from
+	pe.startdate)) as datayear
+from
+	period pe )
+union (
+select
+distinct (extract(year
+from
+pe.enddate)) as datayear
+from
+period pe )
+union (
+select
+distinct (extract(year
+from
+(case
+when 'SCHEDULE' = psi.status then psi.duedate
+else psi.executiondate
+end))) as datayear
+from
+programstageinstance psi
+where
+(case
+when 'SCHEDULE' = psi.status then psi.duedate
+else psi.executiondate
+end) is not null
+and psi.deleted is false )
+order by
+datayear asc;
+
+
+-- Based on start/end years supported, find the invalid executiondate in events.
+select psi.executiondate from programstageinstance psi where
+(EXTRACT(year from psi.executiondate) < 1990 
+ or EXTRACT(year from psi.executiondate) > 2029);
+
+
+-- Based on start/end years supported, find the invalid duedate in events.
+select psi.uid, psi.code, psi.duedate from programstageinstance psi where
+(EXTRACT(year from psi.duedate) < 1990 or EXTRACT(year from psi.duedate) > 2029);
+
+
+select psi.uid eventID,psi.programstageinstanceid, psi.executiondate::date,
+psi.duedate::date from programstageinstance psi where
+(EXTRACT(year from psi.executiondate) < 1990 
+or EXTRACT(year from psi.executiondate) > 2029) 
+order by psi.executiondate;
+
+
+select psi.uid eventID,psi.programstageinstanceid, psi.executiondate::date,
+psi.duedate::date,org.uid orgUID,org.name orgName,data.key as dataElement_uid,
+cast(data.value::json ->> 'value' AS VARCHAR) AS ADMISSION_NUMBER from programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN dataelement de ON de.uid = data.key
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+where de.uid = 'VxScEPPSjq8' and 
+(EXTRACT(year from psi.executiondate) < 1990 
+or EXTRACT(year from psi.executiondate) > 2029) 
+order by psi.executiondate;
+
+
+delete from programstageinstance  where 
+uid = 'mzj0ZW3DOTX' and programstageinstanceid = 14830837;
+
+delete from trackedentitydatavalueaudit where 
+programstageinstanceid = 14830837;
+
+select table_name from information_schema.tables 
+where table_name like 'analytics%' and table_type = 'BASE TABLE'; 
+
+
+-- Myanmar prep tracker -- PrEP_Miss-Appointment Client list of 
+-- prep_tracker send e-mail for miss appointment 
+
+select * from programstageinstance;
+
+SELECT psi.uid,psi.programstageinstanceid, psi.executiondate,
+psi.duedate,psi.completeddate,
+extract (epoch from (CURRENT_DATE - psi.duedate))::integer/86400 as dayDiffrence
+from programstageinstance psi
+
+WHERE psi.programstageid in ( select programstageid from programstage where uid = 'BrZ8MF97cDH')
+and psi.duedate <= CURRENT_DATE - interval '7 day';
+
+SELECT organisationunitid,uid,name,email from organisationunit where email is not null
+and organisationunitid in ( select organisationunitid from program_organisationunits);
+
+SELECT tei.uid AS teiUID, psi.uid AS eventUID, teav1.value as Client_ID, 
+org.uid AS orgUID,org.name AS orgName, psi.executiondate::date as Event_date,
+psi.duedate::date AS due_date, cast(psi.data.value::json ->> 'value' AS VARCHAR) AS de_value,
+extract (epoch from (CURRENT_DATE - psi.duedate))::integer/86400 as dayDiffrence
+FROM trackedentityattributevalue teav1
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN dataelement de ON de.uid = psi.data.key
+WHERE teav1.trackedentityattributeid in ( select trackedentityattributeid from 
+trackedentityattribute where uid = 'P3Spi0kT92n') and org.uid = 'Cc2ntGA27wX'
+AND psi.programstageid in ( select programstageid from programstage where uid = 'wmKHppc1gL7')
+and cast(data.value::json ->> 'value' AS VARCHAR) <= CURRENT_DATE - interval '7 day' and de.uid = 'QB79pRV2LqV';
+
+
+
+
+
+
+
+
+
+-- de -- PREP_SCR_ClientDemo_Sex -- kQzpqh4JL7l, PREP_SCR_ClientInfo_AddressState -- nVU4BU2jHc3
+-- de -- PREP_SCR_ClientInfo_AddressTown -- x3s6CXPdNjd
+
+-- de -- PrEP_FU_ARV icJeQiH7vf3 -- PrEP Follow-Up Visits stage -- uid -- wmKHppc1gL7
+
+-- for column 8,9,10
+
+-- days calculation -- PrEP Follow-Up Visits - wmKHppc1gL7 dataElement -- PrEP_FU_Next_Schedule_Date -- QB79pRV2LqV
+
+-- final query for TEI list based for send e-mail daysDiffrence calculation and interval '7 day'
+
+-- coloumn 1 -- te Attribute -- Client’s ID P3Spi0kT92n
+-- coloumn 2 -- te Attribute -- Client’s PrEP ID n2gG7cdigPc
+
+
+
+-- TEI list nased on orgUnit UID
+
+SELECT tei.uid AS teiUID FROM programinstance pi
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN organisationunit org ON pi.organisationunitid = org.organisationunitid
+WHERE org.uid = 'Cc2ntGA27wX';
+
+
+-- for coloumn 6,8,10,11 --stage id - wmKHppc1gL7 PrEP follow-up
+-- find latest event based on TEI orgUnit,programstage,dataelement
+SELECT tei.uid AS teiUID, psi.uid AS eventUID, org.uid AS orgUID,org.name AS orgName, 
+psi.executiondate::date as Event_date,
+cast(data.value::json ->> 'value' AS VARCHAR) AS last_next_schedule_date,
+extract (epoch from (CURRENT_DATE - cast(data.value::json ->> 'value' AS timestamp)))::integer/86400 as dayDiffrence
+FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE
+INNER JOIN dataelement de ON data.key = de.uid
+INNER JOIN organisationunit org ON psi.organisationunitid = org.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.programstageid in ( select programstageid from programstage where uid = 'wmKHppc1gL7') 
+AND org.uid = 'Cc2ntGA27wX' AND tei.uid = 'qmuvHtNbbiO' AND
+cast(data.value::json ->> 'value' AS DATE) <= CURRENT_DATE - interval '7day day' 
+and de.uid = 'QB79pRV2LqV' order by psi.executiondate DESC LIMIT 1;
+
+
+
+
+SELECT tei.uid AS teiUID, psi.uid AS eventUID, data.key as de_uid,
+org.uid AS orgUID,org.name AS orgName, psi.executiondate::date as Event_date,
+cast(data.value::json ->> 'value' AS VARCHAR) AS last_next_schedule_date,
+extract (epoch from (CURRENT_DATE - cast(data.value::json ->> 'value' AS timestamp)))::integer/86400 as dayDiffrence
+FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE
+INNER JOIN dataelement de ON data.key = de.uid
+INNER JOIN organisationunit org ON psi.organisationunitid = org.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.programstageid in ( select programstageid from programstage where uid = 'wmKHppc1gL7') 
+AND org.uid = 'Cc2ntGA27wX' AND 
+cast(data.value::json ->> 'value' AS DATE) <= CURRENT_DATE - interval '7 day' 
+and de.uid = 'QB79pRV2LqV';
+
+
+SELECT tei.uid AS teiUID, psi.uid AS eventUID, org.uid AS orgUID,org.name AS orgName, 
+psi.executiondate::date as Event_date,
+cast(data.value::json ->> 'value' AS VARCHAR) AS last_next_schedule_date,
+extract (epoch from (CURRENT_DATE - cast(data.value::json ->> 'value' AS timestamp)))::integer/86400 as dayDiffrence
+FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE
+INNER JOIN dataelement de ON data.key = de.uid
+INNER JOIN organisationunit org ON psi.organisationunitid = org.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.programstageid in ( select programstageid from programstage where uid = 'wmKHppc1gL7') 
+AND org.uid = 'Cc2ntGA27wX' AND 
+cast(data.value::json ->> 'value' AS DATE) <= CURRENT_DATE - interval '1000 day' 
+and de.uid = 'QB79pRV2LqV';
+
+
+
+
+-- for coloumn 9 -- Last PrEP ARV taken -- de -- icJeQiH7vf3 stage id - wmKHppc1gL7 PrEP follow-up
+SELECT psi.uid eventID, data.key as de_uid,
+cast(data.value::json ->> 'value' AS VARCHAR) AS de_value
+FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN dataelement de ON de.uid = data.key
+where psi.uid = 'zgPbSiBBHov' and de.uid = 'icJeQiH7vf3';
+
+-- latest event for coloumn SEX - 3 -- de - kQzpqh4JL7l -- satge -- BrZ8MF97cDH
+-- State/Region 4 -- de - nVU4BU2jHc3 -- satge -- BrZ8MF97cDH
+-- Township 5 -- de -x3s6CXPdNjd -- satge -- BrZ8MF97cDH
+-- PrEP PrEP Initiation Date 7 -- de - ts9LEoIEJWC satge -- BrZ8MF97cDH
+
+SELECT tei.uid AS teiUID, psi.uid AS eventUID,psi.executiondate::date as Event_date
+FROM programstageinstance psi
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.programstageid in ( select programstageid from programstage 
+where uid = 'BrZ8MF97cDH') AND tei.uid = 'fRHpYpNUP79'
+ORDER BY psi.executiondate desc LIMIT 1;
+
+
+
+SELECT tei.uid AS teiUID, psi.uid AS eventUID,psi.executiondate::date as Event_date
+FROM programstageinstance psi
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.programstageid in ( select programstageid from programstage 
+where uid = 'BrZ8MF97cDH') AND tei.uid = 'GluYVeUJCBj'
+ORDER BY psi.executiondate desc LIMIT 1;
+
+
+
+SELECT psi.uid eventID, data.key as de_uid,de.name,
+cast(data.value::json ->> 'value' AS VARCHAR) AS de_value
+FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN dataelement de ON de.uid = data.key
+where psi.uid = 'HhPkGKi6Kb3' and 
+de.uid in ( 'kQzpqh4JL7l','nVU4BU2jHc3','x3s6CXPdNjd','ts9LEoIEJWC');
+
+
+
+
+
+SELECT tei.uid AS teiUID, psi.uid AS eventUID,psi.executiondate::date as Event_date,
+cast(data.value::json ->> 'value' AS VARCHAR)
+FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE
+INNER JOIN dataelement de ON data.key = de.uid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.programstageid in ( select programstageid from programstage 
+where uid = 'BrZ8MF97cDH') AND tei.uid = 'fRHpYpNUP79'
+and de.uid in ( 'kQzpqh4JL7l','nVU4BU2jHc3','x3s6CXPdNjd')
+ORDER BY psi.executiondate desc LIMIT 1;
+
+
+-- trace outcome
+
+SELECT tei.uid AS teiUID, psi.uid AS eventUID, data.key as de_uid,
+org.uid AS orgUID,org.name AS orgName, psi.executiondate::date as Event_date,
+cast(data.value::json ->> 'value' AS VARCHAR) AS last_next_schedule_date FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE
+INNER JOIN dataelement de ON data.key = de.uid
+INNER JOIN organisationunit org ON psi.organisationunitid = org.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.programstageid in ( select programstageid from programstage where uid = 'EgacaWiHkuy') 
+and de.uid = 'uQwJ1KDketQ';
+
+SELECT tei.uid AS teiUID, psi.uid AS eventUID, data.key as de_uid,
+org.uid AS orgUID,org.name AS orgName, psi.executiondate::date as Event_date,
+cast(data.value::json ->> 'value' AS VARCHAR) AS tei_trace_outCome FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE
+INNER JOIN dataelement de ON data.key = de.uid
+INNER JOIN organisationunit org ON psi.organisationunitid = org.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.programstageid in ( select programstageid from programstage where uid = 'EgacaWiHkuy') 
+and de.uid = 'uQwJ1KDketQ' AND tei.uid = 'NhQtcUiPOXi' and cast(data.value::json ->> 'value' AS VARCHAR)
+in ( 'Cannot trace more and case close', 'Refuse to care','Cannot trace more and case close');
+
+SELECT tei.uid AS teiUID, cast(data.value::json ->> 'value' AS VARCHAR) AS tei_trace_outCome 
+FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE
+INNER JOIN dataelement de ON data.key = de.uid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.programstageid in ( select programstageid from programstage where uid = 'EgacaWiHkuy') 
+and de.uid = 'uQwJ1KDketQ' AND tei.uid = 'NhQtcUiPOXi'
+
+
+
+
+
+
+-- --
+
+SELECT tei.uid AS teiUID, psi.uid AS eventUID, psi.executiondate::date as Event_date,
+psi.duedate::date FROM programstageinstance psi
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.programstageid in ( select programstageid from programstage where uid = 'wmKHppc1gL7')
+and tei.uid = 'a1ORZhbnbF7' order by psi.executiondate::date desc limit 1;
+
+
+SELECT psi.uid eventID, data.key as de_uid,
+cast(data.value::json ->> 'value' AS VARCHAR) AS de_value
+FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN dataelement de ON de.uid = data.key
+where psi.uid = 'zgPbSiBBHov' and de.uid = 'icJeQiH7vf3';
+
+
+
+SELECT tei.uid AS teiUID, psi.uid AS eventUID, psi.executiondate::date as Event_date,
+psi.duedate::date,data.key as de_uid,cast(data.value::json ->> 'value' AS VARCHAR) AS de_value 
+FROM programstageinstance psi
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN dataelement de ON de.uid = data.key
+WHERE psi.programstageid in ( select programstageid from programstage where uid = 'wmKHppc1gL7')
+and tei.uid = 'KeNI7TmlH3I' and de.uid = 'icJeQiH7vf3';
+
+
+
+-- TEI and multiple attribute value
+SELECT tei.uid AS teiUID,teav1.value as client_ID ,teav2.value as prEP_ID_Number
+FROM trackedentityattributevalue teav1
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN ( SELECT trackedentityinstanceid,value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid = 8907 ) teav2
+on teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
+INNER JOIN programinstance pi ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN organisationunit org ON pi.organisationunitid = org.organisationunitid
+WHERE org.uid = 'Cc2ntGA27wX' AND teav1.trackedentityattributeid =  38775;
+
+
+
+SELECT psi.uid eventID, data.key as de_uid,
+cast(data.value::json ->> 'value' AS VARCHAR) AS de_value, 
+prg.uid AS prgUID FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN dataelement de ON de.uid = data.key
+where psi.uid = 'AVn2JjgGx8u' ; 
+
+SELECT psi.uid eventID, data.key as de_uid,
+cast(data.value::json ->> 'value' AS VARCHAR) AS de_value
+FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN dataelement de ON de.uid = data.key
+where de.uid in('kQzpqh4JL7l','nVU4BU2jHc3','x3s6CXPdNjd') 
+and psi.uid = 'AVn2JjgGx8u';
+
+
+
+                    /*
+                    String emailText=
+                        "<table width='100%' border='1' align='left'>"
+                               + "<tr align='center' style='color: #0000FF;' >"
+                               + "<td><b>Client’s ID<b></td>"
+                               + "<td><b>Client’s PrEP ID<b></td>"
+                               + "<td><b>Client’s Sex<b></td>"
+                               + "<td><b>State/Region<b></td>"
+                               + "<td><b>Township<b></td>"
+                               + "<td><b>Facility <b></td>"
+                               + "<td><b>PrEP Initiation Date<b></td>"
+                               + "<td><b>Last Visit Date at PrEP clinic<b></td>"
+                               + "<td><b>Last PrEP ARV taken<b></td>"
+                               + "<td><b>Last Next schedule Date<b></td>"
+                               + "<td><b>Days of missed appointment since last schedule date<b></td>"
+                               + "</tr>";
+                                           
+                    
+                     * System.out.println(entry.getKey() + " :" + entry.getValue());
+                                   text=text+"<tr align='center'>"+"<td>" + entry.getValue() + "</td>"
+                                               + "<td>" + entry.getKey() + "</td>"+"</tr>";
+              
+                    
+                    emailText = emailText + "</table>";
+                    */    

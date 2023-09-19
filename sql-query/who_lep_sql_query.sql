@@ -65,3 +65,44 @@ INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
 WHERE de.uid in ('evXyDr6c7eu','EnQPW5xZDPX','bLR7YvL1f5O') and org.uid = 'WwFCWM75uGn'
 and pe.startdate >= '2019-01-01' and pe.enddate <= '2019-12-31'
 and dv.deleted = false order by pe.startdate;
+
+
+-- Countries with Zero Foreign born new cases
+select ous.namelevel2, ous.namelevel3, sum(dv.value::int) from datavalue dv
+inner join _orgunitstructure ous on ous.organisationunitid = dv.sourceid
+where dv.dataelementid in (144) and dv.periodid = 58530
+group by ous.namelevel2, ous.namelevel3
+order by sum, ous.namelevel2, ous.namelevel3
+
+
+-- Zero_data_value_New cases_GLP_indicator -- 07/08/2023
+
+select ous.namelevel2, ous.namelevel3, sum(dv.value::int) from datavalue dv
+inner join _orgunitstructure ous on ous.organisationunitid = dv.sourceid
+where dv.dataelementid in (select dataelementid from dataelement where uid in (
+'evXyDr6c7eu','gVmFx873rdZ','IQgrP2W9gTV','liZaznYiWwp')) 
+and dv.periodid in ( select periodid from period 
+where startdate = '2022-01-01' and enddate = '2023-12-31')
+group by ous.namelevel2, ous.namelevel3
+order by sum, ous.namelevel2, ous.namelevel3;
+
+
+select ous.namelevel2, ous.namelevel3, sum(dv.value::int) from datavalue dv
+inner join _orgunitstructure ous on ous.organisationunitid = dv.sourceid
+where dv.dataelementid in (select dataelementid from dataelement where uid in (
+'evXyDr6c7eu','gVmFx873rdZ','IQgrP2W9gTV','liZaznYiWwp')) 
+and dv.periodid in ( select periodid from period 
+where startdate = '2022-01-01' and enddate = '2022-12-31') 
+group by ous.namelevel2, ous.namelevel3 having sum(dv.value::int) = 0
+order by sum, ous.namelevel2, ous.namelevel3;
+
+-- New cases - Children_GLP Zero_data_value_New cases - Children_GLP_indicator
+select ous.namelevel2, ous.namelevel3, sum(dv.value::int) from datavalue dv
+inner join _orgunitstructure ous on ous.organisationunitid = dv.sourceid
+where dv.dataelementid in (select dataelementid from dataelement where uid in (
+'evXyDr6c7eu','gVmFx873rdZ','IQgrP2W9gTV' )) and dv.categoryoptioncomboid in (
+select categoryoptioncomboid from categoryoptioncombo where uid = 'ZZFiCRpT37i')
+and dv.periodid in ( select periodid from period 
+where startdate = '2022-01-01' and enddate = '2022-12-31') 
+group by ous.namelevel2, ous.namelevel3 having sum(dv.value::int) = 0
+order by sum, ous.namelevel2, ous.namelevel3;
