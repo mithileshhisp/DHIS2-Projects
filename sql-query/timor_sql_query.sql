@@ -78,3 +78,23 @@ in ( select dataelementid from dataelement where uid in (
 'YfOzH9DqJeN',
 'H2qjZE32mMF'));
 
+-- http://172.105.47.158/ihip_timor -- ict4cop_kenya - 4646
+-- delete event program -- http://172.105.47.158/ihip_timor -- 26/09/2023
+
+select * from program where uid = 'sKFnwwYd4Bv'
+
+select * from program where programid = 61435;
+
+
+delete from programstageinstance where programinstanceid
+in ( select programinstanceid from programinstance where 
+programid = 61435);
+
+delete from programinstance where 
+programid = 61435;
+
+delete from programstage where 
+programid = 61435;
+
+delete from program where programid = 61435;
+

@@ -6,6 +6,20 @@
  -- COVID19 - CCCC (4C) Reporting Dataset HiuM9tRwiT7
  
  
+ 
+-- 29/09/2023 mizoram ipa file type event datavalue with file uid query
+
+select * from fileresource where uid = 'uOehOZNFO4w';
+
+select psi.uid eventID,psi.programstageinstanceid, psi.executiondate::date,
+psi.duedate::date, data.key as dataElement_uid,de.name,
+cast(data.value::json ->> 'value' AS VARCHAR) as file_uid FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE
+INNER JOIN dataelement de ON de.uid = data.key
+and de.uid = 'ABhQQL8wrPd';
+
+---- 
+ 
 select * from datavalueaudit where dataelementid in (
 select dataelementid from datasetelement where datasetid in (
 select datasetid from dataset where uid = 'HiuM9tRwiT7')) and
@@ -1692,3 +1706,131 @@ and psi.uid = 'AVn2JjgGx8u';
                     
                     emailText = emailText + "</table>";
                     */    
+
+
+
+select psi.uid eventID,psi.programstageinstanceid, psi.executiondate::date,
+psi.duedate::date,data.key as dataElement_uid,
+cast(data.value::json ->> 'value' AS VARCHAR) FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE
+INNER JOIN dataelement de ON de.uid = data.key
+
+where cast(data.value::json ->> 'value' AS VARCHAR) 
+like '%0000-06-29%' and de.valuetype = 'DATE'
+
+(
+select
+	distinct (extract(year
+from
+	pe.startdate)) as datayear
+from
+	period pe )
+union (
+select
+distinct (extract(year
+from
+pe.enddate)) as datayear
+from
+period pe )
+union (
+select
+distinct (extract(year
+from
+(case
+when 'SCHEDULE' = psi.status then psi.duedate
+else psi.executiondate
+end))) as datayear
+from
+programstageinstance psi
+where
+(case
+when 'SCHEDULE' = psi.status then psi.duedate
+else psi.executiondate
+end) is not null
+and psi.deleted is false )
+order by
+datayear asc;
+
+select psi.uid eventID,psi.programstageinstanceid, psi.executiondate::date,
+psi.duedate::date from programstageinstance psi where
+(EXTRACT(year from psi.executiondate) >= 1975
+or EXTRACT(year from psi.executiondate) <= 2048) 
+order by psi.executiondate;
+
+select * from programstageinstance where executiondate::date = '0000-06-29'
+
+
+select psi.executiondate from programstageinstance psi where
+(EXTRACT(year from psi.duedate) >= 1975
+ or EXTRACT(year from psi.duedate) <= 2048 )
+ order by psi.duedate;
+ 
+select executiondate,duedate from programstageinstance order by  executiondate desc
+ limit 10000;
+ 
+ 
+ 
+select psi.uid eventID,psi.programstageinstanceid, psi.executiondate::date,
+psi.duedate::date,data.key as dataElement_uid,de.name,
+cast(data.value::json ->> 'value' AS VARCHAR) FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE
+INNER JOIN dataelement de ON de.uid = data.key
+and psi.programstageid = 219385 and psi.programstageinstanceid = 17094459
+ 
+ 
+ 
+select psi.uid eventID,psi.programstageinstanceid, psi.executiondate::date,
+psi.duedate::date,org.uid orgUID,org.name orgName,data.key as dataElement_uid,
+cast(data.value::json ->> 'value' AS VARCHAR) FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE
+INNER JOIN dataelement de ON de.uid = data.key
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+where cast(data.value::json ->> 'value' AS VARCHAR) 
+like '%0000-06-29%'
+
+order by psi.executiondate;
+
+
+
+
+-- using springBoot for sending e-mail
+
+-- use APIs and SQL-Views
+
+-- APIs
+
+//https://train-dhis-mm.icap.baosystems.com/api/trackedEntityInstances.json?ouMode=DESCENDANTS&program=bASezt1TUKD&ou=ikjUpqWKy7H&order=lastUpdated:desc&skipPaging=true
+//https://links.hispindia.org/prep_tracker/api/trackedEntityInstances.json?skipPaging=true&program=bASezt1TUKD&ou=Cc2ntGA27wX&fields=orgUnit,trackedEntityInstance,attributes[attribute,value],enrollments[orgUnitName,events[programStage,eventDate,dataValues[dataElement,value]]]
+//https://train-dhis-mm.icap.baosystems.com/api/trackedEntityInstances/NhQtcUiPOXi.json?skipPaging=true&program=bASezt1TUKD&ou=RZjIN6Adcdr&ouMode=DESCENDANTS&fields=orgUnit,trackedEntityInstance,attributes[attribute,value],enrollments[orgUnitName,events[programStage,eventDate,dataValues[dataElement,value]]]
+//https://train-dhis-mm.icap.baosystems.com/api/trackedEntityInstances.json?skipPaging=true&program=bASezt1TUKD&ou=RZjIN6Adcdr&ouMode=DESCENDANTS&fields=orgUnit,trackedEntityInstance,attributes[attribute,value],enrollments[orgUnitName,events[programStage,eventDate,dataValues[dataElement,value]]]
+//https://train-dhis-mm.icap.baosystems.com/api/trackedEntityInstances/NhQtcUiPOXi.json?skipPaging=true&program=bASezt1TUKD&ou=RZjIN6Adcdr&fields=orgUnit,trackedEntityInstance,attributes[attribute,value],enrollments[orgUnitName,events[event,programStage,eventDate,dataValues[dataElement,value]]]
+//https://train-dhis-mm.icap.baosystems.com/api/trackedEntityInstances.json?skipPaging=true&program=bASezt1TUKD&ou=ikjUpqWKy7H&fields=orgUnit,trackedEntityInstance,attributes[attribute,value],enrollments[orgUnitName,events[event,programStage,eventDate,dataValues[dataElement,value]]]
+
+-- SQL-Views
+-- name -- MissAppointmentTEIList -- uid  -- Q9LGwm4cqeG
+SELECT tei.uid AS teiUID, psi.uid AS eventUID, org.uid AS orgUID,org.name AS orgName,
+psi.executiondate::date as Event_date, cast(data.value::json ->> 'value' AS VARCHAR) 
+AS last_next_schedule_date,extract (epoch from (CURRENT_DATE - cast(data.value::json ->> 'value' AS timestamp)))::integer/86400 
+as dayDiffrence FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE
+INNER JOIN dataelement de ON data.key = de.uid
+INNER JOIN organisationunit org ON psi.organisationunitid = org.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE de.uid = '${deUID}' AND org.uid = '${orgUID}' AND tei.uid =  '${teiUID}'
+AND psi.programstageid in ( select programstageid from programstage where uid = 'wmKHppc1gL7' )
+AND cast(data.value::json ->> 'value' AS DATE) <= CURRENT_DATE - interval '7 day' 
+order by psi.executiondate DESC LIMIT 1;
+
+
+-- name -- LatestEventOfTEI -- uid  -- uxSLQ0uffI4
+SELECT tei.uid AS teiUID, psi.uid AS eventId
+FROM programstageinstance psi 
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+WHERE ps.uid = '${prgStageUID}'  AND tei.uid  =  '${teiUID}'
+order by psi.executiondate DESC LIMIT 1;
+
+-- mithilesh.thakur@hispindia.org -- PSI TOP (Tamwe)
+-- mithilesh.hisp@gmail.com -- Latha STD Team 

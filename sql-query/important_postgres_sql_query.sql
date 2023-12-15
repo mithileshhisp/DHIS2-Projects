@@ -4,7 +4,7 @@
 -- Dh!sUs3Rp@SS1
 -- ln2  172.104.173.245  96 5454   Dh!$U$3R#p@SS
 -- ln1  139.162.61.147   96  dhis@hisp 3333
--- https://amrhp.hispindia.org/dhis2 -- 172.105.47.158 -- 22 -- ict kenya -- 4646
+-- https://amrhp.hispindia.org/dhis2 -- 172.105.47.158 -- 22 -- ict kenya -- 4646 -- dhis -- d#$h!s@0987
 -- 
  -- create user on poatgres
  
@@ -15,14 +15,21 @@
  
 -- eventDataValue update dataElement-value
  
+pg_dump -U dhis -d piramal_240 -T analytics* > /home/mithilesh/piramal_240_12Dec2023.sql 
  
+pg_dump -U dhis -d piramal_240 -T analytics* > /home/mithilesh/piramal_240_02Nov2023.sql 
+ 
+ timor_v238
+pg_dump -U dhis -d piramal_240 -T analytics* > /home/mithilesh/piramal_240_02Nov2023.sql
 
-pg_dump -U dhis -d timor_v238 -T analytics* > /home/mithilesh/timor_v238_21Aug2023.sql
+pg_dump -U dhis -d timor_v238 -T analytics* > /home/mithilesh/timor_v238_16Nov2023.sql
 pg_dump -U dhis -d prep_tracker_v238 -T analytics* > /home/mithilesh/prep_tracker_v238_29Aug2023.sql
 
 pg_dump -U dhis -d unfpa_239 -T analytics*  > /home/mithilesh/unfpa_239_18Sept2023_backup.sql
 
 pg_dump -U dhis -d unfpa_239 -T analytics*  > /home/mithilesh/unfpa_239_19Sept2023_backup.sql
+
+pg_dump -U dhis -d malaria_timor_v236 -T analytics*  > /home/mithilesh/malaria_timor_v236_backup_16Nov2023.sql
  
 UPDATE programstageinstance SET 
 eventdatavalues = jsonb_set(eventdatavalues,'{FmDPRFXrMaG, value}', '"2021-08-17T20:53:08.000Z"',true) 
@@ -171,6 +178,8 @@ SELECT pg_size_pretty( pg_database_size('hiv_tracker_234_18_06_2021') );
 SELECT pg_size_pretty( pg_database_size('ippf_234_fpan_22_06_2021') );
 
 SELECT pg_size_pretty( pg_database_size('icmr_nikushta_v228_23062021') ); // 1063 in 2.28
+
+SELECT pg_size_pretty( pg_database_size('dhis2_Training') );
 
 -- table size 
 
@@ -482,6 +491,17 @@ delete from messageconversation;
 delete from message;
 
 -- A way to confirm the list of current existing years that are used during the Analytics Export process is running this query:
+-- wrong period issue in run analytics
+( select distinct (extract(year
+from pe.startdate)) as datayear ,pe.periodid
+from period pe )
+union 
+( select distinct (extract(year
+from pe.enddate)) as datayear,pe.periodid
+from period pe )
+
+order by
+datayear desc;
 
 (
 select

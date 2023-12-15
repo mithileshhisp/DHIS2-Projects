@@ -27,7 +27,21 @@ INNER JOIN trackedentitycomment tec ON tec.trackedentitycommentid = psic.tracked
 where psi.programstageinstanceid in ( select programstageinstanceid from
 programstageinstance where programinstanceid = 539676);
 
+
+select psi.programstageinstanceid,psi.uid,psic.sort_order,psic.trackedentitycommentid, 
+tec.commenttext, tec.createddate,tec.creator from  programstageinstance psi
+INNER JOIN programstageinstancecomments psic ON psic.programstageinstanceid = psi.programstageinstanceid
+INNER JOIN trackedentitycomment tec ON tec.trackedentitycommentid = psic.trackedentitycommentid
+where psi.programstageinstanceid in ( select programstageinstanceid from
+programstageinstance where programinstanceid = 539676);
+
+
 -- delete on testing instance on link
+delete from programstageinstancecomments where programstageinstanceid in 
+( select programstageinstanceid from
+programstageinstance where programinstanceid = 539676);
+
+-- delete on production instance on link 19/09/2023
 delete from programstageinstancecomments where programstageinstanceid in 
 ( select programstageinstanceid from
 programstageinstance where programinstanceid = 539676);
@@ -271,6 +285,52 @@ delete from usersetting where userinfoid in ( 536498 );
 delete from userkeyjsonvalue where namespace = 'trackerCaptureGridColumns' 
 and userid in ( 536498 );
 
+-- 10/10/2023
+
+select * from users where username in ( 'azadnagar', 'preetnagar') ;
+
+select * from usersetting where userinfoid in ( 536507,536508 );
+delete from usersetting where userinfoid in ( 536507,536508 );	
+
+select * from userkeyjsonvalue where namespace = 'trackerCaptureGridColumns' 
+and userid in ( 536507,536508 );
+
+delete from userkeyjsonvalue where namespace = 'trackerCaptureGridColumns' 
+and userid in ( 536507,536508 );
+
+
+-- 05/12/2023
+
+select * from usersetting where userinfoid in ( select userid from users where username in 
+( 'newggsnagar' ) );
+
+delete from usersetting where userinfoid in ( select userid from users where username in 
+( 'newggsnagar' ) );
+
+select * from userkeyjsonvalue where namespace = 'trackerCaptureGridColumns'
+and userid in ( select userid from users where username in ( 'newggsnagar'));
+
+delete from userkeyjsonvalue where namespace = 'trackerCaptureGridColumns'
+and userid in ( select userid from users where username in ( 'newggsnagar'));
+
+
+-- 12/12/2023
+
+select * from usersetting where userinfoid in ( select userid from users where username in 
+( 'newggsnagar','ggsnagar','harkrishanagar','preetnagar' ) );
+
+delete from usersetting where userinfoid in ( select userid from users where username in 
+( 'newggsnagar','ggsnagar','harkrishanagar','preetnagar' ) );
+
+select * from userkeyjsonvalue where namespace = 'trackerCaptureGridColumns'
+and userid in ( select userid from users where username 
+in ('newggsnagar','ggsnagar','harkrishanagar','preetnagar'));
+
+delete from userkeyjsonvalue where namespace = 'trackerCaptureGridColumns'
+and userid in ( select userid from users where username 
+in ('newggsnagar','ggsnagar','harkrishanagar','preetnagar'));
+
+
 -- issue related to soft delete of TEI,enrollment,events
 delete from programinstance where deleted is true;
 
@@ -286,3 +346,62 @@ select programinstanceid from programinstance where deleted is true);
 delete from trackedentitydatavalueaudit where programstageinstanceid in (
 select programstageinstanceid from programstageinstance where programinstanceid in (
 select programinstanceid from programinstance where deleted is true));
+
+-- 06/10/2023
+
+-- relationship query
+
+select rels.relationshiptypeid,rels.from_relationshipitemid,rels.to_relationshipitemid,rel1.relationshipitemid, rel1.trackedentityinstanceid
+as from_tei,rel2.relationshipitemid, rel2.trackedentityinstanceid as to_tei from relationshipitem rel1
+INNER JOIN relationship rels ON rels.from_relationshipitemid = rel1.relationshipitemid
+INNER JOIN relationshipitem rel2 ON rel2.relationshipitemid = rels.to_relationshipitemid	
+where rel1.trackedentityinstanceid in (SELECT tei.trackedentityinstanceid
+FROM trackedentityattributevalue teav
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav.trackedentityinstanceid
+INNER JOIN trackedentityattribute tea ON tea.trackedentityattributeid = teav.trackedentityattributeid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid  = tei.trackedentityinstanceid 
+INNER JOIN program prg ON prg.programid = pi.programid
+WHERE tea.uid = 'KrCahWFMYYz' and prg.uid = 'BgTTdBNKHwc' and rel1.trackedentityinstanceid = 424355 )
+order by rel1.trackedentityinstanceid ;
+
+
+select rels.relationshiptypeid,rels.from_relationshipitemid,rels.to_relationshipitemid,rel1.relationshipitemid, rel1.trackedentityinstanceid
+as from_tei,rel2.relationshipitemid, rel2.trackedentityinstanceid as to_tei from relationshipitem rel1
+INNER JOIN relationship rels ON rels.from_relationshipitemid = rel1.relationshipitemid
+INNER JOIN relationshipitem rel2 ON rel2.relationshipitemid = rels.to_relationshipitemid	
+where rels.relationshiptypeid = 360319 and 
+rel2.trackedentityinstanceid in ( 425649,425659,425660,425662 );
+
+-- tei list with multiple TEA
+
+SELECT tei.trackedentityinstanceid teiID, tei.uid teiUID, teav1.value as dob, 
+EXTRACT(year FROM AGE(current_date,teav1.value::date))::int as age,
+teav2.value, org.uid AS orgUID,org.name AS orgName 
+FROM trackedentityattributevalue teav1
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN ( SELECT trackedentityinstanceid,value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid = 139 ) teav2
+ON teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
+INNER JOIN programinstance pi  on pi.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = pi.organisationunitid
+INNER JOIN program prg on prg.programid = pi.programid
+WHERE teav1.trackedentityattributeid =  138 
+and prg.uid = 'TcaMMqHJxK5' and tei.created::date between
+'2023-01-01' and '2023-09-30';
+
+select * from trackedentityattributevalue
+where trackedentityattributeid = 521331
+and trackedentityinstanceid = 423856; -- SES
+
+-- stage Socio-economic details program -- 1. Household Program
+SELECT tei.trackedentityinstanceid, tei.uid AS teiUID, psi.uid AS eventUID, psi.executiondate::date as Event_date,
+psi.duedate::date,data.key as de_uid,cast(data.value::json ->> 'value' AS VARCHAR) AS de_value 
+FROM programstageinstance psi
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN dataelement de ON de.uid = data.key
+WHERE psi.programstageid in ( select programstageid from programstage where uid = 'FudWXWCAAM9')
+and tei.trackedentityinstanceid in (421565) and de.uid = 'Jrax4JcLZK4';
+
+

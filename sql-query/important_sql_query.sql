@@ -1,4 +1,71 @@
 
+-- AMR Varanasi 31/08/2023 delete Favorites created before 22/08/2023
+
+delete from visualization_categorydimensions
+where visualizationid in ( select visualizationid
+from visualization where created::date < '2023-08-22'); -- 623
+
+delete from visualization_columns
+where visualizationid in ( select visualizationid
+from visualization where created::date < '2023-08-22'); -- 623
+
+delete from visualization_filters
+where visualizationid in ( select visualizationid
+from visualization where created::date < '2023-08-22'); -- 928
+
+delete from visualization_organisationunits
+where visualizationid in ( select visualizationid
+from visualization where created::date < '2023-08-22'); -- 55
+
+delete from visualization_rows
+where visualizationid in ( select visualizationid
+from visualization where created::date < '2023-08-22'); -- 514
+
+delete from visualization_datadimensionitems
+where visualizationid in ( select visualizationid
+from visualization where created::date < '2023-08-22'); -- 839
+
+delete from visualization_periods
+where visualizationid in ( select visualizationid
+from visualization where created::date < '2023-08-22'); -- 31
+
+delete from visualization_dataelementgroupsetdimensions
+where visualizationid in ( select visualizationid
+from visualization where created::date < '2023-08-22'); -- 28
+
+delete from visualization_orgunitlevels
+where visualizationid in ( select visualizationid
+from visualization where created::date < '2023-08-22'); -- 1
+
+delete from visualization where
+created::date < '2023-08-22'; -- 358
+
+
+-- 08/11/2023
+-- delete all dashboard form AMR Tanda production instance
+
+select * from dashboard;
+
+delete from dashboard;
+delete from dashboard_items;
+
+delete from visualization_columns;
+delete from visualization_datadimensionitems;
+delete from visualization_filters;
+delete from visualization_organisationunits;
+delete from visualization_rows;
+delete from dashboarditem;
+delete from dashboarditem_reports;
+delete from visualization_dataelementgroupsetdimensions;
+delete from visualization_categoryoptiongroupsetdimensions;
+delete from visualization_categorydimensions;
+delete from visualization_periods;
+delete from visualization_yearlyseries;
+delete from visualization_orgunitlevels;
+delete from visualization;
+
+
+
 -- organisationunit with parent
 -- analytics table list
 
@@ -908,6 +975,16 @@ INNER JOIN users us ON us.userid = urm.userid
 INNER JOIN userrole ur on ur.userroleid = urm.userroleid
 order by ur.name
 
+
+-- from 2.39 /2.40 and above
+select uf.uid userUID,	urm.userid userID, uf.username userName,
+ur.uid userRoleUID, urm.userroleid userRoleID,ur.name 
+userRoleName from  userrolemembers urm
+INNER JOIN userinfo uf ON uf.userinfoid = urm.userid
+INNER JOIN userrole ur on ur.userroleid = urm.userroleid
+order by ur.name
+
+
 -- user-outPut org list
 
 select 	uo.userinfoid,us.username, org.uid outPutOrgUID from  userdatavieworgunits uo
@@ -1449,6 +1526,16 @@ INNER JOIN organisationunit org ON org.organisationunitid = pi.organisationuniti
 INNER JOIN program prg on prg.programid = pi.programid
 WHERE teav1.trackedentityattributeid =  138 and prg.uid = 'TcaMMqHJxK5';
 
+-- piramal event list with age on visit( diffrence of age from event-date to date-of-birth)
+SELECT psi.uid eventID,psi.executiondate::date, teav.value::date 
+AS date_of_birth, EXTRACT(year FROM AGE(psi.executiondate,teav.value::date))::int
+FROM programstageinstance psi
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+where prg.uid = 'vyQPQ07JB9M' and teav.trackedentityattributeid = 7206;
+
+
 -- dmc attribute value and age calculation based on dob
 
 SELECT tei.uid teiUID, teav1.value as dob, 
@@ -1506,19 +1593,7 @@ where rel1.trackedentityinstanceid in ( select trackedentityinstanceid from
 trackedentityinstance where uid = 'GNqKL1hOeLi')
 order by rel1.trackedentityinstanceid;	
 
-
-select rels.relationshiptypeid,rels.from_relationshipitemid,rels.to_relationshipitemid,rel1.relationshipitemid, rel1.trackedentityinstanceid
-as from_tei,rel2.relationshipitemid, rel2.trackedentityinstanceid as to_tei from relationshipitem rel1
-INNER JOIN relationship rels ON rels.from_relationshipitemid = rel1.relationshipitemid
-INNER JOIN relationshipitem rel2 ON rel2.relationshipitemid = rels.to_relationshipitemid	
-where rel1.trackedentityinstanceid in (SELECT tei.trackedentityinstanceid
-FROM trackedentityattributevalue teav
-INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav.trackedentityinstanceid
-INNER JOIN trackedentityattribute tea ON tea.trackedentityattributeid = teav.trackedentityattributeid
-INNER JOIN programinstance pi ON pi.trackedentityinstanceid  = tei.trackedentityinstanceid 
-INNER JOIN program prg ON prg.programid = pi.programid
-WHERE tea.uid = 'ZQMF7taSAw8' and prg.uid = 'BgTTdBNKHwc' )
-order by rel1.trackedentityinstanceid;	
+o
 
 
 -- dmc event dataValue
@@ -2125,6 +2200,25 @@ INNER JOIN optionset ops ON ops.optionsetid = opv.optionsetid
 where ops.uid = 'cjuiUdHB366' order by ops.name;
 
 
+-- optionValue with attribueValue
+
+select ops.uid optionsetUID, ops.name optionsetName, opv.uid optionUID, opv.name optionName, 
+opv.code optionCode,opv.optionvalueid optionvalueID, opv.sort_order,cast(optionAttribute.value::json ->> 'value' AS VARCHAR) 
+AS villageID from optionvalue opv 
+JOIN json_each_text(opv.attributevalues::json) optionAttribute ON TRUE 
+INNER JOIN optionset ops ON ops.optionsetid = opv.optionsetid
+INNER JOIN attribute attr ON attr.uid = optionAttribute.key
+where ops.uid = 'p6fHp8sI0gA' and attr.uid = 'RDZKbFFn7EL' order by ops.name;
+
+-- organisationunit with attribueValue
+select orgunit.organisationunitid, orgunit.uid,orgunit.name,
+cast(orgUnitAttribute.value::json ->> 'value' AS VARCHAR) 
+from organisationunit orgunit 
+JOIN json_each_text(orgunit.attributevalues::json) orgUnitAttribute ON TRUE 
+INNER JOIN attribute attr ON attr.uid = orgUnitAttribute.key
+where attr.uid = 'l38VgCtdLFD' and orgunit.hierarchylevel = 4;
+
+
  -- who_leprosy reporting rate query
 
 SELECT dv.sourceid,org1.name as Region_Name ,org.name as country_name,count( dv.sourceid ) 
@@ -2611,7 +2705,9 @@ UPDATE programstageinstance SET
 eventdatavalues = jsonb_set(eventdatavalues,'{FmDPRFXrMaG, value}', '"2021-08-17T20:53:08.000Z"',true) 
 WHERE programstageinstanceid = '123621';
 
-
+UPDATE programstageinstance SET 
+eventdatavalues = jsonb_set(eventdatavalues,'{hsbXpo83f4I, value}', '"6268567"',true) 
+WHERE uid = 'bihnZb17v6R';
 
 
 -- for all events dataelement and its value
@@ -3555,6 +3651,15 @@ FROM users
 GROUP BY  username HAVING COUNT(username) > 1
 ORDER BY username;
 
+
+select * from users where username = 'uh1_chououn_abbasieh'
+
+SELECT username, COUNT(username)
+FROM users
+GROUP BY  username HAVING COUNT(username) > 1
+ORDER BY username;
+
+
 SELECT username, lastupdated, COUNT(username)
 FROM users
 GROUP BY lastupdated, username 
@@ -4214,6 +4319,339 @@ INNER join period pe ON pe.periodid = dv.periodid
 INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
 INNER join periodtype pety ON pety.periodtypeid = pe.periodtypeid
 WHERE de.uid = 'AaIqiIX2qxH' and dv.value is not null and dv.deleted is not true;	
+
+
+-- nipi query 05/10/2023
+
+delete from trackedentityinstance where created::date 
+in ('2023-10-04', '2023-10-05');
+
+delete from trackedentityattributevalue where trackedentityinstanceid in (
+select trackedentityinstanceid from trackedentityinstance where created::date 
+in ('2023-10-04', '2023-10-05'));
+
+delete from trackedentityprogramowner where trackedentityinstanceid in (
+select trackedentityinstanceid from trackedentityinstance where created::date 
+in ('2023-10-04', '2023-10-05'));
+
+
+select * from programinstance where trackedentityinstanceid in (
+select trackedentityinstanceid from trackedentityinstance where created::date 
+in ('2023-10-04', '2023-10-05'));
+
+delete from programstageinstance where created::date 
+in ('2023-10-06') and programstageid = 7641;
+
+
+
+
+-- eventdatavalues_json_query
+-- json query
+
+-- got from global-team
+
+SELECT data.key as de_uid,
+cast(data.value::json → ‘value’ AS VARCHAR) AS de_value
+FROM programstageinstance psi
+JOIN json_each_text(eventdatavalues::json) data ON TRUE
+
+-- json query for eventdatavalues in programstageinstance table
+
+-- for all events dataelement and its value
+SELECT data.key as de_uid,
+cast(data.value::json ->> 'value' AS VARCHAR) AS de_value
+FROM programstageinstance psi
+JOIN json_each_text(eventdatavalues::json) data ON TRUE;
+
+
+SELECT data.key as de_uid,
+cast(data.value::json ->> 'value' AS VARCHAR) AS de_value, psi.uid eventID,
+psi.executiondate::date FROM programstageinstance psi
+JOIN json_each_text(eventdatavalues::json) data ON TRUE
+and psi.executiondate between '2021-01-01' and '2021-10-05'; 
+
+-- event list with dataelement-value
+SELECT data.key as de_uid,
+cast(data.value::json ->> 'value' AS VARCHAR) AS de_value, psi.uid eventID,
+psi.executiondate::date FROM programstageinstance psi
+JOIN json_each_text(eventdatavalues::json) data ON TRUE
+and psi.executiondate between '2021-08-01' and '2021-11-30'; 
+
+-- event list with dataelement-value
+SELECT psi.uid eventID,psi.executiondate::date, data.key as de_uid,
+cast(data.value::json ->> 'value' AS VARCHAR) AS de_value, 
+prg.uid AS prgUID,de.name AS dataElementName FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN dataelement de ON de.uid = data.key
+where psi.executiondate between '2021-08-01' and '2021-11-30';
+
+-- program wise event list with dataelement-value
+SELECT psi.uid eventID,psi.storedby, psi.status, psi.executiondate::date,
+psi.completedby, psi.completeddate::date,psi.deleted,data.key as de_uid,
+cast(data.value::json ->> 'value' AS VARCHAR) AS de_value, de.name AS dataElementName,
+prg.uid AS prgUID FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN dataelement de ON de.uid = data.key
+where prg.uid = 'dzizG8i1cmP' and psi.executiondate between '2021-08-01' and '2021-08-31'
+order by psi.programstageinstanceid;
+
+-- event list with dataelement-value with trackedentityattributevalue
+SELECT psi.uid eventID,psi.executiondate::date, data.key as de_uid,
+cast(data.value::json ->> 'value' AS VARCHAR) AS de_value, 
+prg.uid AS prgUID,de.name AS dataElementName, teav.value AS CR_Number FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN dataelement de ON de.uid = data.key
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+where psi.executiondate between '2021-08-01' and '2021-11-30' and teav.trackedentityattributeid = 3418;
+
+-- tei list based on eventdatavalues particular dataelement value
+SELECT tei.uid as tei_uid, psi.uid eventID, psi.executiondate::date as eventDate,
+psi.status as eventStatus, pi.enrollmentdate::date as enrollmentDate, org.uid as orgUnitUID,
+data.key as dataElementUID, cast(data.value::json ->> 'value' AS VARCHAR) AS data_value
+FROM programstageinstance psi 
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstage prgs ON prgs.programstageid = psi.programstageid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN organisationunit org ON pi.organisationunitid = org .organisationunitid
+INNER JOIN dataelement de ON de.uid = data.key
+WHERE org.path like '%cCTQiGkKcTk%' and prg.uid = 'L78QzNqadTV' and psi.deleted is false 
+and prgs.uid = 'zRUw1avYEvI' and de.uid = 'gPHLt0PQq1b' 
+and cast(data.value::json ->> 'value' AS VARCHAR) between '2021-01-01' and '2021-12-31';
+
+-- sql-view with parameters
+SELECT tei.uid as tei_uid, org.uid as orgUnitUID, data.key as dataElementUID, 
+cast(data.value::json ->> 'value' AS VARCHAR) AS data_value FROM programstageinstance psi 
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstage prgs ON prgs.programstageid = psi.programstageid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN organisationunit org ON pi.organisationunitid = org .organisationunitid
+INNER JOIN dataelement de ON de.uid = data.key
+WHERE org.path like '%${orgunit}%' and prg.uid = 'L78QzNqadTV' and psi.deleted is false 
+and prgs.uid = 'zRUw1avYEvI' and de.uid = '${dataelement}' 
+and cast(data.value::json ->> 'value' AS VARCHAR) between '${startdate}' and '${enddate}';
+
+api/sqlViews/UoB6FSJlnkz/data.json?var=orgunit:cCTQiGkKcTk&var=dataelement:gPHLt0PQq1b&var=startdate:2021-01-01&var=enddate:2021-12-31&paging=false
+https://tracker.hivaids.gov.np/save-child-2.27/api/sqlViews/UoB6FSJlnkz/data.json?var=orgunit:cCTQiGkKcTk&var=dataelement:gPHLt0PQq1b&var=startdate:2021-01-01&var=enddate:2021-12-31&paging=false
+
+-- for all events dataelement and its value and programstageinstanceid , UID
+SELECT data.key as de_uid,
+cast(data.value::json ->> 'value' AS VARCHAR) AS de_value, psi.uid,psi.programstageinstanceid
+FROM programstageinstance psi
+JOIN json_each_text(eventdatavalues::json) data ON TRUE;
+
+
+SELECT data.key as de_uid,
+cast(data.value::json ->> 'value' AS VARCHAR) AS de_value, psi.uid,psi.programstageinstanceid
+FROM programstageinstance psi
+JOIN json_each_text(eventdatavalues::json) data ON TRUE where psi.programstageinstanceid = 79876;
+
+
+ -- single dataElement value
+SELECT e.uid, eventdatavalues -> 'ooIQeHbhH61' ->> 'value' as dataValue
+FROM programstageinstance e
+where eventdatavalues -> 'ooIQeHbhH61' is not null 
+ORDER BY eventdatavalues -> 'ooIQeHbhH61' ->> 'value';
+
+
+-- json query for AMR-2.34
+
+
+SELECT e.uid, eventdatavalues -> 'ooIQeHbhH61' ->> 'value' as amrid
+FROM programstageinstance e
+and eventdatavalues -> 'ooIQeHbhH61' is not null 
+ORDER BY eventdatavalues -> 'ooIQeHbhH61' ->> 'value';
+
+
+SELECT eventdatavalues -> 'lIkk661BLpG' ->> 'value' as amrid
+FROM programstageinstance e
+INNER JOIN programinstance pi ON e.programinstanceid = pi.programinstanceid
+INNER JOIN program pr ON pi.programid = pr.programid
+INNER JOIN organisationunit o ON e.organisationunitid = o.organisationunitid
+WHERE o.path LIKE '%mKmB0wcw7Gf%' and eventdatavalues -> 'lIkk661BLpG' is not null 
+ORDER BY eventdatavalues -> 'lIkk661BLpG' ->> 'value';
+
+
+SELECT eventdatavalues -> 'lIkk661BLpG' ->> 'value' as amrid
+FROM programstageinstance e
+INNER JOIN programinstance pi ON e.programinstanceid = pi.programinstanceid
+INNER JOIN program pr ON pi.programid = pr.programid
+INNER JOIN organisationunit o ON e.organisationunitid = o.organisationunitid
+WHERE o.path LIKE '%mKmB0wcw7Gf%' and eventdatavalues is not null 
+ORDER BY eventdatavalues -> 'lIkk661BLpG' ->> 'value';
+
+ -- for HIV tracker
+ -- eventdatavalues
+
+SELECT tei.uid  as tei_uid,  psi.uid as event, psi.created::date,  psi.status ,
+eventdatavalues -> 'WpBa1L6xxPC' ->> 'value' as art_status FROM programstageinstance psi
+INNER JOIN programinstance pi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN program prg ON pi.programid = prg.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN organisationunit org ON psi.organisationunitid = org .organisationunitid
+WHERE org.uid =  'aXquUzlrYYv' and prg.uid = 'L78QzNqadTV' and psi.deleted is false and 
+eventdatavalues -> 'WpBa1L6xxPC' is not null  and 
+eventdatavalues -> 'WpBa1L6xxPC' ->> 'value' = 'transfer_out' order by psi.created desc;
+
+-- event -data-value
+
+SELECT org.uid as orgUnit, tei.uid as tei, pi.uid AS enrollment, psi.uid as event, psi.created,
+psi.status, eventdatavalues -> 'WpBa1L6xxPC' ->> 'value' as art_status, psi.duedate, psi.executiondate as eventDate from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE prg.uid = '${program}' and tei.uid = '${tei}' and 
+eventdatavalues -> 'WpBa1L6xxPC' ->> 'value' = 'transfer_out'
+and psi.deleted is false order by psi.executiondate desc LIMIT 1 ; 
+
+-- based on enrollmentdate
+
+SELECT distinct tei.uid  as tei_uid FROM programstageinstance psi
+INNER JOIN programinstance pi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN program prg ON pi.programid = prg.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN organisationunit org ON psi.organisationunitid = org .organisationunitid
+WHERE org.uid =  'UcFtqIBF6dF' and prg.uid = 'L78QzNqadTV' and psi.deleted is false and 
+eventdatavalues -> 'WpBa1L6xxPC' is not null and pi.enrollmentdate::date between
+'2019-01-01' and '2019-12-31';
+
+SELECT tei.uid  as tei_uid,  psi.uid as event, psi.created::date,  psi.status ,
+eventdatavalues -> 'WpBa1L6xxPC' ->> 'value' as dataValue FROM programstageinstance psi
+INNER JOIN programinstance pi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN program prg ON pi.programid = prg.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN organisationunit org ON psi.organisationunitid = org .organisationunitid
+WHERE org.uid =  'UcFtqIBF6dF' and prg.uid = 'L78QzNqadTV' and psi.deleted is false and 
+eventdatavalues -> 'WpBa1L6xxPC' is not null and pi.enrollmentdate::date between
+'2019-01-01' and '2019-12-31';
+
+
+-- tei list based on eventdatavalues dataelement value
+SELECT tei.uid  as tei_uid,  psi.uid as event, psi.created::date,  psi.status ,
+eventdatavalues -> 'WpBa1L6xxPC' ->> 'value' as art_status, pi.enrollmentdate::date FROM programstageinstance psi
+INNER JOIN programinstance pi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN program prg ON pi.programid = prg.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN organisationunit org ON pi.organisationunitid = org .organisationunitid
+WHERE org.path like  '%cCTQiGkKcTk%' and prg.uid = 'L78QzNqadTV' and pi.deleted is false and 
+eventdatavalues -> 'WpBa1L6xxPC' is not null  and 
+eventdatavalues -> 'WpBa1L6xxPC' ->> 'value' = 'transfer_out'
+and pi.enrollmentdate::date <= '2020-12-31';
+
+
+-- tei list based on eventdatavalues particular dataelement value
+
+SELECT tei.uid as tei_uid, psi.uid eventID, psi.executiondate::date as eventDate,
+psi.status as eventStatus, pi.enrollmentdate::date as enrollmentDate, org.uid as orgUnitUID,
+data.key as dataElementUID, cast(data.value::json ->> 'value' AS VARCHAR) AS data_value
+FROM programstageinstance psi 
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstage prgs ON prgs.programstageid = psi.programstageid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN organisationunit org ON pi.organisationunitid = org .organisationunitid
+INNER JOIN dataelement de ON de.uid = data.key
+WHERE org.path like '%cCTQiGkKcTk%' and prg.uid = 'L78QzNqadTV' and psi.deleted is false 
+and prgs.uid = 'zRUw1avYEvI' and de.uid = 'gPHLt0PQq1b' 
+and cast(data.value::json ->> 'value' AS VARCHAR) between '2021-01-01' and '2021-12-31';
+
+
+SELECT tei.uid as tei_uid,  psi.uid as eventUID, psi.executiondate::date as eventDate, 
+psi.status as eventStatus, eventdatavalues -> 'rQnmYAF1899' ->> 'value' as art_tre_date, 
+pi.enrollmentdate::date as enrollmentDate, org.uid as orgUnitUID FROM programstageinstance psi
+INNER JOIN programinstance pi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN program prg ON pi.programid = prg.programid
+INNER JOIN programstage prgs ON prgs.programstageid = psi.programstageid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN organisationunit org ON pi.organisationunitid = org .organisationunitid
+WHERE org.path like  '%cCTQiGkKcTk%' and prg.uid = 'L78QzNqadTV' and psi.deleted is false 
+and prgs.uid = 'zRUw1avYEvI' and eventdatavalues -> 'rQnmYAF1899' is not null and 
+eventdatavalues -> 'rQnmYAF1899' ->> 'value' between '2021-01-01' and '2021-12-31';
+
+SELECT tei.uid as tei_uid,  psi.uid as eventUID, psi.executiondate::date as eventDate, 
+psi.status as eventStatus, eventdatavalues -> 'gPHLt0PQq1b' ->> 'value' as art_tre_date, 
+pi.enrollmentdate::date as enrollmentDate, org.uid as orgUnitUID FROM programstageinstance psi
+INNER JOIN programinstance pi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN program prg ON pi.programid = prg.programid
+INNER JOIN programstage prgs ON prgs.programstageid = psi.programstageid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN organisationunit org ON pi.organisationunitid = org .organisationunitid
+WHERE org.path like  '%cCTQiGkKcTk%' and prg.uid = 'L78QzNqadTV' and psi.deleted is false 
+and prgs.uid = 'zRUw1avYEvI' and eventdatavalues -> 'gPHLt0PQq1b' is not null and 
+eventdatavalues -> 'gPHLt0PQq1b' ->> 'value' between '2021-01-01' and '2021-12-31';
+
+
+
+select * from json_each_text('{"a":"foo", "b":"bar"}')
+
+SELECT programstageinstanceid,uid,
+   eventdatavalues -> 'zTwMKXGt0xF' ->> 'value' as value
+FROM
+   programstageinstance where uid in ( 'AiSdX1jtq0x','ykEs09tttt7','vpcxSuFm4CS','d8f0Fjbjk2j',
+'QuV5wz4fzbK','YfwXSS3Q6F1','YHPOHL4Z7Q7')
+
+
+SELECT programstageinstanceid,
+   eventdatavalues -> 'FU4eoBAjxVJ' ->> 'value' as value,
+   eventdatavalues -> 'T7L6dtXlGRh' ->> 'value' as value,
+   eventdatavalues -> 'QPCKDxWIlds' ->> 'value' as value
+FROM
+   programstageinstance
+
+SELECT programstageinstanceid,
+   eventdatavalues ->> 'FU4eoBAjxVJ' AS deUid
+FROM
+   programstageinstance;
+
+SELECT programstageinstanceid, uid,
+ eventdatavalues #>> '{FU4eoBAjxVJ, value}',
+ eventdatavalues #>> '{T7L6dtXlGRh, value}',
+ eventdatavalues #>> '{T7L6dtXlGRh, value}'
+ 
+ FROM
+   programstageinstance;
+
+
+SELECT programstageinstanceid, uid,
+ eventdatavalues #>> '{gC5vAvkiDQC, value}'
+ 
+ FROM
+   programstageinstance;   
+
+
+SELECT programstageinstanceid, uid,
+ eventdatavalues #>> '{S1sDvEir5Ur, value}'
+ 
+ FROM
+   programstageinstance;
+
+
+
+create or replace function generate_uid()
+  returns text as
+$$
+declare
+  chars  text [] := '{0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z}';
+  result text := chars [11 + random() * (array_length(chars, 1) - 11)];
+begin
+  for i in 1..10 loop
+    result := result || chars [1 + random() * (array_length(chars, 1) - 1)];
+  end loop;
+  return result;	
+end;
+$$
+language plpgsql;
 
 
 

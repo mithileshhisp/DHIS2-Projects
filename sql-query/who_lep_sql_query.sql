@@ -106,3 +106,38 @@ and dv.periodid in ( select periodid from period
 where startdate = '2022-01-01' and enddate = '2022-12-31') 
 group by ous.namelevel2, ous.namelevel3 having sum(dv.value::int) = 0
 order by sum, ous.namelevel2, ous.namelevel3;
+
+
+
+-- who new server setup 17/11/2023
+
+postgres sql binary setup -- 
+
+https://www.enterprisedb.com/download-postgresql-binaries
+
+set path in Env varaible
+
+initdb -D D:\PostgreSQL\pgsql\data -U postgres -E utf8 -W -A scram-sha-256
+
+
+pg_ctl -D C:\PostgreSQL\pgsql\data -l logfile start
+pg_ctl -D C:\PostgreSQL\pgsql\data -l logfile stop
+
+create extension if not exists postgis;
+enable port 5432 in side data/postgres.conf file and create new-server on pgadmin with same port 5432 and user and password
+
+help file - https://www.geeksforgeeks.org/postgresql-installing-postgresql-without-admin-rights-on-windows/
+post-gis --  instalation https://www.postgresql.org/ftp/postgis/pg13/v3.4.0/win64/
+post-gis -- https://ftp.postgresql.org/pub/postgis/pg14/v3.4.0/win64/postgis-bundle-pg14x64-setup-3.4.0-1.exe
+
+pg_ctl.exe register -N "PostgreSQL" -U "NT AUTHORITY\NetworkService" -D "C:\PostgreSQL\pgsql\data" -w
+C:/PostgreSQL/pgsql/bin/pg_ctl.exe start -N "postgresql-13" -D "C:\PostgreSQL\pgsql\data" -w
+
+
+// schedular in window database backup
+
+https://www.sharepointdiary.com/2013/03/create-scheduled-task-for-powershell-script.html
+// symbol come in Maintenanace page bad characters
+https://community.dhis2.org/t/maintenanace-page-bad-characters/37061
+If that is set to windows-1252 (or anything except UTF-8/UTF8) then doing this in tomcat/bin/setenv.bat should do the trick:
+set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF8"

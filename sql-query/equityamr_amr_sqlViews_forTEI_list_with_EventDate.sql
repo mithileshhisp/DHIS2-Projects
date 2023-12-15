@@ -836,6 +836,127 @@ created::date < '2023-08-22'; -- 358
 
 
 
+---- AMR Varanasi pending TEI list in SQL-view in dataEntry app que
+
+-- pending sample result
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID,
+psi.eventdatavalues as datavalues, psi.created as created, 
+psi.executiondate as eventDate from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and 
+psi.executiondate >  CURRENT_DATE - INTERVAL '2 months' 
+and  psi.eventdatavalues -> 'u8VDCIwa3w4' is null and prg.uid = 'L7bu48EI54J'
+order by psi.executiondate desc;
+
+-- pending Antibiotics result
+
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID,
+psi.eventdatavalues as datavalues, psi.created as created, 
+psi.executiondate as eventDate, psi.status from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and 
+psi.executiondate >  CURRENT_DATE - INTERVAL '2 months' 
+and  psi.eventdatavalues -> 'u8VDCIwa3w4' is not null
+and eventdatavalues -> 'u8VDCIwa3w4' ->> 'value' in ( 'Organism growth detected' ) and psi.status  =  'ACTIVE'
+order by psi.executiondate desc;
+
+-- updated as on 06/12/2023
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID,
+psi.eventdatavalues as datavalues, psi.created as created, 
+psi.executiondate as eventDate, psi.status,prg.name from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and 
+psi.executiondate >  CURRENT_DATE - INTERVAL '2 months' 
+and psi.status  =  'ACTIVE' AND prg.uid != 'L7bu48EI54J'
+order by psi.executiondate desc;
+
+-- Pending Antibiotics Recived
+
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID,
+psi.eventdatavalues as datavalues, psi.created as created, 
+psi.executiondate as eventDate, psi.status from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and 
+psi.executiondate >  CURRENT_DATE - INTERVAL '2 months' 
+and  psi.eventdatavalues -> 'u8VDCIwa3w4' is not null
+and eventdatavalues -> 'u8VDCIwa3w4' ->> 'value' in ( 'Organism growth detected' )  and psi.status = 'COMPLETED'
+order by psi.executiondate desc;
+
+-- updated as on 06/12/2023
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID,
+psi.eventdatavalues as datavalues, psi.created as created, 
+psi.executiondate as eventDate, psi.status,prg.name from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and 
+psi.executiondate >  CURRENT_DATE - INTERVAL '2 months' 
+ and psi.status = 'COMPLETED' AND prg.uid != 'L7bu48EI54J'
+order by psi.executiondate desc;
+
+
+
+
+
+-- pending list
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID,
+psi.eventdatavalues as datavalues, psi.created as created, 
+psi.executiondate as eventDate from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and 
+psi.executiondate >  CURRENT_DATE - INTERVAL '2 months' 
+and  psi.eventdatavalues -> 'u8VDCIwa3w4' is null
+order by psi.executiondate desc;
+
+-- Sterile list
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID,
+psi.eventdatavalues as datavalues, psi.created as created, 
+psi.executiondate as eventDate from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and 
+psi.executiondate >  CURRENT_DATE - INTERVAL '2 months' 
+and  psi.eventdatavalues -> 'u8VDCIwa3w4' is not null
+and eventdatavalues -> 'u8VDCIwa3w4' ->> 'value' = 'Sterile'
+order by psi.executiondate desc;
+
+
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID,
+psi.eventdatavalues as datavalues, psi.created as created, 
+psi.executiondate as eventDate,eventdatavalues -> 'u8VDCIwa3w4' ->> 'value' as Sterile
+from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and 
+psi.executiondate >  CURRENT_DATE - INTERVAL '2 months' 
+and  psi.eventdatavalues -> 'u8VDCIwa3w4' is not null
+and eventdatavalues -> 'u8VDCIwa3w4' ->> 'value' = 'Sterile'
+order by psi.executiondate desc;
+
+-- 
+
+
+
 
 -- incomplete event list with CR number and name
 
@@ -873,4 +994,59 @@ WHERE teav1.trackedentityattributeid =  3418
 and psi.status != 'COMPLETED' and prg.uid not in ('L7bu48EI54J');
 
 
+https://ln2.hispindia.org/amr_vnimport/api/dataValues.json?paging=false&pe=202301&ds=oG3BlD3M9IE&de=ivbdHXXpwZ5&ou=zCSRdpPXo5a&cc=bdutjzPz3lA&cp=v6QVa6b0sO9;FwCOqlaRrPm;lgT5XFn2CzA;n0wkVSON7Tz&co=HllvX50cXC0
 
+
+https://ln2.hispindia.org/amr_vnimport/api/dataValues?paging=false&pe=202301&ds=oG3BlD3M9IE&de=ivbdHXXpwZ5&ou=zCSRdpPXo5a&cc=bdutjzPz3lA&cp=v6QVa6b0sO9;FwCOqlaRrPm;lgT5XFn2CzA;n0wkVSON7Tz&co=HllvX50cXC0&value=1
+
+
+v6QVa6b0sO9;FwCOqlaRrPm;lgT5XFn2CzA;n0wkVSON7Tz
+
+http://127.0.0.1:8091/amr/api/dataValues.json?paging=false&pe=202309&ds=A57wLN9xqjq&de=niIjSge7ObN&ou=h7fXhILHCAO&cc=PvoQryFqDr1&cp=o2KJuGuyUQ8;vwWRiZcQqKr;XQTJmE3Mo92&value=1&co=fyoAwpSvmIB
+
+oG3BlD3M9IE
+
+ivbdHXXpwZ5
+
+fyoAwpSvmIB
+
+fyoAwpSvmIB
+
+de: ivbdHXXpwZ5
+co: HllvX50cXC0
+ds: oG3BlD3M9IE
+ou: zCSRdpPXo5a
+pe: 202301
+value: 1
+cc: bdutjzPz3lA
+cp: lgT5XFn2CzA;v6QVa6b0sO9;FwCOqlaRrPm;n0wkVSON7Tz
+
+select * from datavalue;
+select * from datavalueaudit;
+
+delete from datavalue;
+delete from datavalueaudit;
+
+
+-- 08/11/2023
+-- delete all dashboard form AMR Tanda production instance
+
+select * from dashboard;
+
+delete from dashboard;
+delete from dashboard_items;
+
+delete from visualization_columns;
+delete from visualization_datadimensionitems;
+delete from visualization_filters;
+delete from visualization_organisationunits;
+delete from visualization_rows;
+delete from dashboarditem;
+delete from dashboarditem_reports;
+delete from visualization_dataelementgroupsetdimensions;
+delete from visualization_categoryoptiongroupsetdimensions;
+delete from visualization_categorydimensions;
+delete from visualization_periods;
+delete from visualization_yearlyseries;
+delete from visualization_orgunitlevels;
+delete from visualization;
