@@ -1,0 +1,31 @@
+
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+
+</head>
+
+
+
+<script>
+
+/*
+$.ajax({url: "demo_test.txt", success: function(result){
+    $("#div1").html(result);
+ }});
+*/
+getPublicDashboard();
+async function getPublicDashboard() {
+    let res = await (await fetch( 'http://127.0.0.1:8091/manipur_covid/api/me.json&paging=false', {
+        method: 'GET',
+        headers: {
+            "Content-Type": "text/plain",
+            'Authorization': `Basic cHVibGljOkRpc3RyaWN0MSM=`,
+        }})).json()
+		//debugger
+		window.open( 'http://127.0.0.1:8091/manipur_covid/dhis-web-dashboard/#/',"_self");
+    return res;
+}
+</script>
+
+</html>

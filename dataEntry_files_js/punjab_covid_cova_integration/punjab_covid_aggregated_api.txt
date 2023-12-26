@@ -1,0 +1,48 @@
+curl --location --request POST 
+'https://cova.punjab.gov.in/api/cova/hospital/services/v1/fetch-health-sampling-testing-positive-data-all' 
+\
+--header 'Authorization: Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI0NiIsInVzZXJ0eXBlIjoiMSIsInRzIjoiNDQ0IiwiZXhwIjoxNjI1OTg3MjAyLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjYzODg0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo2Mzg4NCJ9.Hz8C5U-yW2guwMYegISGtUPQ0OEcdpNxFwcOgOSvWh0' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "punjab_lgd_district_Id": "36",
+    "search_type": "D",
+    "start_date1": "2021-01-18",
+    "dist_date": "2021-01-19",
+    "type_of_area": ""
+}'
+
+
+
+
+
+
+
+{
+    "response": 1,
+    "sys_message": "success",
+    "data": [
+        {
+            "ROWNUM": "1",
+            "punjab_lgd_district_Id": "36",
+            "sample_RTPCR_govt": "2531",
+            "sample_RTPCR_private": "782",
+            "sample_rapid_antigen_test_govt": "154",
+            "sample_rapid_antigen_test_private": "47",
+            "sample_trunat_cbnat_govt": "0",
+            "sample_trunat_cbnat_private": "0",
+            "tested_RTPCR_govt": "3136",
+            "tested_RTPCR_private": "600",
+            "tested_antigen_test_govt": "154",
+            "tested_antigen_test_private": "47",
+            "tested_trunat_cbnat_govt": "0",
+            "tested_trunat_cbnat_private": "0",
+            "positive_RTPCR_govt": "18",
+            "positive_RTPCR_private": "28",
+            "positive_antigen_test_govt": "0",
+            "positive_antigen_test_private": "1",
+            "positive_trunat_cbnat_govt": "0",
+            "positive_trunat_cbnat_private": "0",
+            "district_name": "LUDHIANA"
+        }
+    ]
+}

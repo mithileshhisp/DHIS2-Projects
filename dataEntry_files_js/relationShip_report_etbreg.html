@@ -1,0 +1,271 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+    integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+
+
+<style>
+    table {
+        border-collapse: collapse;
+    }
+
+    thead>tr>th {
+        font-weight: bold;
+        background-color: #ADD8E6;
+    }
+
+    tbody>tr>td {
+        background-color: #eceeef;
+    }
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        opacity: 1;
+    }
+
+    /* Center the loader  */
+    #loader {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        z-index: 1;
+        width: 150px;
+        height: 150px;
+        margin: -75px 0 0 -75px;
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #34B4DB;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+    }
+
+    @-webkit-keyframes spin {
+        0% {
+            -webkit-transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* Add animation to "page content" */
+
+    .animate-bottom {
+        position: relative;
+        -webkit-animation-name: animatebottom;
+        -webkit-animation-duration: 1s;
+        animation-name: animatebottom;
+        animation-duration: 1s
+    }
+
+    @-webkit-keyframes animatebottom {
+        from {
+            bottom: -100px;
+            opacity: 0
+        }
+
+        to {
+            bottom: 0px;
+            opacity: 1
+        }
+    }
+
+    @keyframes animatebottom {
+        from {
+            bottom: -100px;
+            opacity: 0
+        }
+
+        to {
+            bottom: 0;
+            opacity: 1
+        }
+    }
+
+    #printing {
+
+        text-align: center;
+    }
+</style>
+<a id="dlink" style="display:none;"></a>
+<button type="button" class="btn btn-primary btn-sm" style="vertical-align: middle; cursor:pointer"
+    onclick="printContent('printing')"><span class="glyphicon glyphicon-print" style="font-size: 15px;"></span> &nbsp;
+    Print
+</button>
+
+<button type="button" class="btn btn-success btn-sm" style="vertical-align: middle; cursor:pointer" id="btnExport"
+    onclick="tableToExcel('dataTable', 'Relationship Report', 'Relationship_Report.xls')"><span
+        class="glyphicon glyphicon-download-alt" style="font-size: 15px;"></span>Download As Excel
+</button>
+
+
+<div id="loader"></div>
+<div id="printing" class="animate-bottom">
+    <div id='state'>
+        <table border="1" id="dataTable" class="table  table-hover text-center" width="100">
+            <thead >
+                <tr >
+                    <th>Patient ID</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+                    <th>Sex</th>
+                    <th>DOB</th>
+                    <th>Address</th>
+                    <th>TB district number</th>
+					<th>Contact Case ID</th>
+					<th>Relation with Index case</th>
+					
+                </tr>
+            </thead>
+            <tbody id="tableBody" >
+        </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- printing script -->
+<script type="text/javascript">
+$('#state').hide();
+$('#loader').show();
+        setTimeout(()=>{
+            getData()
+        },1000)
+function getData(){
+		//let obj = {pID:"",fName:"", lName:"" ,sex:"" ,dob:"" ,address:"" ,district:"" }
+		$.ajax({
+				type: "GET",
+				async: true,
+				url: "../api/trackedEntityInstances.json?program=Lt6P15ps7f6&ou=KpfavxDJMUb&ouMode=DESCENDANTS&paging=false",
+				data: JSON,
+				success: function (data, status) {
+				
+					data.trackedEntityInstances.forEach(tei => {
+						getRelationshipData(tei)
+						/*
+						tei.attributes.forEach(tea => {
+							if(tea.displayName == "Patient ID"){
+								obj["pID"]=tea.value
+							}
+							if(tea.displayName == "First Name"){
+								obj["fName"]=tea.value
+							}
+							if(tea.displayName == "Last Name"){
+								obj["lName"]=tea.value
+							}
+							if(tea.displayName == "Sex"){
+								obj["sex"]=tea.value
+							}
+							if(tea.displayName == "Date of birth (age)"){
+								obj["dob"]=tea.value
+							}
+							if(tea.displayName == "Address"){
+								obj["address"]=tea.value
+							}
+							if(tea.displayName == "TB district number"){
+								obj["district"]=tea.value
+							}							
+						})
+						printTableRow(obj);	
+						*/						
+					});
+
+					//printTableRow(obj);
+				}
+			});
+        }    
+		
+    function getRelationshipData(tei){
+        //let obj = {areaType:"",scale:"", fName:"" ,lName:"" ,}
+		let obj = {pID:"",fName:"", lName:"" ,sex:"" ,dob:"" ,address:"" ,district:"", contactCaseID:"" , relationWithIndexCase:""}
+        //obj["OU"]=data['4']
+        //obj["DOB"]=data['1']
+        //obj["age"]=data['2']
+		
+		tei.attributes.forEach(tea => {
+		if(tea.displayName == "Patient ID"){
+			obj["pID"]=tea.value
+		}
+		if(tea.displayName == "First Name"){
+			obj["fName"]=tea.value
+		}
+		if(tea.displayName == "Last Name"){
+			obj["lName"]=tea.value
+		}
+		if(tea.displayName == "Sex"){
+			obj["sex"]=tea.value
+		}
+		if(tea.displayName == "Date of birth (age)"){
+			obj["dob"]=tea.value
+		}
+		if(tea.displayName == "Address"){
+			obj["address"]=tea.value
+		}
+		if(tea.displayName == "TB district number"){
+			obj["district"]=tea.value
+		}							
+	});
+		
+	$.ajax({
+		type: "GET",
+		async: true,
+		url: '../api/relationships.json?tei='+tei.trackedEntityInstance,
+		data: JSON,
+		success: function (relationshipData, status) {
+			relationshipData.forEach(res => {
+			   res.to.trackedEntityInstance.attributes.forEach(element=>{
+				if(element.displayName =="Contact Case ID"){
+				  obj["contactCaseID"]=element.value
+				 }
+				 
+				 if(element.displayName =="Relation with Index case"){
+				  obj["relationWithIndexCase"]=element.value
+				 }
+				 
+			   });
+			   printTableRow(obj)
+			});
+			//printTableRow(obj)
+		}
+	});
+    }
+
+   function printTableRow(obj){
+        document.getElementById("tableBody").innerHTML += '<tr><td>'+obj.pID+'</td><td>'+obj.fName+ '</td><td>' + obj.lName +'</td><td>'+obj.sex +'</td><td>'+obj.dob+'</td><td>'+obj.address+'</td><td>'+obj.district+'</td><td>'+obj.contactCaseID+'</td> <td>'+obj.relationWithIndexCase+'</td> </tr>';
+        $('#state').show();
+        $('#loader').hide();
+    }
+    
+    function printContent(el) {
+        var restorepage = document.body.innerHTML;
+        var printcontent = document.getElementById(el).innerHTML;
+        document.body.innerHTML = printcontent;
+        window.print();
+        document.body.innerHTML = restorepage;
+    }
+
+    var tableToExcel = (function () {
+        var uri = 'data:application/vnd.ms-excel;base64,'
+            , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+            , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+            , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+        return function (table, name, filename) {
+            if (!table.nodeType) table = document.getElementById(table)
+            var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+            document.getElementById("dlink").href = uri + base64(format(template, ctx));
+            document.getElementById("dlink").download = filename;
+            document.getElementById("dlink").click();
+        }
+    })()
+
+</script>

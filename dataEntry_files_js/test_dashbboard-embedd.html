@@ -1,0 +1,33 @@
+<html>
+ 
+<head>
+  <script src="https://uphmis.in/uphmis/dhis-web-visualizer/chart.js">
+  </script>
+  <script src="https://uphmis.in/uphmis/dhis-web-maps/map.js">
+  </script>
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous">
+  </script>
+  <script>
+    chartPlugin.url = "https://links.hispindia.org/covid";
+    chartPlugin.username = "admin";
+    chartPlugin.password = "district";
+    chartPlugin.loadingIndicator = true;
+ 
+    // Referring to an existing chart through the id parameter, render to "report1" div
+ 
+    var r1 = {
+      el: "report1",
+      id: "omHQm45n4gD"
+    };
+
+
+    // Render the charts
+    chartPlugin.load(r1);
+  </script>
+</head>
+ 
+<body>
+  <div id="report1"></div>
+</body>
+ 
+</html>

@@ -1,0 +1,786 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="https://links.hispindia.org/covid/api/documents/zKzk3biSeyk/data"/>
+    <script src="https://links.hispindia.org/covid/api/documents/VBbv1dXDDlV/data">
+    </script>
+    <script src="https://links.hispindia.org/covid/api/documents/jue7BZt3qWr/data">
+    </script>
+    <script src="https://links.hispindia.org/covid/api/documents/KiX3UEUYwi8/data">
+    </script>
+    <script src="https://links.hispindia.org/covid/api/documents/bgzFxO2Yida/data">
+    </script>
+    <script src="https://links.hispindia.org/covid/api/documents/ABe9q0n44wa/data">
+    </script>
+    <script src="https://maps.google.com/maps/api/js?sensor=false"></script>
+
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous">
+    </script>
+
+    <script src="https://links.hispindia.org/covid/api/documents/Ck3xWnWK4LB/data">
+    </script>
+    <script src="https://links.hispindia.org/covid/api/documents/Ra0hSgx7ao1/data">
+    </script>
+    <script src="https://links.hispindia.org/covid/api/documents/FPRncRu2Q8G/data">
+    </script>
+    <script src="https://links.hispindia.org/covid/api/documents/abVyOpyJZgr/data">
+    </script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        /* Create four equal columns that floats next to each other */
+        .column {
+            float: left;
+            width: 25%;
+            padding: 10px;
+            height: 100%;; /* Should be removed. Only for demonstration */
+        }
+
+        .column1 {
+            float: left;
+            width: 100%;
+            padding: 10px;
+            height: 100%;; /* Should be removed. Only for demonstration */
+        }
+
+        .column2 {
+            float: left;
+            width: 50%;
+            padding: 15px;
+            height: 100%;; /* Should be removed. Only for demonstration */
+        }
+
+        .column3 {
+            float: right;
+            width: 25%;
+            padding: 15px;
+            height: 100%;; /* Should be removed. Only for demonstration */
+        }
+
+        .column4 {
+            float: left;
+            width: 33%;
+            padding: 15px;
+            height: 100%;; /* Should be removed. Only for demonstration */
+        }
+
+        .column5 {
+            float: left;
+            width: 25%;
+            padding: 15px;
+            height: 100%;; /* Should be removed. Only for demonstration */
+        }
+
+        .column6 {
+            float: left;
+            width: 30%;
+            padding: 5px;
+            height: 100%;; /* Should be removed. Only for demonstration */
+        }
+
+        .column7 {
+            float: left;
+            width: 50%;
+            padding: 15px;
+            height: 100%;; /* Should be removed. Only for demonstration */
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .inline {
+            display: inline-block;
+            border: 10px solid red;
+            margin: 10px;
+        }
+
+        #container {
+            text-align: justify;
+            -ms-text-justify: distribute-all-lines;
+            text-justify: distribute-all-lines;
+            width: 100%;
+        }
+
+        #container > div {
+            width: 100px;
+            height: 100px;
+            vertical-align: center;
+            display: inline-block;
+            *display: inline;
+            zoom: 0;
+            background: red;
+        }
+
+        span {
+            width: 100%;
+            display: inline-block;
+            font-size: 0;
+            line-height: 0
+        }
+    </style>
+    <script>
+        var baseurl = "https://links.hispindia.org/covid";
+
+        chartPlugin.url = baseurl;
+        chartPlugin.username = "";
+        chartPlugin.password = "";
+        chartPlugin.loadingIndicator = true;
+
+        reportTablePlugin.url = baseurl;
+        reportTablePlugin.username = "";
+        reportTablePlugin.password = "";
+        reportTablePlugin.loadingIndicator = true;
+
+        mapPlugin.url = baseurl;
+        mapPlugin.username = "";
+        mapPlugin.password = "";
+        mapPlugin.loadingIndicator = true;
+
+
+        var gauge1 = {
+            "columns": [
+                {
+                    "dimension": "dx",
+                    "items": [
+                        {
+                            "id": "Hpaz8Pw6Ehv",
+                        }
+                    ]
+                }
+            ],
+
+            "filters": [
+                {
+                    "dimension": "ou",
+                    "items": [
+                        {
+                            "id": "bIWAWkfcaeR"
+                        }
+                    ]
+                },
+                {
+                    "dimension": "pe",
+                    "items": [
+                        {
+                            "id": "LAST_SIX_MONTH"
+
+                        }
+                    ]
+                }
+            ],
+            "type": "gauge",
+            "el": "gauge1"
+        };
+        var gauge2 = {
+            "columns": [
+                {
+                    "dimension": "dx",
+                    "items": [
+                        {
+                            "id": "kMqFKT5cYPD",
+                        }
+                    ]
+                }
+            ],
+
+            "filters": [
+                {
+                    "dimension": "ou",
+                    "items": [
+                        {
+                            "id": "bIWAWkfcaeR"
+                        }
+                    ]
+                },
+                {
+                    "dimension": "pe",
+                    "items": [
+                        {
+                            "id": "LAST_SIX_MONTH"
+
+                        }
+                    ]
+                }
+            ],
+            "type": "gauge",
+            "el": "gauge2"
+        };
+
+        var gauge3 = {
+            "columns": [
+                {
+                    "dimension": "dx",
+                    "items": [
+                        {
+                            "id": "J12vzWDsGzF",
+                        }
+                    ]
+                }
+            ],
+
+            "filters": [
+                {
+                    "dimension": "ou",
+                    "items": [
+                        {
+                            "id": "bIWAWkfcaeR"
+                        }
+                    ]
+                },
+                {
+                    "dimension": "pe",
+                    "items": [
+                        {
+                            "id": "LAST_SIX_MONTH"
+
+                        }
+                    ]
+                }
+            ],
+            "type": "gauge",
+            "el": "gauge3"
+        };
+        var gauge4 = {
+            "columns": [
+                {
+                    "dimension": "dx",
+                    "items": [
+                        {
+                            "id": "wfQZkwDGmxm",
+                        }
+                    ]
+                }
+            ],
+
+            "filters": [
+                {
+                    "dimension": "ou",
+                    "items": [
+                        {
+                            "id": "bIWAWkfcaeR"
+                        }
+                    ]
+                },
+                {
+                    "dimension": "pe",
+                    "items": [
+                        {
+                            "id": "LAST_SIX_MONTH"
+
+                        }
+                    ]
+                }
+            ],
+            "type": "gauge",
+            "el": "gauge4"
+        };
+
+
+        var chart1 = {
+            el: "chart1",
+            id: "xsZZ1IOedEF"
+        };
+        var chart2 = {
+            el: "chart2",
+            id: "bh0O1e1DNyF"
+        };
+
+        var table1 = {
+            el: "table1",
+            id: "FP6nwJ5w14D"
+        };
+        var table2 = {
+            el: "table2",
+            id: "ysd2ULHnxXq"
+        };
+        var table3 = {
+            el: "table3",
+            id: "f7F5fKVs6ex"
+        };
+
+        var pie1 = {
+            "columns": [
+                {
+                    "dimension": "dx",
+                    "items": [
+                        {
+                            "id": "Hpaz8Pw6Ehv"
+                        }
+                    ]
+                }
+            ],
+            rows: [
+                {
+                    "dimension": "xGfxQOMb2jw",
+                    "items": [
+                        {"id": "NfTnBdG8EGE"},
+                        {"id": "gZGoJ2mf847"},
+                        {"id": "gSbIUCbwVgY"}]
+                }
+            ],
+
+            "filters": [
+                {
+                    "dimension": "ou",
+                    "items": [
+                        {
+                            "id": "bIWAWkfcaeR"
+                        }
+                    ]
+                },
+
+                {dimension: "pe", items: [{id: "LAST_6_MONTHS"}]}
+
+            ],
+            type: "pie",
+            el: "pie1"
+        };
+        var pie2 = {
+            "columns": [
+                {
+                    "dimension": "dx",
+                    "items": [
+                        {
+                            "id": "kMqFKT5cYPD"
+                        }
+                    ]
+                }
+            ],
+            rows: [
+                {
+                    "dimension": "xGfxQOMb2jw",
+                    "items": [
+                        {"id": "NfTnBdG8EGE"},
+                        {"id": "gZGoJ2mf847"},
+                        {"id": "gSbIUCbwVgY"}]
+                }
+            ],
+
+            "filters": [
+                {
+                    "dimension": "ou",
+                    "items": [
+                        {
+                            "id": "bIWAWkfcaeR"
+                        }
+                    ]
+                },
+
+                {dimension: "pe", items: [{id: "LAST_6_MONTHS"}]}
+
+            ],
+            type: "pie",
+            el: "pie2"
+        };
+
+        var pie3 = {
+            columns: [
+                {
+                    "dimension": "dx",
+                    "items": [
+                        {
+                            "id": "Hpaz8Pw6Ehv",
+                        }
+                    ]
+                }
+            ],
+            rows: [
+                {
+                    "dimension": "ou",
+                    "items": [
+                        {"id": "gFFMTnEdaxl"},
+                        {"id": "cAQUAch2x6F"},
+                        {"id": "DtpUITpbvCu"},
+                        {"id": "jUa3L5hVp7H"},
+                        {"id": "ISXrHyyO8qV"},
+                        {"id": "W33Swjw0RJN"},
+                        {"id": "yjsdQaMrxMX"},
+                        {"id": "DaABzqcpYVE"},
+                        {"id": "Y8haCfbwDSD"},
+                        {"id": "cnQlwa889JP"},
+                        {"id": "EvyucnurJ9s"},
+                        {"id": "padYCfBGMjh"},
+                        {"id": "diI0veKKYpu"},
+                        {"id": "FQnlmFLpNDU"},
+                        {"id": "kXSuVd2FatB"},
+                        {"id": "uEXiURSza2l"},
+                        {"id": "SGM3d3BDdod"},
+                        {"id": "xcmu8iBPOIA"},
+                        {"id": "DUVOKYgswjG"},
+                        {"id": "ZTqWB5s5WvV"},
+                        {"id": "GDmNmvvNZo2"},
+                        {"id": "kiAS5Vgc8hj"},
+                    ]
+                }
+            ],
+            filters: [
+                {
+                    "dimension": "pe",
+                    "items": [
+                        {
+                            "id": "LAST_SIX_MONTH"
+
+                        }
+                    ]
+                }
+            ],
+
+            type: "pie",
+            el: "pie3",
+        };
+
+        var pie4 = {
+            columns: [
+                {
+                    "dimension": "dx",
+                    "items": [
+                        {
+                            "id": "kMqFKT5cYPD",
+                        }
+                    ]
+                }
+            ],
+            rows: [
+                {
+                    "dimension": "ou",
+                    "items": [
+                        {"id": "gFFMTnEdaxl"},
+                        {"id": "cAQUAch2x6F"},
+                        {"id": "DtpUITpbvCu"},
+                        {"id": "jUa3L5hVp7H"},
+                        {"id": "ISXrHyyO8qV"},
+                        {"id": "GDmNmvvNZo2"},
+                        {"id": "kiAS5Vgc8hj"},
+                        {"id": "W33Swjw0RJN"},
+                        {"id": "yjsdQaMrxMX"},
+                        {"id": "DaABzqcpYVE"},
+                        {"id": "Y8haCfbwDSD"},
+                        {"id": "cnQlwa889JP"},
+                        {"id": "EvyucnurJ9s"},
+                        {"id": "padYCfBGMjh"},
+                        {"id": "diI0veKKYpu"},
+                        {"id": "FQnlmFLpNDU"},
+                        {"id": "kXSuVd2FatB"},
+                        {"id": "uEXiURSza2l"},
+                        {"id": "SGM3d3BDdod"},
+                        {"id": "xcmu8iBPOIA"},
+                        {"id": "DUVOKYgswjG"},
+                        {"id": "ZTqWB5s5WvV"},
+                    ]
+                }
+            ],
+            filters: [
+                {
+                    "dimension": "pe",
+                    "items": [
+                        {
+                            "id": "LAST_SIX_MONTH"
+
+                        }
+                    ]
+                }
+            ],
+
+            type: "pie",
+            el: "pie4",
+        };
+        var pie5 = {
+            columns: [
+                {
+                    "dimension": "dx",
+                    "items": [
+                        {
+                            "id": "J12vzWDsGzF",
+                        }
+                    ]
+                }
+            ],
+            rows: [
+                {
+                    "dimension": "ou",
+                    "items": [
+                        {"id": "gFFMTnEdaxl"},
+                        {"id": "cAQUAch2x6F"},
+                        {"id": "DtpUITpbvCu"},
+                        {"id": "jUa3L5hVp7H"},
+                        {"id": "ISXrHyyO8qV"},
+                        {"id": "W33Swjw0RJN"},
+                        {"id": "yjsdQaMrxMX"},
+                        {"id": "DaABzqcpYVE"},
+                        {"id": "Y8haCfbwDSD"},
+                        {"id": "cnQlwa889JP"},
+                        {"id": "EvyucnurJ9s"},
+                        {"id": "padYCfBGMjh"},
+                        {"id": "diI0veKKYpu"},
+                        {"id": "FQnlmFLpNDU"},
+                        {"id": "kXSuVd2FatB"},
+                        {"id": "uEXiURSza2l"},
+                        {"id": "SGM3d3BDdod"},
+                        {"id": "xcmu8iBPOIA"},
+                        {"id": "DUVOKYgswjG"},
+                        {"id": "ZTqWB5s5WvV"},
+                        {"id": "GDmNmvvNZo2"},
+                        {"id": "kiAS5Vgc8hj"},
+                    ]
+                }
+            ],
+            filters: [
+                {
+                    "dimension": "pe",
+                    "items": [
+                        {
+                            "id": "LAST_SIX_MONTH"
+
+                        }
+                    ]
+                }
+            ],
+
+            type: "pie",
+            el: "pie5",
+        };
+
+        var pie6 = {
+            columns: [
+                {
+                    "dimension": "dx",
+                    "items": [
+                        {
+                            "id": "Hpaz8Pw6Ehv",
+                        }
+                    ]
+                }
+            ],
+            rows: [
+                {
+                    "dimension": "GRBingLFHGJ",
+                    "items": [
+                        {"id": "B7Dpum1CeQ3"},
+                        {"id": "GLHXHAPHD7c"}
+                    ]
+                }
+            ],
+            filters: [
+                {
+                    "dimension": "pe",
+                    "items": [
+                        {
+                            "id": "LAST_SIX_MONTH"
+
+                        }
+                    ]
+                },
+                {
+
+                    "dimension": "ou",
+                    "items": [
+                        {
+                            "id": "bIWAWkfcaeR"
+                        }]
+                }
+            ],
+
+            type: "pie",
+            el: "pie6",
+        };
+        var pie7 = {
+            columns: [
+                {
+                    "dimension": "dx",
+                    "items": [
+                        {
+                            "id": "kMqFKT5cYPD",
+                        }
+                    ]
+                }
+            ],
+            rows: [
+                {
+                    "dimension": "GRBingLFHGJ",
+                    "items": [
+                        {"id": "B7Dpum1CeQ3"},
+                        {"id": "GLHXHAPHD7c"}
+                    ]
+                }
+            ],
+            filters: [
+                {
+                    "dimension": "pe",
+                    "items": [
+                        {
+                            "id": "LAST_SIX_MONTH"
+
+                        }
+                    ]
+                },
+                {
+
+                    "dimension": "ou",
+                    "items": [
+                        {
+                            "id": "bIWAWkfcaeR"
+                        }]
+                }
+            ],
+
+            type: "pie",
+            el: "pie7",
+        };
+
+        var pie8 = {
+            columns: [
+                {
+                    "dimension": "dx",
+                    "items": [
+                        {
+                            "id": "J12vzWDsGzF",
+                        }
+                    ]
+                }
+            ],
+            rows: [
+                {
+
+                    "dimension": "xGfxQOMb2jw",
+                    "items": [
+                        {"id": "NfTnBdG8EGE"},
+                        {"id": "gZGoJ2mf847"},
+                        {"id": "gSbIUCbwVgY"}]
+                }
+
+            ],
+            filters: [
+                {
+                    "dimension": "pe",
+                    "items": [
+                        {
+                            "id": "LAST_SIX_MONTH"
+
+                        }
+                    ]
+                },
+                {
+
+                    "dimension": "ou",
+                    "items": [
+                        {
+                            "id": "bIWAWkfcaeR"
+                        }]
+                }
+            ],
+
+            type: "pie",
+            el: "pie8",
+        };
+
+        var pie9 = {
+            columns: [
+                {
+                    "dimension": "dx",
+                    "items": [
+                        {
+                            "id": "J12vzWDsGzF",
+                        }
+                    ]
+                }
+            ],
+            rows: [
+                {
+                    "dimension": "GRBingLFHGJ",
+                    "items": [
+                        {"id": "B7Dpum1CeQ3"},
+                        {"id": "GLHXHAPHD7c"}
+                    ]
+                }
+            ],
+            filters: [
+                {
+                    "dimension": "pe",
+                    "items": [
+                        {
+                            "id": "LAST_SIX_MONTH"
+
+                        }
+                    ]
+                },
+                {
+
+                    "dimension": "ou",
+                    "items": [
+                        {
+                            "id": "bIWAWkfcaeR"
+                        }]
+                }
+            ],
+
+            type: "pie",
+            el: "pie9",
+        };
+
+
+        var chart3 = {
+            el: "chart3",
+            id: "nBc4xROdbzy"
+        };
+
+        chartPlugin.load(chart1, chart2, pie1, pie2, pie3, pie4, pie5);
+        chartPlugin.load(pie6, pie7, pie8, pie9, chart3);
+        chartPlugin.load(gauge1, gauge2, gauge3, gauge4);
+        reportTablePlugin.load([table1, table2, table3]);
+    </script>
+</head>
+
+<body>
+<h1 style="text-align: center">Samples Collected Tested and Positive (STP)</h1>
+<div class="row">
+
+    <div class="column" style="background-color:#aaa" ; id="gauge1"></div>
+    <div class="column" style="background-color:#bbb;" id="gauge2"></div>
+
+    <!--    </div>-->
+    <div class="column" style="background-color:#ccc;" id="gauge3">
+
+    </div>
+    <div class="column" style="background-color:#ddd;" id="gauge4">
+
+    </div>
+</div>
+<div class="row" style="border-width: thin;border-style: solid">
+    <div class="column1" id="chart1"></div>
+</div>
+<div class="row" style="border-width: thin;border-style: solid">
+    <div class="column1" id="chart2"></div>
+</div>
+<div class="row" style="border-width: thin;border-style: solid">
+    <div class="column2" id="table1"></div>
+    <div class="column3" id="pie1"></div>
+    <div class="column3" id="pie2"></div>
+</div>
+<div class="row" style="border-width: thin;border-style: solid">
+    <div class="column4" id="pie3"></div>
+    <div class="column4" id="pie4"></div>
+    <div class="column4" id="pie5"></div>
+</div>
+
+<div class="row" style="border-width: thin;border-style: solid">
+    <div class="column5" id="pie6"></div>
+    <div class="column5" id="pie7"></div>
+    <div class="column5" id="pie8"></div>
+    <div class="column5" id="pie9"></div>
+</div>
+
+<div id="chart3" style="border-width: thin;border-style: solid"></div>
+<div class="row">
+    <div class="column6" style="border-width: thin;border-style:groove" id="table2"></div>
+    <div class="column7" style="border-width: thin;border-style:groove" id="table3"></div>
+</div>
+</body>
+
+</html>

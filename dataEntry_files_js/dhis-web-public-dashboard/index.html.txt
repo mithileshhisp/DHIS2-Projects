@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+
+</head>
+
+
+
+<script>
+
+/*
+$.ajax({url: "demo_test.txt", success: function(result){
+    $("#div1").html(result);
+ }});
+*/
+getCovacVaccineNames();
+async function getCovacVaccineNames() {
+    let res = await (await fetch( 'http://covid19mizoram.in:8080/mizoram_covid/api/me.json&paging=false', {
+        method: 'GET',
+        headers: {
+            "Content-Type": "text/plain",
+            'Authorization': `Basic cHVibGljOkRpc3RyaWN0MSM=`,
+        }})).json()
+		debugger
+		window.open( 'http://covid19mizoram.in:8080/mizoram_covid/dhis-web-dashboard/#/',"_self");
+    return res;
+}
+
+</script>
+
+</html>

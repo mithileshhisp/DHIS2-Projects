@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mizo Import</title>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+        .custom{
+            margin-top:50px;
+            width:100%;
+            padding:10px;
+        }
+        .custom-table{
+            width:75%;
+            font-size:16px;
+            margin:auto;
+            text-align:center;
+        }
+        .custom-drop{
+            text-align:center;
+        }
+
+        /*.loader {*/
+        /*    border: 16px solid #f3f3f3; !* Light grey *!*/
+        /*    border-top: 16px solid #3498db; !* Blue *!*/
+        /*    border-radius: 50%;*/
+        /*    width: 120px;*/
+        /*    height: 120px;*/
+        /*    animation: spin 2s linear infinite;*/
+        /*}*/
+
+        /*@keyframes spin {*/
+        /*    0% { transform: rotate(0deg); }*/
+        /*    100% { transform: rotate(360deg); }*/
+        /*}*/
+
+        /*.hide-loader{*/
+        /*    display:none;*/
+        /*}*/
+        /*.show-loader{*/
+        /*    display:inline;*/
+        /*}*/
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+
+    <form >
+        <label for="startdate">Start Date:</label>
+        <input type="date" id="startdate" name="startdate">
+        <label for="enddate">End Date:</label>
+        <input type="date" id="enddate" name="enddate">
+        <input onclick="getDates()" type="submit">
+    </form>
+<!--    <div class="loader" id="loader">-->
+<!--    </div>-->
+    <p id="demo"></p>
+    <p id="demo1"></p>
+</div>
+</body>
+<script type="text/javascript">
+    $('#loader').addClass("hide-loader");
+    function getDates() {
+
+        var start_date_d =  new Date(document.getElementById("startdate").value);
+        var end_date_d =  new Date(document.getElementById("enddate").value);
+        var start_date = document.getElementById("startdate").value;
+        var end_date = document.getElementById("enddate").value;
+        var assigned_ous = [];
+        var dataelements = [];
+        var datavalue = {};
+        var datavalue_all = [];
+        var datavalues_array = [];
+        var de_d=[];
+        var ou_d=[];
+
+        if (end_date_d>start_date_d )
+        {
+
+            if (parseInt((end_date_d - start_date_d) / (1000 * 60 * 60 * 24), 10)<31)
+            {
+
+
+                // $('#loader').addClass("show-loader");
+                $.ajax({
+                    type: "GET",
+                    crossDomain: true,
+                    url: '../api/dataSets/s0E4hhz4AAX.json?fields=organisationUnits[id,code,name],dataSetElements[dataElement[id,name,code]]',
+                    async: false,
+                    success: function (response) {
+                        for (var j = 0; j < response.organisationUnits.length; j++) {
+
+                            var ou = {"id": response.organisationUnits[j].id, "code": response.organisationUnits[j].code,};
+                            assigned_ous.push(ou);
+
+                        }
+                        for (var i = 0; i < response.dataSetElements.length; i++) {
+                            var de = {
+                                "id": response.dataSetElements[i].dataElement.id,
+                                "code": response.dataSetElements[i].dataElement.code,
+                            };
+                            dataelements.push(de);
+                        }
+
+                    },
+                    error: function (response) {
+                        console.log("Error occured:", response);
+                    }
+                });
+
+                for (start_date_d;start_date_d<end_date_d;start_date_d.setDate(start_date_d.getDate()+1)) {
+                    $.ajax({
+                        type: "GET",
+                        crossDomain: true,
+                        url: 'https://fatidique-choucroute-97606.herokuapp.com/https://www.nishthateletrack.com/ApiMizo/GetPerformanceIndicators?date=' + start_date_d.toISOString().slice(0,10).replace(/ /g,"") + '&api_key=OmgcvV1AHs6Ng1pYLIgfIbwzAs0Sn3ji',
+                        async: false,
+                        success: function (response) {
+                            for (var i = 0; i < response.data.length; i++) {
+                                for (var j = 0; j < response.data[i].indicators.length; j++) {
+                                    de_d = getDEByCode(response.data[i].indicators[j].code);
+                                    ou_d = getOUByCode(response.data[i].id);
+
+                                    if (response.data[i].indicators[j].day>0)
+                                    {
+                                        datavalue = {
+                                            "dataElement": de_d[0].id,
+                                            "period": start_date_d.toISOString().slice(0, 10).replace(/-/g, ""),
+                                            "orgUnit": ou_d[0].id,
+                                            "value": response.data[i].indicators[j].day
+                                        };
+                                        datavalue_all.push(datavalue);
+                                    }
+                                    else
+                                    {
+
+                                    }
+
+                                }
+
+                            }
+
+
+                        },
+                        error: function (response) {
+                            console.log("not Save TEI:", response);
+                        }
+                    });
+                }
+                // $('#loader').addClass("hide-loader");
+                datavalues_array={"dataValues":datavalue_all}
+
+                $.ajax({
+                    type: "POST",
+                    crossDomain: true,
+                    url: '../api/dataValueSets',
+                    async: false,
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    data: JSON.stringify(datavalues_array),
+                    success: function (response) {
+                         alert(JSON.stringify(response));
+                        console.log("importSummaries", response);
+                    },
+                    error: function (response) {
+                        console.log("Error occured:", response);
+                    }
+                });
+
+
+
+                function getDEByCode(code) {
+                    return dataelements.filter(
+                        function (data) {
+                            return data.code == code
+                        }
+                    );
+                }
+
+                function getOUByCode(code) {
+                    return assigned_ous.filter(
+                        function (data) {
+                            return data.code == code
+                        }
+                    );
+                }
+            }
+            else
+            {
+                alert("Max days allowed : 31")
+            }
+
+
+        }
+        else
+        {
+            alert("End Date Should Be Less Than Start Date Please...")
+        }
+
+
+    }
+    // }
+
+</script>
+</html>

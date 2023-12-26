@@ -1,0 +1,1484 @@
+<table border="2" bordercolor="#111111" cellpadding="0" cellspacing="0">
+	<script type="text/javascript">
+				function calculatedDataValueForBallenceFromPreviousMonth( selectedInputIdBFPM )
+				{
+					var selectedOU = $( '#selectedOrganisationUnit' ).val();
+					var selectedEPId = $( '#selectedPeriodId' ).val();
+					var selectedInputIdBFPM_Temp = selectedInputIdBFPM.split( '-' );
+					var selectedDataElementID = selectedInputIdBFPM_Temp[0];
+					var selectedDataElementCOCID_BFPM = parseInt(selectedInputIdBFPM_Temp[1]);	
+					var selectedInputIdBFPM = selectedDataElementID + '-' + selectedDataElementCOCID_BFPM + '-val';
+					var selectedDataElementValue_BFPM = parseInt(document.getElementById(selectedInputIdBFPM).value);
+					var selectedDataElementCOCID_SR = parseInt(selectedDataElementCOCID_BFPM) + 3;
+					var selectedInputIdSR = selectedDataElementID + '-' + selectedDataElementCOCID_SR + '-val';
+					var selectedDataElementValue_SR = parseInt(document.getElementById(selectedInputIdSR).value);
+					var selectedDataElementCOCID_U = parseInt(selectedDataElementCOCID_BFPM) + 4;
+					var selectedInputIdU = selectedDataElementID + '-' + selectedDataElementCOCID_U + '-val';
+					var selectedDataElementValue_U = parseInt(document.getElementById(selectedInputIdU).value);
+					var selectedDataElementCOCID_SD = parseInt(selectedDataElementCOCID_BFPM) + 2;
+					var selectedInputIdSD = selectedDataElementID + '-' + selectedDataElementCOCID_SD + '-val';
+					var selectedDataElementValue_SD = parseInt(document.getElementById(selectedInputIdSD).value);
+					if(isNaN(selectedDataElementValue_BFPM))
+					{
+					   selectedDataElementValue_BFPM = parseInt(0);
+					}
+					if(isNaN(selectedDataElementValue_SR))
+					{
+					   selectedDataElementValue_SR = parseInt(0);
+					}
+					if(isNaN(selectedDataElementValue_U))
+					{
+					   selectedDataElementValue_U = parseInt(0);
+					}
+					if(isNaN(selectedDataElementValue_SD))
+					{
+					   selectedDataElementValue_SD = parseInt(0);
+					}
+					var selectedDataElementTSBfpmValue = ( selectedDataElementValue_BFPM + selectedDataElementValue_SR - selectedDataElementValue_U - selectedDataElementValue_SD );
+					var nextMonthExternalPeriodId = getNextMonthExternalPeriodId( selectedEPId );
+					var valueSaverBfpm = new ValueSaverByOrgUnit( selectedDataElementID, selectedDataElementCOCID_BFPM, selectedOU, selectedEPId, selectedDataElementValue_BFPM, COLOR_GREEN );														
+					var valueSaverBfpmNxt = new ValueSaverByOrgUnit( selectedDataElementID, selectedDataElementCOCID_BFPM, selectedOU, nextMonthExternalPeriodId, selectedDataElementTSBfpmValue, COLOR_GREEN );														
+					valueSaverBfpm.save();				
+					valueSaverBfpmNxt.save();
+				}
+
+				function calculatedDataValueForStockRecived( selectedInputIdSR )
+			{
+				var selectedOU = $( '#selectedOrganisationUnit' ).val();
+				var selectedEPId = $( '#selectedPeriodId' ).val();
+				var selectedInputIdSR_Temp = selectedInputIdSR.split( '-' );
+				var selectedDataElementID = selectedInputIdSR_Temp[0];
+				var selectedDataElementCOCID_SR = parseInt(selectedInputIdSR_Temp[1]);
+				var selectedInputIdSR = selectedDataElementID + '-' + selectedDataElementCOCID_SR + '-val';
+				var selectedDataElementValue_SR = parseInt(document.getElementById(selectedInputIdSR).value);
+				var selectedDataElementCOCID_BFPM = parseInt(selectedDataElementCOCID_SR) - 3;	
+				var selectedInputIdBFPM = selectedDataElementID + '-' + selectedDataElementCOCID_BFPM + '-val';
+				var selectedDataElementValue_BFPM = parseInt(document.getElementById(selectedInputIdBFPM).value);
+				var selectedDataElementCOCID_U = parseInt(selectedDataElementCOCID_SR) + 1;
+				var selectedInputIdU = selectedDataElementID + '-' + selectedDataElementCOCID_U + '-val';
+				var selectedDataElementValue_U = parseInt(document.getElementById(selectedInputIdU).value);
+				var selectedDataElementCOCID_SD = parseInt(selectedDataElementCOCID_SR) - 1;
+				var selectedInputIdSD = selectedDataElementID + '-' + selectedDataElementCOCID_SD + '-val';
+				var selectedDataElementValue_SD = parseInt(document.getElementById(selectedInputIdSD).value);
+				if(isNaN(selectedDataElementValue_BFPM))
+				{
+				   selectedDataElementValue_BFPM = parseInt(0);
+				}
+				if(isNaN(selectedDataElementValue_SR))
+				{
+				   selectedDataElementValue_SR = parseInt(0);
+				}
+				if(isNaN(selectedDataElementValue_U))
+				{
+				   selectedDataElementValue_U = parseInt(0);
+				}
+				if(isNaN(selectedDataElementValue_SD))
+				{
+				   selectedDataElementValue_SD = parseInt(0);
+				}
+				var selectedDataElementTSTsValue = ( selectedDataElementValue_BFPM + selectedDataElementValue_SR - selectedDataElementValue_U - selectedDataElementValue_SD );
+				var nextMonthExternalPeriodId = getNextMonthExternalPeriodId( selectedEPId );
+				var valueSaverSr = new ValueSaverByOrgUnit( selectedDataElementID, selectedDataElementCOCID_SR, selectedOU, selectedEPId, selectedDataElementValue_SR, COLOR_GREEN );														
+				var valueSaverSrNxt = new ValueSaverByOrgUnit( selectedDataElementID, selectedDataElementCOCID_BFPM, selectedOU, nextMonthExternalPeriodId, selectedDataElementTSTsValue, COLOR_GREEN );														
+				valueSaverSr.save();				
+				valueSaverSrNxt.save();
+			}
+			function calculatedDataValueForUnusable( selectedInputIdU )
+			{
+				var selectedOU = $( '#selectedOrganisationUnit' ).val();
+				var selectedEPId = $( '#selectedPeriodId' ).val();
+				var selectedInputIdU_Temp = selectedInputIdU.split( '-' );
+				var selectedDataElementID = selectedInputIdU_Temp[0];
+				var selectedDataElementCOCID_U = parseInt(selectedInputIdU_Temp[1]);
+				var selectedInputIdU = selectedDataElementID + '-' + selectedDataElementCOCID_U + '-val';
+				var selectedDataElementValue_U = parseInt(document.getElementById(selectedInputIdU).value);
+				var selectedDataElementCOCID_BFPM = parseInt(selectedDataElementCOCID_U) - 4;	
+				var selectedInputIdBFPM = selectedDataElementID + '-' + selectedDataElementCOCID_BFPM + '-val';
+				var selectedDataElementValue_BFPM = parseInt(document.getElementById(selectedInputIdBFPM).value);
+				var selectedDataElementCOCID_SR = parseInt(selectedDataElementCOCID_U) - 1;
+				var selectedInputIdSR = selectedDataElementID + '-' + selectedDataElementCOCID_SR + '-val';
+				var selectedDataElementValue_SR = parseInt(document.getElementById(selectedInputIdSR).value);
+				var selectedDataElementCOCID_SD = parseInt(selectedDataElementCOCID_U) - 2;
+				var selectedInputIdSD = selectedDataElementID + '-' + selectedDataElementCOCID_SD + '-val';
+				var selectedDataElementValue_SD = parseInt(document.getElementById(selectedInputIdSD).value);
+				if(isNaN(selectedDataElementValue_BFPM))
+				{
+				   selectedDataElementValue_BFPM = parseInt(0);
+				}
+				if(isNaN(selectedDataElementValue_SR))
+				{
+				   selectedDataElementValue_SR = parseInt(0);
+				}
+				if(isNaN(selectedDataElementValue_U))
+				{
+				   selectedDataElementValue_U = parseInt(0);
+				}
+				if(isNaN(selectedDataElementValue_SD))
+				{
+				   selectedDataElementValue_SD = parseInt(0);
+				}
+				var selectedDataElementTSUValue = ( selectedDataElementValue_BFPM + selectedDataElementValue_SR - selectedDataElementValue_U - selectedDataElementValue_SD );
+				var nextMonthExternalPeriodId = getNextMonthExternalPeriodId( selectedEPId );
+				var valueSaverU = new ValueSaverByOrgUnit( selectedDataElementID, selectedDataElementCOCID_U, selectedOU, selectedEPId, selectedDataElementValue_U, COLOR_GREEN );														
+				var valueSaverUNxt = new ValueSaverByOrgUnit( selectedDataElementID, selectedDataElementCOCID_BFPM, selectedOU, nextMonthExternalPeriodId, selectedDataElementTSUValue, COLOR_GREEN );														
+				valueSaverU.save();				
+				valueSaverUNxt.save();
+			}
+
+			function calculatedDataValueForStockDistributed( selectedInputIdSD )
+			{
+				var selectedOU = $( '#selectedOrganisationUnit' ).val();
+				var selectedEPId = $( '#selectedPeriodId' ).val();
+				var selectedInputIdSD_Temp = selectedInputIdSD.split( '-' );
+				var selectedDataElementID = selectedInputIdSD_Temp[0];
+				var selectedDataElementCOCID_SD = parseInt(selectedInputIdSD_Temp[1]);
+				var selectedInputIdSD = selectedDataElementID + '-' + selectedDataElementCOCID_SD + '-val';
+				var selectedDataElementValue_SD = parseInt(document.getElementById(selectedInputIdSD).value);
+				var selectedDataElementCOCID_BFPM = parseInt(selectedDataElementCOCID_SD) - 2;	
+				var selectedInputIdBFPM = selectedDataElementID + '-' + selectedDataElementCOCID_BFPM + '-val';
+				var selectedDataElementValue_BFPM = parseInt(document.getElementById(selectedInputIdBFPM).value);
+				var selectedDataElementCOCID_SR = parseInt(selectedDataElementCOCID_SD) + 1;
+				var selectedInputIdSR = selectedDataElementID + '-' + selectedDataElementCOCID_SR + '-val';
+				var selectedDataElementValue_SR = parseInt(document.getElementById(selectedInputIdSR).value);
+				var selectedDataElementCOCID_U = parseInt(selectedDataElementCOCID_SD) + 2;
+				var selectedInputIdU = selectedDataElementID + '-' + selectedDataElementCOCID_U + '-val';
+				var selectedDataElementValue_U = parseInt(document.getElementById(selectedInputIdU).value);
+				if(isNaN(selectedDataElementValue_BFPM))
+				{
+				   selectedDataElementValue_BFPM = parseInt(0);
+				}
+				if(isNaN(selectedDataElementValue_SR))
+				{
+				   selectedDataElementValue_SR = parseInt(0);
+				}
+				if(isNaN(selectedDataElementValue_U))
+				{
+				   selectedDataElementValue_U = parseInt(0);
+				}
+				if(isNaN(selectedDataElementValue_SD))
+				{
+				   selectedDataElementValue_SD = parseInt(0);
+				}
+				var selectedDataElementTSSdValue = ( selectedDataElementValue_BFPM + selectedDataElementValue_SR - selectedDataElementValue_U - selectedDataElementValue_SD );
+				var nextMonthExternalPeriodId = getNextMonthExternalPeriodId( selectedEPId );
+				var valueSaverSd = new ValueSaverByOrgUnit( selectedDataElementID, selectedDataElementCOCID_SD, selectedOU, selectedEPId, selectedDataElementValue_SD, COLOR_GREEN );														
+				var valueSaverSdNxt = new ValueSaverByOrgUnit( selectedDataElementID, selectedDataElementCOCID_BFPM, selectedOU, nextMonthExternalPeriodId, selectedDataElementTSSdValue, COLOR_GREEN );														
+				valueSaverSd.save();				
+				valueSaverSdNxt.save();
+			}
+
+			function getNextMonthExternalPeriodId( selectedEPId )
+			{
+				   //alert( " next period ");
+				   var temp = selectedEPId.split('_');
+				   var temp0 = temp[0];
+				   var temp1 = temp[1];
+				   var temp2 = temp1.split('-');
+				   var temp3 = parseInt(temp2[0]);
+				   var temp4 = parseInt(temp2[1]);
+				   var temp5 = parseInt(temp2[2]);
+				   if( temp5 < 10 )
+				   {
+					   temp5 = '0' + temp5;
+				   }
+				   if(temp4 == 12)
+					   {
+						temp3 = temp3 + 1;
+						temp4 = '01';
+				   }else{
+						temp4 = temp4 + 1;
+						if( temp4 < 10 )
+							{
+								temp4 = '0' + temp4;
+							}
+				   }	   
+				   return temp0 + "_" + temp3 + "-" + temp4 + "-" + temp5 ;
+			}
+
+			function ValueSaverByOrgUnit( dataElementId_, optionComboId_, selectedOrganisationUnitName_, periodId_, value_, resultColor_ )
+			{
+				    var dataValue = {
+					'dataElementId' : dataElementId_,
+					'optionComboId' : optionComboId_,
+					'selectedOrganisationUnitName' : selectedOrganisationUnitName_,
+					'periodId' : periodId_,
+					'value' : value_,
+				    };
+
+				    var resultColor = resultColor_;
+
+				    this.save = function()
+				    {
+					$.ajax( {
+					    url: 'saveValueJS.action',
+					    data: dataValue,
+					    dataType: 'json',
+					    cache: false,
+					    success: handleSuccess,
+					    error: handleError
+					} );
+				    };
+
+				    function handleSuccess( json )
+				    {
+					var code = json.c;
+
+					if ( code == 0 ) // Value successfully saved on server
+					{
+					    storageManager.clearDataValueJSON( dataValue );
+					    markValue( resultColor );
+					}
+					else if(code == 2)
+					{
+					    markValue( COLOR_RED );
+					    window.alert( i18n_saving_value_failed_dataset_is_locked );
+					}
+					else // Server error during save
+					{
+					    markValue( COLOR_RED );
+					    window.alert( i18n_saving_value_failed_status_code + '\n\n' + code );
+					}
+				    }
+
+				    function handleError( jqXHR, textStatus, errorThrown )
+				    {
+					setHeaderMessage( i18n_offline_notification );
+					markValue( resultColor );
+				    }
+
+				    function markValue( color )
+				    {
+					$( '#' + dataValue.dataElementId + '-' + dataValue.optionComboId + '-val' ).css( 'background-color', color );
+				    }
+			}
+
+</script>
+
+<script type="text/javascript">
+	//window.onload = VaccineDPT();
+	//window.onload = codeAddress();
+</script>
+
+
+
+
+	<colgroup>
+		<col width="52" />
+		<col width="368" />
+		<col width="76" />
+		<col width="57" />
+		<col width="63" />
+		<col width="69" />
+		<col width="65" />
+	</colgroup>
+	<tbody>
+		<tr>
+			<td align="center" bgcolor="#CCCCCC" colspan="7">
+				<strong>District HQ MIES Monthly Dataset</strong></td>
+		</tr>
+		<tr>
+			<td bgcolor="#CCCCCC" width="52">
+				<strong>Part A</strong></td>
+			<td bgcolor="#CCCCCC" colspan="6">
+				<strong>Monthly Inventory details</strong></td>
+		</tr>
+		<tr>
+			<td bgcolor="#CCCCCC" width="52">
+				<strong>H</strong></td>
+			<td bgcolor="#CCCCCC" width="425">
+				<strong>Stock Position (During the Month)</strong></td>
+			<td align="center" bgcolor="#CCCCCC" width="106">
+				<strong>Balance from Previous month</strong></td>
+			<td align="center" bgcolor="#CCCCCC" width="86">
+				<strong>Stock received</strong></td>
+			<td align="center" bgcolor="#CCCCCC" width="92">
+				<strong>Unusable stock</strong></td>
+			<td align="center" bgcolor="#CCCCCC" width="90">
+				<strong>Stock Distributed</strong></td>
+			<td align="center" bgcolor="#CCCCCC" width="95">
+				<strong>Total Stock</strong></td>
+		</tr>
+		<tr>
+			<td bgcolor="#CCCCCC" width="52">
+				<strong>H1</strong></td>
+			<td bgcolor="#CCCCCC" width="425">
+				<strong>Vaccines</strong></td>
+			<td bgcolor="#CCCCCC" width="106">
+				&nbsp;</td>
+			<td bgcolor="#CCCCCC" width="86">
+				&nbsp;</td>
+			<td bgcolor="#CCCCCC" width="92">
+				&nbsp;</td>
+			<td bgcolor="#CCCCCC" width="90">
+				&nbsp;</td>
+			<td bgcolor="#CCCCCC" width="95">
+				&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="52">
+				1.1</td>
+			<td width="341">
+				Vaccine - DPT</td>
+			<td style="text-align: center;">
+				<input id="344-2-val" style="width:7em;text-align:center" title="344 - DPT Stock - 2 - (Balance from Previous month) - int" value="[ DPT Stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="344-5-val" name="entryfield" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="344 - DPT Stock - 5 - (Stock received) - int" type="text" value="[ DPT Stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="344-6-val" name="entryfield" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="344 - DPT Stock - 6 - (Unusable) - int" type="text" value="[ DPT Stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="344-4-val" name="entryfield" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="344 - DPT Stock - 4 - (Stock Distributed) - int" type="text" value="[ DPT Stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator211" indicatorid="211" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="DPT Total Stock" value="[ DPT Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				1.2</td>
+			<td width="341">
+				Vaccine - Pentavalent</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="5939-2-val" style="width:7em;text-align:center" title="5939 - Pentavalent  Vaccine Stock - 2 - (Balance from Previous month) - int" value="[ Pentavalent  Vaccine Stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="5939-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="5939 - Pentavalent  Vaccine Stock - 5 - (Stock received) - int" type="text" value="[ Pentavalent  Vaccine Stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="5939-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="5939 - Pentavalent  Vaccine Stock - 6 - (Unusable) - int" type="text" value="[ Pentavalent  Vaccine Stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="5939-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="5939 - Pentavalent  Vaccine Stock - 4 - (Stock Distributed) - int" type="text" value="[ Pentavalent  Vaccine Stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator212" indicatorid="212" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="Pentavalent Total Stock" value="[ Pentavalent Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				1.3</td>
+			<td width="341">
+				Vaccine - OPV</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="345-2-val" style="width:7em;text-align:center" title="345 - OPV Stock - 2 - (Balance from Previous month) - int" value="[ OPV Stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="345-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="345 - OPV Stock - 5 - (Stock received) - int" type="text" value="[ OPV Stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="345-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="345 - OPV Stock - 6 - (Unusable) - int" type="text" value="[ OPV Stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="345-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="345 - OPV Stock - 4 - (Stock Distributed) - int" type="text" value="[ OPV Stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator213" indicatorid="213" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="OPV Total Stock" value="[ OPV Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				1.4</td>
+			<td width="341">
+				Vaccine - TT</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="346-2-val" style="width:7em;text-align:center" title="346 - TT Stock - 2 - (Balance from Previous month) - int" value="[ TT Stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="346-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="346 - TT Stock - 5 - (Stock received) - int" type="text" value="[ TT Stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="346-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="346 - TT Stock - 6 - (Unusable) - int" type="text" value="[ TT Stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="346-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="346 - TT Stock - 4 - (Stock Distributed) - int" type="text" value="[ TT Stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator214" indicatorid="214" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="TT Total Stock" value="[ TT Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				1.5</td>
+			<td width="341">
+				Vaccine - DT</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="347-2-val" style="width:7em;text-align:center" title="347 - DT Stock - 2 - (Balance from Previous month) - int" value="[ DT Stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="347-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="347 - DT Stock - 5 - (Stock received) - int" type="text" value="[ DT Stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="347-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="347 - DT Stock - 6 - (Unusable) - int" type="text" value="[ DT Stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="347-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="347 - DT Stock - 4 - (Stock Distributed) - int" type="text" value="[ DT Stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator215" indicatorid="215" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="DT Total Stock" value="[ DT Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				1.6</td>
+			<td width="341">
+				Vaccine - BCG</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="348-2-val" style="width:7em;text-align:center" title="348 - BCG Stock - 2 - (Balance from Previous month) - int" value="[ BCG Stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="348-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="348 - BCG Stock - 5 - (Stock received) - int" type="text" value="[ BCG Stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="348-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="348 - BCG Stock - 6 - (Unusable) - int" type="text" value="[ BCG Stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="348-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="348 - BCG Stock - 4 - (Stock Distributed) - int" type="text" value="[ BCG Stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator216" indicatorid="216" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="BCG Total Stock" value="[ BCG Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				1.7</td>
+			<td width="341">
+				Vaccine - Measles</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="349-2-val" style="width:7em;text-align:center" title="349 - Measles Stock - 2 - (Balance from Previous month) - int" value="[ Measles Stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="349-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="349 - Measles Stock - 5 - (Stock received) - int" type="text" value="[ Measles Stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="349-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="349 - Measles Stock - 6 - (Unusable) - int" type="text" value="[ Measles Stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="349-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="349 - Measles Stock - 4 - (Stock Distributed) - int" type="text" value="[ Measles Stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator217" indicatorid="217" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="Measles Total Stock" value="[ Measles Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				1.8</td>
+			<td width="341">
+				Vaccine - JE</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="350-2-val" style="width:7em;text-align:center" title="350 - JE Stock - 2 - (Balance from Previous month) - int" value="[ JE Stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="350-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="350 - JE Stock - 5 - (Stock received) - int" type="text" value="[ JE Stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="350-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="350 - JE Stock - 6 - (Unusable) - int" type="text" value="[ JE Stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="350-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="350 - JE Stock - 4 - (Stock Distributed) - int" type="text" value="[ JE Stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator218" indicatorid="218" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="JE Total Stock" value="[ JE Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				1.9</td>
+			<td width="341">
+				Vaccine - Hepatitis B</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="351-2-val" style="width:7em;text-align:center" title="351 - Hepatitis B Stock - 2 - (Balance from Previous month) - int" value="[ Hepatitis B Stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="351-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="351 - Hepatitis B Stock - 5 - (Stock received) - int" type="text" value="[ Hepatitis B Stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="351-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="351 - Hepatitis B Stock - 6 - (Unusable) - int" type="text" value="[ Hepatitis B Stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="351-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="351 - Hepatitis B Stock - 4 - (Stock Distributed) - int" type="text" value="[ Hepatitis B Stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator219" indicatorid="219" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="Hepatitis B Total Stock" value="[ Hepatitis B Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				1.10</td>
+			<td width="341">
+				Vaccine - Typhoid</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="6163-2-val" style="width:7em;text-align:center" title="6163 - Typhoid Vaccine stock - 2 - (Balance from Previous month) - int" value="[ Typhoid Vaccine stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6163-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="6163 - Typhoid Vaccine stock - 5 - (Stock received) - int" type="text" value="[ Typhoid Vaccine stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6163-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="6163 - Typhoid Vaccine stock - 6 - (Unusable) - int" type="text" value="[ Typhoid Vaccine stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6163-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="6163 - Typhoid Vaccine stock - 4 - (Stock Distributed) - int" type="text" value="[ Typhoid Vaccine stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator220" indicatorid="220" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="Typhoid Vaccine Total Stock" value="[ Typhoid Vaccine Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				1.11</td>
+			<td width="341">
+				Vaccine - Vitamin K</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="6164-2-val" style="width:7em;text-align:center" title="6164 - Vitamin K Vaccine stock - 2 - (Balance from Previous month) - int" value="[ Vitamin K Vaccine stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6164-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="6164 - Vitamin K Vaccine stock - 5 - (Stock received) - int" type="text" value="[ Vitamin K Vaccine stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6164-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="6164 - Vitamin K Vaccine stock - 6 - (Unusable) - int" type="text" value="[ Vitamin K Vaccine stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6164-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="6164 - Vitamin K Vaccine stock - 4 - (Stock Distributed) - int" type="text" value="[ Vitamin K Vaccine stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator221" indicatorid="221" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="Vitamin K Vaccine Total Stock" value="[ Vitamin K Vaccine Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				1.12</td>
+			<td width="341">
+				Rotavirus&nbsp;</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="6165-2-val" style="width:7em;text-align:center" title="6165 - Rotavirus stock - 2 - (Balance from Previous month) - int" value="[ Rotavirus stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6165-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="6165 - Rotavirus stock - 5 - (Stock received) - int" type="text" value="[ Rotavirus stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6165-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="6165 - Rotavirus stock - 6 - (Unusable) - int" type="text" value="[ Rotavirus stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6165-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="6165 - Rotavirus stock - 4 - (Stock Distributed) - int" type="text" value="[ Rotavirus stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator222" indicatorid="222" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="Rotavirus Total Stock" value="[ Rotavirus Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				1.13</td>
+			<td width="341">
+				Injectable Polio Vaccine</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="6166-2-val" style="width:7em;text-align:center" title="6166 - Injectable Polio Vaccine stock - 2 - (Balance from Previous month) - int" value="[ Injectable Polio Vaccine stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6166-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="6166 - Injectable Polio Vaccine stock - 5 - (Stock received) - int" type="text" value="[ Injectable Polio Vaccine stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6166-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="6166 - Injectable Polio Vaccine stock - 6 - (Unusable) - int" type="text" value="[ Injectable Polio Vaccine stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6166-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="6166 - Injectable Polio Vaccine stock - 4 - (Stock Distributed) - int" type="text" value="[ Injectable Polio Vaccine stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator223" indicatorid="223" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="Injectable Polio Vaccine Total Stock" value="[ Injectable Polio Vaccine Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				1.14</td>
+			<td width="341">
+				Measles Rubella (MR)</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="6167-2-val" style="width:7em;text-align:center" title="6167 - Measles Rubella (MR) stock - 2 - (Balance from Previous month) - int" value="[ Measles Rubella (MR) stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6167-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="6167 - Measles Rubella (MR) stock - 5 - (Stock received) - int" type="text" value="[ Measles Rubella (MR) stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6167-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="6167 - Measles Rubella (MR) stock - 6 - (Unusable) - int" type="text" value="[ Measles Rubella (MR) stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6167-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="6167 - Measles Rubella (MR) stock - 4 - (Stock Distributed) - int" type="text" value="[ Measles Rubella (MR) stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator224" indicatorid="224" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="Measles Rubella (MR) Total Stock" value="[ Measles Rubella (MR) Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td bgcolor="#CCCCCC" width="52">
+				<strong>H2</strong></td>
+			<td bgcolor="#CCCCCC" colspan="6">
+				<strong>Family Planning</strong></td>
+		</tr>
+		<tr>
+			<td width="52">
+				2.1</td>
+			<td width="341">
+				IUD 380 A</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="352-2-val" style="width:7em;text-align:center" title="352 - IUD 380 A Stock - 2 - (Balance from Previous month) - int" value="[ IUD 380 A Stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="352-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="352 - IUD 380 A Stock - 5 - (Stock received) - int" type="text" value="[ IUD 380 A Stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="352-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="352 - IUD 380 A Stock - 6 - (Unusable) - int" type="text" value="[ IUD 380 A Stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="352-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="352 - IUD 380 A Stock - 4 - (Stock Distributed) - int" type="text" value="[ IUD 380 A Stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator225" indicatorid="225" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="IUD 380 A Total Stock" value="[ IUD 380 A Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				2.2</td>
+			<td width="341">
+				IUD 375 A</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="6168-2-val" style="width:7em;text-align:center" title="6168 - IUD 375 A stock - 2 - (Balance from Previous month) - int" value="[ IUD 375 A stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6168-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="6168 - IUD 375 A stock - 5 - (Stock received) - int" type="text" value="[ IUD 375 A stock (Stock received) ]" /></td>
+			<td>
+				<input id="6168-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="6168 - IUD 375 A stock - 6 - (Unusable) - int" type="text" value="[ IUD 375 A stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6168-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="6168 - IUD 375 A stock - 4 - (Stock Distributed) - int" type="text" value="[ IUD 375 A stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator226" indicatorid="226" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="IUD 375 A Total Stock" value="[ IUD 375 A Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				2.3</td>
+			<td width="341">
+				Condoms</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="353-2-val" style="width:7em;text-align:center" title="353 - Condoms Stock - 2 - (Balance from Previous month) - int" value="[ Condoms Stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="353-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="353 - Condoms Stock - 5 - (Stock received) - int" type="text" value="[ Condoms Stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="353-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="353 - Condoms Stock - 6 - (Unusable) - int" type="text" value="[ Condoms Stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="353-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="353 - Condoms Stock - 4 - (Stock Distributed) - int" type="text" value="[ Condoms Stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator227" indicatorid="227" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="Condoms Total Stock" value="[ Condoms Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				2.4</td>
+			<td width="341">
+				Oral Contraceptive</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="354-2-val" style="width:7em;text-align:center" title="354 - Oral Contraceptive Stock - 2 - (Balance from Previous month) - int" value="[ Oral Contraceptive Stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="354-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="354 - Oral Contraceptive Stock - 5 - (Stock received) - int" type="text" value="[ Oral Contraceptive Stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="354-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="354 - Oral Contraceptive Stock - 6 - (Unusable) - int" type="text" value="[ Oral Contraceptive Stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="354-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="354 - Oral Contraceptive Stock - 4 - (Stock Distributed) - int" type="text" value="[ Oral Contraceptive Stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator228" indicatorid="228" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="Oral Contraceptive Total Stock" value="[ Oral Contraceptive Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				2.5</td>
+			<td width="341">
+				Emergency Contraceptive Pills</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="355-2-val" style="width:7em;text-align:center" title="355 - Emergency Contraceptive Pills Stock - 2 - (Balance from Previous month) - int" value="[ Emergency Contraceptive Pills Stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="355-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="355 - Emergency Contraceptive Pills Stock - 5 - (Stock received) - int" type="text" value="[ Emergency Contraceptive Pills Stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="355-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="355 - Emergency Contraceptive Pills Stock - 6 - (Unusable) - int" type="text" value="[ Emergency Contraceptive Pills Stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="355-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="355 - Emergency Contraceptive Pills Stock - 4 - (Stock Distributed) - int" type="text" value="[ Emergency Contraceptive Pills Stock (Stock Distributed) ]" /></td>
+			<td>
+				<input id="indicator229" indicatorid="229" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="Emergency Contraceptive Pills Total Stock" value="[ Emergency Contraceptive Pills Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				2.6</td>
+			<td width="341">
+				Centchroman weekly pills&nbsp;</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="6169-2-val" style="width:7em;text-align:center" title="6169 - Centchroman Weekly Pills stock - 2 - (Balance from Previous month) - int" value="[ Centchroman Weekly Pills stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6169-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="6169 - Centchroman Weekly Pills stock - 5 - (Stock received) - int" type="text" value="[ Centchroman Weekly Pills stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6169-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="6169 - Centchroman Weekly Pills stock - 6 - (Unusable) - int" type="text" value="[ Centchroman Weekly Pills stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6169-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="6169 - Centchroman Weekly Pills stock - 4 - (Stock Distributed) - int" type="text" value="[ Centchroman Weekly Pills stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator230" indicatorid="230" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="Centchroman Weekly Pills Total Stock" value="[ Centchroman Weekly Pills Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				2.7</td>
+			<td width="341">
+				Injectable Contraceptive MPA (Vials)</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="6170-2-val" style="width:7em;text-align:center" title="6170 - Injectable Contraceptive MPA (Vials) stock - 2 - (Balance from Previous month) - int" value="[ Injectable Contraceptive MPA (Vials) stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6170-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="6170 - Injectable Contraceptive MPA (Vials) stock - 5 - (Stock received) - int" type="text" value="[ Injectable Contraceptive MPA (Vials) stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6170-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="6170 - Injectable Contraceptive MPA (Vials) stock - 6 - (Unusable) - int" type="text" value="[ Injectable Contraceptive MPA (Vials) stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6170-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="6170 - Injectable Contraceptive MPA (Vials) stock - 4 - (Stock Distributed) - int" type="text" value="[ Injectable Contraceptive MPA (Vials) stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator231" indicatorid="231" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="Injectable Contraceptive MPA (Vials) Total Stock" value="[ Injectable Contraceptive MPA (Vials) Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				2.8</td>
+			<td width="341">
+				Tubal rings</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="356-2-val" style="width:7em;text-align:center" title="356 - Tubal rings Stock - 2 - (Balance from Previous month) - int" value="[ Tubal rings Stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="356-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="356 - Tubal rings Stock - 5 - (Stock received) - int" type="text" value="[ Tubal rings Stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="356-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="356 - Tubal rings Stock - 6 - (Unusable) - int" type="text" value="[ Tubal rings Stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="356-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="356 - Tubal rings Stock - 4 - (Stock Distributed) - int" type="text" value="[ Tubal rings Stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator232" indicatorid="232" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="Tubal Rings Total Stock" value="[ Tubal Rings Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				2.9</td>
+			<td width="341">
+				Pregnant testing Kits (Nischay Kits)</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="6171-2-val" style="width:7em;text-align:center" title="6171 - Pregnant testing Kits (Nischay Kits) stock - 2 - (Balance from Previous month) - int" value="[ Pregnant testing Kits (Nischay Kits) stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6171-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="6171 - Pregnant testing Kits (Nischay Kits) stock - 5 - (Stock received) - int" type="text" value="[ Pregnant testing Kits (Nischay Kits) stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6171-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="6171 - Pregnant testing Kits (Nischay Kits) stock - 6 - (Unusable) - int" type="text" value="[ Pregnant testing Kits (Nischay Kits) stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6171-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="6171 - Pregnant testing Kits (Nischay Kits) stock - 4 - (Stock Distributed) - int" type="text" value="[ Pregnant testing Kits (Nischay Kits) stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator233" indicatorid="233" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="Pregnant testing Kits (Nischay Kits) Total Stock" value="[ Pregnant testing Kits (Nischay Kits) Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td bgcolor="#CCCCCC" width="52">
+				<strong>H3</strong></td>
+			<td bgcolor="#CCCCCC" colspan="6">
+				<strong>Other Items</strong></td>
+		</tr>
+		<tr>
+			<td width="52">
+				3.1</td>
+			<td width="341">
+				Gloves</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="358-2-val" style="width:7em;text-align:center" title="358 - Gloves Stock - 2 - (Balance from Previous month) - int" value="[ Gloves Stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="358-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="358 - Gloves Stock - 5 - (Stock received) - int" type="text" value="[ Gloves Stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="358-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="358 - Gloves Stock - 6 - (Unusable) - int" type="text" value="[ Gloves Stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="358-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="358 - Gloves Stock - 4 - (Stock Distributed) - int" type="text" value="[ Gloves Stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator234" indicatorid="234" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="Gloves Total Stock" value="[ Gloves Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				3.2</td>
+			<td width="341">
+				MVA Syringes</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="359-2-val" style="width:7em;text-align:center" title="359 - MVA Syringes Stock - 2 - (Balance from Previous month) - int" value="[ MVA Syringes Stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="359-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="359 - MVA Syringes Stock - 5 - (Stock received) - int" type="text" value="[ MVA Syringes Stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="359-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="359 - MVA Syringes Stock - 6 - (Unusable) - int" type="text" value="[ MVA Syringes Stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="359-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="359 - MVA Syringes Stock - 4 - (Stock Distributed) - int" type="text" value="[ MVA Syringes Stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator235" indicatorid="235" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="MVA Syringes Total Stock" value="[ MVA Syringes Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				3.3</td>
+			<td width="341">
+				Tab. Fluconazole</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="360-2-val" style="width:7em;text-align:center" title="360 - Tab. Fluconazole Stock - 2 - (Balance from Previous month) - int" value="[ Tab. Fluconazole Stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="360-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="360 - Tab. Fluconazole Stock - 5 - (Stock received) - int" type="text" value="[ Tab. Fluconazole Stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="360-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="360 - Tab. Fluconazole Stock - 6 - (Unusable) - int" type="text" value="[ Tab. Fluconazole Stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="360-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="360 - Tab. Fluconazole Stock - 4 - (Stock Distributed) - int" type="text" value="[ Tab. Fluconazole Stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator236" indicatorid="236" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="Tab. Fluconazole Total Stock" value="[ Tab. Fluconazole Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				3.4</td>
+			<td width="341">
+				Blood Transfusion sets</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="361-2-val" style="width:7em;text-align:center" title="361 - Blood Transfusion sets Stock - 2 - (Balance from Previous month) - int" value="[ Blood Transfusion sets Stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="361-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="361 - Blood Transfusion sets Stock - 5 - (Stock received) - int" type="text" value="[ Blood Transfusion sets Stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="361-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="361 - Blood Transfusion sets Stock - 6 - (Unusable) - int" type="text" value="[ Blood Transfusion sets Stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="361-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="361 - Blood Transfusion sets Stock - 4 - (Stock Distributed) - int" type="text" value="[ Blood Transfusion sets Stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator237" indicatorid="237" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="Blood Transfusion Sets Total Stock" value="[ Blood Transfusion Sets Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				3.5</td>
+			<td width="341">
+				Gluteraldehyde 2%</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="362-2-val" style="width:7em;text-align:center" title="362 - Gluteraldehyde 2% Stock - 2 - (Balance from Previous month) - int" value="[ Gluteraldehyde 2% Stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="362-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="362 - Gluteraldehyde 2% Stock - 5 - (Stock received) - int" type="text" value="[ Gluteraldehyde 2% Stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="362-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="362 - Gluteraldehyde 2% Stock - 6 - (Unusable) - int" type="text" value="[ Gluteraldehyde 2% Stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="362-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="362 - Gluteraldehyde 2% Stock - 4 - (Stock Distributed) - int" type="text" value="[ Gluteraldehyde 2% Stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator238" indicatorid="238" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="Gluteraldehyde 2% Total Stock" value="[ Gluteraldehyde 2% Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				3.6</td>
+			<td width="341">
+				IFA tablets ( Adult)</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="363-2-val" style="width:7em;text-align:center" title="363 - IFA tablets Stock - 2 - (Balance from Previous month) - int" value="[ IFA tablets Stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="363-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="363 - IFA tablets Stock - 5 - (Stock received) - int" type="text" value="[ IFA tablets Stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="363-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="363 - IFA tablets Stock - 6 - (Unusable) - int" type="text" value="[ IFA tablets Stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="363-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="363 - IFA tablets Stock - 4 - (Stock Distributed) - int" type="text" value="[ IFA tablets Stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator239" indicatorid="239" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="IFA Tablets Total Stock" value="[ IFA Tablets Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				3.7</td>
+			<td width="341">
+				IFA - Blue ( Adolescent 10-19 yrs)</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="6172-2-val" style="width:7em;text-align:center" title="6172 - IFA - Blue ( Adolescent 10-19 yrs) stock - 2 - (Balance from Previous month) - int" value="[ IFA - Blue ( Adolescent 10-19 yrs) stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6172-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="6172 - IFA - Blue ( Adolescent 10-19 yrs) stock - 5 - (Stock received) - int" type="text" value="[ IFA - Blue ( Adolescent 10-19 yrs) stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6172-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="6172 - IFA - Blue ( Adolescent 10-19 yrs) stock - 6 - (Unusable) - int" type="text" value="[ IFA - Blue ( Adolescent 10-19 yrs) stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6172-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="6172 - IFA - Blue ( Adolescent 10-19 yrs) stock - 4 - (Stock Distributed) - int" type="text" value="[ IFA - Blue ( Adolescent 10-19 yrs) stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator240" indicatorid="240" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="IFA - Blue ( Adolescent 10-19 yrs) Total Stock " value="[ IFA - Blue ( Adolescent 10-19 yrs) Total Stock  ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				3.8</td>
+			<td width="341">
+				IFA- Pink ( Junior 6-10 yrs)</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="6173-2-val" style="width:7em;text-align:center" title="6173 - IFA- Pink ( Junior 6-10 yrs) stock - 2 - (Balance from Previous month) - int" value="[ IFA- Pink ( Junior 6-10 yrs) stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6173-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="6173 - IFA- Pink ( Junior 6-10 yrs) stock - 5 - (Stock received) - int" type="text" value="[ IFA- Pink ( Junior 6-10 yrs) stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6173-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="6173 - IFA- Pink ( Junior 6-10 yrs) stock - 6 - (Unusable) - int" type="text" value="[ IFA- Pink ( Junior 6-10 yrs) stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6173-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="6173 - IFA- Pink ( Junior 6-10 yrs) stock - 4 - (Stock Distributed) - int" type="text" value="[ IFA- Pink ( Junior 6-10 yrs) stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator241" indicatorid="241" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="IFA- Pink (Junior 6-10 yrs) Total Stock" value="[ IFA- Pink (Junior 6-10 yrs) Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				3.9</td>
+			<td width="341">
+				IFA Syrup (Paediatric)</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="364-2-val" style="width:7em;text-align:center" title="364 - IFA Syrup (Paediatric) Stock - 2 - (Balance from Previous month) - int" value="[ IFA Syrup (Paediatric) Stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="364-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="364 - IFA Syrup (Paediatric) Stock - 5 - (Stock received) - int" type="text" value="[ IFA Syrup (Paediatric) Stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="364-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="364 - IFA Syrup (Paediatric) Stock - 6 - (Unusable) - int" type="text" value="[ IFA Syrup (Paediatric) Stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="364-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="364 - IFA Syrup (Paediatric) Stock - 4 - (Stock Distributed) - int" type="text" value="[ IFA Syrup (Paediatric) Stock (Stock Distributed) ]" /></td>
+			<td>
+				<input id="indicator242" indicatorid="242" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="IFA Syrup (Paediatric) Total Stock" value="[ IFA Syrup (Paediatric) Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				3.10</td>
+			<td width="341">
+				Paediatrics Antibiotics ( Amoxycillin and Injectable Gentamicin)</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="6174-2-val" style="width:7em;text-align:center" title="6174 - Paediatrics Antibiotics ( Amoxycillin and Injectable Gentamicin) stock - 2 - (Balance from Previous month) - int" value="[ Paediatrics Antibiotics ( Amoxycillin and Injectable Gentamicin) stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6174-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="6174 - Paediatrics Antibiotics ( Amoxycillin and Injectable Gentamicin) stock - 5 - (Stock received) - int" type="text" value="[ Paediatrics Antibiotics ( Amoxycillin and Injectable Gentamicin) stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6174-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="6174 - Paediatrics Antibiotics ( Amoxycillin and Injectable Gentamicin) stock - 6 - (Unusable) - int" type="text" value="[ Paediatrics Antibiotics ( Amoxycillin and Injectable Gentamicin) stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6174-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="6174 - Paediatrics Antibiotics ( Amoxycillin and Injectable Gentamicin) stock - 4 - (Stock Distributed) - int" type="text" value="[ Paediatrics Antibiotics ( Amoxycillin and Injectable Gentamicin) stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator243" indicatorid="243" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="Paediatrics Antibiotics ( Amoxycillin and Injectable Gentamicin) Total Stock" value="[ Paediatrics Antibiotics ( Amoxycillin and Injectable Gentamicin) Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				3.11</td>
+			<td width="341">
+				Vitamin A solution</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="366-2-val" style="width:7em;text-align:center" title="366 - Vitamin A solution Stock - 2 - (Balance from Previous month) - int" value="[ Vitamin A solution Stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="366-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="366 - Vitamin A solution Stock - 5 - (Stock received) - int" type="text" value="[ Vitamin A solution Stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="366-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="366 - Vitamin A solution Stock - 6 - (Unusable) - int" type="text" value="[ Vitamin A solution Stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="366-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="366 - Vitamin A solution Stock - 4 - (Stock Distributed) - int" type="text" value="[ Vitamin A solution Stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator244" indicatorid="244" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="Vitamin A solution Total Stock" value="[ Vitamin A solution Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				3.12</td>
+			<td width="341">
+				ORS (New WHO)</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="367-2-val" style="width:7em;text-align:center" title="367 - ORS (New WHO) Stock - 2 - (Balance from Previous month) - int" value="[ ORS (New WHO) Stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="367-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="367 - ORS (New WHO) Stock - 5 - (Stock received) - int" type="text" value="[ ORS (New WHO) Stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="367-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="367 - ORS (New WHO) Stock - 6 - (Unusable) - int" type="text" value="[ ORS (New WHO) Stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="367-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="367 - ORS (New WHO) Stock - 4 - (Stock Distributed) - int" type="text" value="[ ORS (New WHO) Stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator245" indicatorid="245" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="ORS (New WHO) Total Stock" value="[ ORS (New WHO) Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				3.13</td>
+			<td width="341">
+				RTI /STI colour coded syndromic kits ( I to VII)</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="6175-2-val" style="width:7em;text-align:center" title="6175 - RTI /STI colour coded syndromic kits ( I to VII) stock - 2 - (Balance from Previous month) - int" value="[ RTI /STI colour coded syndromic kits ( I to VII) stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6175-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="6175 - RTI /STI colour coded syndromic kits ( I to VII) stock - 5 - (Stock received) - int" type="text" value="[ RTI /STI colour coded syndromic kits ( I to VII) stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6175-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="6175 - RTI /STI colour coded syndromic kits ( I to VII) stock - 6 - (Unusable) - int" type="text" value="[ RTI /STI colour coded syndromic kits ( I to VII) stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6175-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="6175 - RTI /STI colour coded syndromic kits ( I to VII) stock - 4 - (Stock Distributed) - int" type="text" value="[ RTI /STI colour coded syndromic kits ( I to VII) stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator246" indicatorid="246" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="RTI /STI colour coded syndromic kits ( I to VII) Total Stock" value="[ RTI /STI colour coded syndromic kits ( I to VII) Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				3.14</td>
+			<td width="341">
+				Zinc 20 mg tablet</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="6176-2-val" style="width:7em;text-align:center" title="6176 - Zinc 20 mg tablet stock - 2 - (Balance from Previous month) - int" value="[ Zinc 20 mg tablet stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6176-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="6176 - Zinc 20 mg tablet stock - 5 - (Stock received) - int" type="text" value="[ Zinc 20 mg tablet stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6176-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="6176 - Zinc 20 mg tablet stock - 6 - (Unusable) - int" type="text" value="[ Zinc 20 mg tablet stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6176-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="6176 - Zinc 20 mg tablet stock - 4 - (Stock Distributed) - int" type="text" value="[ Zinc 20 mg tablet stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator247" indicatorid="247" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="Zinc 20 mg Tablet Total Stock" value="[ Zinc 20 mg Tablet Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				3.15</td>
+			<td width="341">
+				Albendazole 400 mg tablet</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="6177-2-val" style="width:7em;text-align:center" title="6177 - Albendazole 400 mg tablet stock - 2 - (Balance from Previous month) - int" value="[ Albendazole 400 mg tablet stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6177-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="6177 - Albendazole 400 mg tablet stock - 5 - (Stock received) - int" type="text" value="[ Albendazole 400 mg tablet stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6177-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="6177 - Albendazole 400 mg tablet stock - 6 - (Unusable) - int" type="text" value="[ Albendazole 400 mg tablet stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6177-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="6177 - Albendazole 400 mg tablet stock - 4 - (Stock Distributed) - int" type="text" value="[ Albendazole 400 mg tablet stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator248" indicatorid="248" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="Albendazole 400 mg Tablet Total Stock" value="[ Albendazole 400 mg Tablet Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				3.16</td>
+			<td width="341">
+				Calcium Tablets</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="6178-2-val" style="width:7em;text-align:center" title="6178 - Calcium Tablets stock - 2 - (Balance from Previous month) - int" value="[ Calcium Tablets stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6178-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="6178 - Calcium Tablets stock - 5 - (Stock received) - int" type="text" value="[ Calcium Tablets stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6178-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="6178 - Calcium Tablets stock - 6 - (Unusable) - int" type="text" value="[ Calcium Tablets stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="6178-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="6178 - Calcium Tablets stock - 4 - (Stock Distributed) - int" type="text" value="[ Calcium Tablets stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator249" indicatorid="249" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="Calcium Tablets Total Stock" value="[ Calcium Tablets Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td bgcolor="#CCCCCC" width="52">
+				<strong>H4</strong></td>
+			<td bgcolor="#CCCCCC" colspan="6">
+				<strong>Syringes</strong></td>
+		</tr>
+		<tr>
+			<td width="52">
+				4.1</td>
+			<td width="341">
+				Syringes - 0.1 ml (AD)</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="372-2-val" style="width:7em;text-align:center" title="372 - 0.1 ml (AD) Stock - 2 - (Balance from Previous month) - int" value="[ 0.1 ml (AD) Stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="372-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="372 - 0.1 ml (AD) Stock - 5 - (Stock received) - int" type="text" value="[ 0.1 ml (AD) Stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="372-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="372 - 0.1 ml (AD) Stock - 6 - (Unusable) - int" type="text" value="[ 0.1 ml (AD) Stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="372-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="372 - 0.1 ml (AD) Stock - 4 - (Stock Distributed) - int" type="text" value="[ 0.1 ml (AD) Stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator250" indicatorid="250" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="0.1 ml (AD) Total Stock" value="[ 0.1 ml (AD) Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				4.2</td>
+			<td width="341">
+				Syringes - 0.5 ml (AD)</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="373-2-val" style="width:7em;text-align:center" title="373 - 0.5 ml (AD) Stock - 2 - (Balance from Previous month) - int" value="[ 0.5 ml (AD) Stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="373-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="373 - 0.5 ml (AD) Stock - 5 - (Stock received) - int" type="text" value="[ 0.5 ml (AD) Stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="373-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="373 - 0.5 ml (AD) Stock - 6 - (Unusable) - int" type="text" value="[ 0.5 ml (AD) Stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="373-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="373 - 0.5 ml (AD) Stock - 4 - (Stock Distributed) - int" type="text" value="[ 0.5 ml (AD) Stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator251" indicatorid="251" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="0.5 ml (AD) Total Stock" value="[ 0.5 ml (AD) Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td width="52">
+				4.3</td>
+			<td width="341">
+				Syringes - 5.0 ml (Disposable)</td>
+			<td style="text-align: center;">
+				<input disabled="disabled" id="374-2-val" style="width:7em;text-align:center" title="374 - 5.0 ml (Disposable) Stock - 2 - (Balance from Previous month) - int" value="[ 5.0 ml (Disposable) Stock (Balance from Previous month) ]" /></td>
+			<td style="text-align: center;">
+				<input id="374-5-val" onkeyup="calculatedDataValueForStockRecived( this.id )" style="width:7em;text-align:center" title="374 - 5.0 ml (Disposable) Stock - 5 - (Stock received) - int" type="text" value="[ 5.0 ml (Disposable) Stock (Stock received) ]" /></td>
+			<td style="text-align: center;">
+				<input id="374-6-val" onkeyup="calculatedDataValueForUnusable( this.id )" style="width:7em;text-align:center" title="374 - 5.0 ml (Disposable) Stock - 6 - (Unusable) - int" type="text" value="[ 5.0 ml (Disposable) Stock (Unusable) ]" /></td>
+			<td style="text-align: center;">
+				<input id="374-4-val" onkeyup="calculatedDataValueForStockDistributed( this.id )" style="width:7em;text-align:center" title="374 - 5.0 ml (Disposable) Stock - 4 - (Stock Distributed) - int" type="text" value="[ 5.0 ml (Disposable) Stock (Stock Distributed) ]" /></td>
+			<td style="text-align: center;">
+				<input id="indicator252" indicatorid="252" name="indicator" readonly="readonly" style="width:7em;text-align:center;" title="5.0 ml (Disposable) Total Stock" value="[ 5.0 ml (Disposable) Total Stock ]" /></td>
+		</tr>
+		<tr>
+			<td bgcolor="#CCCCCC" width="52">
+				<strong>Part B</strong></td>
+			<td bgcolor="#CCCCCC" width="425">
+				<strong>Other Programmes</strong></td>
+			<td align="center" bgcolor="#CCCCCC" colspan="5">
+				<strong>Numbers reported</strong></td>
+		</tr>
+		<tr>
+			<td bgcolor="#CCCCCC" width="52">
+				<strong>H5</strong></td>
+			<td bgcolor="#CCCCCC" colspan="6">
+				<strong>Rashtriya Bal Swasthaya Karyakram (RBSK)</strong></td>
+		</tr>
+		<tr>
+			<td>
+				5.1</td>
+			<td width="425">
+				Number of newborn screened for defects at birth (as per RBSK)</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6179-1-val" style="width:7em;text-align:center" title="6179 - Newborn screened for defects at birth (as per RBSK) - 1 - (default) - int" value="[ Newborn screened for defects at birth (as per RBSK) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				5.2</td>
+			<td width="425">
+				Number of children (6 month to 6 years) screened by RBSK mobile health teams at Anganwadi center</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6180-1-val" style="width:7em;text-align:center" title="6180 - Children between age group 6 month to 6 years screened by RBSK mobile health teams at Anganwadi center - 1 - (default) - int" value="[ Children between age group 6 month to 6 years screened by RBSK mobile health teams at Anganwadi center (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				5.3</td>
+			<td width="425">
+				Number of children (6 years to 18 years) screened by RBSK mobile health teams at Govt and Govt aided schools</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6181-1-val" style="width:7em;text-align:center" title="6181 - Children between age group 6 years to 18 years screened by RBSK mobile health teams at Govt and Govt aided schools - 1 - (default) - int" value="[ Children between age group 6 years to 18 years screened by RBSK mobile health teams at Govt and Govt aided schools (default) ]" /></td>
+		</tr>
+		<tr>
+			<td bgcolor="#CCCCCC" width="52">
+				<strong>5.4</strong></td>
+			<td bgcolor="#CCCCCC" colspan="6">
+				<strong>Number of children identified with selected health conditions ( New Born - 18 years)</strong></td>
+		</tr>
+		<tr>
+			<td bgcolor="#CCCCCC" width="52">
+				<strong>5.4.1</strong></td>
+			<td bgcolor="#CCCCCC" colspan="6">
+				<strong>Disease</strong></td>
+		</tr>
+		<tr>
+			<td>
+				5.4.1.a</td>
+			<td width="425">
+				Number of Male children identified with Disease</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6183-1-val" style="width:7em;text-align:center" title="6183 - Male children identified with Disease - 1 - (default) - int" value="[ Male children identified with Disease (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				5.4.1.b</td>
+			<td width="425">
+				Number of Female children identified with Disease</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6182-1-val" style="width:7em;text-align:center" title="6182 - Female children identified with Disease - 1 - (default) - int" value="[ Female children identified with Disease (default) ]" /></td>
+		</tr>
+		<tr>
+			<td bgcolor="#CCCCCC" width="52">
+				<strong>5.4.2</strong></td>
+			<td bgcolor="#CCCCCC" colspan="6">
+				<strong>Deficiency</strong></td>
+		</tr>
+		<tr>
+			<td>
+				5.4.2.a</td>
+			<td width="425">
+				Number of Male children identified with Deficiency</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6185-1-val" style="width:7em;text-align:center" title="6185 - Male children identified with Deficiency - 1 - (default) - int" value="[ Male children identified with Deficiency (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				5.4.2.b</td>
+			<td width="425">
+				Number of Female children identified with Deficiency</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6184-1-val" style="width:7em;text-align:center" title="6184 - Female children identified with Deficiency - 1 - (default) - int" value="[ Female children identified with Deficiency (default) ]" /></td>
+		</tr>
+		<tr>
+			<td bgcolor="#CCCCCC" width="52">
+				<strong>5.4.3</strong></td>
+			<td bgcolor="#CCCCCC" colspan="6">
+				<strong>Developmental delay</strong></td>
+		</tr>
+		<tr>
+			<td>
+				5.4.3.a</td>
+			<td width="425">
+				Number of Male children identified with Developmental delay</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6187-1-val" style="width:7em;text-align:center" title="6187 - Male children identified with Developmental delay - 1 - (default) - int" value="[ Male children identified with Developmental delay (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				5.4.3.b</td>
+			<td width="425">
+				Number of Female children identified with Developmental delay</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6186-1-val" style="width:7em;text-align:center" title="6186 - Female children identified with Developmental delay - 1 - (default) - int" value="[ Female children identified with Developmental delay (default) ]" /></td>
+		</tr>
+		<tr>
+			<td bgcolor="#CCCCCC" width="52">
+				<strong>5.5</strong></td>
+			<td bgcolor="#CCCCCC" colspan="6">
+				<strong>Number of children (affected with selected health conditions) managed by following intervention</strong></td>
+		</tr>
+		<tr>
+			<td>
+				5.5.1</td>
+			<td width="425">
+				Number of children managed by intervention - Medical</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6188-1-val" style="width:7em;text-align:center" title="6188 - Children managed by intervention - Medical - 1 - (default) - int" value="[ Children managed by intervention - Medical (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				5.5.2</td>
+			<td width="425">
+				Number of children managed by intervention - Surgical</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6189-1-val" style="width:7em;text-align:center" title="6189 - Children managed by intervention - Surgical - 1 - (default) - int" value="[ Children managed by intervention - Surgical (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				5.5.3</td>
+			<td width="425">
+				Early intervention at DEIC ( District Early Intervention Centre)</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6190-1-val" style="width:7em;text-align:center" title="6190 - Early intervention at DEIC ( District Early Intervention Centre) - 1 - (default) - int" value="[ Early intervention at DEIC ( District Early Intervention Centre) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td bgcolor="#CCCCCC" width="52">
+				<strong>H6</strong></td>
+			<td bgcolor="#CCCCCC" colspan="6">
+				<strong>Adolscent Health</strong></td>
+		</tr>
+		<tr>
+			<td bgcolor="#CCCCCC" width="52">
+				<strong>6.1</strong></td>
+			<td bgcolor="#CCCCCC" colspan="6">
+				<strong>Coverage under Weekly Iron and Folic Acid(WIFS)&nbsp;Supplementation Programme</strong></td>
+		</tr>
+		<tr>
+			<td bgcolor="#CCCCCC" width="52">
+				<strong>6.1.1</strong></td>
+			<td bgcolor="#CCCCCC" colspan="6">
+				<strong>Number of students (6th -12th class) provided 4 -5 IFA tablets in schools</strong></td>
+		</tr>
+		<tr>
+			<td>
+				6.1.1.a</td>
+			<td width="425">
+				Girls (6th -12th class) provided 4 -5 IFA tablets in schools</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6192-1-val" style="width:7em;text-align:center" title="6192 - Girls between 6th -12th class provided 4-5 IFA tablets in schools - 1 - (default) - int" value="[ Girls between 6th -12th class provided 4-5 IFA tablets in schools (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				6.1.1.b</td>
+			<td width="425">
+				Boys (6th -12th class) provided 4 -5 IFA tablets in schools</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6191-1-val" style="width:7em;text-align:center" title="6191 - Boys between 6th -12th class provided 4-5 IFA tablets in schools - 1 - (default) - int" value="[ Boys between 6th -12th class provided 4-5 IFA tablets in schools (default) ]" /></td>
+		</tr>
+		<tr>
+			<td bgcolor="#CCCCCC" width="52">
+				<strong>6.1.2</strong></td>
+			<td bgcolor="#CCCCCC" colspan="6">
+				<strong>Number of students (6th -12th class) provided albendazole in schools</strong></td>
+		</tr>
+		<tr>
+			<td height="23">
+				6.1.2.a</td>
+			<td width="425">
+				Girls (6th -12th class) provided albendazole in schools</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6194-1-val" style="width:7em;text-align:center" title="6194 - Girls between 6th -12th class provided albendazole in schools - 1 - (default) - int" value="[ Girls between 6th -12th class provided albendazole in schools (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				6.1.2.b</td>
+			<td width="425">
+				Boys (6th -12th class) provided albendazole in schools</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6193-1-val" style="width:7em;text-align:center" title="6193 - Boys between 6th -12th class provided albendazole in schools - 1 - (default) - int" value="[ Boys between 6th -12th class provided albendazole in schools (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				6.1.3</td>
+			<td width="425">
+				Number of out of school adolscent girls (10-19 years) provided 4 -5 IFA tablets at Anganwadi Centres</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6195-1-val" style="width:7em;text-align:center" title="6195 - Out of school adolscent girls between age group 10-19 years provided 4-5 IFA tablets at Anganwadi Centres - 1 - (default) - int" value="[ Out of school adolscent girls between age group 10-19 years provided 4-5 IFA tablets at Anganwadi Centres (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				6.1.4</td>
+			<td width="425">
+				Number of out of school adolscent girls (10-19 years) provided albendazole at Anganwadi Centres</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6196-1-val" style="width:7em;text-align:center" title="6196 - Out of school adolscent girls between age group 10-19 years provided albendazole at Anganwadi Centres - 1 - (default) - int" value="[ Out of school adolscent girls between age group 10-19 years provided albendazole at Anganwadi Centres (default) ]" /></td>
+		</tr>
+		<tr>
+			<td bgcolor="#CCCCCC" width="52">
+				<strong>6.2</strong></td>
+			<td bgcolor="#CCCCCC" colspan="6">
+				<strong>Coverage under Menstrual Hygiene Scheme</strong></td>
+		</tr>
+		<tr>
+			<td>
+				6.2.1</td>
+			<td width="425">
+				Number of adolescent girls provided sanitary napkins packs</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6197-1-val" style="width:7em;text-align:center" title="6197 - Adolescent girls provided sanitary napkins packs - 1 - (default) - int" value="[ Adolescent girls provided sanitary napkins packs (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				6.2.2</td>
+			<td width="425">
+				Number of sanitary napkin packs sold to adolescent girls</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6198-1-val" style="width:7em;text-align:center" title="6198 - Sanitary napkin packs sold to adolescent girls - 1 - (default) - int" value="[ Sanitary napkin packs sold to adolescent girls (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				6.2.3</td>
+			<td width="425">
+				Number of sanitary napkin packs distributed free to ASHA</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6199-1-val" style="width:7em;text-align:center" title="6199 - Sanitary napkin packs distributed free to ASHA - 1 - (default) - int" value="[ Sanitary napkin packs distributed free to ASHA (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				6.2.4</td>
+			<td width="425">
+				Number of adolescent girls attended monthly meeting</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6200-1-val" style="width:7em;text-align:center" title="6200 - Adolescent girls attended monthly meeting - 1 - (default) - int" value="[ Adolescent girls attended monthly meeting (default) ]" /></td>
+		</tr>
+		<tr>
+			<td bgcolor="#CCCCCC" width="52">
+				<strong>H7</strong></td>
+			<td bgcolor="#CCCCCC" colspan="6">
+				<strong>Coverage under WIFS JUNIOR (Weekly Iron Folic Acid Supplementation Programme for children 6 - 10 years ) - PINK IFA tablet</strong></td>
+		</tr>
+		<tr>
+			<td>
+				7.1</td>
+			<td width="425">
+				Number of children covered under WIFS JUNIOR (6 - 10 years ) provided 4-5 IFA tablets in schools</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6201-1-val" style="width:7em;text-align:center" title="6201 - Children covered under WIFS JUNIOR (6 - 10 years ) provided 4-5 IFA tablets in schools - 1 - (default) - int" value="[ Children covered under WIFS JUNIOR (6 - 10 years ) provided 4-5 IFA tablets in schools (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				7.2</td>
+			<td width="425">
+				Number of children (6 - 10 years) provided albendazole in schools</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6202-1-val" style="width:7em;text-align:center" title="6202 - Children between age group 6 - 10 years provided albendazole in schools - 1 - (default) - int" value="[ Children between age group 6 - 10 years provided albendazole in schools (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				7.3</td>
+			<td width="425">
+				Number of out of school children (6-10 years) given 4-5 IFA tablets at Anganwadi Centres</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6203-1-val" style="width:7em;text-align:center" title="6203 - Out of school children between age group 6-10 years given 4-5 IFA tablets at Anganwadi Centres - 1 - (default) - int" value="[ Out of school children between age group 6-10 years given 4-5 IFA tablets at Anganwadi Centres (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				7.4</td>
+			<td width="425">
+				Number of out of school children (6-10 years) provided albendazole at Anganwadi Centres</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6204-1-val" style="width:7em;text-align:center" title="6204 - Out of school children between age group 6-10 years provided albendazole at Anganwadi Centres - 1 - (default) - int" value="[ Out of school children between age group 6-10 years provided albendazole at Anganwadi Centres (default) ]" /></td>
+		</tr>
+		<tr>
+			<td bgcolor="#CCCCCC" width="52">
+				<strong>H8</strong></td>
+			<td bgcolor="#CCCCCC" colspan="6">
+				<strong>Maternal Death Reviews Done(MDR) done</strong></td>
+		</tr>
+		<tr>
+			<td>
+				8.1</td>
+			<td width="425">
+				Total Maternal Deaths Reviewed (MDR) by CMO</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6205-1-val" style="width:7em;text-align:center" title="6205 - Maternal Deaths Reviewed (MDR) by CMO - 1 - (default) - int" value="[ Maternal Deaths Reviewed (MDR) by CMO (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				8.2</td>
+			<td width="425">
+				Total Maternal Deaths Reviewed (MDR) by DM</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6206-1-val" style="width:7em;text-align:center" title="6206 - Maternal Deaths Reviewed (MDR) by DM - 1 - (default) - int" value="[ Maternal Deaths Reviewed (MDR) by DM (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				8.3</td>
+			<td width="425">
+				Number of maternal deaths reported through Community based Maternal Death Review (CBMDR)</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6207-1-val" style="width:7em;text-align:center" title="6207 - Maternal deaths reported through Community based Maternal Death Review(CBMDR) - 1 - (default) - int" value="[ Maternal deaths reported through Community based Maternal Death Review(CBMDR) (default) ]" /></td>
+		</tr>
+		<tr>
+			<td bgcolor="#CCCCCC" width="52">
+				<strong>H9</strong></td>
+			<td bgcolor="#CCCCCC" colspan="6">
+				<strong>Janani Shishu Suraksha Karyakram (JSSK)</strong></td>
+		</tr>
+		<tr>
+			<td bgcolor="#CCCCCC" width="52">
+				<strong>9.1</strong></td>
+			<td bgcolor="#CCCCCC" colspan="6">
+				<strong>Number of Pregnant Women provided</strong></td>
+		</tr>
+		<tr>
+			<td>
+				9.1.1</td>
+			<td width="425">
+				Number of Pregnant Women provided - Free Medicines under JSSK</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6208-1-val" style="width:7em;text-align:center" title="6208 - Pregnant women provided free Medicines under JSSK - 1 - (default) - int" value="[ Pregnant women provided free Medicines under JSSK (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				9.1.2</td>
+			<td width="425">
+				Number of Pregnant Women provided - Free Diet under JSSK</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6209-1-val" style="width:7em;text-align:center" title="6209 - Pregnant women provided free Diet under JSSK - 1 - (default) - int" value="[ Pregnant women provided free Diet under JSSK (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				9.1.3</td>
+			<td width="425">
+				Number of Pregnant Women provided - Free Diagnostics under JSSK</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6210-1-val" style="width:7em;text-align:center" title="6210 - Pregnant women provided free Diagnostics under JSSK - 1 - (default) - int" value="[ Pregnant women provided free Diagnostics under JSSK (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				9.1.5</td>
+			<td width="425">
+				Number of Pregnant Women provided - Free Home to facility transport under JSSK</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6211-1-val" style="width:7em;text-align:center" title="6211 - Pregnant women provided free Home to facility transport under JSSK - 1 - (default) - int" value="[ Pregnant women provided free Home to facility transport under JSSK (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				9.1.6</td>
+			<td width="425">
+				Number of Pregnant Women provided - Interfacility transfers when needed under JSSK</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6212-1-val" style="width:7em;text-align:center" title="6212 - Pregnant women provided Interfacility transfers when needed under JSSK - 1 - (default) - int" value="[ Pregnant women provided Interfacility transfers when needed under JSSK (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				9.1.7</td>
+			<td width="425">
+				Number of Pregnant Women provided - Free Drop Back home under JSSK</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6213-1-val" style="width:7em;text-align:center" title="6213 - Pregnant women provided free Drop Back home under JSSK - 1 - (default) - int" value="[ Pregnant women provided free Drop Back home under JSSK (default) ]" /></td>
+		</tr>
+		<tr>
+			<td bgcolor="#CCCCCC" width="52">
+				<strong>9.2</strong></td>
+			<td bgcolor="#CCCCCC" colspan="6">
+				<strong>Number of sick infants provided&nbsp;</strong></td>
+		</tr>
+		<tr>
+			<td>
+				9.2.1</td>
+			<td width="425">
+				Number of sick infants provided - Free Medicines under JSSK</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6217-1-val" style="width:7em;text-align:center" title="6217 - Sick infants provided Free Medicines under JSSK - 1 - (default) - int" value="[ Sick infants provided Free Medicines under JSSK (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				9.2.2</td>
+			<td width="425">
+				Number of sick infants provided - Free Diagnostics under JSSK</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6214-1-val" style="width:7em;text-align:center" title="6214 - Sick infants provided Free Diagnostics under JSSK - 1 - (default) - int" value="[ Sick infants provided Free Diagnostics under JSSK (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				9.2.3</td>
+			<td width="425">
+				Number of sick infants provided - Free Home to facility transport under JSSK</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6216-1-val" style="width:7em;text-align:center" title="6216 - Sick infants provided Free Home to facility transport under JSSK - 1 - (default) - int" value="[ Sick infants provided Free Home to facility transport under JSSK (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				9.2.4</td>
+			<td width="425">
+				Number of sick infants provided - Interfacility transfers when needed under JSSK</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6218-1-val" style="width:7em;text-align:center" title="6218 - Sick infants provided Interfacility transfers when needed under JSSK - 1 - (default) - int" value="[ Sick infants provided Interfacility transfers when needed under JSSK (default) ]" /></td>
+		</tr>
+		<tr>
+			<td>
+				9.2.5</td>
+			<td width="425">
+				Number of sick infants provided - Free Drop Back home under JSSK</td>
+			<td colspan="5" style="text-align: center;">
+				<input id="6215-1-val" style="width:7em;text-align:center" title="6215 - Sick infants provided Free Drop Back home under JSSK - 1 - (default) - int" value="[ Sick infants provided Free Drop Back home under JSSK (default) ]" /></td>
+		</tr>
+	</tbody>
+</table>
+<p>
+	&nbsp;</p>
+	
+<script type="text/javascript">
+	
+	//var currentOrgUnitID = $( '#selectedOrganisationUnit' ).val();
+	//var currentOrgUnitID = dhis2.de.getCurrentOrganisationUnit();
+	var currentOrgUnitID = currentOrganisationUnitId;
+	var currentPeriodID = $( '#selectedPeriodId' ).val();
+	var monthlyNextExternalPeriodId = getNextMonthExternalPeriodId( currentPeriodID );
+	
+	function VaccineDPT() 
+	{
+		
+		var dptValue_OB = parseInt(document.getElementById('344-2-val').value);
+		//alert( dptValue_OB );
+		var dptValue_SR = parseInt(document.getElementById('344-5-val').value);
+		//alert( dptValue_SR );
+		var dptValue_US = parseInt(document.getElementById('344-6-val').value);
+		var dptValue_SD = parseInt(document.getElementById('344-4-val').value);
+		
+		if(isNaN(dptValue_OB))
+		{
+		   dptValue_OB = parseInt(0);
+		}
+		if(isNaN(dptValue_SR))
+		{
+		   dptValue_SR = parseInt(0);
+		}
+		if(isNaN(dptValue_US))
+		{
+		   dptValue_US = parseInt(0);
+		}
+		if(isNaN(dptValue_SD))
+		{
+		   dptValue_SD = parseInt(0);
+		}
+		
+		var indicatorValue = parseInt(document.getElementById('indicator211').value);
+		
+		//var dptForNextMonthValue = ( dptValue_OB + dptValue_SR - dptValue_US - dptValue_SD );
+		
+		alert(indicatorValue + '  VaccineDPT' + " -- " + currentOrgUnitID + " --- " + monthlyNextExternalPeriodId + " -- "  + dptValue_OB );
+		
+		var valueSaverSdNxt = new ValueSaverByOrgUnit( 344, 2, currentOrgUnitID, monthlyNextExternalPeriodId, indicatorValue, COLOR_GREEN );														
+					
+		valueSaverSdNxt.save();
+	}	
+	
+	//window.onload = VaccineDPT();
+	//window.onload = codeAddress();
+</script>	

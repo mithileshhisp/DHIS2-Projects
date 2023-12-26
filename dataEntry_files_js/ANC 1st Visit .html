@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+
+<style type="text/css">
+	tr td
+	{
+		border: 1px solid black;
+	    padding: 1px;
+	    text-align: center; 
+	}
+
+	#table1
+	{
+	    table-layout: auto;
+		border-collapse: collapse;
+		border:none;
+	}
+	tr :hover { 
+    background-color: #ff6600;
+    color:white;
+	}
+	
+
+</style>
+
+
+</head>
+<body>
+
+<div class="container">
+  
+ <b > Start Date: </b><br/>
+    <div class="row">
+        <div class='col-sm-6'>
+            <div class="form-group">
+                <div class='input-group date' id='startdate' >
+                    <input type='text' class="form-control" id="inputStartDate"  />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>    
+    </div>
+</div>
+
+<div class="container">
+ <b> End date: </b><br/>
+    <div class="row">
+        <div class='col-sm-6'>
+            <div class="form-group">
+                <div class='input-group date' id='enddate'>
+                    <input type='text' class="form-control" id="inputEndDate" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>    
+    </div>
+</div>
+
+<div class='col-sm-5' style='margin-left: 20%'>
+    <div class="form-group">
+        <button class="btn btn-default" id="submit">Submit</button>
+        <button class="btn btn-default" id="download" style="margin-left: 20px">Download</button>
+       <a class="btn btn-danger" onclick="location.reload();" style='font-size:20px;color:white;margin-left:60px;'><i class="fa fa-trash-o fa-lg"></i> &nbsp;&nbsp;Clear</a>
+    </div>
+</div>
+
+
+<br>
+<br>
+<br>
+
+<table id="table1" class="reporttable table table-bordered table-hover" style="width:100%">
+</table>
+	
+
+<script type="text/javascript" async>
+
+	$.ajaxSetup({
+        async: false
+    });
+      
+      	var objname=[];
+		var objtrack=[];
+		var objhouse=[];
+		var objmctsid=[];
+		var objrchid=[];
+		var objlocality=[];
+		var objanm=[];
+		var objage=[];
+		var objdate=[];
+		var flag1=0;
+		var flag2=0;
+		var flag3=0;
+		var flag4=0;
+		var flag5=0;
+		
+
+		 $(document).ready(function() {
+            $('#startdate').datetimepicker({
+               format: 'YYYY-MM-DD'
+            });
+            $('#enddate').datetimepicker({
+                format: 'YYYY-MM-DD'
+            });
+       	
+		 $('#submit').on('click',function() {
+            var startdate = $("#inputStartDate").val();
+            var enddate = $("#inputEndDate").val();
+
+
+            $.when($.get("../api/events.json?orgUnit=lZtSBQjZCaX&program=SUCUF657zNe&programStage=aAmtHNAQo7g&startDate="+startdate+"&endDate="+enddate+"&skipPaging=true")).then
+              (function (data1) 
+		  		{
+					var eventdata=data1;
+				 
+				    for(var i=0;i<eventdata.events.length;i++)
+					{
+						if(eventdata.events[i].eventDate)
+						{	
+							if(eventdata.events[i].status=="COMPLETED")
+							{
+								objtrack.push(eventdata.events[i].trackedEntityInstance);
+								var id=eventdata.events[i].eventDate;
+								objdate.push(id.split('T')[0]);		
+				    		}
+			    		}
+			    	}
+			    });
+
+
+	            for(var j=0;j<objtrack.length;j++)
+				{	
+					$.when($.get("../api/trackedEntityInstances.json?ou=lZtSBQjZCaX&program=SUCUF657zNe&trackedEntityInstance="+objtrack[j] +"&skipPaging=true")).then
+		              (function (data1) 
+				  		{
+							var trackdata=data1;
+						 
+						    for(var i=0;i<trackdata.trackedEntityInstances.length;i++)
+							{
+						
+							   var attributepath=trackdata.trackedEntityInstances[i].attributes; 
+							   
+							  
+								for(var q=0;q<attributepath.length;q++)
+							    {  
+									if(attributepath[q].attribute=="YFjB0zhySP6")//household
+									{
+										var aa=attributepath[q].value;
+										objhouse.push(aa);
+										flag1=1;	 
+									}
+
+								 	else if(attributepath[q].attribute=="xalnzkNfD77")//Name
+								 	{
+										var aa=attributepath[q].value;
+										objname.push(aa);
+										flag2=1;
+								 	}
+								 	else if(attributepath[q].attribute=="AiPFBqutPYy")// MCTS ID of mother
+								 	{
+									 	var mcts=attributepath[q].value;	
+										objmctsid.push(mcts);
+										flag3 = 1;	
+									}
+									else if(attributepath[q].attribute=="NG0XocGDXZp")//Age
+								 	{
+										var age=attributepath[q].value;
+										objage.push(age);
+										flag4=1;
+								 	}
+								 	else if(attributepath[q].attribute=="nxYjIIBWcao")// RCH ID of mother
+								 	{
+									 	var rch=attributepath[q].value;	
+										objrchid.push(rch);
+										flag5 = 1;	
+									} 
+								}
+								if(flag1==0)
+								 	objhouse.push("");
+								if(flag2==0)			
+								 	objname.push("");
+								if(flag3==0)
+							 		objmctsid.push("");
+							 	if(flag4==0)
+							 		objage.push("");		
+								if(flag5==0)
+							 		objrchid.push("");
+								flag1=0;
+					    		flag2=0;
+					    		flag3=0;
+					    		flag4=0;
+					    		flag5=0;
+					    	}
+					    });
+	            }
+
+	            for(var j=0;j<objtrack.length;j++)
+				{	
+					$.when($.get("../api/trackedEntityInstances.json?ou=lZtSBQjZCaX&program=BgTTdBNKHwc&filter=ZQMF7taSAw8:EQ:"+objhouse[j]+"&skipPaging=true")).then
+		              (function (data1) 
+				  		{
+							var trackdata=data1;
+						 		
+						 	if(trackdata.trackedEntityInstances.length>0)
+						 	{	
+								   var attributepath=trackdata.trackedEntityInstances[0].attributes; 
+								   
+								  
+									for(var q=0;q<attributepath.length;q++)
+								    {  
+										if(attributepath[q].attribute=="MV4wWoZBrJS")//Locality
+										{
+											var aa=attributepath[q].value;
+											objlocality.push(aa);
+											flag1=1;	 
+										}
+
+									 	else if(attributepath[q].attribute=="yDCO4KM4WVA")//ANM Name
+									 	{
+											var aa=attributepath[q].value;
+											objanm.push(aa);
+											flag2=1;
+									 	}
+									}
+									if(flag1==0)
+									 	objlocality.push("");
+									if(flag2==0)			
+									 	objanm.push("");			
+									flag1=0;
+						    		flag2=0;
+						    }
+						    else
+						    {
+						    	objlocality.push("");
+						    	objanm.push("");
+						    }
+					    });
+	            }
+
+	            console.log(objname);
+				console.log(objtrack);
+				console.log(objhouse);
+				console.log(objmctsid);
+				console.log(objrchid);
+				console.log(objlocality);
+				console.log(objanm);
+				console.log(objage);
+				console.log(objdate);
+
+            
+	var header="<tr style='background-color:#6967ef;color:white;'><td>S.No.</td><td>Date</td><td>MCTS ID</td><td>RCH ID</td><td>Name</td><td>Age</td><td>Household</td><td>Locality</td><td>Visit</td><td>ANM</td></tr>";
+        	     $(".reporttable").append(header);
+            
+            	for(var k=0;k<objname.length;k++)
+				{	
+					var dataelements="<tr><td>"+(k+1)+"</td><td>"+objdate[k]+"</td><td>&nbsp;"+objmctsid[k]+"</td><td>&nbsp;"+objrchid[k]+"</td><td>"+objname[k]+"</td><td>"+objage[k]+"</td><td>"+objhouse[k]+"</td><td>"+objlocality[k]+"</td><td>1st Visit</td><td>"+objanm[k]+"</tr>";	
+					$(".reporttable").append(dataelements);
+				}
+
+		});
+	});
+
+$("#download").click(function (e) {
+               var a = document.createElement('a');
+               var data_type = 'data:application/vnd.ms-excel';
+               var table_div = document.getElementById('table1');
+               var table_html = table_div.outerHTML.replace(/ /g, '%20');
+               a.href = data_type + ', ' + table_html;
+               a.download = 'ANC First Visit.xls';
+               a.click();
+               e.preventDefault();
+           });
+
+
+		
+   </script>  
+  </body>
+  </html>

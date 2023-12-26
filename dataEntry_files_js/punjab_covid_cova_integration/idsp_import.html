@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+        .custom{
+            margin-top:50px;
+            width:100%;
+            padding:10px;
+        }
+        .custom-table{
+            width:75%;
+            font-size:16px;
+            margin:auto;
+            text-align:center;
+        }
+        .custom-drop{
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-*  custom">
+            <button onClick="Import()" id="Import Contacts Data" style="margin-left: 45%">Start Import</button>
+
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    //Loading all Org units//
+    //check duplicates for 609,28,33,39
+
+    function Import() {
+        //refe-distt 28---2020-11-22
+        var orgunit_code=[];
+        var all_teavs = [];
+        var district_array = [42,41,662,38,37,651,30,29,605,27,35,36,32,31,34];
+        var dataElementsCodeMap = [];
+        var all_orgunits = [];
+        var today = new Date();
+        var s_today = new Date();
+        var e_today = new Date();
+
+        init();
+
+        function init() {
+            $.ajax({
+                type: "GET",
+                crossDomain: true,
+                url: '../api/organisationUnits?fields=id,name,code,level&filter=level:in:[3,4]&paging=false',
+                async: false,
+                success: function (response) {
+                    all_orgunits=response.organisationUnits;
+
+                    $.ajax({
+                        type: "GET",
+                        crossDomain: true,
+                        url: '../api/dataElements?fields=id,name,code&paging=false',
+                        async: false,
+                        success: function (response1) {
+                            var des = response1.dataElements;
+
+                            for (var i = 0; i < des.length; i++) {
+
+                                dataElementsCodeMap[des[i].name]= des[i].name;
+                            }
+                            transfer();
+                        },
+                        error: function (response) {
+                            console.log("no data elements--",response);
+                        }
+                    });
+                    // callback(response);
+                },
+                error: function (response) {
+                    console.log("not Save TEI:",response);
+                }
+            });
+
+
+        }
+
+        // alert("s_today", s_today.toJSON().substring(0, 10));
+        // alert("e_today", e_today);
+
+
+        function transfer() {
+            for (var dista=0;dista<district_array.length;dista++)
+            {
+                s_today.setFullYear(2020);
+                s_today.setDate(1);
+                s_today.setMonth(10);
+                e_today.setFullYear(2020);
+                e_today.setDate(8);
+                e_today.setMonth(10);
+
+                for (s_today; s_today < today; s_today.setDate(s_today.getDate() + 7)) {
+
+                    $.ajax({
+                        type: "POST",
+                        crossDomain: true,
+                        url: "https://cova.punjab.gov.in/api/cova/users/auth/v1/fetch-idsp-all-data-external",
+                        async: false,
+                        headers: {
+                            // 'Authorization': 'Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI0NiIsInVzZXJ0eXBlIjoiMSIsInRzIjoiNDQ0IiwiZXhwIjoxNjI1OTg3MjAyLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjYzODg0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo2Mzg4NCJ9.Hz8C5U-yW2guwMYegISGtUPQ0OEcdpNxFwcOgOSvWh0',
+                            "Authorization": "Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI0NiIsInVzZXJ0eXBlIjoiMSIsInRzIjoiNDQ0IiwiZXhwIjoxNjI1OTg3MjAyLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjYzODg0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo2Mzg4NCJ9.Hz8C5U-yW2guwMYegISGtUPQ0OEcdpNxFwcOgOSvWh0"
+                        },
+                        //609,28,33,39,40,43,608,42,41,662,38,37,651,30,29,605,27,35,36,32,31,34
+
+                        data: JSON.stringify({
+                            "district_Id": district_array[dista],
+                            "start_date": s_today.toJSON().substring(0, 10),
+                            "end_date": e_today.toJSON().substring(0, 10)
+                        }),
+                        contentType: "application/json",
+                        success: function (cova_data) {
+                            if (cova_data.data != null) {
+                                for (var i = 0; i < cova_data.data.length; i++) {
+                                    // https://links.hispindia.org/covid/api/29/sqlViews/oRyjE9nFCow
+                                    //hHaLtX4Icyc
+
+                                        $.ajax({
+                                            async: false,
+                                            type: "GET",
+                                            url: "../api/sqlViews/KwTJQvesAMN/data?var=teav:"+cova_data.data[i].idsp_id,
+                                            success: function (data) {
+                                                // for(var p1=0;p1<data.organisationUnits.length;p1++){
+                                                // all_teavs.push(data.listGrid.rows);
+                                                if (data.listGrid.rows.length>0)
+                                                {
+                                                    console.log("Record already exist for idsp_id--", cova_data.data[i].idsp_id);
+                                                }
+                                                else
+                                                {
+                                                    for (var j = 0; j < all_orgunits.length; j++) {
+
+                                                        if (cova_data.data[i].patient_sub_district_id == all_orgunits[j].code) {
+
+                                                            var teienroll = {
+                                                                "trackedEntityType": "MCPQUTHX1Ze",
+                                                                "orgUnit": all_orgunits[j].id,
+                                                                "attributes": [
+                                                                    {
+                                                                        "attribute": "zovPpwEdjkO",
+                                                                        "value": cova_data.data[i].idsp_id
+                                                                    },
+                                                                    {
+                                                                        "attribute": "sB1IHYu2xQT",
+                                                                        "value": cova_data.data[i].patient_name
+                                                                    },
+                                                                    {
+                                                                        "attribute": "oindugucx72",
+                                                                        "value": cova_data.data[i].patient_sex
+                                                                    },
+                                                                    {
+                                                                        "attribute": "fctSQp5nAYl",
+                                                                        "value": cova_data.data[i].patient_mobile
+                                                                    },
+                                                                    {
+                                                                        "attribute": "Rv8WM2mTuS5",
+                                                                        "value": cova_data.data[i].patient_age
+                                                                    },
+                                                                    {
+                                                                        "attribute": "Xhdn49gUd52",
+                                                                        "value": cova_data.data[i].patient_address
+                                                                    },
+                                                                    {
+                                                                        "attribute": "WHZjGqOLDZK",
+                                                                        "value": cova_data.data[i].patient_occupation
+                                                                    },
+                                                                    {
+                                                                        "attribute": "doXv8QTb5kJ",
+                                                                        "value": cova_data.data[i].id_type_name
+                                                                    },
+                                                                    {
+                                                                        "attribute": "jxiqNSlTC6x",
+                                                                        "value": cova_data.data[i].id_number
+                                                                    },
+                                                                    {
+                                                                        "attribute": "oSlRezClT5F",
+                                                                        "value": cova_data.data[i].icmr_category
+                                                                    },
+                                                                    {
+                                                                        "attribute": "wCvMsiZFGmN",
+                                                                        "value": cova_data.data[i].type_case_name
+                                                                    },
+                                                                    {
+                                                                        "attribute": "he05i8FUwu3",
+                                                                        "value": cova_data.data[i].icmr_Id
+                                                                    },
+                                                                    {
+                                                                        "attribute": "KwY0phpRvCx",
+                                                                        "value": cova_data.data[i].patient_Id
+                                                                    },
+                                                                    {
+                                                                        "attribute": "C8hLD2XSExU",
+                                                                        "value": cova_data.data[i].patient_region
+                                                                    },
+                                                                ],
+
+                                                                "enrollments": [{
+                                                                    "orgUnit": all_orgunits[j].id,
+                                                                    "program": "uYjxkTbwRNf",
+                                                                    "status": "ACTIVE",
+                                                                    "enrollmentDate": cova_data.data[i].date_sample_collection,
+                                                                    "incidentDate": cova_data.data[i].date_sample_collection,
+                                                                    "events": [
+                                                                        {
+                                                                            "program": "uYjxkTbwRNf",
+                                                                            "orgUnit": all_orgunits[j].id,
+                                                                            "eventDate": cova_data.data[i].date_sample_collection,
+                                                                            "status": "ACTIVE",
+                                                                            "storedBy": "admin",
+                                                                            "programStage": "LpWNjNGvCO5",
+                                                                            "dataValues": [
+                                                                                {
+                                                                                    "dataElement": "F00gHNdSerM",
+                                                                                    "value": cova_data.data[i].institutional_level_name
+                                                                                },
+                                                                                {
+                                                                                    "dataElement": "nUEmcgo2s0F",
+                                                                                    "value": cova_data.data[i].type_isolation_name
+                                                                                },
+                                                                                {
+                                                                                    "dataElement": "s3eoonJ8OJb",
+                                                                                    "value": formatDate(cova_data.data[i].date_onset_symptoms)
+                                                                                },
+                                                                                {
+                                                                                    "dataElement": "yQ1kBrpWHMI",
+                                                                                    "value": formatDate(cova_data.data[i].date_isolation)
+                                                                                },
+                                                                                {
+                                                                                    "dataElement": "TzqawmlPkI5",
+                                                                                    "value": cova_data.data[i].travel_history
+                                                                                },
+                                                                                {
+                                                                                    "dataElement": "oomj0HzoQB5",
+                                                                                    "value": cova_data.data[i].country_state_name
+                                                                                },
+                                                                                {
+                                                                                    "dataElement": "GNqZXPAdTgt",
+                                                                                    "value": formatDate(cova_data.data[i].date_of_return)
+                                                                                },
+                                                                                {
+                                                                                    "dataElement": "waOx3rpZgWB",
+                                                                                    "value": cova_data.data[i].traceable
+                                                                                },
+                                                                                {
+                                                                                    "dataElement": "xiFdLurDGVA",
+                                                                                    "value": cova_data.data[i].institutional_type_name
+                                                                                },
+                                                                                {
+                                                                                    "dataElement": "NQj9PyJvBvN",
+                                                                                    "value": cova_data.data[i].bed_type_name
+                                                                                },
+                                                                                {
+                                                                                    "dataElement": "IBh50aopjrH",
+                                                                                    "value": cova_data.data[i].time_of_isolation_name
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            "program": "uYjxkTbwRNf",
+                                                                            "orgUnit": all_orgunits[j].id,
+                                                                            "eventDate": cova_data.data[i].date_sample_collection,
+                                                                            "status": "ACTIVE",
+                                                                            "storedBy": "admin",
+                                                                            "programStage": "iR8O4hSLHnu",
+                                                                            "dataValues": [
+                                                                                {
+                                                                                    "dataElement": "FSzpeQS2e2g",
+                                                                                    "value": cova_data.data[i].lab_type_name
+                                                                                },
+                                                                                {
+                                                                                    "dataElement": "Q98LhagGLFj",
+                                                                                    "value": formatDate(cova_data.data[i].date_sample_collection)
+                                                                                },
+                                                                                {
+                                                                                    "dataElement": "D0RBm3alWd9",
+                                                                                    "value": cova_data.data[i].test_type_name
+                                                                                }]
+                                                                        },
+                                                                        {
+                                                                            "program": "uYjxkTbwRNf",
+                                                                            "orgUnit": all_orgunits[j].id,
+                                                                            "eventDate": cova_data.data[i].date_tested_positive,
+                                                                            "status": "ACTIVE",
+                                                                            "storedBy": "admin",
+                                                                            "programStage": "dDHkBd3X8Ce",
+                                                                            "dataValues": [
+                                                                                {
+                                                                                    "dataElement": "tYzF5meCFFv",
+                                                                                    "value": formatDate(cova_data.data[i].date_tested_positive)
+                                                                                },
+                                                                                {
+                                                                                    "dataElement": "ovY6E8BSdto",
+                                                                                    "value": "Positive"
+                                                                                },
+
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            "program": "uYjxkTbwRNf",
+                                                                            "orgUnit": all_orgunits[j].id,
+                                                                            "eventDate": cova_data.data[i].date_outcome,
+                                                                            "status": "ACTIVE",
+                                                                            "storedBy": "admin",
+                                                                            "programStage": "iVfs6Jyp7I8",
+                                                                            "dataValues": [
+                                                                                {
+                                                                                    "dataElement": "bOYWVEBaWy6",
+                                                                                    "value": cova_data.data[i].outcome_name
+                                                                                },
+                                                                                {
+                                                                                    "dataElement": "R5yEysXA4r9",
+                                                                                    "value": cova_data.data[i].institutional_facility_name
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    ]
+                                                                }
+                                                                ]
+                                                            }
+
+
+                                                            $.ajax({
+                                                                type: "POST",
+                                                                crossDomain: true,
+                                                                url: '../api/trackedEntityInstances',
+                                                                async: false,
+                                                                headers: {
+                                                                    'Accept': 'application/json',
+                                                                    'Content-Type': 'application/json'
+                                                                },
+                                                                data: JSON.stringify(teienroll),
+                                                                success: function (response) {
+
+                                                                    console.log("reference---importSummaries", response.response.importSummaries[0].reference);
+                                                                    console.log("refe-distt",district_array[dista]+ "---"+ s_today.toJSON().substring(0, 10));
+
+                                                                },
+                                                                error: function (response) {
+                                                                    console.log("not Save TEI:", response);
+                                                                }
+                                                            });
+
+
+                                                        }
+                                                    }
+                                                }
+
+                                            },
+                                            error: function (response) {
+
+                                            }
+
+                                        });
+
+
+
+                                }
+                            } else {
+                                console.log("no data found for:--", data.listGrid.rows[t][0]);
+                            }
+
+                        }
+                    });
+                    e_today.setDate(e_today.getDate() + 7);
+                }
+            }
+        }
+
+
+
+    }
+    function getDEs(callback) {
+
+
+
+    }
+
+    function getOUs(callback) {
+
+        $.ajax({
+            type: "GET",
+            crossDomain: true,
+            url: '../api/organisationUnits?fields=id,name,code,level&filter=level:in:[3,4]&paging=false',
+            async: false,
+            success: function (response) {
+                all_orgunits = response.organisationUnits;
+
+                $.ajax({
+                    type: "GET",
+                    crossDomain: true,
+                    url: '../api/dataElements?fields=id,name,code&paging=false',
+                    async: false,
+                    success: function (response) {
+
+                        var des = JSON.parse(response).dataElements;
+
+                        for (var i = 0; i < des.length; i++) {
+
+                            dataElementsCodeMap[des[i].name] = des[i].name;
+                        }
+                    },
+                    error: function (response) {
+                        console.log("no data elements--",response);
+                    }
+                });
+                // callback(response);
+            },
+            error: function (response) {
+                console.log("not Save TEI:",response);
+            }
+        });
+
+
+    }
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
+</script>
+</br>
+</div>
+</html>

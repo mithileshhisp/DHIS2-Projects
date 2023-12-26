@@ -1,0 +1,156 @@
+Step-1
+
+Get the trackedEntityInstance uid,enroolment uid from trackedEntityAttribute value 
+
+url:'api/trackedEntityInstances.json?fields=trackedEntityInstance,orgUnit&program=RUqNUsv6WBp&ou=Fn51zf6ifbm&ouMode=DESCENDANTS&paging=false&filter=uuZ2ngqdsjm:eq:TIL2872',
+
+contentType: 'application/json',
+method -- GET
+
+from this API we got below response
+
+{
+	"trackedEntityInstances": [
+	{
+		"orgUnit": "Fn51zf6ifbm",
+		"trackedEntityInstance": "Zg3o5oubG3o"
+	}
+      ]
+}
+
+
+step 2) now we create event push API like
+
+var event_payload = {
+                    "program": 'RUqNUsv6WBp',
+                    "orgUnit": apiResponse.trackedEntityInstances[0].orgUnit,
+                    "eventDate": your-event-date,
+                    "programStage": 'kqpguGhJ8h5',
+                    "status": "ACTIVE",
+                    "trackedEntityInstance": apiResponse.trackedEntityInstances[0].trackedEntityInstance,
+                    "dataValues": [
+                        {"dataElement": "eHksMNjnBZu", "value": "true"},
+                        {"dataElement": "Ypjgv3T8seU", "value": "true"},
+                        {"dataElement": "NVWzsivfKlx", "value": "true"},
+                        {"dataElement": "lizbBquxcZQ", "value": "true"},
+                        {"dataElement": "I1hSmbmMwvw", "value": "true"},
+                        {"dataElement": "sV3dTTB8XJC", "value": "false"},
+                        {"dataElement": "bImNYrrb41A", "value": "true"},
+                        {"dataElement": "W8QAfbEk4pH", "value": "false"},
+                        {"dataElement": "uVQQ1fSvdwo", "value": "false"},
+                        {"dataElement": "a9Hk3xZkeLl", "value": "false"},
+                        {"dataElement": "tVW30uk3oY0", "value": "true"},
+                        {"dataElement": "zArrxSefNqD", "value": "false"},
+                        {"dataElement": "jjQit5DW2wQ", "value": "false"},
+                        {"dataElement": "kVf6uc7qEiV", "value": "false"},
+                        {"dataElement": "PMqLQCZWyRx", "value": "false"}
+
+                    ]
+                }
+
+
+event push API 
+
+dataType: "json",
+contentType: "application/json",
+url -- ../api/events/
+data -- in json ( event_payload )
+method -- post
+
+
+
+Complete payload including: tracked entity instance, enrollment and event
+It is also possible to create (and update) a tracked entity instance, at the same time enroll into a program and create an event.
+
+API URL -- https://links.hispindia.org/timor/api/trackedEntityInstances
+
+            $.ajax({
+                type: "POST",
+                async: false,
+                dataType: "json",
+                contentType: "application/json",
+                data: dataJSON,
+                url: 'https://links.hispindia.org/timor/api/trackedEntityInstances',
+                success: function (postResponse) {
+                   
+                },
+                error: function (postResponse) {
+                   
+                },
+                warning: function (postResponse) {
+                   
+                }
+            });
+
+var postData = {
+    "trackedEntityType": "nEenWmSyUEp",
+    "orgUnit": "DiszpKrYNg8",
+    "attributes": [
+        {
+            "attribute": "w75KJ2mc4zz",
+            "value": "Joe"
+        },
+        {
+            "attribute": "zDhUuAYrxNC",
+            "value": "Rufus"
+        },
+        {
+            "attribute": "cejWyOfXge6",
+            "value": "Male"
+        }
+    ],
+    "enrollments": [
+        {
+            "orgUnit": "DiszpKrYNg8",
+            "program": "ur1Edk5Oe2n",
+            "enrollmentDate": "2017-09-15",
+            "incidentDate": "2017-09-15",
+            "events": [
+                {
+                    "program": "ur1Edk5Oe2n",
+                    "orgUnit": "DiszpKrYNg8",
+                    "eventDate": "2017-10-17",
+                    "status": "COMPLETED",
+                    "storedBy": "admin",
+                    "programStage": "EPEcjy3FWmI",
+                    "coordinate": {
+                        "latitude": "59.8",
+                        "longitude": "10.9"
+                    },
+                    "dataValues": [
+                        {
+                            "dataElement": "qrur9Dvnyt5",
+                            "value": "22"
+                        },
+                        {
+                            "dataElement": "oZg33kd9taw",
+                            "value": "Male"
+                        }
+                    ]
+                },
+                {
+                    "program": "ur1Edk5Oe2n",
+                    "orgUnit": "DiszpKrYNg8",
+                    "eventDate": "2017-10-17",
+                    "status": "COMPLETED",
+                    "storedBy": "admin",
+                    "programStage": "EPEcjy3FWmI",
+                    "coordinate": {
+                        "latitude": "59.8",
+                        "longitude": "10.9"
+                    },
+                    "dataValues": [
+                        {
+                            "dataElement": "qrur9Dvnyt5",
+                            "value": "26"
+                        },
+                        {
+                            "dataElement": "oZg33kd9taw",
+                            "value": "Female"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

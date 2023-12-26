@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+        .custom{
+            margin-top:50px;
+            width:100%;
+            padding:10px;
+        }
+        .custom-table{
+            width:75%;
+            font-size:16px;
+            margin:auto;
+            text-align:center;
+        }
+        .custom-drop{
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-*  custom">
+            <button onClick="Import()" id="Import Contacts Data" style="margin-left: 45%">Start Import</button>
+
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    //Loading all Org units//
+    var orgunit_code=[];
+    var all_teavs = [];
+
+
+/*
+select tea.value,tei.uid ,ou.uid from teav tea 
+inner join trackedentityinstance tei on tea.trackedentityinstanceid =tei.trackedentityinstanceid 
+inner join organisationunit ou on tei.organisationunitid =ou.organisationunitid 
+where tea.trackedentityattributeid =15110 ;
+*/
+    function Import() {
+        $.ajax({
+            async : false,
+            type: "GET",
+            url: "../api/sqlViews/zyIATGZ3E2B/data?paging=false",
+            success: function(data){
+                // for(var p1=0;p1<data.organisationUnits.length;p1++){
+                // all_teavs.push(data.listGrid.rows);
+                console.log("id_numbers_length--all_teavs",data.listGrid.rows.length);
+                console.log("id_numbers_length--data.listGrid.rows",data.listGrid.rows[0][0]);
+                console.log("id_numbers_length--data.listGrid.rows",data.listGrid.rows[1][0]);
+              for (var t=0;t<data.listGrid.rows.length;t++)
+              // for (var t=0;t<10;t++)
+              {
+                  $.ajax({
+                      type: "POST",
+                      crossDomain: true,
+                      url: "https://cova.punjab.gov.in/api/cova/users/auth/v1/fetch-cnt-external",
+                      async: false,
+                      headers: {
+                          // 'Authorization': 'Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI0NiIsInVzZXJ0eXBlIjoiMSIsInRzIjoiNDQ0IiwiZXhwIjoxNjI1OTg3MjAyLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjYzODg0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo2Mzg4NCJ9.Hz8C5U-yW2guwMYegISGtUPQ0OEcdpNxFwcOgOSvWh0',
+                          "Authorization": "Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI0NiIsInVzZXJ0eXBlIjoiMSIsInRzIjoiNDQ0IiwiZXhwIjoxNjI1OTg3MjAyLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjYzODg0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo2Mzg4NCJ9.Hz8C5U-yW2guwMYegISGtUPQ0OEcdpNxFwcOgOSvWh0"
+                      },
+                      data: JSON.stringify({
+                          "positive_patient_id":data.listGrid.rows[t][0]
+                          // "positive_patient_id": "0302700225010"
+                      }),
+                      contentType: "application/json",
+                      success: function (cova_data) {
+                          if (cova_data.data != null) {
+                              console.log("Yes contacts found for:--",data.listGrid.rows[t][0]);
+
+                              for (var i = 0; i < cova_data.data.length; i++) {
+                                  console.log("inside--for--loop--",data.listGrid.rows[t][0]);
+                                  console.log("patient-region--",cova_data.data[i].patient_region);
+                                  console.log("patient-name--",cova_data.data[i].patient_name);
+                                  var teienroll = {
+                                      "trackedEntityType": "MCPQUTHX1Ze",
+                                      "orgUnit": data.listGrid.rows[t][2],
+                                      "attributes": [
+                                          {
+                                              "attribute": "C8hLD2XSExU",
+                                              "value": cova_data.data[i].patient_region
+                                          },
+                                          {
+                                              "attribute": "sB1IHYu2xQT",
+                                              "value": cova_data.data[i].patient_name
+                                          },
+                                          {
+                                              "attribute": "oindugucx72",
+                                              "value": cova_data.data[i].patient_sex
+                                          },
+                                          {
+                                              "attribute": "Rv8WM2mTuS5",
+                                              "value": cova_data.data[i].patient_age
+                                          },
+                                          {
+                                              "attribute": "doXv8QTb5kJ",
+                                              "value": cova_data.data[i].id_type_name
+                                          },
+                                          {
+                                              "attribute": "JRGfVy7Yt59",
+                                              "value": cova_data.data[i].type_contact_id_name
+                                          },
+
+                                          {
+                                              "attribute": "C5Et77XPcMl",
+                                              "value": cova_data.data[i].contact_tracing_Id
+                                          }
+                                      ],
+
+                                      "enrollments": [{
+                                          "orgUnit": data.listGrid.rows[t][2],
+                                          "program": "DM9n1bUw8W8",
+                                          "status": "ACTIVE",
+                                          "enrollmentDate": formatDate(cova_data.data[i].log_date),
+                                          "incidentDate": formatDate(cova_data.data[i].log_date),
+                                          "events": [
+                                              {
+                                                  "program": "DM9n1bUw8W8",
+                                                  "orgUnit": data.listGrid.rows[t][2],
+                                                  "eventDate": formatDate(cova_data.data[i].log_date),
+                                                  "status": "ACTIVE",
+                                                  "storedBy": "admin",
+                                                  "programStage": "sAV9jAajr8x",
+                                                  "dataValues": [
+                                                      {
+                                                          "dataElement": "gHfIwiK6iIn",
+                                                          "value": cova_data.data[i].risk_name
+                                                      },
+                                                      {
+                                                          "dataElement": "EHd4ZIFAEm6",
+                                                          "value": cova_data.data[i].type_admission_name
+                                                      },
+                                                      {
+                                                          "dataElement": "waOx3rpZgWB",
+                                                          "value": cova_data.data[i].traceable_name
+                                                      },
+                                                      {
+                                                          "dataElement": "nUEmcgo2s0F",
+                                                          "value": cova_data.data[i].type_isolation_name
+                                                      },
+                                                      {
+                                                          "dataElement": "xiFdLurDGVA",
+                                                          "value": cova_data.data[i].institutional_type_name
+                                                      },
+                                                      {
+                                                          "dataElement": "arPkmfgnHgW",
+                                                          "value": cova_data.data[i].hospital_name
+                                                      },
+                                                      {
+                                                          "dataElement": "HXaSwxsMYcz",
+                                                          "value": cova_data.data[i].is_sample_taken
+                                                      },
+                                                      {
+                                                          "dataElement": "ovY6E8BSdto",
+                                                          "value": cova_data.data[i].result_name
+                                                      },
+                                                      {
+                                                          "dataElement": "XlNVazI32rG",
+                                                          "value": cova_data.data[i].isolated_name
+                                                      },
+                                                      {
+                                                          "dataElement": "MTfb6fQM19m",
+                                                          "value": formatDate(cova_data.data[i].date_of_exposure)
+                                                      },
+                                                      {
+                                                          "dataElement": "Q98LhagGLFj",
+                                                          "value": formatDate(cova_data.data[i].date_sample_collection)
+                                                      },
+                                                      {
+                                                          "dataElement": "tEFVjZXqZ4v",
+                                                          "value": formatDate(cova_data.data[i].date_quarantine_start)
+                                                      }
+                                                  ]
+                                              },
+
+                                          ]
+                                      }
+                                      ]
+                                  }
+
+                                  $.ajax({
+                                      async: false,
+                                      type: "POST",
+                                      dataType: "json",
+                                      contentType: "application/json",
+                                      url: '../api/trackedEntityInstances/',
+                                      data: JSON.stringify(teienroll),
+                                      success: function (response) {
+
+                                          console.log("reference---importSummaries",response.response.importSummaries[0].reference);
+                                          var relation = {
+                                              "relationshipType": "ipjUWSTPKFt",
+                                              "from": {
+                                                  "trackedEntityInstance": {
+                                                      "trackedEntityInstance": response.response.importSummaries[0].reference
+                                                  }
+                                              },
+                                              "to": {
+                                                  "trackedEntityInstance": {
+                                                      "trackedEntityInstance": data.listGrid.rows[t][1]
+                                                  }
+                                              }
+                                          }
+                                          $.ajax({
+                                              async: false,
+                                              type: "POST",
+                                              dataType: "json",
+                                              contentType: "application/json",
+                                              url: '../api/relationships/',
+                                              data: JSON.stringify(relation),
+                                              success: function (response) {
+
+                                                  console.log("relation created--",response.response.reference);
+                                                  console.log("relation details----",response.response);
+                                              },
+                                              error: function (response) {
+                                                  console.log("not Save relation:",response);
+                                              }
+                                          });
+                                          console.log("response--reference",response.response.reference);
+                                          console.log("response--",response.response);
+                                      },
+                                      error: function (response) {
+                                          console.log("not Save TEI:",response);
+                                      }
+                                  });
+
+                              }
+                          }
+                          else
+                          {
+                              console.log("no contacts found for:--",data.listGrid.rows[t][0]);
+                          }
+
+                      }
+                  });
+              }
+              alert("Contacts data updated....");
+
+                // }
+            },
+        });
+
+
+    }
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
+</script>
+</br>
+</div>
+</html>
