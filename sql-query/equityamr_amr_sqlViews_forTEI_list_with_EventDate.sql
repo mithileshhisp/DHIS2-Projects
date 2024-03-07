@@ -1050,3 +1050,47 @@ delete from visualization_periods;
 delete from visualization_yearlyseries;
 delete from visualization_orgunitlevels;
 delete from visualization;
+
+-- 20/12/2023
+-- delete all dashboard form equityamr_bihar_v238  production instance
+
+delete from dashboard_items;
+
+delete from dashboard 
+where dashboardid in (
+21912624,
+21901324,
+21914146,
+21901339,
+21917273,
+21917699,
+21917936,
+21888137,
+21889076,
+21901384,
+21947138,
+21947719,
+21947720,
+21954536,
+21963558,
+21967131,
+21960720,
+21980515);
+
+delete from visualization_categorydimensions where visualizationid in (
+21853736,
+21907524);
+
+-- delete datavalue from equityamr production 08/02/2024
+
+delete from datavalue where sourceid = 21888164 
+and periodid in ( select periodid from period where startdate >= '2023-01-01' 
+and enddate <= '2023-12-31' and periodtypeid = 8)and dataelementid in ( 
+21922527,21922513,21922514,21922515,21922516,21922517,21922518,21922519,
+21922520,21922521,21922522,21922523,21922524,21922525,21922526,21746340);
+
+delete from datavalueaudit where organisationunitid = 21888164 
+and periodid in ( select periodid from period where startdate >= '2023-01-01' 
+and enddate <= '2023-12-31' and periodtypeid = 8)and dataelementid in ( 
+21922527,21922513,21922514,21922515,21922516,21922517,21922518,21922519,
+21922520,21922521,21922522,21922523,21922524,21922525,21922526,21746340);

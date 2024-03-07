@@ -8,12 +8,213 @@
 
 -- pg_dump -U dhis -d piramal_240 -T analytics* > /home/mithilesh/piramal_240_08Dec2023_with_out_dataValue.sql
 
+
+
+-- 104 event list count
+
+https://links.hispindia.org/amrit/api/organisationUnits.json?fields=id,displayName,shortName,code,level,attributeValues[attribute[id,displayName,code],value]&sortOrder=ASC&paging=false&filter=level:eq:4
+
+https://links.hispindia.org/amrit/api/organisationUnits.json?fields=id,displayName,shortName,code,level,attributeValues[attribute[id,displayName,code],value]&sortOrder=ASC&paging=false&filter=level:eq:3
+
+-- 06/03/2024 
+-- ou list
+https://links.hispindia.org/amrit/api/organisationUnits?fields=id,name,level,attributeValues&filter=attributeValues.attribute.id:eq:v0l6GSGw7TS&paging=false
+-- HWC registration/enrollment count
+select count (*)from trackedentityinstance
+where trackedentityinstanceid in (
+select trackedentityinstanceid from programinstance 
+where programid in (select programid from program
+where uid = 'PTubSEvAvVI'));
+
+select * from program;
+
+-- HWC registration/enrollment count
+select count(*) from programinstance 
+where programid in (select programid from program
+where uid = 'PTubSEvAvVI');
+
+-- for HWC ID ( HWC facility )
+select orgunit.organisationunitid, orgunit.uid,orgunit.name,
+cast(orgUnitAttribute.value::json ->> 'value' AS VARCHAR) 
+from organisationunit orgunit 
+JOIN json_each_text(orgunit.attributevalues::json) orgUnitAttribute ON TRUE 
+INNER JOIN attribute attr ON attr.uid = orgUnitAttribute.key
+where attr.uid = 'v0l6GSGw7TS' and orgunit.hierarchylevel = 5;
+
+
+-- HWC registration/enrollment count
+select count (*)from trackedentityinstance
+where trackedentityinstanceid in (
+select trackedentityinstanceid from programinstance 
+where programid in (select programid from program
+where uid = 'PTubSEvAvVI'));
+
+select * from program;
+
+-- HWC registration/enrollment count
+select count(*) from programinstance 
+where programid in (select programid from program
+where uid = 'PTubSEvAvVI');
+
+
+-- bayer registration/enrollment count
+select count (*)from trackedentityinstance
+where trackedentityinstanceid in (
+select trackedentityinstanceid from programinstance 
+where programid = 7294 ) and organisationunitid in (7471628,
+7471629,7471630,7471632,7471631,7471636,7471633,7471634,
+7471635,7471638,7471639,7471637,7471640,7471641 );
+
+select count(*) from programinstance 
+where programid = 7294 and organisationunitid in (7471628,
+7471629,7471630,7471632,7471631,7471636,7471633,7471634,
+7471635,7471638,7471639,7471637,7471640,7471641 );
+
+
+
+-- bayer event count
+select count(*) from programstageinstance 
+where programstageid = 146164 and organisationunitid in (7471628,
+7471629,7471630,7471632,7471631,7471636,7471633,7471634,
+7471635,7471638,7471639,7471637,7471640,7471641 );
+
+-- 1097 prefered language attribute
+
+select value,count(value) from trackedentityattributevalue where 
+trackedentityattributeid = 6900511 group by value;
+
+-- 1097 TEI attributeValue
+
+SELECT teav.value,tei.uid tei_uid,org.uid org_uid
+FROM programinstance pi
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN organisationunit org ON org.organisationunitid = pi.organisationunitid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid =pi.trackedentityinstanceid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+where prg.uid = 'ggbtdN2DyfR' and teav.trackedentityattributeid = 7210;
+
+-- 1097 age on visit
+
+SELECT psi.uid eventID,psi.executiondate::date, teav.value::date 
+AS date_of_birth, EXTRACT(year FROM AGE(psi.executiondate,teav.value::date))::int,psi.created
+FROM programstageinstance psi
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+where prg.uid = 'ggbtdN2DyfR' and teav.trackedentityattributeid = 7206
+order by psi.created desc;
+
+select count(*) from programstageinstance psi 
+where programstageid = 6900528;
+
+select * from programstageinstance 
+where programstageid = 6900528 order by created desc;
+
+select uid,programstageinstanceid,created from programstageinstance 
+where programstageid = 6900528 order by programstageinstanceid desc;
+
+
+select ops.uid optionsetUID, ops.name optionsetName, opv.uid optionUID, opv.name optionName, 
+opv.code optionCode from optionvalue opv 
+INNER JOIN optionset ops ON ops.optionsetid = opv.optionsetid
+where ops.uid = 'MQzM9kXQuxk'
+order by opv.name;
+
+
+-- 1097 registration/enrollment count
+select count (*)from trackedentityinstance
+where trackedentityinstanceid in (
+select trackedentityinstanceid from programinstance 
+where programid = 6345158 );
+
+select count(*) from programinstance 
+where programid = 6345158
+
+-- 1097 event count
+
+select count(*) from programstageinstance psi 
+where programstageid = 6900528;
+
+
+SELECT psi.uid AS eventUID,psi.eventdatavalues
+from programstageinstance psi where programstageid = 7391
+and  psi.eventdatavalues is null;
+
+select count(*) from programstageinstance psi 
+where programstageid = 7391;
+
+select programstageinstanceid,uid from programstageinstance psi 
+where programstageid = 7391 order by programstageinstanceid desc limit 1;
+
+SELECT psi.uid AS eventUID,psi.executiondate::date
+from programstageinstance psi where programstageid = 7391
+and  psi.eventdatavalues -> 'hsbXpo83f4I' is not null;
+
+select count(*) from programstageinstance psi 
+where programstageid = 7391 -- 254866;
+
+select count(*) from programstageinstance psi 
+where programstageid = 7391 and 
+psi.eventdatavalues -> 'hsbXpo83f4I' is null; -- 145688
+
+SELECT psi.uid AS eventUID,psi.executiondate::date
+from programstageinstance psi where programstageid = 7391
+and  psi.eventdatavalues -> 'hsbXpo83f4I' is null;
+
+
+select count(*) from programstageinstance psi 
+where programstageid = 7391 and 
+psi.eventdatavalues -> 'hsbXpo83f4I' is not null; -- 109178
+
+
 SELECT psi.uid eventID,psi.executiondate::date, teav.value::date 
 AS date_of_birth FROM programstageinstance psi
 INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
 INNER JOIN program prg ON prg.programid = pi.programid
 INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
 where teav.trackedentityattributeid = 7206;
+
+
+
+-- TM event list with BenVisitID and BeneficiaryRegID
+
+	
+SELECT psi.uid eventID,psi.executiondate::date,
+data.key as de_uid,cast(data.value::json ->> 'value' AS VARCHAR) AS BenVisitID,
+teav.value as BeneficiaryRegID
+FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN dataelement de ON de.uid = data.key
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+where prg.uid = 'hQUeRtU70wj' and de.uid = 'Q7aA5HvvV7L'
+and teav.trackedentityattributeid = 7210;
+
+
+SELECT psi.uid eventID,psi.executiondate::date,
+data.key as de_uid,cast(data.value::json ->> 'value' AS VARCHAR) AS BenVisitID
+FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN dataelement de ON de.uid = data.key
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+where prg.uid = 'hQUeRtU70wj' and de.uid = 'Q7aA5HvvV7L';	
+
+
+
+-- 104 BenCallID event-dataValue query
+
+SELECT psi.uid eventID,psi.executiondate::date,
+data.key as de_uid,cast(data.value::json ->> 'value' AS VARCHAR) AS BenCallID 
+FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN dataelement de ON de.uid = data.key
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+where prg.uid = 'vyQPQ07JB9M'
+and de.uid = 'hsbXpo83f4I';
+
 
 
 -- piramal event list with age on visit( diffrence of age from event-date to date-of-birth)
@@ -25,6 +226,67 @@ INNER JOIN program prg ON prg.programid = pi.programid
 INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
 where prg.uid = 'vyQPQ07JB9M' and teav.trackedentityattributeid = 7206;
 
+-- for TM program event list with age on visit( diffrence of age from event-date to date-of-birth)
+SELECT psi.uid eventID,psi.executiondate::date, teav.value::date 
+AS date_of_birth, EXTRACT(year FROM AGE(psi.executiondate,teav.value::date))::int
+FROM programstageinstance psi
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+where prg.uid = 'hQUeRtU70wj' and teav.trackedentityattributeid = 7206;
+
+
+-- for MMU program event list with age on visit( diffrence of age from event-date to date-of-birth)
+
+SELECT psi.uid eventID,psi.executiondate::date, teav.value::date 
+AS date_of_birth, EXTRACT(year FROM AGE(psi.executiondate,teav.value::date))::int
+FROM programstageinstance psi
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+where prg.uid = 'NMGbY2nXCKu' and teav.trackedentityattributeid = 7206;
+
+
+SELECT psi.uid eventID,psi.executiondate::date, teav.value::date 
+AS date_of_birth, EXTRACT(year FROM AGE(psi.executiondate,teav.value::date))::int,
+data.key as de_uid,cast(data.value::json ->> 'value' AS VARCHAR) AS de_value 
+FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN dataelement de ON de.uid = data.key
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+where prg.uid = 'NMGbY2nXCKu' and teav.trackedentityattributeid = 7206
+and de.uid = 'Q7aA5HvvV7L' and psi.executiondate::date between '2023-01-01' and '2023-12-31';
+
+
+SELECT psi.uid eventID,psi.executiondate::date, teav.value::date 
+AS date_of_birth, EXTRACT(year FROM AGE(psi.executiondate,teav.value::date))::int
+FROM programstageinstance psi
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+where prg.uid = 'NMGbY2nXCKu' and teav.trackedentityattributeid = 7206
+and psi.executiondate::date 
+between '2023-01-01' and '2023-12-31';
+
+
+select count(*) from programstageinstance
+where programstageid in ( select programstageid
+from programstage where programid in ( select 
+programid from program where uid = 'NMGbY2nXCKu') );
+
+
+-- event dataValue -- age on visist for TM program
+
+SELECT psi.uid AS eventUID, psi.executiondate::date as Event_date,
+data.key as de_uid,cast(data.value::json ->> 'value' AS VARCHAR) AS de_value 
+FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN dataelement de ON de.uid = data.key
+WHERE de.uid = 'P5a5E6m8llj' and psi.programstageid in (
+select programstageid from programstage where programid 
+in ( select programid from program where uid = 'hQUeRtU70wj'));
 
 -- event dataValue -- whith dataelement value == Beneficiary Call ID_104
 SELECT psi.uid AS eventUID, psi.executiondate::date as Event_date,
@@ -84,6 +346,17 @@ insert into trackedentityinstance (trackedentityinstanceid, uid, created, lastup
 update trackedentityinstance set created = now()::timestamp where created = '2023-12-08';
 update trackedentityinstance set lastupdated = now()::timestamp where lastupdated = '2023-12-08';
 
+update trackedentityinstance set created = now()::timestamp where created = '2024-02-17';
+update trackedentityinstance set lastupdated = now()::timestamp where lastupdated = '2024-02-17';
+
+update trackedentityprogramowner set created = now()::timestamp where created = '2024-02-17';
+update trackedentityprogramowner set lastupdated = now()::timestamp where lastupdated = '2024-02-17';
+
+update programinstance set created = now()::timestamp where created = '2024-02-17';
+update programinstance set lastupdated = now()::timestamp where lastupdated = '2024-02-17';
+
+select * from programinstance where created::date = '2024-02-17';
+
 insert into programinstance (programinstanceid, uid, created, lastupdated, enrollmentdate,  status, trackedentityinstanceid, programid, incidentdate, organisationunitid, deleted, storedby ) values
 ="(nextval('hibernate_sequence'),'"&B2&"', '2023-11-02', '2023-11-02', '"&D2&"', 'ACTIVE', "&C2&", 7295,'"&D2&"', "&E2&", 'false','admin' ),"
 
@@ -106,7 +379,12 @@ update trackedentityprogramowner set created = now()::timestamp where created = 
 update trackedentityprogramowner set lastupdated = now()::timestamp where lastupdated = '2023-12-08';
 
 insert into programstageinstance (programstageinstanceid, uid, created, lastupdated, programinstanceid, programstageid, attributeoptioncomboid, storedby,  executiondate, organisationunitid, status, deleted ) values
-="(nextval('hibernate_sequence'),'"&C2&"', '2023-11-02', '2023-11-02', "&E2&", 7391, 24, admin,'"&F2&"',"&D2&", 'ACTIVE','false'),"
+="(nextval('hibernate_sequence'),'"&C2&"', '2023-11-02', '2023-11-02', "&E2&", 7391, 24, 'admin','"&F2&"',"&D2&", 'ACTIVE','false'),"
+
+select * programstageinstance  where created::date = '2023-12-27';
+
+update programstageinstance set created = now()::timestamp where created = '2023-12-27';
+update programstageinstance set lastupdated = now()::timestamp where lastupdated = '2023-12-27';
 
 update programstageinstance set created = now()::timestamp where created = '2023-11-02';
 update programstageinstance set lastupdated = now()::timestamp where lastupdated = '2023-11-02';
@@ -118,6 +396,16 @@ update programstageinstance set lastupdated = now()::timestamp where lastupdated
 
 
 
+-- MMU event insert query
+
+insert into programstageinstance (programstageinstanceid, uid, created, lastupdated, programinstanceid, programstageid, attributeoptioncomboid, storedby, executiondate, organisationunitid, status, deleted ) values
+="(nextval('hibernate_sequence'),'"&D2&"', '2024-01-17', '2024-01-17', "&F2&", 7226, 24, 'admin','"&E2&"',"&G2&", 'ACTIVE','false'),"
+ 
+-- 734978 + 334318 + 672290 = 1741586
+update programstageinstance set created = now()::timestamp where created = '2024-01-17';
+update programstageinstance set lastupdated = now()::timestamp where lastupdated = '2024-01-17';
+
+-- 
 
 select * from organisationunit; 788 ( 36 + 751 + 1)
 
@@ -234,6 +522,11 @@ md.GovtDistrictID FROM m_districtblock mdb
 INNER JOIN m_district md ON md.DistrictID = mdb.DistrictID -- 6447;
 
 
+select ops.uid optionsetUID, ops.name optionsetName, opv.uid optionUID, opv.name optionName, 
+opv.code optionCode,opv.optionvalueid optionvalueID, opv.sort_order from optionvalue opv 
+INNER JOIN optionset ops ON ops.optionsetid = opv.optionsetid
+where ops.uid = 'ZE69SPZUlBr' order by ops.name;
+
 -- optionValue with attribueValue
 
 select ops.uid optionsetUID, ops.name optionsetName, opv.uid optionUID, opv.name optionName, 
@@ -257,12 +550,41 @@ INNER JOIN attribute attr ON attr.uid = optionAttribute.key
 where ops.uid = 'p6fHp8sI0gA' and attr.uid = 'RDZKbFFn7EL' order by ops.name;
 
 -- organisationunit with attribueValue
+select cast(orgUnitAttribute.value::json ->> 'value' AS VARCHAR)
+AS BayerVanID,orgunit.organisationunitid, orgunit.uid,orgunit.name
+from organisationunit orgunit 
+JOIN json_each_text(orgunit.attributevalues::json) orgUnitAttribute ON TRUE 
+INNER JOIN attribute attr ON attr.uid = orgUnitAttribute.key
+where attr.uid = 'OZW5netBBfD';
+
+
+-- organisationunit with attribueValue
 select orgunit.organisationunitid, orgunit.uid,orgunit.name,
 cast(orgUnitAttribute.value::json ->> 'value' AS VARCHAR) 
 from organisationunit orgunit 
 JOIN json_each_text(orgunit.attributevalues::json) orgUnitAttribute ON TRUE 
 INNER JOIN attribute attr ON attr.uid = orgUnitAttribute.key
 where attr.uid = 'l38VgCtdLFD' and orgunit.hierarchylevel = 4;
+
+select orgunit.organisationunitid, orgunit.uid,orgunit.name,
+orgunit.parentid, parent.uid parentUID,
+parent.organisationunitid parentID ,parent.name as parentname, concat(orgunit.uid,'-',parent.uid),
+cast(orgUnitAttribute.value::json ->> 'value' AS VARCHAR) 
+from organisationunit orgunit 
+JOIN json_each_text(orgunit.attributevalues::json) orgUnitAttribute ON TRUE 
+INNER JOIN attribute attr ON attr.uid = orgUnitAttribute.key
+left join organisationunit parent on parent.organisationunitid = orgunit.parentid
+where attr.uid = 'l38VgCtdLFD' and orgunit.hierarchylevel = 3
+and orgunit.name = 'Not Disclosed';
+
+SELECT orgGrpMember.organisationunitid,orgunitgrp.orgunitgroupid, 
+orgunitgrp.uid,orgunitgrp.name,
+cast(orgUnitAttribute.value::json ->> 'value' AS VARCHAR) 
+from orgunitgroup orgunitgrp 
+JOIN json_each_text(orgunitgrp.attributevalues::json) orgUnitAttribute ON TRUE 
+INNER JOIN attribute attr ON attr.uid = orgUnitAttribute.key
+INNER JOIN orgunitgroupmembers orgGrpMember ON orggrpmember.orgunitgroupid = orgunitgrp.orgunitgroupid
+where attr.code = 'XMLName';
 
 -- for VanID
 select orgunit.organisationunitid, orgunit.uid,orgunit.name,
@@ -272,6 +594,17 @@ JOIN json_each_text(orgunit.attributevalues::json) orgUnitAttribute ON TRUE
 INNER JOIN attribute attr ON attr.uid = orgUnitAttribute.key
 where attr.uid = 'EnxzhgiA5ra' and orgunit.hierarchylevel = 4;
 
+
+-- for HWC ID ( HWC facility )
+select orgunit.organisationunitid, orgunit.uid,orgunit.name,
+cast(orgUnitAttribute.value::json ->> 'value' AS VARCHAR) 
+from organisationunit orgunit 
+JOIN json_each_text(orgunit.attributevalues::json) orgUnitAttribute ON TRUE 
+INNER JOIN attribute attr ON attr.uid = orgUnitAttribute.key
+where attr.uid = 'v0l6GSGw7TS' and orgunit.hierarchylevel = 5;
+
+-- API
+https://links.hispindia.org/amrit/api/organisationUnits?fields=id,name,level,attributeValues&filter=attributeValues.attribute.id:eq:v0l6GSGw7TS&paging=false
 
 -- // MY-sql installer
 --https://dev.mysql.com/downloads/installer/
@@ -412,6 +745,9 @@ https://links.hispindia.org/amrit/api/trackedEntityInstances/query.json?ou=NQjEl
 &filter=attributeValues.attribute.id:eq:
 
 &filter=attributeValues.attribute.id:eq:HKw3ToP2354
+
+https://links.hispindia.org/amrit/api/organisationUnits?fields=id,name,level,attributeValues&filter=attributeValues.attribute.id:eq:v0l6GSGw7TS
+https://links.hispindia.org/amrit/api/organisationUnits?fields=id,name,level,attributeValues&filter=attributeValues.attribute.id:eq:v0l6GSGw7TS&paging=false
 
 https://links.hispindia.org/amrit/api/trackedEntityInstances/KyZ2a02rtsN.json
 
@@ -1309,6 +1645,7 @@ i_ben_details.LastName,i_ben_details.Gender,YEAR(i_ben_details.DOB),i_ben_mappin
 CAST(i_ben_mapping.CreatedDate AS DATE)
 , i_ben_address.PermSubDistrictId,i_ben_address.PermVillageId,i_ben_address.PermVillage
 FROM i_beneficiarymapping i_ben_mapping 
+
 INNER JOIN i_beneficiarydetails i_ben_details ON i_ben_details.VanSerialNo = i_ben_mapping.BenDetailsId
 AND i_ben_details.VanID = i_ben_mapping.VanID 
 
@@ -1585,6 +1922,118 @@ db_identity.i_beneficiarymapping i_ben_mapping where i_ben_mapping.VanID  IN
 
 
 
+-- MMU all stage events data db_iemr.m_institution details with hierarchy
+
+SELECT DISTINCT ( db_iemr.t_benvisitdetail.BenVisitID), db_iemr.t_benvisitdetail.BeneficiaryRegID,
+db_iemr.t_benvisitdetail.VisitNo,db_iemr.t_benvisitdetail.CreatedDate,
+db_iemr.t_benvisitdetail.VisitReason,db_iemr.t_benvisitdetail.VisitCategory,
+db_iemr.t_benvisitdetail.SubVisitCategory,db_iemr.t_benvisitdetail.RCHID,
+anc.HighRiskCondition,anc.ComplicationOfCurrentPregnancy,pnc.ProvisionalDiagnosis,
+ncd.NCD_Condition,phy.SystolicBP_1stReading,phy.DiastolicBP_1stReading,tm.Status,
+patient.PrescriptionID, referal.referredToInstituteName,
+ms.StateName,md.DistrictName,mdb.BlockName,
+institution.InstitutionName,
+
+testorder.ProcedureName,
+prescription.DiagnosisProvided FROM db_iemr.t_benvisitdetail
+
+LEFT JOIN db_iemr.t_ancdiagnosis anc on anc.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_pncdiagnosis pnc on pnc.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_ncddiagnosis ncd on ncd.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_phy_vitals phy on phy.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_tmrequest tm on tm.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_patientissue patient on patient.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+
+LEFT JOIN db_iemr.t_benreferdetails referal ON referal.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_lab_testorder testorder ON testorder.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_prescription prescription ON prescription.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+
+LEFT JOIN db_iemr.m_institution institution ON institution.InstitutionID = referal.referredToInstituteID
+LEFT JOIN db_iemr.m_state ms ON ms.StateID = institution.StateID
+LEFT JOIN db_iemr.m_district md ON md.DistrictID = institution.DistrictID
+LEFT JOIN db_iemr.m_districtblock mdb ON mdb.BlockID = institution.BlockID
+
+
+where db_iemr.t_benvisitdetail.CreatedDate between '2022-01-01 00:00:00' and '2023-01-01 00:00:00'
+AND db_iemr.t_benvisitdetail.BeneficiaryRegID in (select i_ben_mapping.BenRegId from
+db_identity.i_beneficiarymapping i_ben_mapping where i_ben_mapping.VanID  IN 
+( SELECT VanID FROM db_iemr.m_van WHERE ProviderServiceMapID in (6,7,9,10,11,18) )); -- 851707
+
+
+
+SELECT DISTINCT ( db_iemr.t_benvisitdetail.BenVisitID), db_iemr.t_benvisitdetail.BeneficiaryRegID,
+db_iemr.t_benvisitdetail.VisitNo,db_iemr.t_benvisitdetail.CreatedDate,
+db_iemr.t_benvisitdetail.VisitReason,db_iemr.t_benvisitdetail.VisitCategory,
+db_iemr.t_benvisitdetail.SubVisitCategory,db_iemr.t_benvisitdetail.RCHID,
+anc.HighRiskCondition,anc.ComplicationOfCurrentPregnancy,pnc.ProvisionalDiagnosis,
+ncd.NCD_Condition,phy.SystolicBP_1stReading,phy.DiastolicBP_1stReading,tm.Status,
+patient.PrescriptionID, referal.referredToInstituteName,
+ms.StateName,md.DistrictName,mdb.BlockName,
+institution.InstitutionName,
+
+testorder.ProcedureName,
+prescription.DiagnosisProvided FROM db_iemr.t_benvisitdetail
+
+LEFT JOIN db_iemr.t_ancdiagnosis anc on anc.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_pncdiagnosis pnc on pnc.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_ncddiagnosis ncd on ncd.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_phy_vitals phy on phy.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_tmrequest tm on tm.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_patientissue patient on patient.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+
+LEFT JOIN db_iemr.t_benreferdetails referal ON referal.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_lab_testorder testorder ON testorder.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_prescription prescription ON prescription.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+
+LEFT JOIN db_iemr.m_institution institution ON institution.InstitutionID = referal.referredToInstituteID
+LEFT JOIN db_iemr.m_state ms ON ms.StateID = institution.StateID
+LEFT JOIN db_iemr.m_district md ON md.DistrictID = institution.DistrictID
+LEFT JOIN db_iemr.m_districtblock mdb ON mdb.BlockID = institution.BlockID
+
+
+where db_iemr.t_benvisitdetail.CreatedDate between '2023-01-01 00:00:00' and '2023-06-30 00:00:00'
+AND db_iemr.t_benvisitdetail.BeneficiaryRegID in (select i_ben_mapping.BenRegId from
+db_identity.i_beneficiarymapping i_ben_mapping where i_ben_mapping.VanID  IN 
+( SELECT VanID FROM db_iemr.m_van WHERE ProviderServiceMapID in (6,7,9,10,11,18) )); -- 728701 -- 1086941
+
+
+SELECT DISTINCT ( db_iemr.t_benvisitdetail.BenVisitID), db_iemr.t_benvisitdetail.BeneficiaryRegID,
+db_iemr.t_benvisitdetail.VisitNo,db_iemr.t_benvisitdetail.CreatedDate,
+db_iemr.t_benvisitdetail.VisitReason,db_iemr.t_benvisitdetail.VisitCategory,
+db_iemr.t_benvisitdetail.SubVisitCategory,db_iemr.t_benvisitdetail.RCHID,
+anc.HighRiskCondition,anc.ComplicationOfCurrentPregnancy,pnc.ProvisionalDiagnosis,
+ncd.NCD_Condition,phy.SystolicBP_1stReading,phy.DiastolicBP_1stReading,tm.Status,
+patient.PrescriptionID, referal.referredToInstituteName,
+ms.StateName,md.DistrictName,mdb.BlockName,
+institution.InstitutionName,
+
+testorder.ProcedureName,
+prescription.DiagnosisProvided FROM db_iemr.t_benvisitdetail
+
+LEFT JOIN db_iemr.t_ancdiagnosis anc on anc.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_pncdiagnosis pnc on pnc.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_ncddiagnosis ncd on ncd.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_phy_vitals phy on phy.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_tmrequest tm on tm.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_patientissue patient on patient.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+
+LEFT JOIN db_iemr.t_benreferdetails referal ON referal.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_lab_testorder testorder ON testorder.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_prescription prescription ON prescription.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+
+LEFT JOIN db_iemr.m_institution institution ON institution.InstitutionID = referal.referredToInstituteID
+LEFT JOIN db_iemr.m_state ms ON ms.StateID = institution.StateID
+LEFT JOIN db_iemr.m_district md ON md.DistrictID = institution.DistrictID
+LEFT JOIN db_iemr.m_districtblock mdb ON mdb.BlockID = institution.BlockID
+
+
+where db_iemr.t_benvisitdetail.CreatedDate between '2023-06-30 00:00:01' and '2024-01-01 00:00:00'
+AND db_iemr.t_benvisitdetail.BeneficiaryRegID in (select i_ben_mapping.BenRegId from
+db_identity.i_beneficiarymapping i_ben_mapping where i_ben_mapping.VanID  IN 
+( SELECT VanID FROM db_iemr.m_van WHERE ProviderServiceMapID in (6,7,9,10,11,18) )); -- 358240 + 728701 -- 1086941
+
+
+
 --
 
 
@@ -1674,3 +2123,1049 @@ select count(*) from db_identity.i_beneficiarymapping
 where BenRegId is not null; --4659393
 
 where BenRegId=5773338;
+
+
+
+-- 02/01/2023
+
+select * from db_iemr.m_104diseasesummary md; 
+select * from db_iemr.t_ncddiagnosis tn; 
+
+select DISTINCT (NCD_Condition) from 
+db_iemr.t_ncddiagnosis where NCD_Condition is not null;
+
+select * from db_iemr.m_ncdscreeningcondition;
+
+select * from db_iemr.t_ancdiagnosis ta limit 1000 
+
+-- MMU month wise all stage events data db_iemr.m_institution details with hierarchy
+
+SELECT DISTINCT ( db_iemr.t_benvisitdetail.BenVisitID), db_iemr.t_benvisitdetail.BeneficiaryRegID,
+db_iemr.t_benvisitdetail.VisitNo,db_iemr.t_benvisitdetail.CreatedDate,
+db_iemr.t_benvisitdetail.VisitReason,db_iemr.t_benvisitdetail.VisitCategory,
+db_iemr.t_benvisitdetail.SubVisitCategory,db_iemr.t_benvisitdetail.RCHID,
+anc.HighRiskCondition,anc.ComplicationOfCurrentPregnancy,pnc.ProvisionalDiagnosis,
+ncd.NCD_Condition,phy.SystolicBP_1stReading,phy.DiastolicBP_1stReading,tm.Status,
+patient.PrescriptionID, referal.referredToInstituteName,
+ms.StateName,md.DistrictName,mdb.BlockName,
+institution.InstitutionName,
+
+testorder.ProcedureName,
+prescription.DiagnosisProvided FROM db_iemr.t_benvisitdetail
+
+LEFT JOIN db_iemr.t_ancdiagnosis anc on anc.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_pncdiagnosis pnc on pnc.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_ncddiagnosis ncd on ncd.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_phy_vitals phy on phy.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_tmrequest tm on tm.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_patientissue patient on patient.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+
+LEFT JOIN db_iemr.t_benreferdetails referal ON referal.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_lab_testorder testorder ON testorder.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN db_iemr.t_prescription prescription ON prescription.BenVisitID=db_iemr.t_benvisitdetail.BenVisitID
+
+LEFT JOIN db_iemr.m_institution institution ON institution.InstitutionID = referal.referredToInstituteID
+LEFT JOIN db_iemr.m_state ms ON ms.StateID = institution.StateID
+LEFT JOIN db_iemr.m_district md ON md.DistrictID = institution.DistrictID
+LEFT JOIN db_iemr.m_districtblock mdb ON mdb.BlockID = institution.BlockID
+
+
+where CAST(db_iemr.t_benvisitdetail.CreatedDate AS DATE ) between '2022-01-01' and '2022-02-28'
+AND db_iemr.t_benvisitdetail.BeneficiaryRegID in (select i_ben_mapping.BenRegId from
+db_identity.i_beneficiarymapping i_ben_mapping where i_ben_mapping.VanID  IN 
+( SELECT VanID FROM db_iemr.m_van WHERE ProviderServiceMapID in (6,7,9,10,11,18) ));
+
+
+-- Drug Prescription ID
+-- Procedure Name
+-- Diagnosis provided
+-- Complication of current pregnancy
+-- High risk condition
+-- Provisional Diagnosis
+-- Visit Sub-Category
+
+
+-- jan 2022 -- 12923
+-- feb 2022 -- 13164
+
+
+select * from program;
+
+select * from programstage where 
+programid = 7220
+
+select * from programstageinstance where 
+programstageid = 7226;
+
+
+-- 11/01/2024 new indicators relatd queries
+
+select * from db_iemr.t_nhmagentrealtimedata limit 1000; -- 25
+
+
+select * from db_iemr.t_104prescription; -- 62921
+
+select * from db_iemr.t_104benmedhistory limit 1000; -- 322279
+
+
+select * from db_iemr.t_detailedcallreport 
+limit 1000; -- 863611
+
+select db_iemr.t_detailedcallreport.AgentName,db_iemr.t_detailedcallreport.Campaign_Name,
+db_iemr.t_detailedcallreport.AgentID, db_iemr.t_detailedcallreport.Call_Start_Time,
+db_iemr.t_detailedcallreport.Call_End_Time,
+TIME_TO_SEC(TIMEDIFF(db_iemr.t_detailedcallreport.Call_End_Time,
+db_iemr.t_detailedcallreport.Call_Start_Time)) AS duration_second
+from db_iemr.t_detailedcallreport 
+limit 1000;
+
+
+select db_iemr.t_detailedcallreport.Campaign_Name,
+db_iemr.t_detailedcallreport.Call_Start_Time,
+db_iemr.t_detailedcallreport.Call_End_Time,
+TIME_TO_SEC(TIMEDIFF(db_iemr.t_detailedcallreport.Call_End_Time,
+db_iemr.t_detailedcallreport.Call_Start_Time)) AS duration_second
+from db_iemr.t_detailedcallreport 
+limit 1000;
+
+
+-- 12/01/2024 for 104 shared by client
+
+SELECT Count(distinct case when db_iemr.t_bencall.ReceivedRoleName like '%HAO%' and
+db_iemr.t_bencall.IsOutbound is false
+then db_iemr.t_bencall.BenCallID end) As Total_Calls,
+count(distinct db_iemr.t_bencall.BeneficiaryRegID) As Unique_beneficiary,
+count(distinct case when (db_iemr.t_bencall.ReceivedRoleName like '%HAO%' 
+and db_iemr.t_bencall.IsOutbound is false) then db_iemr.t_bencall.CallID end) As Unique_Calls,
+count(c.CategoryName) As Category,count(s.SubCategoryName) As Subcategory,count(b.SelecteDiagnosis) As Diasease
+FROM db_iemr.t_bencall
+ 
+inner join db_iemr.t_104benmedhistory b on b.BenCallID = db_iemr.t_bencall.BenCallID
+inner join db_iemr.m_calltype mct on mct.CallTypeID=db_iemr.t_bencall.CallTypeID
+left join db_iemr.m_category c on c.CategoryID=b.CategoryID
+left join db_iemr.m_subcategory s on s.SubCategoryID=b.SubCategoryID
+ 
+WHERE db_iemr.t_bencall.BeneficiaryRegID IS NOT NULL;
+
+
+
+-- 17/01/2024
+
+SELECT db_iemr.t_bencall.BenCallID,db_iemr.t_bencall.CallID, db_iemr.t_bencall.BeneficiaryRegID,
+db_iemr.t_bencall.PhoneNo,db_iemr.t_bencall.CallTypeID,
+db_iemr.t_bencall.is1097, 
+db_iemr.t_bencall.IsOutbound, TIME_TO_SEC(TIMEDIFF(db_iemr.t_bencall.CallEndTime,db_iemr.t_bencall.CallTime)) 
+AS CallDurationInSeconds, db_iemr.t_bencall.ReceivedRoleName,db_iemr.t_bencall.CreatedDate,
+db_iemr.t_bencall.TypeOfComplaint,mct.CallType FROM db_iemr.t_bencall
+
+inner join db_iemr.m_calltype mct on mct.CallTypeID=db_iemr.t_bencall.CallTypeID
+
+WHERE db_iemr.t_bencall.BeneficiaryRegID IS NOT NULL 
+and db_iemr.t_bencall.BeneficiaryRegID  = 7999563;
+
+
+SELECT db_iemr.t_bencall.BenCallID,db_iemr.t_bencall.CallID, db_iemr.t_bencall.BeneficiaryRegID,
+db_iemr.t_bencall.PhoneNo,db_iemr.mct.CallTypeID,
+db_iemr.t_bencall.is1097, c.CategoryName,s.SubCategoryName,b.SelecteDiagnosis As Diasease,
+db_iemr.t_bencall.IsOutbound, TIME_TO_SEC(TIMEDIFF(db_iemr.t_bencall.CallEndTime,db_iemr.t_bencall.CallTime)) 
+AS CallDurationInSeconds, db_iemr.t_bencall.ReceivedRoleName,db_iemr.t_bencall.CreatedDate,
+db_iemr.t_bencall.TypeOfComplaint,mct.CallType,detcallreport.Queue_time FROM db_iemr.t_bencall
+
+inner join db_iemr.t_detailedcallreport detcallreport ON detcallreport.SessionID = db_iemr.t_bencall.CallID 
+
+inner join db_iemr.t_104benmedhistory b on b.BenCallID = db_iemr.t_bencall.BenCallID
+inner join db_iemr.m_calltype mct on mct.CallTypeID=db_iemr.t_bencall.CallTypeID
+left join db_iemr.m_category c on c.CategoryID=b.CategoryID
+left join db_iemr.m_subcategory s on s.SubCategoryID=b.SubCategoryID
+
+WHERE db_iemr.t_bencall.BeneficiaryRegID IS NOT NULL 
+and db_iemr.t_bencall.BeneficiaryRegID  = 7999563;
+
+
+
+select * from db_iemr.t_104prescription; 62921 -- join with BenCallID
+
+
+
+-- 18/01/2024
+
+-- 104 query shared by venkat
+
+SELECT distinct db_iemr.t_bencall.BenCallID,db_iemr.t_bencall.CallID, db_iemr.t_bencall.BeneficiaryRegID,
+db_iemr.t_bencall.PhoneNo,db_iemr.mct.CallTypeID,
+db_iemr.t_bencall.is1097, c.CategoryName,s.SubCategoryName,b.SelecteDiagnosis As Diasease,
+db_iemr.t_bencall.IsOutbound, TIME_TO_SEC(TIMEDIFF(db_iemr.t_bencall.CallEndTime,db_iemr.t_bencall.CallTime))
+AS CallDurationInSeconds, db_iemr.t_bencall.ReceivedRoleName,db_iemr.t_bencall.CreatedDate,
+db_iemr.t_bencall.TypeOfComplaint,mct.CallType,detcallreport.Queue_time FROM db_iemr.t_bencall
+left join db_iemr.t_detailedcallreport detcallreport ON detcallreport.SessionID = db_iemr.t_bencall.CallID
+left join db_iemr.t_104benmedhistory b on b.BenCallID = db_iemr.t_bencall.BenCallID
+inner join db_iemr.m_calltype mct on mct.CallTypeID=db_iemr.t_bencall.CallTypeID
+left join db_iemr.m_category c on c.CategoryID=b.CategoryID
+left join db_iemr.m_subcategory s on s.SubCategoryID=b.SubCategoryID
+WHERE db_iemr.t_bencall.BeneficiaryRegID IS NOT NULL
+and db_iemr.t_bencall.BeneficiaryRegID  = 7999563;
+
+
+
+
+
+SELECT distinct db_iemr.t_bencall.CallID, 
+p.PrescriptionID,detcallreport.Queue_time FROM db_iemr.t_bencall
+
+left join db_iemr.t_detailedcallreport detcallreport ON detcallreport.SessionID = db_iemr.t_bencall.CallID
+left join db_iemr.t_104benmedhistory b on b.BenCallID = db_iemr.t_bencall.BenCallID
+left join db_iemr.t_104prescription p on p.BenCallID=b.BenCallID
+inner join db_iemr.m_calltype mct on mct.CallTypeID=db_iemr.t_bencall.CallTypeID
+left join db_iemr.m_category c on c.CategoryID=b.CategoryID
+left join db_iemr.m_subcategory s on s.SubCategoryID=b.SubCategoryID
+
+WHERE db_iemr.t_bencall.BeneficiaryRegID IS NOT NULL
+
+and db_iemr.t_bencall.BeneficiaryRegID  = 7999563;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- 19/01/2024
+-- 104 query shared by venkat
+SELECT distinct db_iemr.t_bencall.BenCallID,db_iemr.t_bencall.CallID, db_iemr.t_bencall.BeneficiaryRegID,
+db_iemr.t_bencall.PhoneNo,db_iemr.mct.CallTypeID,
+db_iemr.t_bencall.is1097, c.CategoryName,s.SubCategoryName,b.SelecteDiagnosis As Diasease,b.DiseaseSummary As Algorithm,
+p.PrescriptionID,db_iemr.t_bencall.IsOutbound, TIME_TO_SEC(TIMEDIFF(db_iemr.t_bencall.CallEndTime,db_iemr.t_bencall.CallTime))
+AS CallDurationInSeconds, db_iemr.t_bencall.ReceivedRoleName,db_iemr.t_bencall.CreatedDate,db_iemr.t_bencall.CallTime,
+db_iemr.t_bencall.TypeOfComplaint,mct.CallGroupType,mct.CallType,detcallreport.Queue_time FROM db_iemr.t_bencall
+
+left join db_iemr.t_detailedcallreport detcallreport ON detcallreport.SessionID = db_iemr.t_bencall.CallID
+left join db_iemr.t_104benmedhistory b on b.BenCallID = db_iemr.t_bencall.BenCallID
+left join db_iemr.t_104prescription p on p.BenCallID=b.BenCallID
+inner join db_iemr.m_calltype mct on mct.CallTypeID=db_iemr.t_bencall.CallTypeID
+left join db_iemr.m_category c on c.CategoryID=b.CategoryID
+left join db_iemr.m_subcategory s on s.SubCategoryID=b.SubCategoryID
+
+WHERE db_iemr.t_bencall.BeneficiaryRegID IS NOT NULL
+
+and db_iemr.t_bencall.BeneficiaryRegID  = 7999563;
+
+
+SELECT distinct db_iemr.t_bencall.BenCallID,db_iemr.t_bencall.CallID, db_iemr.t_bencall.BeneficiaryRegID,
+db_iemr.t_bencall.PhoneNo,db_iemr.mct.CallTypeID,
+db_iemr.t_bencall.is1097, c.CategoryName,s.SubCategoryName,b.SelecteDiagnosis As Diasease,b.DiseaseSummary As Algorithm,
+p.PrescriptionID,db_iemr.t_bencall.IsOutbound, TIME_TO_SEC(TIMEDIFF(db_iemr.t_bencall.CallEndTime,db_iemr.t_bencall.CallTime))
+AS CallDurationInSeconds, db_iemr.t_bencall.ReceivedRoleName,db_iemr.t_bencall.CreatedDate,db_iemr.t_bencall.CallTime,
+db_iemr.t_bencall.TypeOfComplaint,mct.CallGroupType,mct.CallType,detcallreport.Queue_time FROM db_iemr.t_bencall
+
+left join db_iemr.t_detailedcallreport detcallreport ON detcallreport.SessionID = db_iemr.t_bencall.CallID
+left join db_iemr.t_104benmedhistory b on b.BenCallID = db_iemr.t_bencall.BenCallID
+left join db_iemr.t_104prescription p on p.BenCallID=b.BenCallID
+inner join db_iemr.m_calltype mct on mct.CallTypeID=db_iemr.t_bencall.CallTypeID
+left join db_iemr.m_category c on c.CategoryID=b.CategoryID
+left join db_iemr.m_subcategory s on s.SubCategoryID=b.SubCategoryID
+
+WHERE db_iemr.t_bencall.BeneficiaryRegID IS NOT NULL and 
+AND db_iemr.t_bencall.CreatedDate between '2022-01-01 00:00:00' and '2022-12-31 23:59:59';
+
+
+
+-- 104 final query as on 08/02/2024
+SELECT distinct db_iemr.t_bencall.BenCallID,db_iemr.t_bencall.CallID, db_iemr.t_bencall.BeneficiaryRegID,
+db_iemr.t_bencall.PhoneNo,db_iemr.mct.CallTypeID,
+db_iemr.t_bencall.is1097, c.CategoryName,s.SubCategoryName,b.SelecteDiagnosis As Diasease,b.DiseaseSummary As Algorithm,
+p.PrescriptionID,db_iemr.t_bencall.IsOutbound, TIME_TO_SEC(TIMEDIFF(db_iemr.t_bencall.CallEndTime,db_iemr.t_bencall.CallTime))
+AS CallDurationInSeconds, db_iemr.t_bencall.ReceivedRoleName,db_iemr.t_bencall.CreatedDate,db_iemr.t_bencall.CallTime,
+db_iemr.t_bencall.TypeOfComplaint,mct.CallGroupType,mct.CallType
+FROM db_iemr.t_bencall
+
+left join db_iemr.t_104benmedhistory b on b.BenCallID = db_iemr.t_bencall.BenCallID
+left join db_iemr.t_104prescription p on p.BenCallID=b.BenCallID
+left join db_iemr.m_calltype mct on mct.CallTypeID=db_iemr.t_bencall.CallTypeID
+left join db_iemr.m_category c on c.CategoryID=b.CategoryID
+left join db_iemr.m_subcategory s on s.SubCategoryID=b.SubCategoryID
+WHERE db_iemr.t_bencall.BeneficiaryRegID IS NOT NULL
+
+AND db_iemr.t_bencall.CreatedDate between '2022-01-01 00:00:00' and '2023-12-31 23:59:59';
+
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT count(distinct db_iemr.t_bencall.BenCallID),db_iemr.t_bencall.CallID, db_iemr.t_bencall.BeneficiaryRegID,
+db_iemr.t_bencall.PhoneNo,db_iemr.mct.CallTypeID,
+db_iemr.t_bencall.is1097, c.CategoryName,s.SubCategoryName,b.SelecteDiagnosis As Diasease,b.DiseaseSummary As Algorithm,
+p.PrescriptionID,db_iemr.t_bencall.IsOutbound, TIME_TO_SEC(TIMEDIFF(db_iemr.t_bencall.CallEndTime,db_iemr.t_bencall.CallTime))
+AS CallDurationInSeconds, db_iemr.t_bencall.ReceivedRoleName,db_iemr.t_bencall.CreatedDate,db_iemr.t_bencall.CallTime,
+db_iemr.t_bencall.TypeOfComplaint,mct.CallGroupType,mct.CallType,detcallreport.Queue_time FROM db_iemr.t_bencall
+
+left join db_iemr.t_detailedcallreport detcallreport ON detcallreport.SessionID = db_iemr.t_bencall.CallID
+left join db_iemr.t_104benmedhistory b on b.BenCallID = db_iemr.t_bencall.BenCallID
+left join db_iemr.t_104prescription p on p.BenCallID=b.BenCallID
+inner join db_iemr.m_calltype mct on mct.CallTypeID=db_iemr.t_bencall.CallTypeID
+left join db_iemr.m_category c on c.CategoryID=b.CategoryID
+left join db_iemr.m_subcategory s on s.SubCategoryID=b.SubCategoryID
+
+WHERE db_iemr.t_bencall.BeneficiaryRegID IS NOT NULL and 
+AND db_iemr.t_bencall.CreatedDate between '2022-01-01 00:00:00' and '2022-12-31 23:59:59';
+
+
+SELECT db_iemr.t_bencall.BenCallID,db_iemr.t_bencall.CallID, db_iemr.t_bencall.BeneficiaryRegID,
+db_iemr.t_bencall.PhoneNo,db_iemr.mct.CallTypeID,
+db_iemr.t_bencall.is1097, c.CategoryName,s.SubCategoryName,b.SelecteDiagnosis As Diasease,b.DiseaseSummary As Algorithm,
+p.PrescriptionID,db_iemr.t_bencall.IsOutbound, TIME_TO_SEC(TIMEDIFF(db_iemr.t_bencall.CallEndTime,db_iemr.t_bencall.CallTime))
+AS CallDurationInSeconds, db_iemr.t_bencall.ReceivedRoleName,db_iemr.t_bencall.CreatedDate,db_iemr.t_bencall.CallTime,
+db_iemr.t_bencall.TypeOfComplaint,mct.CallGroupType,mct.CallType
+FROM db_iemr.t_bencall
+
+left join db_iemr.t_104benmedhistory b on b.BenCallID = db_iemr.t_bencall.BenCallID
+left join db_iemr.t_104prescription p on p.BenCallID=b.BenCallID
+left join db_iemr.m_calltype mct on mct.CallTypeID=db_iemr.t_bencall.CallTypeID
+left join db_iemr.m_category c on c.CategoryID=b.CategoryID
+left join db_iemr.m_subcategory s on s.SubCategoryID=b.SubCategoryID
+
+
+WHERE db_iemr.t_bencall.BeneficiaryRegID IS NOT NULL;
+
+SELECT count(*) from  db_iemr.t_bencall; -- 2887837
+
+-- agent query for add new program Agent
+select CampaignName,Loggedin,CreatedDate,LastModDate,Incall,
+HOLD,AWT,NotReady,Free,Aux  from db_iemr.t_nhmagentrealtimedata; -- 25
+
+select db_iemr.t_detailedcallreport.SessionID,
+db_iemr.t_detailedcallreport.Queue_time, from db_iemr.t_detailedcallreport
+where db_iemr.t_detailedcallreport.SessionID in ( );
+
+
+-- SessionID duplicate
+
+select db_iemr.t_detailedcallreport.SessionID,
+db_iemr.t_detailedcallreport.Queue_time from db_iemr.t_detailedcallreport
+where db_iemr.t_detailedcallreport.SessionID in ( 1696267902.8164000000,
+1687632180.3517000000);
+
+select db_iemr.t_104prescription.BenCallID, db_iemr.t_104prescription.PrescriptionID
+from db_iemr.t_104prescription
+where db_iemr.t_104prescription.BenCallID in ( );
+
+
+-- 08/02/2024
+-- Queue_time for indicators -- table t_detailedcallreport 
+-- agent registration 
+select date(Call_Start_Time), AgentID as AgentID ,
+Campaign_Name  As Campaign_Name,avg(Queue_time) 
+from db_iemr.t_detailedcallreport 
+group by date(Call_Start_Time), Campaign_Name,AgentID;
+
+select date(Call_Start_Time), avg(Queue_time) 
+from db_iemr.t_detailedcallreport group by date(Call_Start_Time);
+
+select  *  from db_iemr.t_detailedcallreport limit 1000;
+
+
+-- agent update indicator count query
+
+select date(CreatedDate) As Date,
+(case when CampaignName in ('H_104_Hybrid_CO','H_104_CO','H_104_PD_MH') then 'CO' 
+when CampaignName in ('H_104_Hybrid_HAO','H_104_HAO','ECD_ASSOCIATE','ECD_OUTBOUND_ANM') then 'HAO'
+when CampaignName in ('H_104_Hybrid_MO','H_104_MO','ECD_OUTBOUND_MO') then 'MO' end) As Campaign_Name,
+sum(Loggedin) As Agents_loggedin,
+(sum(Incall)+sum(Hold)) As Agents_Incall,
+sum(AWT) As Agents_Closure,
+(sum(Free)+Sum(NotReady)+sum(Aux)) As Agents_Idle
+from db_iemr.t_nhmagentrealtimedata
+where CampaignName in ('H_104_Hybrid_CO','H_104_Hybrid_HAO','H_104_Hybrid_MO','H_104_CO','H_104_MO',
+'H_104_HAO','ECD_ASSOCIATE','H_104_PD_MH','ECD_OUTBOUND_ANM','ECD_OUTBOUND_MO')
+group by Date,Campaign_name;
+
+
+
+
+-- -- 1097 registration query  13/02/2024
+
+-- 1097 registration query 
+SELECT i_ben_mapping.BenRegId AS mappingBenRegId, i_ben_details.BeneficiaryRegID, i_ben_details.FirstName,i_ben_details.MiddleName,
+i_ben_details.LastName,i_ben_details.Gender,YEAR(i_ben_details.DOB),i_ben_mapping.VanID, i_ben_mapping.CreatedDate,
+CAST(i_ben_mapping.CreatedDate AS DATE),i_ben_address.PermStateId,i_ben_address.PermState,
+i_ben_address.PermDistrictId,i_ben_address.PermDistrict
+
+FROM i_beneficiarymapping i_ben_mapping 
+left JOIN i_beneficiarydetails i_ben_details ON i_ben_details.BeneficiaryDetailsId = i_ben_mapping.BenDetailsId
+left JOIN i_beneficiaryaddress i_ben_address ON i_ben_address.BenAddressID = i_ben_mapping.BenAddressId
+WHERE i_ben_mapping.BenRegId IS NOT NULL 
+-- and i_ben_address.PermStateId = 19 and i_ben_address.PermDistrictId = 332
+AND i_ben_address.PermStateId IS NOT NULL
+AND i_ben_address.PermDistrictId IS NOT NULL 
+
+-- AND i_ben_address.PermSubDistrictId IS NOT NULL
+-- AND i_ben_mapping.VanID = 1
+LIMIT 10000; -- 187864
+
+
+
+
+-- 1097 registration query final
+SELECT i_ben_mapping.BenRegId AS mappingBenRegId, i_ben_details.BeneficiaryRegID, 
+i_ben_details.FirstName,i_ben_details.MiddleName,i_ben_details.LastName,
+i_ben_details.Gender,YEAR(i_ben_details.DOB),
+IF(i_ben_details.DOB IS NOT NULL, DATE_FORMAT(i_ben_details.DOB, '%Y-01-01'), NULL) AS DOB,
+i_ben_mapping.VanID, CAST(i_ben_mapping.CreatedDate AS DATE),
+i_ben_details.SexualOrientationType,i_ben_address.PermDistrictId, i_ben_address.PermDistrict
+
+FROM i_beneficiarymapping i_ben_mapping 
+left JOIN i_beneficiarydetails i_ben_details ON i_ben_details.BeneficiaryDetailsId = i_ben_mapping.BenDetailsId
+left JOIN i_beneficiaryaddress i_ben_address ON i_ben_address.BenAddressID = i_ben_mapping.BenAddressId
+WHERE i_ben_mapping.BenRegId IS NOT NULL 
+-- and i_ben_address.PermStateId = 19 and i_ben_address.PermDistrictId = 332
+AND i_ben_address.PermStateId IS NOT NULL
+AND i_ben_address.PermDistrictId IS NOT NULL 
+order by i_ben_mapping.BenRegId ASC; -- till 6828 done
+
+
+SELECT i_ben_mapping.BenRegId AS MappingBenRegId, i_ben_details.BeneficiaryRegID, 
+CAST(i_ben_mapping.CreatedDate AS DATE),i_ben_details.FirstName,i_ben_details.MiddleName,
+i_ben_details.LastName,i_ben_details.Gender,
+IF(i_ben_details.DOB IS NOT NULL, DATE_FORMAT(i_ben_details.DOB, '%Y-01-01'), NULL) AS DOB,
+i_ben_mapping.VanID,i_ben_details.SexualOrientationType,i_ben_address.PermStateId,i_ben_address.PermState,
+i_ben_address.PermDistrictId,i_ben_address.PermDistrict,i_ben_details.preferredLanguage 
+FROM i_beneficiarymapping i_ben_mapping 
+left JOIN i_beneficiarydetails i_ben_details ON i_ben_details.BeneficiaryDetailsId = i_ben_mapping.BenDetailsId
+left JOIN i_beneficiaryaddress i_ben_address ON i_ben_address.BenAddressID = i_ben_mapping.BenAddressId
+
+WHERE i_ben_mapping.BenRegId IS NOT NULL 
+AND i_ben_address.PermStateId IS NOT NULL
+AND i_ben_address.PermDistrictId IS NOT NULL
+AND i_ben_mapping.BenRegId > 6828
+AND i_ben_mapping.CreatedDate between '2022-01-01 00:00:00' and '2023-12-31 23:59:59';
+
+
+
+SELECT i_ben_mapping.BenRegId AS MappingBenRegId, i_ben_details.BeneficiaryRegID, 
+CAST(i_ben_mapping.CreatedDate AS DATE),i_ben_details.FirstName,i_ben_details.MiddleName,
+i_ben_details.LastName,i_ben_details.Gender,
+IF(i_ben_details.DOB IS NOT NULL, DATE_FORMAT(i_ben_details.DOB, '%Y-01-01'), NULL) AS DOB,
+i_ben_mapping.VanID,i_ben_details.SexualOrientationType,i_ben_address.PermStateId,i_ben_address.PermState,
+i_ben_address.PermDistrictId,i_ben_address.PermDistrict,i_ben_details.preferredLanguage 
+FROM i_beneficiarymapping i_ben_mapping 
+left JOIN i_beneficiarydetails i_ben_details ON i_ben_details.BeneficiaryDetailsId = i_ben_mapping.BenDetailsId
+left JOIN i_beneficiaryaddress i_ben_address ON i_ben_address.BenAddressID = i_ben_mapping.BenAddressId
+
+WHERE i_ben_mapping.BenRegId IS NOT NULL 
+AND i_ben_address.PermStateId IS NOT NULL
+AND i_ben_address.PermDistrictId IS NOT NULL
+and i_ben_address.PermDistrict = 'Not Disclosed'
+
+
+
+
+select * from i_beneficiarydetails limit 1000;
+
+select count(*) from 1097_db_1097_identity.i_beneficiarymapping;
+-- master table
+
+select * from 1097_db_iemr.m_sexualorientation ms;
+
+
+-- 1097 event query 
+select count(*) from 1097_db_iemr.t_bencall;
+
+
+-- 19/02/2024 ServiceProviderName ServiceProviderName As Project_Name
+select m.ProviderServiceMapID,p.ServiceProviderName  As Project_Name,s.ServiceName from m_providerservicemapping m
+inner join m_serviceprovider p on p.ServiceProviderID=m.ServiceProviderID
+inner join m_servicemaster s on s.ServiceID=m.ServiceID;
+
+
+-- 1097 event query
+
+SELECT distinct 1097_db_iemr.t_bencall.BenCallID,1097_db_iemr.t_bencall.CallID, 1097_db_iemr.t_bencall.BeneficiaryRegID,
+1097_db_iemr.t_bencall.PhoneNo,
+1097_db_iemr.t_bencall.is1097, 1097_db_iemr.t_bencall.IsOutbound, 
+TIME_TO_SEC(TIMEDIFF(1097_db_iemr.t_bencall.CallEndTime,1097_db_iemr.t_bencall.CallTime))
+AS CallDurationInSeconds, 1097_db_iemr.t_bencall.ReceivedRoleName,
+1097_db_iemr.t_bencall.CallTypeID,mct.CallType,mct.CallGroupType,
+1097_db_iemr.t_bencall.CreatedDate
+ -- mct.CallType -- ,detcallreport.Queue_time 
+FROM 1097_db_iemr.t_bencall
+
+left join 1097_db_iemr.m_calltype mct on mct.CallTypeID=1097_db_iemr.t_bencall.CallTypeID
+
+-- left join 1097_db_iemr.t_detailedcallreport detcallreport ON detcallreport.SessionID = 1097_db_iemr.t_bencall.CallID
+-- left join 1097_db_iemr.t_104benmedhistory b on b.BenCallID = 1097_db_iemr.t_bencall.BenCallID
+-- inner join 1097_db_iemr.m_calltype mct on mct.CallTypeID=1097_db_iemr.t_bencall.CallTypeID
+-- left join 1097_db_iemr.m_category c on c.CategoryID=b.CategoryID
+-- left join 1097_db_iemr.m_subcategory s on s.SubCategoryID=b.SubCategoryID
+WHERE 1097_db_iemr.t_bencall.BeneficiaryRegID IS NOT NULL
+
+and 1097_db_iemr.t_bencall.BeneficiaryRegID  = 7110;
+
+
+-- mysql query for age calculation
+
+select CURDATE();
+select NOW();
+year(curdate())-year(1097_db_iemr.t_bencall.CreatedDate) as StudentAge from AgeDemo;
+SELECT DATE_FORMAT(FROM_DAYS(DATEDIFF(now(),'2010-11-25')), '%Y')+0 AS Age;
+-- 1097 event query with ageOnVisit
+
+SELECT distinct 1097_db_iemr.t_bencall.BenCallID,1097_db_iemr.t_bencall.CallID, 
+1097_db_iemr.t_bencall.BeneficiaryRegID,
+IF(i_ben_details.DOB IS NOT NULL, DATE_FORMAT(i_ben_details.DOB, '%Y-01-01'), NULL) AS DOB,
+1097_db_iemr.t_bencall.CreatedDate,
+year(1097_db_iemr.t_bencall.CreatedDate) - year(DOB) as AgeOnVisit,
+1097_db_iemr.t_bencall.is1097, 1097_db_iemr.t_bencall.IsOutbound, 
+TIME_TO_SEC(TIMEDIFF(1097_db_iemr.t_bencall.CallEndTime,1097_db_iemr.t_bencall.CallTime))
+AS CallDurationInSeconds, 1097_db_iemr.t_bencall.ReceivedRoleName,
+1097_db_iemr.t_bencall.CallTypeID,mct.CallType,mct.CallGroupType
+
+ -- mct.CallType -- ,detcallreport.Queue_time 
+FROM 1097_db_iemr.t_bencall
+
+left join  1097_db_1097_identity.i_beneficiarymapping i_ben_mapping ON 
+i_ben_mapping.BenRegId = 1097_db_iemr.t_bencall.BeneficiaryRegID
+
+left join  1097_db_1097_identity.i_beneficiarydetails i_ben_details ON 
+i_ben_details.BeneficiaryDetailsId = i_ben_mapping.BenDetailsId
+
+left join 1097_db_iemr.m_calltype mct on mct.CallTypeID=1097_db_iemr.t_bencall.CallTypeID
+
+-- left join 1097_db_iemr.t_detailedcallreport detcallreport ON detcallreport.SessionID = 1097_db_iemr.t_bencall.CallID
+-- left join 1097_db_iemr.t_104benmedhistory b on b.BenCallID = 1097_db_iemr.t_bencall.BenCallID
+-- inner join 1097_db_iemr.m_calltype mct on mct.CallTypeID=1097_db_iemr.t_bencall.CallTypeID
+-- left join 1097_db_iemr.m_category c on c.CategoryID=b.CategoryID
+-- left join 1097_db_iemr.m_subcategory s on s.SubCategoryID=b.SubCategoryID
+WHERE 1097_db_iemr.t_bencall.BeneficiaryRegID IS NOT NULL -- 594241
+
+
+
+-- 2nd query for age on visit
+SELECT distinct 1097_db_iemr.t_bencall.BenCallID,1097_db_iemr.t_bencall.CallID, 
+1097_db_iemr.t_bencall.BeneficiaryRegID,1097_db_iemr.t_bencall.CreatedDate,
+
+year(1097_db_iemr.t_bencall.CreatedDate) - 
+year(IF(i_ben_details.DOB IS NOT NULL, DATE_FORMAT(i_ben_details.DOB, '%Y-01-01'), NULL)) as AgeOnVisit,
+
+IF(1097_db_iemr.t_bencall.is1097 = 1, 'true', 'false') AS Is1097,
+IF(1097_db_iemr.t_bencall.IsOutbound = 1, 'true', 'false') As IsOutbound,
+1097_db_iemr.t_bencall.ReceivedRoleName,
+
+TIME_TO_SEC(TIMEDIFF(1097_db_iemr.t_bencall.CallEndTime,1097_db_iemr.t_bencall.CallTime))
+AS CallDurationInSeconds, 
+
+1097_db_iemr.t_bencall.CallTypeID,mct.CallType,mct.CallGroupType
+
+FROM 1097_db_iemr.t_bencall
+
+left join  1097_db_1097_identity.i_beneficiarymapping i_ben_mapping ON 
+i_ben_mapping.BenRegId = 1097_db_iemr.t_bencall.BeneficiaryRegID
+
+left join  1097_db_1097_identity.i_beneficiarydetails i_ben_details ON 
+i_ben_details.BeneficiaryDetailsId = i_ben_mapping.BenDetailsId
+
+left join 1097_db_iemr.m_calltype mct on mct.CallTypeID=1097_db_iemr.t_bencall.CallTypeID
+
+WHERE 1097_db_iemr.t_bencall.BeneficiaryRegID IS NOT NULL limit 1000
+
+-- 26/02/2024 1097 event query
+
+SELECT distinct 1097_db_iemr.t_bencall.BenCallID,1097_db_iemr.t_bencall.CallID, 
+1097_db_iemr.t_bencall.BeneficiaryRegID,
+IF(i_ben_details.DOB IS NOT NULL, DATE_FORMAT(i_ben_details.DOB, '%Y-01-01'), NULL) AS DOB,
+1097_db_iemr.t_bencall.CreatedDate,
+year(1097_db_iemr.t_bencall.CreatedDate) - year(DOB) as AgeOnVisit,
+1097_db_iemr.t_bencall.is1097, 1097_db_iemr.t_bencall.IsOutbound, 
+TIME_TO_SEC(TIMEDIFF(1097_db_iemr.t_bencall.CallEndTime,1097_db_iemr.t_bencall.CallTime))
+AS CallDurationInSeconds, 1097_db_iemr.t_bencall.ReceivedRoleName,
+1097_db_iemr.t_bencall.CallTypeID,mct.CallType,mct.CallGroupType,1097_db_iemr.t_bencall.Category
+ ,servicesmapping.InstituteDirMapID,servicesmapping.FeedbackID
+
+ -- mct.CallType -- ,detcallreport.Queue_time 
+FROM 1097_db_iemr.t_bencall
+
+left join  1097_db_1097_identity.i_beneficiarymapping i_ben_mapping ON 
+i_ben_mapping.BenRegId = 1097_db_iemr.t_bencall.BeneficiaryRegID
+
+left join  1097_db_1097_identity.i_beneficiarydetails i_ben_details ON 
+i_ben_details.BeneficiaryDetailsId = i_ben_mapping.BenDetailsId
+
+left join 1097_db_iemr.m_calltype mct on mct.CallTypeID=1097_db_iemr.t_bencall.CallTypeID
+
+left join 1097_db_iemr.m_bencall1097servicesmapping servicesmapping ON 
+servicesmapping.BenCallID = 1097_db_iemr.t_bencall.BenCallID
+
+
+-- left join 1097_db_iemr.t_detailedcallreport detcallreport ON detcallreport.SessionID = 1097_db_iemr.t_bencall.CallID
+-- left join 1097_db_iemr.t_104benmedhistory b on b.BenCallID = 1097_db_iemr.t_bencall.BenCallID
+-- inner join 1097_db_iemr.m_calltype mct on mct.CallTypeID=1097_db_iemr.t_bencall.CallTypeID
+-- left join 1097_db_iemr.m_category c on c.CategoryID=b.CategoryID
+-- left join 1097_db_iemr.m_subcategory s on s.SubCategoryID=b.SubCategoryID
+WHERE 1097_db_iemr.t_bencall.BeneficiaryRegID IS NOT NULL
+
+
+--- 1097 event query
+
+SELECT distinct 1097_db_iemr.t_bencall.BenCallID,1097_db_iemr.t_bencall.CallID, 
+1097_db_iemr.t_bencall.BeneficiaryRegID,
+IF(i_ben_details.DOB IS NOT NULL, DATE_FORMAT(i_ben_details.DOB, '%Y-01-01'), NULL) AS DOB,
+1097_db_iemr.t_bencall.CreatedDate,
+year(1097_db_iemr.t_bencall.CreatedDate) - year(DOB) as AgeOnVisit,
+1097_db_iemr.t_bencall.is1097, 1097_db_iemr.t_bencall.IsOutbound, 
+TIME_TO_SEC(TIMEDIFF(1097_db_iemr.t_bencall.CallEndTime,1097_db_iemr.t_bencall.CallTime))
+AS CallDurationInSeconds, 1097_db_iemr.t_bencall.ReceivedRoleName,
+1097_db_iemr.t_bencall.CallTypeID,mct.CallType,mct.CallGroupType,1097_db_iemr.t_bencall.Category
+ -- ,cate.CategoryName,
+ 
+ ,feedback.FeedbackID
+
+ -- mct.CallType -- ,detcallreport.Queue_time 
+FROM 1097_db_iemr.t_bencall
+
+left join  1097_db_1097_identity.i_beneficiarymapping i_ben_mapping ON 
+i_ben_mapping.BenRegId = 1097_db_iemr.t_bencall.BeneficiaryRegID
+
+left join  1097_db_1097_identity.i_beneficiarydetails i_ben_details ON 
+i_ben_details.BeneficiaryDetailsId = i_ben_mapping.BenDetailsId
+
+left join 1097_db_iemr.m_calltype mct on mct.CallTypeID=1097_db_iemr.t_bencall.CallTypeID
+
+left join 1097_db_iemr.t_feedback feedback ON 
+feedback.BenCallID = 1097_db_iemr.t_bencall.BenCallID
+
+-- left join 1097_db_iemr.m_category cate on cate.CategoryID=servicesmapping.CategoryID
+
+
+-- left join 1097_db_iemr.t_detailedcallreport detcallreport ON detcallreport.SessionID = 1097_db_iemr.t_bencall.CallID
+-- left join 1097_db_iemr.t_104benmedhistory b on b.BenCallID = 1097_db_iemr.t_bencall.BenCallID
+-- inner join 1097_db_iemr.m_calltype mct on mct.CallTypeID=1097_db_iemr.t_bencall.CallTypeID
+-- left join 1097_db_iemr.m_category c on c.CategoryID=b.CategoryID
+-- left join 1097_db_iemr.m_subcategory s on s.SubCategoryID=b.SubCategoryID
+WHERE 1097_db_iemr.t_bencall.BeneficiaryRegID IS NOT NULL
+
+
+-- --- 1097 event query provide by venkat
+
+SELECT distinct 1097_db_iemr.t_bencall.BenCallID,1097_db_iemr.t_bencall.CallID,
+1097_db_iemr.t_bencall.BeneficiaryRegID,
+IF(i_ben_details.DOB IS NOT NULL, DATE_FORMAT(i_ben_details.DOB, '%Y-01-01'), NULL) AS DOB,
+1097_db_iemr.t_bencall.CreatedDate,
+year(1097_db_iemr.t_bencall.CreatedDate) - year(DOB) as AgeOnVisit,
+1097_db_iemr.t_bencall.is1097, 1097_db_iemr.t_bencall.IsOutbound,
+TIME_TO_SEC(TIMEDIFF(1097_db_iemr.t_bencall.CallEndTime,1097_db_iemr.t_bencall.CallTime))
+AS CallDurationInSeconds, 1097_db_iemr.t_bencall.ReceivedRoleName,
+1097_db_iemr.t_bencall.CallTypeID,mct.CallType,mct.CallGroupType,feedback.FeedbackID,
+ftype.FeedbackTypeName,inst.InstitutionName,inst.InstitutionID
+FROM 1097_db_iemr.t_bencall
+left join  1097_db_1097_identity.i_beneficiarymapping i_ben_mapping ON
+i_ben_mapping.BenRegId = 1097_db_iemr.t_bencall.BeneficiaryRegID
+left join  1097_db_1097_identity.i_beneficiarydetails i_ben_details ON
+i_ben_details.BeneficiaryDetailsId = i_ben_mapping.BenDetailsId
+left join 1097_db_iemr.m_calltype mct on mct.CallTypeID=1097_db_iemr.t_bencall.CallTypeID
+left join 1097_db_iemr.t_feedback feedback ON
+feedback.BenCallID = 1097_db_iemr.t_bencall.BenCallID
+ 
+left join 1097_db_iemr.m_feedbacktype ftype on ftype.FeedbackTypeID=feedback.FeedbackTypeID
+ 
+left join 1097_db_iemr.m_institution inst on inst.InstitutionID=feedback.InstitutionID
+
+WHERE 1097_db_iemr.t_bencall.BeneficiaryRegID IS NOT NULL -- total records -- 594250
+
+-- feedback master
+select * from 1097_db_iemr.m_feedbacktype;
+
+-- institution master
+select * from 1097_db_iemr.m_institution;
+
+
+select * from 1097_db_iemr.m_bencall1097servicesmapping;
+
+select * from 1097_db_iemr.m_category;
+
+select * from 1097_db_iemr.m_calltype mc 
+select * from 1097_db_iemr.t_feedback tf 
+
+
+-- t_bencall, db_iemr.m_bencall1097servicesmapping
+
+select * from 1097_db_iemr.m_bencall1097servicesmapping;
+
+-- CallID and InstituteDirMapID,FeedbackID
+
+select * from 1097_db_iemr.m_category mc
+
+select * from 1097_db_iemr.t_bencall tb limit 1000
+
+-- pyton script 1097 event query 28/02/2023
+
+SELECT distinct 1097_db_iemr.t_bencall.BenCallID,1097_db_iemr.t_bencall.CallID, 
+1097_db_iemr.t_bencall.BeneficiaryRegID,1097_db_iemr.t_bencall.CreatedDate,
+
+year(1097_db_iemr.t_bencall.CreatedDate) - 
+year(IF(i_ben_details.DOB IS NOT NULL, DATE_FORMAT(i_ben_details.DOB, '%Y-01-01'), NULL)) as AgeOnVisit,
+
+IF(1097_db_iemr.t_bencall.is1097 = 1, 'true', 'false') AS Is1097,
+
+IF(1097_db_iemr.t_bencall.IsOutbound = 1, 'true', 'false') As IsOutbound,
+
+1097_db_iemr.t_bencall.ReceivedRoleName,
+
+TIME_TO_SEC(TIMEDIFF(1097_db_iemr.t_bencall.CallEndTime,1097_db_iemr.t_bencall.CallTime))
+AS CallDurationInSeconds, mct.CallType,mct.CallGroupType,
+
+feedback.FeedbackID,ftype.FeedbackTypeName,inst.InstitutionID, inst.InstitutionName
+
+FROM 1097_db_iemr.t_bencall
+
+left join  1097_db_1097_identity.i_beneficiarymapping i_ben_mapping ON 
+i_ben_mapping.BenRegId = 1097_db_iemr.t_bencall.BeneficiaryRegID
+
+left join  1097_db_1097_identity.i_beneficiarydetails i_ben_details ON 
+i_ben_details.BeneficiaryDetailsId = i_ben_mapping.BenDetailsId
+
+left join 1097_db_iemr.m_calltype mct ON mct.CallTypeID=1097_db_iemr.t_bencall.CallTypeID
+
+left join 1097_db_iemr.t_feedback feedback ON
+feedback.BenCallID = 1097_db_iemr.t_bencall.BenCallID
+
+left join 1097_db_iemr.m_feedbacktype ftype on ftype.FeedbackTypeID=feedback.FeedbackTypeID
+left join 1097_db_iemr.m_institution inst on inst.InstitutionID=feedback.InstitutionID
+
+WHERE 1097_db_iemr.t_bencall.BeneficiaryRegID IS NOT NULL
+AND 1097_db_iemr.t_bencall.BenCallID BETWEEN 1 AND 10000
+order by 1097_db_iemr.t_bencall.BenCallID ASC;
+
+
+-- 1) 1097_db_iemr.t_bencall.BenCallID BETWEEN 1 AND 10000 -- 1776 -- done
+-- 2) 1097_db_iemr.t_bencall.BenCallID BETWEEN 10001 AND 20000 -- 1677 -- done
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--- bayer
+
+SELECT i_ben_mapping.BenRegId AS MappingBenRegId, i_ben_details.BeneficiaryRegID, 
+CAST(i_ben_mapping.CreatedDate AS DATE),i_ben_details.FirstName,i_ben_details.MiddleName,
+i_ben_details.LastName,i_ben_details.Gender,
+IF(i_ben_details.DOB IS NOT NULL, DATE_FORMAT(i_ben_details.DOB, '%Y-01-01'), NULL) AS DOB,
+i_ben_mapping.VanID,i_ben_details.SexualOrientationType,i_ben_address.PermStateId,i_ben_address.PermState,
+i_ben_address.PermDistrictId,i_ben_address.PermDistrict,i_ben_address.PermSubDistrictId,
+i_ben_address.PermSubDistrict
+FROM i_beneficiarymapping i_ben_mapping 
+left JOIN i_beneficiarydetails i_ben_details ON i_ben_details.BeneficiaryDetailsId = i_ben_mapping.BenDetailsId
+left JOIN i_beneficiaryaddress i_ben_address ON i_ben_address.BenAddressID = i_ben_mapping.BenAddressId
+
+WHERE i_ben_mapping.BenRegId IS NOT NULL 
+AND i_ben_address.PermStateId IS NOT NULL
+AND i_ben_address.PermDistrictId IS NOT NULL
+AND i_ben_address.PermSubDistrictId IS NOT NULL -- -- 98009
+
+
+
+
+--- bayer final query -- 29/02/2024
+SELECT bayer_db_identity.i_ben_mapping.BenRegId AS MappingBenRegId, bayer_db_identity.i_ben_details.BeneficiaryRegID, 
+CAST(bayer_db_identity.i_ben_mapping.CreatedDate AS DATE),
+bayer_db_identity.i_ben_details.FirstName,
+bayer_db_identity.i_ben_details.MiddleName,
+bayer_db_identity.i_ben_details.LastName,bayer_db_identity.i_ben_details.Gender,
+
+IF(bayer_db_identity.i_ben_details.DOB IS NOT NULL, DATE_FORMAT(bayer_db_identity.i_ben_details.DOB, '%Y-01-01'), NULL) AS DOB,
+
+bayer_db_identity.i_ben_mapping.VanID,
+bayer_db_identity.i_ben_address.PermStateId,bayer_db_identity.i_ben_address.PermState,
+bayer_db_identity.i_ben_address.PermDistrictId,
+bayer_db_identity.i_ben_address.PermDistrict,
+bayer_db_identity.i_ben_address.PermSubDistrictId,
+bayer_db_identity.i_ben_address.PermSubDistrict,
+sp.ServiceProviderName As Project,mp.ProviderServiceMapID,
+bayerVan.VanID,bayerVan.VanName,bayerFacility.FacilityName
+
+FROM bayer_db_identity.i_beneficiarymapping i_ben_mapping
+
+left JOIN bayer_db_identity.i_beneficiarydetails i_ben_details ON 
+i_ben_details.BeneficiaryDetailsId = i_ben_mapping.BenDetailsId
+left JOIN bayer_db_identity.i_beneficiaryaddress i_ben_address 
+ON bayer_db_identity.i_ben_address.BenAddressID = i_ben_mapping.BenAddressId
+
+inner join bayer_db_iemr.m_van bayerVan ON  bayerVan.VanID = bayer_db_identity.i_ben_mapping.VanID
+inner join bayer_db_iemr.m_facility bayerFacility on bayerVan.FacilityID = bayerFacility.FacilityID
+inner join bayer_db_iemr.m_providerservicemapping mp on mp.ProviderServiceMapID = bayerVan.ProviderServiceMapID
+inner join bayer_db_iemr.m_serviceprovider sp on mp.ServiceProviderID = sp.ServiceProviderID
+
+
+WHERE i_ben_mapping.BenRegId IS NOT NULL 
+AND i_ben_address.PermStateId IS NOT NULL
+AND i_ben_address.PermDistrictId IS NOT NULL
+AND i_ben_address.PermSubDistrictId IS NOT NULL
+AND bayerVan.ProviderServiceMapID = 1; -- 98007
+
+
+--- bayer final query -- 29/02/2024 for DHIS2 TEA registration
+SELECT bayer_db_identity.i_ben_mapping.BenRegId AS MappingBenRegId,
+bayer_db_identity.i_ben_details.BeneficiaryRegID, 
+CAST(bayer_db_identity.i_ben_mapping.CreatedDate AS DATE) AS EnrollmentDate,
+bayer_db_identity.i_ben_details.FirstName,bayer_db_identity.i_ben_details.MiddleName,
+bayer_db_identity.i_ben_details.LastName,bayer_db_identity.i_ben_details.Gender,
+IF(bayer_db_identity.i_ben_details.DOB IS NOT NULL, 
+DATE_FORMAT(bayer_db_identity.i_ben_details.DOB, '%Y-01-01'), NULL) AS DOB,
+bayerVan.VanID
+
+FROM bayer_db_identity.i_beneficiarymapping i_ben_mapping
+
+LEFT JOIN bayer_db_identity.i_beneficiarydetails i_ben_details ON 
+i_ben_details.BeneficiaryDetailsId = i_ben_mapping.BenDetailsId
+
+INNER JOIN bayer_db_iemr.m_van bayerVan ON  bayerVan.VanID = bayer_db_identity.i_ben_mapping.VanID
+
+WHERE i_ben_mapping.BenRegId IS NOT NULL AND bayerVan.ProviderServiceMapID = 1
+ORDER by MappingBenRegId ASC; -- 98007
+
+
+select sp.ServiceProviderName As Project,mp.ProviderServiceMapID,m.VanID,m.VanName,f.FacilityName from m_van m
+inner join m_facility f on m.FacilityID=f.FacilityID
+inner join m_providerservicemapping mp on mp.ProviderServiceMapID=m.ProviderServiceMapID
+inner join m_serviceprovider sp on mp.ServiceProviderID=sp.ServiceProviderID
+where m.ProviderServiceMapID = 1
+
+
+
+-- bayer final event / TRANSACTION query -- 01/03/2024 for DHIS2 Event
+
+SELECT bayer_db_iemr.t_benvisitdetail.BenVisitID, bayer_db_iemr.t_benvisitdetail.BeneficiaryRegID,
+bayer_db_iemr.t_benvisitdetail.VisitNo,bayer_db_iemr.t_benvisitdetail.CreatedDate,
+
+ year(bayer_db_iemr.t_benvisitdetail.CreatedDate) - 
+ year(IF(i_ben_details.DOB IS NOT NULL, DATE_FORMAT(i_ben_details.DOB, '%Y-01-01'), NULL)) as AgeOnVisit,
+
+bayer_db_iemr.t_benvisitdetail.VisitReason,bayer_db_iemr.t_benvisitdetail.VisitCategory,
+
+bayer_db_iemr.t_benvisitdetail.RCHID,
+anc.HighRiskCondition,anc.ComplicationOfCurrentPregnancy,pnc.ProvisionalDiagnosis,
+ncd.NCD_Condition,phy.SystolicBP_1stReading,phy.DiastolicBP_1stReading,tm.Status,
+patient.PrescriptionID,referal.referredToInstituteName,testorder.ProcedureName,
+
+prescription.DiagnosisProvided FROM bayer_db_iemr.t_benvisitdetail
+
+LEFT JOIN  bayer_db_identity.i_beneficiarymapping i_ben_mapping ON 
+i_ben_mapping.BenRegId = bayer_db_iemr.t_benvisitdetail.BeneficiaryRegID
+
+LEFT JOIN  bayer_db_identity.i_beneficiarydetails i_ben_details ON 
+i_ben_details.BeneficiaryDetailsId = i_ben_mapping.BenDetailsId
+
+LEFT JOIN bayer_db_iemr.t_ancdiagnosis anc on anc.BenVisitID=bayer_db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN bayer_db_iemr.t_pncdiagnosis pnc on pnc.BenVisitID=bayer_db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN bayer_db_iemr.t_ncddiagnosis ncd on ncd.BenVisitID=bayer_db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN bayer_db_iemr.t_phy_vitals phy on phy.BenVisitID=bayer_db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN bayer_db_iemr.t_tmrequest tm on tm.BenVisitID=bayer_db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN bayer_db_iemr.t_patientissue patient on patient.BenVisitID=bayer_db_iemr.t_benvisitdetail.BenVisitID
+
+LEFT JOIN bayer_db_iemr.t_benreferdetails referal ON referal.BenVisitID=bayer_db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN bayer_db_iemr.t_lab_testorder testorder ON testorder.BenVisitID=bayer_db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN bayer_db_iemr.t_prescription prescription ON prescription.BenVisitID=bayer_db_iemr.t_benvisitdetail.BenVisitID
+
+WHERE i_ben_mapping.VanID  IN 
+( SELECT VanID FROM bayer_db_iemr.m_van WHERE ProviderServiceMapID in (1));
+
+
+
+
+-- HWC registration data -- 05/03/2024 for DHIS2 TEI and enrollment
+SELECT gok_db_identity.i_ben_mapping.BenRegId AS MappingBenRegId,
+gok_db_identity.i_ben_details.BeneficiaryRegID, 
+CAST(gok_db_identity.i_ben_mapping.CreatedDate AS DATE) AS EnrollmentDate,
+gok_db_identity.i_ben_details.FirstName,gok_db_identity.i_ben_details.MiddleName,
+gok_db_identity.i_ben_details.LastName,gok_db_identity.i_ben_details.Gender,
+
+IF(gok_db_identity.i_ben_details.DOB IS NOT NULL, 
+DATE_FORMAT(gok_db_identity.i_ben_details.DOB, '%Y-01-01'), NULL) AS DOB,
+
+gok_db_identity.i_ben_mapping.VanID,gok_db_identity.i_ben_address.PermStateId,
+gok_db_identity.i_ben_address.PermState,gok_db_identity.i_ben_address.PermDistrictId,
+gok_db_identity.i_ben_address.PermDistrict,gok_db_identity.i_ben_address.PermSubDistrictId,
+gok_db_identity.i_ben_address.PermSubDistrict,i_ben_address.PermVillageId,i_ben_address.PermVillage
+
+FROM gok_db_identity.i_beneficiarymapping i_ben_mapping
+
+LEFT JOIN gok_db_identity.i_beneficiarydetails i_ben_details ON 
+i_ben_details.BeneficiaryDetailsId = i_ben_mapping.BenDetailsId
+
+LEFT JOIN gok_db_identity.i_beneficiaryaddress i_ben_address 
+ON gok_db_identity.i_ben_address.BenAddressID = i_ben_mapping.BenAddressId
+
+WHERE i_ben_mapping.BenRegId IS NOT NULL AND i_ben_address.PermStateId IS NOT NULL
+AND i_ben_address.PermDistrictId IS NOT NULL AND i_ben_address.PermSubDistrictId IS NOT NULL
+ORDER by MappingBenRegId ASC; 
+
+
+
+-- HWC event / TRANSACTION query -- 05/03/2024 for DHIS2 Event
+
+select count(*) from gok_db_iemr.t_benvisitdetail; -- 4347
+
+SELECT gok_db_iemr.t_benvisitdetail.BenVisitID, gok_db_iemr.t_benvisitdetail.BeneficiaryRegID,
+gok_db_iemr.t_benvisitdetail.VisitNo,gok_db_iemr.t_benvisitdetail.CreatedDate,
+
+ year(gok_db_iemr.t_benvisitdetail.CreatedDate) - 
+ year(IF(i_ben_details.DOB IS NOT NULL, DATE_FORMAT(i_ben_details.DOB, '%Y-01-01'), NULL)) as AgeOnVisit,
+
+gok_db_iemr.t_benvisitdetail.VisitReason,gok_db_iemr.t_benvisitdetail.VisitCategory,
+
+gok_db_iemr.t_benvisitdetail.RCHID,
+anc.HighRiskCondition,anc.ComplicationOfCurrentPregnancy,pnc.ProvisionalDiagnosis,
+ncd.NCD_Condition,phy.SystolicBP_1stReading,phy.DiastolicBP_1stReading,tm.Status,
+patient.PrescriptionID,referal.referredToInstituteName,testorder.ProcedureName,
+
+prescription.DiagnosisProvided FROM gok_db_iemr.t_benvisitdetail
+
+LEFT JOIN  gok_db_identity.i_beneficiarymapping i_ben_mapping ON 
+i_ben_mapping.BenRegId = gok_db_iemr.t_benvisitdetail.BeneficiaryRegID
+
+LEFT JOIN  gok_db_identity.i_beneficiarydetails i_ben_details ON 
+i_ben_details.BeneficiaryDetailsId = i_ben_mapping.BenDetailsId
+
+LEFT JOIN gok_db_iemr.t_ancdiagnosis anc on anc.BenVisitID=gok_db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN gok_db_iemr.t_pncdiagnosis pnc on pnc.BenVisitID=gok_db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN gok_db_iemr.t_ncddiagnosis ncd on ncd.BenVisitID=gok_db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN gok_db_iemr.t_phy_vitals phy on phy.BenVisitID=gok_db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN gok_db_iemr.t_tmrequest tm on tm.BenVisitID=gok_db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN gok_db_iemr.t_patientissue patient on patient.BenVisitID=gok_db_iemr.t_benvisitdetail.BenVisitID
+
+LEFT JOIN gok_db_iemr.t_benreferdetails referal ON referal.BenVisitID=gok_db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN gok_db_iemr.t_lab_testorder testorder ON testorder.BenVisitID=gok_db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN gok_db_iemr.t_prescription prescription ON prescription.BenVisitID=gok_db_iemr.t_benvisitdetail.BenVisitID
+order by BenVisitID asc; -- 4760
+
+
+-- HWC registration data shared by venkat 06/03/2024
+SELECT beneficiaryregidmapping.BeneficiaryID,gok_db_identity.i_ben_mapping.BenRegId AS MappingBenRegId,
+gok_db_identity.i_ben_details.BeneficiaryRegID,
+CAST(gok_db_identity.i_ben_mapping.CreatedDate AS DATE) AS EnrollmentDate,
+gok_db_identity.i_ben_details.FirstName,
+gok_db_identity.i_ben_details.MiddleName,
+gok_db_identity.i_ben_details.LastName,
+gok_db_identity.i_ben_details.Gender,
+IF(gok_db_identity.i_ben_details.DOB IS NOT NULL,
+DATE_FORMAT(gok_db_identity.i_ben_details.DOB, '%Y-01-01'), NULL) AS DOB,
+gok_db_identity.i_ben_mapping.VanID,gok_db_identity.i_ben_address.PermStateId,
+gok_db_identity.i_ben_address.PermState,gok_db_identity.i_ben_address.PermDistrictId,
+gok_db_identity.i_ben_address.PermDistrict,gok_db_identity.i_ben_address.PermSubDistrictId,
+gok_db_identity.i_ben_address.PermSubDistrict,
+dm.DistrictBranchID AS registration_facility_id, dm.VillageName AS registration_facility
+
+-- i_ben_address.PermVillageId,i_ben_address.PermVillage
+
+FROM gok_db_identity.i_beneficiarymapping i_ben_mapping
+
+left join gok_db_identity.m_beneficiaryregidmapping beneficiaryregidmapping  ON
+beneficiaryregidmapping.BenRegId = i_ben_mapping.BenRegId
+
+LEFT JOIN gok_db_identity.i_beneficiarydetails i_ben_details ON
+i_ben_details.BeneficiaryDetailsId = i_ben_mapping.BenDetailsId
+
+LEFT JOIN gok_db_identity.i_beneficiaryaddress i_ben_address
+ON gok_db_identity.i_ben_address.BenAddressID = i_ben_mapping.BenAddressId
+left join gok_db_iemr.m_user m on i_ben_mapping.CreatedBy=m.UserName
+left join gok_db_iemr.t_usermastervillagemapping mv on mv.user_id=m.UserID
+left join gok_db_iemr.m_districtbranchmapping dm on dm.DistrictBranchID=mv.masterVillage_id
+WHERE i_ben_mapping.BenRegId IS NOT NULL AND i_ben_address.PermStateId IS NOT NULL
+AND i_ben_address.PermDistrictId IS NOT NULL AND i_ben_address.PermSubDistrictId IS NOT NULL
+ORDER by MappingBenRegId ASC;
+
+
+-- HWC event data 07/03/2024
+SELECT gok_db_iemr.t_benvisitdetail.BenVisitID, gok_db_iemr.t_benvisitdetail.BeneficiaryRegID,
+gok_db_iemr.t_benvisitdetail.VisitNo,gok_db_iemr.t_benvisitdetail.CreatedDate,
+
+ year(gok_db_iemr.t_benvisitdetail.CreatedDate) - 
+ year(IF(i_ben_details.DOB IS NOT NULL, DATE_FORMAT(i_ben_details.DOB, '%Y-01-01'), NULL)) as AgeOnVisit,
+
+gok_db_iemr.t_benvisitdetail.VisitReason,gok_db_iemr.t_benvisitdetail.VisitCategory,
+
+-- gok_db_iemr.t_benvisitdetail.RCHID,
+anc.HighRiskCondition,anc.ComplicationOfCurrentPregnancy, pnc.ProvisionalDiagnosis,ncd.NCD_Condition,
+phy.SystolicBP_1stReading,phy.DiastolicBP_1stReading,tm.Status,
+
+patient.PrescriptionID,referal.referredToInstituteName,testorder.ProcedureName,
+
+prescription.DiagnosisProvided FROM gok_db_iemr.t_benvisitdetail
+
+LEFT JOIN  gok_db_identity.i_beneficiarymapping i_ben_mapping ON 
+i_ben_mapping.BenRegId = gok_db_iemr.t_benvisitdetail.BeneficiaryRegID
+
+LEFT JOIN  gok_db_identity.i_beneficiarydetails i_ben_details ON 
+i_ben_details.BeneficiaryDetailsId = i_ben_mapping.BenDetailsId
+
+LEFT JOIN gok_db_iemr.t_ancdiagnosis anc on anc.BenVisitID=gok_db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN gok_db_iemr.t_pncdiagnosis pnc on pnc.BenVisitID=gok_db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN gok_db_iemr.t_ncddiagnosis ncd on ncd.BenVisitID=gok_db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN gok_db_iemr.t_phy_vitals phy on phy.BenVisitID=gok_db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN gok_db_iemr.t_tmrequest tm on tm.BenVisitID=gok_db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN gok_db_iemr.t_patientissue patient on patient.BenVisitID=gok_db_iemr.t_benvisitdetail.BenVisitID
+
+LEFT JOIN gok_db_iemr.t_benreferdetails referal ON referal.BenVisitID=gok_db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN gok_db_iemr.t_lab_testorder testorder ON testorder.BenVisitID=gok_db_iemr.t_benvisitdetail.BenVisitID
+LEFT JOIN gok_db_iemr.t_prescription prescription ON prescription.BenVisitID=gok_db_iemr.t_benvisitdetail.BenVisitID
+order by BenVisitID asc; -- 4760
+
+select * from gok_db_iemr.t_infantbirthdetails ti limit 1000; -- no records
+select * from gok_db_iemr.t_femaleobstetrichistory tf limit 1000; -- no records
+select * from gok_db_iemr.t_ancdiagnosis ta; -- no records
+select * from gok_db_iemr.t_phy_vitals tpv -- 4324
+
+
+-- STFC registration/demographic query shared by venkat as on 07/03/2024
+
+SELECT mb.BeneficiaryID,i_ben_mapping.BenRegId AS mappingBenRegId, i_ben_details.BeneficiaryRegID,
+i_ben_details.FirstName,i_ben_details.MiddleName,i_ben_details.LastName,i_ben_details.Gender,
+YEAR(i_ben_details.DOB),IF(i_ben_details.DOB IS NOT NULL,
+DATE_FORMAT(i_ben_details.DOB, '%Y-01-01'), NULL) AS DOB,
+i_ben_mapping.VanID, i_ben_mapping.CreatedDate,CAST(i_ben_mapping.CreatedDate AS DATE),
+i_ben_address.PermState,i_ben_address.PermStateId,i_ben_address.PermDistrict,
+i_ben_address.PermDistrictId,i_ben_address.PermSubDistrictId,
+i_ben_address.PermVillageId,i_ben_address.PermVillage
+
+FROM stfc_db_identity.i_beneficiarymapping i_ben_mapping
+
+INNER join stfc_db_identity.m_beneficiaryregidmapping mb on mb.BenRegId=i_ben_mapping.BenRegId
+
+INNER JOIN stfc_db_identity.i_beneficiarydetails i_ben_details ON 
+i_ben_details.BeneficiaryDetailsId = i_ben_mapping.BenDetailsId
+
+INNER JOIN stfc_db_identity.i_beneficiaryaddress i_ben_address ON 
+i_ben_address.BenAddressID = i_ben_mapping.BenAddressId
+
+WHERE i_ben_mapping.BenRegId IS NOT NULL 
+AND i_ben_address.PermStateId IS NOT NULL
+AND i_ben_address.PermDistrictId IS NOT NULL 
+AND i_ben_address.PermSubDistrictId IS NOT NULL; -- 717,782
+
+
+

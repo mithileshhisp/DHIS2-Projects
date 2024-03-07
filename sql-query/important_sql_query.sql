@@ -1,4 +1,30 @@
 
+-- for myanmar event instance issue in add tracker-program -- 28/02/2024
+
+1) alter table program_attributes 
+alter column programattributeid  DROP NOT NULL;
+
+2) alter table program_attributes DROP constraint
+fk_program_attributeid;
+
+3) alter table program_attributes DROP constraint
+program_attributes_pkey CASCADE;
+
+4) alter table program_attributes add constraint
+program_attributes_pkey primary key(programtrackedentityattributeid);
+
+5) ALTER TABLE program_attributes
+ADD CONSTRAINT fk_program_attributeid
+FOREIGN KEY (trackedentityattributeid) 
+REFERENCES trackedentityattribute (trackedentityattributeid);
+
+6) ALTER TABLE programtrackedentityattributegroupmembers
+ADD CONSTRAINT fk_programtrackedentityattributegroupmembers_attributeid
+FOREIGN KEY (programtrackedentityattributeid) 
+REFERENCES program_attributes (programtrackedentityattributeid);
+
+
+
 -- AMR Varanasi 31/08/2023 delete Favorites created before 22/08/2023
 
 delete from visualization_categorydimensions
@@ -878,6 +904,68 @@ left JOIN organisationunit ou3 ON ou3.uid = _orgunitstructure.uidlevel3
 left JOIN organisationunit ou4 ON ou4.uid = _orgunitstructure.uidlevel4
 where level < 5
 order by level;
+
+
+-- optionValue with attribueValue
+
+select ops.uid optionsetUID, ops.name optionsetName, opv.uid optionUID, opv.name optionName, 
+opv.code optionCode,opv.optionvalueid optionvalueID, opv.sort_order,cast(optionAttribute.value::json ->> 'value' AS VARCHAR) 
+AS villageID from optionvalue opv 
+JOIN json_each_text(opv.attributevalues::json) optionAttribute ON TRUE 
+INNER JOIN optionset ops ON ops.optionsetid = opv.optionsetid
+INNER JOIN attribute attr ON attr.uid = optionAttribute.key
+where ops.uid = 'p6fHp8sI0gA' and attr.uid = 'RDZKbFFn7EL' order by ops.name;
+
+
+
+-- optionValue with attribueValue
+
+select ops.uid optionsetUID, ops.name optionsetName, opv.uid optionUID, opv.name optionName, 
+opv.code optionCode,opv.optionvalueid optionvalueID, opv.sort_order,cast(optionAttribute.value::json ->> 'value' AS VARCHAR) 
+AS villageID from optionvalue opv 
+JOIN json_each_text(opv.attributevalues::json) optionAttribute ON TRUE 
+INNER JOIN optionset ops ON ops.optionsetid = opv.optionsetid
+INNER JOIN attribute attr ON attr.uid = optionAttribute.key
+where ops.uid = 'p6fHp8sI0gA' and attr.uid = 'RDZKbFFn7EL' order by ops.name;
+
+-- organisationunit with attribueValue
+select orgunit.organisationunitid, orgunit.uid,orgunit.name,
+cast(orgUnitAttribute.value::json ->> 'value' AS VARCHAR) 
+from organisationunit orgunit 
+JOIN json_each_text(orgunit.attributevalues::json) orgUnitAttribute ON TRUE 
+INNER JOIN attribute attr ON attr.uid = orgUnitAttribute.key
+where attr.uid = 'l38VgCtdLFD' and orgunit.hierarchylevel = 4;
+
+SELECT orgGrpMember.organisationunitid,orgunitgrp.orgunitgroupid, 
+orgunitgrp.uid,orgunitgrp.name,
+cast(orgUnitAttribute.value::json ->> 'value' AS VARCHAR) 
+from orgunitgroup orgunitgrp 
+JOIN json_each_text(orgunitgrp.attributevalues::json) orgUnitAttribute ON TRUE 
+INNER JOIN attribute attr ON attr.uid = orgUnitAttribute.key
+INNER JOIN orgunitgroupmembers orgGrpMember ON orggrpmember.orgunitgroupid = orgunitgrp.orgunitgroupid
+where attr.code = 'XMLName';
+
+-- for VanID
+select orgunit.organisationunitid, orgunit.uid,orgunit.name,
+cast(orgUnitAttribute.value::json ->> 'value' AS VARCHAR) 
+from organisationunit orgunit 
+JOIN json_each_text(orgunit.attributevalues::json) orgUnitAttribute ON TRUE 
+INNER JOIN attribute attr ON attr.uid = orgUnitAttribute.key
+where attr.uid = 'EnxzhgiA5ra' and orgunit.hierarchylevel = 4;
+
+
+-- program with attribueValue
+select prg.uid, prg.name,
+cast(prgUnitAttribute.value::json ->> 'value' AS VARCHAR) 
+from program prg 
+JOIN json_each_text(prg.attributevalues::json) prgUnitAttribute ON TRUE 
+INNER JOIN attribute attr ON attr.uid = prgUnitAttribute.key
+where attr.uid = 'DdKElwiJ3pQ';
+
+
+
+
+
 
 
 -- user import query
@@ -2200,6 +2288,11 @@ INNER JOIN optionset ops ON ops.optionsetid = opv.optionsetid
 where ops.uid = 'cjuiUdHB366' order by ops.name;
 
 
+select ops.uid optionsetUID, ops.name optionsetName, opv.uid optionUID, opv.name optionName, 
+opv.code optionCode, opv.sort_order from optionvalue opv 
+INNER JOIN optionset ops ON ops.optionsetid = opv.optionsetid
+order by ops.name, opv.sort_order;
+
 -- optionValue with attribueValue
 
 select ops.uid optionsetUID, ops.name optionsetName, opv.uid optionUID, opv.name optionName, 
@@ -2218,6 +2311,15 @@ JOIN json_each_text(orgunit.attributevalues::json) orgUnitAttribute ON TRUE
 INNER JOIN attribute attr ON attr.uid = orgUnitAttribute.key
 where attr.uid = 'l38VgCtdLFD' and orgunit.hierarchylevel = 4;
 
+-- organisationunitGrp with attribueValue
+SELECT orgGrpMember.organisationunitid,orgunitgrp.orgunitgroupid, 
+orgunitgrp.uid,orgunitgrp.name,
+cast(orgUnitAttribute.value::json ->> 'value' AS VARCHAR) 
+from orgunitgroup orgunitgrp 
+JOIN json_each_text(orgunitgrp.attributevalues::json) orgUnitAttribute ON TRUE 
+INNER JOIN attribute attr ON attr.uid = orgUnitAttribute.key
+INNER JOIN orgunitgroupmembers orgGrpMember ON orggrpmember.orgunitgroupid = orgunitgrp.orgunitgroupid
+where attr.code = 'XMLName';
 
  -- who_leprosy reporting rate query
 
@@ -2671,7 +2773,13 @@ SELECT dataelement.dataelementid,dataelement.uid,
 dataelement.name, de_translation.value,de_translation.locale,de_translation.property
 FROM dataelement, jsonb_to_recordset(dataelement.translations) 
 AS de_translation(value TEXT, locale TEXT, property TEXT)
-WHERE de_translation.locale = 'my' and de_translation.property in( 'NAME','FORM_NAME');
+WHERE de_translation.locale = 'my' and de_translation.property in( 'NAME','FORM_NAME','SHORT_NAME','DESCRIPTION');
+
+SELECT dataelement.dataelementid,dataelement.uid,
+dataelement.name, de_translation.value,de_translation.locale,de_translation.property
+FROM dataelement, jsonb_to_recordset(dataelement.translations) 
+AS de_translation(value TEXT, locale TEXT, property TEXT)
+WHERE de_translation.property in( 'NAME','FORM_NAME','SHORT_NAME','DESCRIPTION');
 
 
 SELECT *
@@ -2786,6 +2894,36 @@ INNER JOIN program prg ON prg.programid = pi.programid
 INNER JOIN dataelement de ON de.uid = data.key
 where prg.uid = 'qlHnTeSDOfP' order by psi.programstageinstanceid;
 
+-- for myanmar mis eventDataValue for multiple dataelements
+
+SELECT tei.uid AS teiUID, psi.uid eventID,psi.executiondate::date,
+data.key as de_uid_year,cast(data.value::json ->> 'value' AS VARCHAR) AS year,
+data2.key as de_uid_month,cast(data2.value::json ->> 'value' AS VARCHAR) AS month
+FROM programstageinstance psi
+left JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN dataelement de ON de.uid = data.key
+left JOIN json_each_text(psi.eventdatavalues::json) data2 ON TRUE 
+INNER JOIN dataelement de2 ON de2.uid = data2.key
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+where de.uid = 'mHmqOLqzXB2' and de2.uid = 'n3Bkq0yjIa7' and 
+psi.executiondate::date between '2023-02-02' and '2023-12-31';
+
+SELECT tei.uid AS teiUID, psi.uid eventID,psi.executiondate::date,
+data.key as de_uid_year,cast(data.value::json ->> 'value' AS VARCHAR) AS year,
+data2.key as de_uid_month,cast(data2.value::json ->> 'value' AS VARCHAR) AS month
+FROM programstageinstance psi
+left JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN dataelement de ON de.uid = data.key
+left JOIN json_each_text(psi.eventdatavalues::json) data2 ON TRUE 
+INNER JOIN dataelement de2 ON de2.uid = data2.key
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+where de.uid = 'mHmqOLqzXB2' and de2.uid = 'n3Bkq0yjIa7' and 
+cast(data.value::json ->> 'value' AS VARCHAR) = '2023'
+and cast(data2.value::json ->> 'value' AS VARCHAR) = 'February';
 
 -- eventdatavalue based on dataelement value and uid
 
@@ -4093,6 +4231,14 @@ where psi.completeddate <= current_date - interval '7 day' and psi.status = 'COM
 
 select usi.surname,usi.firstname,us.username,us.lastlogin::date from userinfo usi
 INNER JOIN users us ON us.userid = usi.userinfoid
+
+-- plan query
+
+select teav.value,tei.uid teiUID,pi.uid enrollmentUID from trackedentityattributevalue teav
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+where teav.trackedentityattributeid = 1831210;
+
 
 SELECT psi.programstageinstanceid, psi.executiondate::date, pi.trackedentityinstanceid, teav.value, us.username,usinfo.email from programstageinstance psi
 INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid

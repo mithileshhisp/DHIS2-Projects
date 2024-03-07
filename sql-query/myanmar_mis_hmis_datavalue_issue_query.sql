@@ -3,6 +3,62 @@ SELECT pg_size_pretty( pg_database_size('myanmar_hmis_233_21_09_2021') );
 
 pg_dump -U hmis -d hmis_v234 -T analytics* > C:\Users\HISP\Desktop\msf_updated_db.sql
 
+-- for myanmar mis eventDataValue for multiple dataelements
+
+SELECT tei.uid AS teiUID, psi.uid eventID,psi.executiondate::date,
+data.key as de_uid_year,cast(data.value::json ->> 'value' AS VARCHAR) AS year,
+data2.key as de_uid_month,cast(data2.value::json ->> 'value' AS VARCHAR) AS month
+FROM programstageinstance psi
+left JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN dataelement de ON de.uid = data.key
+left JOIN json_each_text(psi.eventdatavalues::json) data2 ON TRUE 
+INNER JOIN dataelement de2 ON de2.uid = data2.key
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+where de.uid = 'mHmqOLqzXB2' and de2.uid = 'n3Bkq0yjIa7' and 
+psi.executiondate::date between '2023-02-02' and '2023-12-31';
+
+
+SELECT tei.uid AS teiUID, psi.uid eventID,psi.executiondate::date,
+data.key as de_uid_year,cast(data.value::json ->> 'value' AS VARCHAR) AS year,
+data2.key as de_uid_month,cast(data2.value::json ->> 'value' AS VARCHAR) AS month
+FROM programstageinstance psi
+left JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN dataelement de ON de.uid = data.key
+left JOIN json_each_text(psi.eventdatavalues::json) data2 ON TRUE 
+INNER JOIN dataelement de2 ON de2.uid = data2.key
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+where de.uid = 'mHmqOLqzXB2' and de2.uid = 'n3Bkq0yjIa7' and 
+cast(data.value::json ->> 'value' AS VARCHAR) = '2023'
+and cast(data2.value::json ->> 'value' AS VARCHAR) = 'February';
+
+
+-- for myanmar event instance issue in add tracker-program 28/02/2024
+
+1) alter table program_attributes 
+alter column programattributeid  DROP NOT NULL;
+
+2) alter table program_attributes DROP constraint
+fk_program_attributeid;
+
+3) alter table program_attributes DROP constraint
+program_attributes_pkey CASCADE;
+
+4) alter table program_attributes add constraint
+program_attributes_pkey primary key(programtrackedentityattributeid);
+
+5) ALTER TABLE program_attributes
+ADD CONSTRAINT fk_program_attributeid
+FOREIGN KEY (trackedentityattributeid) 
+REFERENCES trackedentityattribute (trackedentityattributeid);
+
+6) ALTER TABLE programtrackedentityattributegroupmembers
+ADD CONSTRAINT fk_programtrackedentityattributegroupmembers_attributeid
+FOREIGN KEY (programtrackedentityattributeid) 
+REFERENCES program_attributes (programtrackedentityattributeid);
 
 -- 26/05/2023  upgrade HMIS from 2.33 to 2.39
 

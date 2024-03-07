@@ -7,6 +7,56 @@
  
  
  
+-- 07/02/2024 mizoram ipa organisationunit delete query
+
+
+delete from completedatasetregistration where 
+sourceid in (1496867,1680809);
+
+delete from datasetsource where 
+sourceid in (1496867,1680809);
+
+delete from datavalue where 
+sourceid in (1496867,1680809);
+
+delete from program_organisationunits where 
+organisationunitid in (1496867,1680809);
+
+delete from trackedentitydatavalueaudit where programstageinstanceid
+in ( select programstageinstanceid from programstageinstance where 
+organisationunitid in (1496867,1680809));
+
+delete from programstageinstance where 
+organisationunitid in (1496867,1680809);
+
+delete from programinstance where 
+organisationunitid in (1496867,1680809);
+
+delete from trackedentityattributevalue where trackedentityinstanceid
+in ( select trackedentityinstanceid from trackedentityinstance where 
+organisationunitid in (1496867,1680809));
+
+delete from trackedentityprogramowner where trackedentityinstanceid
+in ( select trackedentityinstanceid from trackedentityinstance where 
+organisationunitid in (1496867,1680809));
+
+delete from trackedentityattributevalueaudit where trackedentityinstanceid
+in ( select trackedentityinstanceid from trackedentityinstance where 
+organisationunitid in (1496867,1680809));
+
+delete from trackedentityinstance where 
+organisationunitid in (1496867,1680809);
+
+delete from userdatavieworgunits where 
+organisationunitid in (1496867,1680809);
+
+delete from usermembership where 
+organisationunitid in (1496867,1680809);
+
+delete from organisationunit where 
+organisationunitid in (1496867,1680809);
+ 
+ 
 -- 29/09/2023 mizoram ipa file type event datavalue with file uid query
 
 select * from fileresource where uid = 'uOehOZNFO4w';
@@ -1221,6 +1271,28 @@ in ( select programstageinstanceid from programstageinstance where uid = 'psJdeG
 
 -- ipa production
 
+-- 03/01/2023
+
+select * from datasetelement where datasetid in (
+select datasetid from dataset where uid = 'ZdblNStbgIA');
+
+select * from datavalue where dataelementid in (
+select dataelementid from 
+datasetelement where datasetid in (
+select datasetid from dataset where uid = 'ZdblNStbgIA'));
+
+select * from datavalueaudit where dataelementid in (
+select dataelementid from 
+datasetelement where datasetid in (
+select datasetid from dataset where uid = 'ZdblNStbgIA'));
+
+update dataelement set zeroissignificant = true
+where dataelementid in (select dataelementid from 
+datasetelement where datasetid in (
+select datasetid from dataset where uid = 'ZdblNStbgIA') );
+
+
+
 select * from datavalue where dataelementid in (
 select dataelementid from dataelement where 
 uid in( 'wLKGbYJXIKt', 'UjFfCQfJuti','gi6F0xlOeeX'));
@@ -1834,3 +1906,34 @@ order by psi.executiondate DESC LIMIT 1;
 
 -- mithilesh.thakur@hispindia.org -- PSI TOP (Tamwe)
 -- mithilesh.hisp@gmail.com -- Latha STD Team 
+
+
+
+
+-- for myanmar event/hmis instance issue in add tracker-program -- 28/02/2024
+
+1) alter table program_attributes 
+alter column programattributeid  DROP NOT NULL;
+
+2) alter table program_attributes DROP constraint
+fk_program_attributeid;
+
+3) alter table program_attributes DROP constraint
+program_attributes_pkey CASCADE;
+
+4) alter table program_attributes add constraint
+program_attributes_pkey primary key(programtrackedentityattributeid);
+
+5) ALTER TABLE program_attributes
+ADD CONSTRAINT fk_program_attributeid
+FOREIGN KEY (trackedentityattributeid) 
+REFERENCES trackedentityattribute (trackedentityattributeid);
+
+6) ALTER TABLE programtrackedentityattributegroupmembers
+ADD CONSTRAINT fk_programtrackedentityattributegroupmembers_attributeid
+FOREIGN KEY (programtrackedentityattributeid) 
+REFERENCES program_attributes (programtrackedentityattributeid);
+
+
+
+

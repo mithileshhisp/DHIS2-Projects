@@ -5,6 +5,43 @@
 
 -- https://me.yesdigital.org/yesdigital/api/system/id.csv?limit=105
 
+-- update event stage
+
+SELECT psi.uid eventID,psi.executiondate::date,
+psi.programstageid,
+data.key as de_uid,cast(data.value::json ->> 'value' AS VARCHAR) AS  value
+FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN dataelement de ON de.uid = data.key
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+where de.uid = 'fNWzHtHMGQF' and cast(data.value::json ->> 'value' AS VARCHAR)
+= 'Before the training';
+
+select * from programstage where uid = 'rWWV04XQYQZ'
+
+select * from programstage where programstageid = 1839037;
+
+select * from programstage where uid = 'oOgGAI0dXr0'
+
+select * from programstage where programstageid = 1876450;
+
+select * from programstage where programstageid = 1874986;
+
+
+="update programstageinstance set programstageid  = "&C2&" where uid = '"&A2&"';"
+
+
+
+-- trackedentityattributevalue 14/02/2024
+
+select teav.value,tei.uid teiUID,pi.uid enrollmentUID from trackedentityattributevalue teav
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+where teav.trackedentityattributeid = 1831210;
+
+
+
 select programstagedataelementid, uid, created, lastupdated, programstageid, dataelementid, 
 compulsory, allowprovidedelsewhere, sort_order, displayinreports, allowfuturedate, 
 renderoptionsasradio, skipsynchronization, rendertype from 

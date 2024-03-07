@@ -12,7 +12,8 @@
  -- sudo /etc/init.d/postgresql restart
  
  -- 9199990989
- 
+
+-- ls -ltrh
 -- eventDataValue update dataElement-value
  
 pg_dump -U dhis -d piramal_240 -T analytics* > /home/mithilesh/piramal_240_12Dec2023.sql 
@@ -30,6 +31,55 @@ pg_dump -U dhis -d unfpa_239 -T analytics*  > /home/mithilesh/unfpa_239_18Sept20
 pg_dump -U dhis -d unfpa_239 -T analytics*  > /home/mithilesh/unfpa_239_19Sept2023_backup.sql
 
 pg_dump -U dhis -d malaria_timor_v236 -T analytics*  > /home/mithilesh/malaria_timor_v236_backup_16Nov2023.sql
+ 
+ 
+pg_dump -U dhis  -d hiv_tracker_238_26102022 -t program_attribute_group > /home/mithilesh/program_attribute_group.sql
+
+pg_dump -U dhis2-user  -d mizoramipa_238 -T analytics* > /home/dbadmin/mizoramipa_238_07Feb2024.sql
+
+
+ 
+-- all tables list with sizes
+
+SELECT pg_size_pretty( pg_database_size('dhis2_Training') );
+
+-- table size 
+
+SELECT pg_size_pretty (pg_total_relation_size (' programinstanceaudit '));
+select pg_relation_size('dataelement');
+
+select pg_relation_size('audit');
+SELECT pg_size_pretty (pg_total_relation_size (' audit '));
+
+SELECT
+    relname AS "tables",
+    pg_size_pretty (
+        pg_total_relation_size (X .oid)
+    ) AS "size"
+FROM
+    pg_class X
+LEFT JOIN pg_namespace Y ON (Y.oid = X .relnamespace)
+WHERE
+    nspname NOT IN (
+        'pg_catalog',
+        'information_schema'
+    )
+AND X .relkind <> 'i'
+AND nspname !~ '^pg_toast'
+ORDER BY
+    pg_total_relation_size (X .oid) desc
+LIMIT 10; 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
 UPDATE programstageinstance SET 
 eventdatavalues = jsonb_set(eventdatavalues,'{FmDPRFXrMaG, value}', '"2021-08-17T20:53:08.000Z"',true) 
@@ -358,6 +408,16 @@ ST_AsText(the_geom) FROM table2;
 
 -- all tables list with sizes
 
+SELECT pg_size_pretty( pg_database_size('dhis2_Training') );
+
+-- table size 
+
+SELECT pg_size_pretty (pg_total_relation_size (' programinstanceaudit '));
+select pg_relation_size('dataelement');
+
+select pg_relation_size('audit');
+SELECT pg_size_pretty (pg_total_relation_size (' audit '));
+
 SELECT
     relname AS "tables",
     pg_size_pretty (
@@ -575,3 +635,58 @@ programstageinstanceid = 14830837;
 
 select table_name from information_schema.tables 
 where table_name like 'analytics%' and table_type = 'BASE TABLE'; 
+
+
+-- for myanmar event instance issue in add tracker-program -- 28/02/2024
+
+1) alter table program_attributes 
+alter column programattributeid  DROP NOT NULL;
+
+2) alter table program_attributes DROP constraint
+fk_program_attributeid;
+
+3) alter table program_attributes DROP constraint
+program_attributes_pkey CASCADE;
+
+4) alter table program_attributes add constraint
+program_attributes_pkey primary key(programtrackedentityattributeid);
+
+5) ALTER TABLE program_attributes
+ADD CONSTRAINT fk_program_attributeid
+FOREIGN KEY (trackedentityattributeid) 
+REFERENCES trackedentityattribute (trackedentityattributeid);
+
+6) ALTER TABLE programtrackedentityattributegroupmembers
+ADD CONSTRAINT fk_programtrackedentityattributegroupmembers_attributeid
+FOREIGN KEY (programtrackedentityattributeid) 
+REFERENCES program_attributes (programtrackedentityattributeid);
+
+
+SELECT dataelement.dataelementid,dataelement.uid,
+dataelement.name, de_translation.value,de_translation.locale,de_translation.property
+FROM dataelement, jsonb_to_recordset(dataelement.translations) 
+AS de_translation(value TEXT, locale TEXT, property TEXT)
+WHERE de_translation.locale = 'my' and de_translation.property = 'NAME';
+
+
+SELECT dataelement.dataelementid,dataelement.uid,
+dataelement.name, de_translation.value,de_translation.locale,de_translation.property
+FROM dataelement, jsonb_to_recordset(dataelement.translations) 
+AS de_translation(value TEXT, locale TEXT, property TEXT)
+WHERE de_translation.locale = 'my' and de_translation.property in( 'NAME','FORM_NAME','SHORT_NAME','DESCRIPTION');
+
+SELECT dataelement.dataelementid,dataelement.uid,
+dataelement.name, de_translation.value,de_translation.locale,de_translation.property
+FROM dataelement, jsonb_to_recordset(dataelement.translations) 
+AS de_translation(value TEXT, locale TEXT, property TEXT)
+WHERE de_translation.property in( 'NAME','FORM_NAME','SHORT_NAME','DESCRIPTION');
+
+
+SELECT *
+FROM 
+  dataelement, 
+  jsonb_to_recordset(dataelement.translations) AS specs(value TEXT, locale TEXT,property TEXT)
+WHERE 
+  specs.locale = 'my'
+  
+SELECT * from jsonb_array_elements('[{"a":"apple", "b":"biscuit"}]');

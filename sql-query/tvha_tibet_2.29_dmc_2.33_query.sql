@@ -330,6 +330,19 @@ delete from userkeyjsonvalue where namespace = 'trackerCaptureGridColumns'
 and userid in ( select userid from users where username 
 in ('newggsnagar','ggsnagar','harkrishanagar','preetnagar'));
 
+-- 09/01/2024
+select * from usersetting where userinfoid in ( select userid from users where username in 
+( 'newggsnagar' ) );
+
+delete from usersetting where userinfoid in ( select userid from users where username in 
+( 'newggsnagar' ) );
+
+select * from userkeyjsonvalue where namespace = 'trackerCaptureGridColumns'
+and userid in ( select userid from users where username in ( 'newggsnagar'));
+
+delete from userkeyjsonvalue where namespace = 'trackerCaptureGridColumns'
+and userid in ( select userid from users where username in ( 'newggsnagar'));
+
 
 -- issue related to soft delete of TEI,enrollment,events
 delete from programinstance where deleted is true;

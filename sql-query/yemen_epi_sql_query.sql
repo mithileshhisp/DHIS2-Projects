@@ -16,6 +16,53 @@ psql -U postgres yemen_epi_234_11_08_2023 <
 pg_dump -U postgres -d yemen_epi_234_11_08_2023 > "C:\Users\Mithilesh Thakur\Desktop\yemen_epi_239_11Aug2023.sql"
 
 
+
+-- as on 04/03/2024 analytics issue in nutration instance
+
+SELECT psi.uid eventID,psi.executiondate::date,psi.duedate::date,
+data.key as de_uid,de.valuetype,de.name,cast(data.value::json ->> 'value' AS VARCHAR) AS dataValue
+FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN dataelement de ON de.uid = data.key
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+where cast(data.value::json ->> 'value' AS VARCHAR) like '000%' order by 
+psi.created desc;
+
+select * from trackedentityattributevalue where
+trackedentityattributeid in( 9694 ) 
+and value in ( '0001-08-18','0003-03-14','0001-06-04','0004-08-03') and
+trackedentityinstanceid in ( select trackedentityinstanceid
+from programinstance where 
+programid in ( select programid from program where uid = 'm6OaZSquWeu'))
+order by created desc;
+
+select * from trackedentityattributevalue where
+trackedentityattributeid in( 9698 ) 
+and
+trackedentityinstanceid in ( select trackedentityinstanceid
+from programinstance where 
+programid in ( select programid from program where uid = 'm6OaZSquWeu'))
+order by created desc;
+
+
+select * from trackedentityattributevalue where 
+trackedentityinstanceid in ( 2375,2374,2367,510);
+
+
+select * from trackedentityattributevalue where 
+trackedentityattributeid in( 9694 ) and trackedentityinstanceid
+in ( 2375,2374,2367,510);
+
+delete from trackedentityattributevalue where 
+trackedentityattributeid in( 9698 ) and trackedentityinstanceid
+in ( 9121,8633,5939 );
+
+trackedentityattributeid=9695
+
+
+
+
 select * from periodtype 
 where name = 'QuarterlyNov';
 

@@ -1,4 +1,32 @@
 
+-- 29/01/2024
+
+
+-- delete TEI query 
+begin;
+delete from trackedentityattributevalue where 
+trackedentityinstanceid in ( 5184372,5184371 );
+
+delete from trackedentitydatavalueaudit where programstageinstanceid
+in ( select programstageinstanceid from programstageinstance where programinstanceid in (
+select programinstanceid from programinstance where 
+trackedentityinstanceid in ( 5184372,5184371 )));
+
+delete from programstageinstance where programinstanceid in (
+select programinstanceid from programinstance where 
+trackedentityinstanceid in ( 5184372,5184371 ));
+
+delete from programinstance where 
+trackedentityinstanceid in ( 5184372,5184371 );
+
+delete from trackedentityprogramowner where 
+trackedentityinstanceid in ( 5184372,5184371 );
+
+delete from trackedentityinstance where 
+trackedentityinstanceid in ( 5184372,5184371 );
+end;
+
+
 -- 14/03/2023
 -- postgres SQL Query alter the database sequence id
 

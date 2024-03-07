@@ -1,10 +1,26 @@
 
--- 16/11/2023
+-- 16/11/2023 09/01/2023 production
 
 --Bhutan - HMIS -- upgrade // 24/11/2023
---upgrade from 2.34 to 2.40
+--upgrade from 2.34 to 40.2.0
 -- soft delete issue
 delete from trackedentityinstance where deleted = true;
+
+delete from trackedentityinstance where deleted = true;
+
+delete from trackedentityprogramowner
+where trackedentityinstanceid in ( select trackedentityinstanceid
+from trackedentityinstance where deleted = true);
+
+delete from trackedentityattributevalueaudit
+where trackedentityinstanceid in ( select trackedentityinstanceid
+from trackedentityinstance where deleted = true);
+
+delete from programownershiphistory
+where trackedentityinstanceid in ( select trackedentityinstanceid
+from trackedentityinstance where deleted = true);
+
+
 
 delete from relationshipitem where
 trackedentityinstanceid in ( select trackedentityinstanceid
@@ -30,6 +46,15 @@ delete from audit;
 
 -- option set load issues
 
+="update optionvalue set sort_order  = "&C2&" where optionvalueid = "&A2&" and uid = '"&B2&"';"
+
+="update optionvalue set sort_order  = "&F2&" where uid = '"&C2&"';"
+
+select ops.uid optionsetUID, ops.name optionsetName, opv.uid optionUID, opv.name optionName, 
+opv.code optionCode, opv.sort_order from optionvalue opv 
+INNER JOIN optionset ops ON ops.optionsetid = opv.optionsetid
+order by ops.name, opv.sort_order;
+
 select * from optionset where uid = 'NYukub0yItZ';	
 
 select * from optionvalue where optionsetid in (
@@ -53,6 +78,15 @@ update optionvalue set sort_order = 3 where optionvalueid = 4105708;
 
 select username, count( username ) from users
 group by username having count( username ) > 1;
+
+
+SELECT 	ui.userinfoid, us.userid, ui.firstname, ui.surname, us.username, 
+us.uid, org.name from userinfo ui
+INNER JOIN users us ON us.userid = ui.userinfoid
+INNER JOIN usermembership um ON um.userinfoid = ui.userinfoid
+inner join organisationunit org ON org.organisationunitid = um.organisationunitid
+
+
 
 delete from userrolemembers where userid in (
 select userid from users where username in('Tshering_LT',
@@ -674,3 +708,17 @@ and userid in ( select userid from users where username in ( 'PantangBHU'));
 delete from userkeyjsonvalue where namespace = 'trackerCaptureGridColumns'
 and userid in ( select userid from users where username in ( 'PantangBHU'));
 
+
+-- 21/12/2023 run on production
+
+select * from usersetting where userinfoid in ( select userid from users where username in 
+( 'GhishingmaSP' ) );
+
+delete from usersetting where userinfoid in ( select userid from users where username in 
+( 'GhishingmaSP' ) );
+
+select * from userkeyjsonvalue where namespace = 'trackerCaptureGridColumns'
+and userid in ( select userid from users where username in ( 'GhishingmaSP'));
+
+delete from userkeyjsonvalue where namespace = 'trackerCaptureGridColumns'
+and userid in ( select userid from users where username in ( 'GhishingmaSP'));
