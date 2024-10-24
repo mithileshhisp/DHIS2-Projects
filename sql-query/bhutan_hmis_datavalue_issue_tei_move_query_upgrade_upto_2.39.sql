@@ -1,3 +1,73 @@
+-- 28/08/2024 bhutan hmis eventDataValue
+
+SELECT psi.uid eventID,psi.executiondate::date, -- data.key as de_uid,
+--cast(data.value::json ->> 'value' AS VARCHAR) AS de_value, 
+prg.uid AS prgUID,--de.name AS dataElementName, 
+teav.value AS MCH_Number, 
+org.uid AS orgUnitUID, org.name AS orgUnitName FROM programstageinstance psi 
+--JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = pi.organisationunitid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+--INNER JOIN dataelement de ON de.uid = data.key
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+where prg.uid = 'ZknH1Y5o3xA' and ps.uid = 'NtXvo6awGak' 
+and teav.trackedentityattributeid = 140223;
+
+
+SELECT psi.uid eventID, data.key as de_uid,
+cast(data.value::json ->> 'value' AS VARCHAR) AS de_value, 
+de.name AS dataElementName FROM programstageinstance psi 
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = pi.organisationunitid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN dataelement de ON de.uid = data.key
+--INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+where prg.uid = 'ZknH1Y5o3xA' and ps.uid = 'NtXvo6awGak' 
+--and teav.trackedentityattributeid = 140223
+and de.uid = 'lee2S6lyX83';
+
+
+SELECT psi.uid eventID,psi.executiondate::date, -- data.key as de_uid,
+--cast(data.value::json ->> 'value' AS VARCHAR) AS de_value, 
+ps.name AS stage_name,--de.name AS dataElementName, 
+teav.value AS MCH_Number, 
+org.uid AS orgUnitUID, org.name AS orgUnitName FROM programstageinstance psi 
+--JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = pi.organisationunitid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+--INNER JOIN dataelement de ON de.uid = data.key
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+where prg.uid = 'ZknH1Y5o3xA' and ps.uid = 'YklkL7cQ6DX' 
+and teav.trackedentityattributeid = 140223;
+
+SELECT psi.uid eventID, data.key as de_uid,
+cast(data.value::json ->> 'value' AS VARCHAR) AS de_value, 
+de.name AS dataElementName FROM programstageinstance psi 
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = pi.organisationunitid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN dataelement de ON de.uid = data.key
+--INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+where prg.uid = 'ZknH1Y5o3xA' and ps.uid = 'YklkL7cQ6DX' 
+--and teav.trackedentityattributeid = 140223
+and de.uid = 'AA2NhokDH60';
+
+
+
+
+
+
+
+
+
 
 -- 16/11/2023 09/01/2023 production
 

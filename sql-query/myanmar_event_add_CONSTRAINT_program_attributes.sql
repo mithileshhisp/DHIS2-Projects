@@ -1,19 +1,19 @@
 begin;
 
 -- 1) 
-alter table program_attributes 
-alter column programattributeid  DROP NOT NULL;
+ALTER TABLE program_attributes
+DROP CONSTRAINT programattributeid;
 
 -- 2) 
-alter table program_attributes DROP constraint
+ALTER TABLE program_attributes DROP constraint
 fk_program_attributeid;
 
 -- 3) 
-alter table program_attributes DROP constraint
+ALTER TABLE program_attributes DROP constraint
 program_attributes_pkey CASCADE;
 
 -- 4) 
-alter table program_attributes add constraint
+ALTER TABLE program_attributes add constraint
 program_attributes_pkey primary key(programtrackedentityattributeid);
 
 -- 5) 

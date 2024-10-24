@@ -36,29 +36,61 @@ cast(data.value::json ->> 'value' AS VARCHAR) = '2023'
 and cast(data2.value::json ->> 'value' AS VARCHAR) = 'February';
 
 
+SELECT tei.uid AS teiUID, psi.uid eventID,psi.executiondate::date,
+data.key as de_uid_year,cast(data.value::json ->> 'value' AS VARCHAR) AS year,
+data2.key as de_uid_month,cast(data2.value::json ->> 'value' AS VARCHAR) AS month,
+data3.key as de_uid_dataValue,cast(data3.value::json ->> 'value' AS VARCHAR) AS dataValue,
+org.uid as orgUid
+FROM programstageinstance psi
+left JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN dataelement de ON de.uid = data.key
+left JOIN json_each_text(psi.eventdatavalues::json) data2 ON TRUE 
+left JOIN json_each_text(psi.eventdatavalues::json) data3 ON TRUE
+INNER JOIN dataelement de2 ON de2.uid = data2.key
+INNER JOIN dataelement de3 ON de3.uid = data3.key
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+where org.path like '%adrQhkl8JMT%' and de.uid = 'mHmqOLqzXB2' and de2.uid = 'n3Bkq0yjIa7' 
+and de3.uid = 'miJVU316ClU'
+and cast(data.value::json ->> 'value' AS VARCHAR) = '2023'
+and cast(data2.value::json ->> 'value' AS VARCHAR) = 'February'
+and cast(data3.value::json ->> 'value' AS VARCHAR) = 'ICMV_V';
+
+
 -- for myanmar event instance issue in add tracker-program 28/02/2024
 
-1) alter table program_attributes 
-alter column programattributeid  DROP NOT NULL;
+-- 1) 
+ALTER TABLE program_attributes
+DROP CONSTRAINT programattributeid;
 
-2) alter table program_attributes DROP constraint
+-- 2) 
+ALTER TABLE program_attributes DROP constraint
 fk_program_attributeid;
 
-3) alter table program_attributes DROP constraint
+-- 3) 
+ALTER TABLE program_attributes DROP constraint
 program_attributes_pkey CASCADE;
 
-4) alter table program_attributes add constraint
+-- 4) 
+ALTER TABLE program_attributes add constraint
 program_attributes_pkey primary key(programtrackedentityattributeid);
 
-5) ALTER TABLE program_attributes
+-- 5) 
+ALTER TABLE program_attributes
 ADD CONSTRAINT fk_program_attributeid
 FOREIGN KEY (trackedentityattributeid) 
 REFERENCES trackedentityattribute (trackedentityattributeid);
 
-6) ALTER TABLE programtrackedentityattributegroupmembers
+-- 6) 
+ALTER TABLE programtrackedentityattributegroupmembers
 ADD CONSTRAINT fk_programtrackedentityattributegroupmembers_attributeid
 FOREIGN KEY (programtrackedentityattributeid) 
 REFERENCES program_attributes (programtrackedentityattributeid);
+
+7) alter table program_attributes 
+alter column programattributeid drop not null;
 
 -- 26/05/2023  upgrade HMIS from 2.33 to 2.39
 

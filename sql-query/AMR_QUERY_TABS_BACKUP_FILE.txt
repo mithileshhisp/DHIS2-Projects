@@ -1,0 +1,175 @@
+**********************************************Varansi Table Queure Query Testing*****************************************************************
+
+1. All Tab (WKhh3qxwcPW) -- AMRNEWDATAVIEW
+
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID, 
+psi.eventdatavalues as datavalues, psi.created as created, psi.executiondate as eventDate
+from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and psi.executiondate >  CURRENT_DATE - INTERVAL '2 months' order by psi.executiondate desc
+
+
+2.Pending sample result(lfsarXAW9j6) -- test pending result
+
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID,
+psi.eventdatavalues as datavalues, psi.created as created, 
+psi.executiondate as eventDate from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and 
+psi.executiondate >  CURRENT_DATE - INTERVAL '2 months' 
+and  psi.eventdatavalues -> 'u8VDCIwa3w4' is null
+order by psi.executiondate desc;
+
+
+// query updated by Shashikant 01/04/2024
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID,
+psi.eventdatavalues as datavalues, psi.created as created, 
+psi.executiondate as eventDate from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  
+and  psi.eventdatavalues -> 'u8VDCIwa3w4' is null AND prg.uid = 'L7bu48EI54J'
+order by psi.executiondate desc;
+
+
+3.Pending antibiotics result(kTBQ3hlAV57)
+
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID,
+psi.eventdatavalues as datavalues, psi.created as created, 
+psi.executiondate as eventDate, psi.status,prg.name from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and 
+psi.executiondate >  CURRENT_DATE - INTERVAL '2 months' 
+and psi.status  =  'ACTIVE' AND prg.uid != 'L7bu48EI54J'
+order by psi.executiondate desc;
+
+4.Antibiotics result received(Sth0MdRyPKd)
+
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID,
+psi.eventdatavalues as datavalues, psi.created as created, 
+psi.executiondate as eventDate, psi.status,prg.name from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and 
+psi.executiondate >  CURRENT_DATE - INTERVAL '2 months' 
+ and psi.status = 'COMPLETED' AND prg.uid != 'L7bu48EI54J'
+order by psi.executiondate desc;
+
+5.Sterile/NA samples(umLlwbUhDv1)
+
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID,
+psi.eventdatavalues as datavalues, psi.created as created, 
+psi.executiondate as eventDate from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and 
+psi.executiondate >  CURRENT_DATE - INTERVAL '2 months' 
+and  psi.eventdatavalues -> 'u8VDCIwa3w4' is not null
+and eventdatavalues -> 'u8VDCIwa3w4' ->> 'value' in ( 'Sterile', 'Contamination')
+order by psi.executiondate desc;
+
+
+*********************************************Tanda Testing Query for Tabs*****************************************************************
+
+1.All Records(WKhh3qxwcPW) AMRNEWDATAVIEW
+
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID, 
+psi.eventdatavalues as datavalues, psi.created as created, psi.executiondate as eventDate
+from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false and psi.executiondate >  CURRENT_DATE - INTERVAL '2 months'  order by psi.executiondate desc,psi.created desc
+
+2.Pending sample result(o2ZZkMpPeo9)
+
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID, 
+psi.eventdatavalues as datavalues, psi.created as created, psi.executiondate as eventDate
+from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false and psi.executiondate >  CURRENT_DATE - INTERVAL '2 months' 
+and  psi.eventdatavalues -> 'u8VDCIwa3w4' is null
+ order by psi.executiondate desc,psi.created desc
+
+3.Pending antibiotics result(kzbj6fGrZpo)
+
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID, 
+psi.eventdatavalues as datavalues, psi.created as created, psi.executiondate as eventDate
+from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false and psi.executiondate >  CURRENT_DATE - INTERVAL '2 months' 
+and  psi.eventdatavalues -> 'u8VDCIwa3w4' is not null
+and eventdatavalues -> 'u8VDCIwa3w4' ->> 'value' in ( 'Detected' ) and psi.status = 'ACTIVE'
+ order by psi.executiondate desc,psi.created desc
+
+4.Antibiotics result received(p8zO3tV8Eyp)
+
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID, 
+psi.eventdatavalues as datavalues, psi.created as created, psi.executiondate as eventDate, psi.status
+from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false and psi.executiondate >  CURRENT_DATE - INTERVAL '2 months'
+and  psi.eventdatavalues -> 'u8VDCIwa3w4' is not null
+and eventdatavalues -> 'u8VDCIwa3w4' ->> 'value' in ( 'Detected' ) and psi.status = 'COMPLETED'
+  order by psi.executiondate desc,psi.created desc
+
+5.Sterile/NA samples(yoGVsIdextO)
+
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID, 
+psi.eventdatavalues as datavalues, psi.created as created, psi.executiondate as eventDate
+from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false and psi.executiondate >  CURRENT_DATE - INTERVAL '2 months' 
+and  psi.eventdatavalues -> 'u8VDCIwa3w4' is not null
+and eventdatavalues -> 'u8VDCIwa3w4' ->> 'value' in ( 'Sterile','Insignificant Growth','Commensals','Growth of contaminants' )
+order by psi.executiondate desc,psi.created desc
+
+
+*********************************************equityamr Query for Tabs*****************************************************************
+
+https://amrin.hispindia.org/equityamr
+
+1.All Records(WKhh3qxwcPW) -- AMRNEWDATAVIEW
+
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID, 
+psi.eventdatavalues as datavalues, psi.created as created, psi.executiondate as eventDate
+from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false and psi.executiondate >  CURRENT_DATE - INTERVAL '2 months'  order by psi.executiondate desc,psi.created desc
+
+
+
+
+
+

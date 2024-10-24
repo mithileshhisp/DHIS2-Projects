@@ -415,6 +415,23 @@ let thirdString = customEnrollmentDate;
 let fourthString = $scope.finalTEICount;
 $scope.generatedCustomId =  firstString+ "/" + secondString + "/" + thirdString + "/" + fourthString;
 
+-- ippf custom id generation pstc ippf bangladesh -- 17/10/2024 2.38
+
+update sqlview set uid = 'CLFhvw5bXhl' where 
+uid = 'n5eJ12KzW8I' -- name -- TEI Count on OrgUnit Program and Enrollment Date
+
+select * from trackedentityattribute
+
+update trackedentityattribute set uid = 'Jn6YH8KIKpg'
+where uid = 'i2L6kx524M1'; -- Unique Identification Number (UID) code -- custom_id
+
+update trackedentityattribute set uid = 'tsBbDQe3sGo'
+where uid = 'uovHj0OZnGj'; -- Client Name / name/
+
+
+
+
+
 -- ippf fpanpro delete default COC
 
 
@@ -470,3 +487,126 @@ set userid = 45
 
 update dataelement 
 set lastupdatedby = 45
+
+
+-- 25/06/2024
+
+select * from dataelement where domaintype = 'TRACKER';
+
+update dataelement set publicaccess = 'rw------'
+where domaintype = 'TRACKER';
+
+-- 20/08/2024 -- delete default datavalue
+
+select * from datavalue where periodid in ( select periodid
+from period where periodtypeid =3 and startdate = '2024-06-01')
+and sourceid in( select organisationunitid from organisationunit
+where uid = 'lwomjryU8Ci') and categoryoptioncomboid = 15 
+and dataelementid in ( select dataelementid
+from dataelement where uid in ( 'r6Jlq4shCIk','o4OoZ7umqCO'
+'z662hSC2T9z','NcPUoeDdIbe','UAjWgfrv56R','XCjU1G2782I',
+'iR5p5Nkoeof','q9UINjgsfTR'));
+
+
+select * from datavalue where periodid in ( select periodid
+from period where periodtypeid =3 and startdate = '2024-06-01')
+and sourceid in( select organisationunitid from organisationunit
+where uid = 'lwomjryU8Ci')
+and dataelementid in ( select dataelementid
+from dataelement where uid in ( 'r6Jlq4shCIk','o4OoZ7umqCO'
+'z662hSC2T9z','NcPUoeDdIbe','UAjWgfrv56R','XCjU1G2782I',
+'iR5p5Nkoeof','q9UINjgsfTR'));
+
+
+
+delete from datavalue where periodid in ( select periodid
+from period where periodtypeid =3 and startdate = '2024-06-01')
+and sourceid in( select organisationunitid from organisationunit
+where uid = 'lwomjryU8Ci') and categoryoptioncomboid = 15 
+and dataelementid in ( select dataelementid
+from dataelement where uid in ( 'r6Jlq4shCIk','o4OoZ7umqCO'
+'z662hSC2T9z','NcPUoeDdIbe','UAjWgfrv56R','XCjU1G2782I',
+'iR5p5Nkoeof','q9UINjgsfTR'));
+
+-- 22/08/2024
+
+select * from datavalue where periodid in ( select periodid
+from period where periodtypeid =3 and startdate = '2024-06-01')
+and sourceid in( select organisationunitid from organisationunit
+where uid = 'lwomjryU8Ci')
+and dataelementid in ( select dataelementid
+from dataelement where uid in ( 'z662hSC2T9z'));
+
+delete from datavalue where periodid in ( select periodid
+from period where periodtypeid =3 and startdate = '2024-06-01')
+and sourceid in( select organisationunitid from organisationunit
+where uid = 'lwomjryU8Ci')
+and dataelementid in ( select dataelementid
+from dataelement where uid in ( 'z662hSC2T9z'));
+
+
+-- 20/09/2024
+
+select * from datavalue where periodid in ( select periodid
+from period where periodtypeid =3 and startdate = '2024-06-01')
+and sourceid in( select organisationunitid from organisationunit
+where uid = 'BjwgoW6wCFF')
+and dataelementid in ( select dataelementid
+from dataelement where uid in ( 'r6Jlq4shCIk','z662hSC2T9z','UAjWgfrv56R'))
+and categoryoptioncomboid = 15;
+
+delete from datavalue where periodid in ( select periodid
+from period where periodtypeid =3 and startdate = '2024-06-01')
+and sourceid in( select organisationunitid from organisationunit
+where uid = 'BjwgoW6wCFF')
+and dataelementid in ( select dataelementid
+from dataelement where uid in ( 'r6Jlq4shCIk','z662hSC2T9z','UAjWgfrv56R'))
+and categoryoptioncomboid = 15;
+
+select * from datavalue where periodid in ( select periodid
+from period where periodtypeid =3 and startdate in('2024-05-01', '2024-06-01'))
+and sourceid in( select organisationunitid from organisationunit
+where uid = 'fBysiAZ2odm')
+and dataelementid in ( select dataelementid
+from dataelement where uid in ( 'r6Jlq4shCIk','z662hSC2T9z','NcPUoeDdIbe','UAjWgfrv56R','XCjU1G2782I'))
+and categoryoptioncomboid = 15;
+
+delete from datavalue where periodid in ( select periodid
+from period where periodtypeid =3 and startdate in('2024-05-01', '2024-06-01'))
+and sourceid in( select organisationunitid from organisationunit
+where uid = 'fBysiAZ2odm')
+and dataelementid in ( select dataelementid
+from dataelement where uid in ( 'r6Jlq4shCIk','z662hSC2T9z','NcPUoeDdIbe','UAjWgfrv56R','XCjU1G2782I'))
+and categoryoptioncomboid = 15;
+
+select * from datavalue where periodid in ( select periodid
+from period where periodtypeid =3 and startdate = '2024-02-01')
+and sourceid in( select organisationunitid from organisationunit
+where uid = 'OD0Jvpl8YwZ')
+and dataelementid in ( select dataelementid
+from dataelement where uid in ( 'r6Jlq4shCIk','z662hSC2T9z','UAjWgfrv56R','NcPUoeDdIbe',''))
+and categoryoptioncomboid = 15;
+
+delete from datavalue where periodid in ( select periodid
+from period where periodtypeid =3 and startdate = '2024-02-01')
+and sourceid in( select organisationunitid from organisationunit
+where uid = 'OD0Jvpl8YwZ')
+and dataelementid in ( select dataelementid
+from dataelement where uid in ( 'r6Jlq4shCIk','z662hSC2T9z','UAjWgfrv56R','NcPUoeDdIbe',''))
+and categoryoptioncomboid = 15;
+
+select * from datavalue where periodid in ( select periodid
+from period where periodtypeid =3 and startdate = '2024-04-01')
+and sourceid in( select organisationunitid from organisationunit
+where uid = 'YRkMteX1TGw')
+and dataelementid in ( select dataelementid
+from dataelement where uid in ( 'r6Jlq4shCIk','NcPUoeDdIbe','UAjWgfrv56R'))
+and categoryoptioncomboid = 15;
+
+delete from datavalue where periodid in ( select periodid
+from period where periodtypeid =3 and startdate = '2024-04-01')
+and sourceid in( select organisationunitid from organisationunit
+where uid = 'YRkMteX1TGw')
+and dataelementid in ( select dataelementid
+from dataelement where uid in ( 'r6Jlq4shCIk','NcPUoeDdIbe','UAjWgfrv56R'))
+and categoryoptioncomboid = 15;

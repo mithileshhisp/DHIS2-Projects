@@ -1,5 +1,64 @@
 
 
+-- 05/04/2023
+
+--delete program satge from leprosy_pilot( tracker )
+
+delete from programruleaction where programstagesectionid in
+( select programstagesectionid from programstagesection where programstageid 
+in ( 14316, 14918 ));
+
+delete from programstagesection_dataelements where programstagesectionid in
+( select programstagesectionid from programstagesection where programstageid 
+in ( 14316, 14918 ));
+
+delete from programstagesection where programstageid 
+in ( 14316, 14918 );
+
+delete from programstagedataelement where programstageid 
+in ( 14316, 14918 );
+
+delete from trackedentitydatavalueaudit where programstageinstanceid in
+( select programstageinstanceid from programstageinstance where programstageid 
+in ( 14316, 14918 ));
+
+delete from programstageinstance where programstageid 
+in ( 14316, 14918 );
+
+
+
+
+
+
+-- as on 01/04/2024
+
+select name,uid from document;
+
+
+-- 2022 population data
+SELECT de.uid AS dataElementUID,coc.uid AS categoryOptionComboUID, org.uid AS organisationunitUID,
+org.name AS organisationunitName,dv.value, dv.storedby, CONCAT (split_part(pe.startdate::TEXT,'-', 1)) 
+as isoPeriod FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+inner join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+WHERE de.uid in ('d1d6EWQZJGB') 
+and pe.startdate >= '2022-01-01' and pe.enddate <= '2022-12-31'
+and dv.value is not null and dv.deleted = false order by pe.startdate;	
+
+-- 2022 child-population data
+SELECT de.uid AS dataElementUID,coc.uid AS categoryOptionComboUID, org.uid AS organisationunitUID,
+org.name AS organisationunitName,dv.value, dv.storedby, CONCAT (split_part(pe.startdate::TEXT,'-', 1)) 
+as isoPeriod FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+inner join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+WHERE de.uid in ('EnQPW5xZDPX') 
+and pe.startdate >= '2022-01-01' and pe.enddate <= '2022-12-31'
+and dv.value is not null and dv.deleted = false order by pe.startdate;
+
  -- yearly datavalue
  
 SELECT de.uid AS dataElementUID,coc.uid AS categoryOptionComboUID, org.uid AS organisationunitUID,
@@ -108,6 +167,41 @@ group by ous.namelevel2, ous.namelevel3 having sum(dv.value::int) = 0
 order by sum, ous.namelevel2, ous.namelevel3;
 
 
+-- 12/08/2024
+-- New_cases_GHO_PB_Cases_GLP_MB_Cases_GLP_Unclassified_Cases_GLP_zeroValue -- bsUzDq9cjXB
+select ous.namelevel2, ous.namelevel3, sum(dv.value::int) from datavalue dv
+inner join _orgunitstructure ous on ous.organisationunitid = dv.sourceid
+where dv.dataelementid in (select dataelementid from dataelement where uid in (
+'evXyDr6c7eu','gVmFx873rdZ','IQgrP2W9gTV','liZaznYiWwp' )) 
+and dv.periodid in ( select periodid from period 
+where startdate = '2019-01-01' and enddate = '2019-12-31') 
+group by ous.namelevel2, ous.namelevel3 having sum(dv.value::int) = 0
+order by sum, ous.namelevel2, ous.namelevel3;
+
+
+-- New_child_cases_GHO_PB_Cases_GLP_MB_Cases_GLP_Unclassified_Cases_GLP_zeroValue -- MUqYJP3HR3w
+select ous.namelevel2, ous.namelevel3, sum(dv.value::int) from datavalue dv
+inner join _orgunitstructure ous on ous.organisationunitid = dv.sourceid
+where dv.dataelementid in (select dataelementid from dataelement where uid in (
+'evXyDr6c7eu','gVmFx873rdZ','IQgrP2W9gTV','TBTHguhWty1' )) and dv.categoryoptioncomboid in (
+select categoryoptioncomboid from categoryoptioncombo where uid = 'ZZFiCRpT37i')
+and dv.periodid in ( select periodid from period 
+where startdate = '2019-01-01' and enddate = '2019-12-31') 
+group by ous.namelevel2, ous.namelevel3 having sum(dv.value::int) = 0
+order by sum, ous.namelevel2, ous.namelevel3;
+
+-- end 12/08/2024
+
+
+-- country_list
+SELECT os.organisationunitid,ou.name AS Global,ou1.name AS Region,ou2.name AS Country
+FROM  _orgunitstructure os
+INNER JOIN organisationunit ou ON ou.organisationunitid = os.organisationunitid
+INNER JOIN organisationunit ou1 ON ou1.organisationunitid = os.idlevel2
+INNER JOIN organisationunit ou2 ON ou2.organisationunitid = os.idlevel3
+ORDER BY Region,Country
+
+
 
 -- who new server setup 17/11/2023
 
@@ -141,3 +235,13 @@ https://www.sharepointdiary.com/2013/03/create-scheduled-task-for-powershell-scr
 https://community.dhis2.org/t/maintenanace-page-bad-characters/37061
 If that is set to windows-1252 (or anything except UTF-8/UTF8) then doing this in tomcat/bin/setenv.bat should do the trick:
 set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF8"
+
+-- 14/08/2024 dataValueAudit
+select * from datavalueaudit
+where created::date between '2023-08-01' and '2024-08-31';
+
+select de.name,org.name,audit.* from datavalueaudit audit
+INNER JOIN dataelement de ON de.dataelementid = audit.dataelementid
+inner JOIN organisationunit org ON org.organisationunitid = audit.organisationunitid
+where audit.created::date between '2023-08-01' and '2024-08-31'
+and audit.periodid =58530;

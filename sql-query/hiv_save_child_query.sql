@@ -448,7 +448,8 @@ Where tea.name='Fingerprint Id'
 group by tei.trackedentityinstanceid,teav.value
 order by cast(teav.value as Int ) desc
 
-
+-- ALL_TEI_DATA_URL
+-- https://tracker.hivaids.gov.np/save-child-2.27/api/29/sqlViews/NHCQz7jhFzk/data.json?paging=false
 -- for recognised finger-print query for all tei fingerprint-string and fingerprint-id for ALL_TEI_DATA_URL 
 
 SELECT teav1.value fingerPrintString, teav2.value fingerPrintId 
@@ -458,7 +459,8 @@ WHERE trackedentityattributeid = 28357  ) teav2
 ON teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
 WHERE teav1.trackedentityattributeid = 28358 order by teav1.trackedentityinstanceid desc;
 
-
+-- latest tei count for biometric SQL-view 
+-- https://tracker.hivaids.gov.np/save-child-2.27/api/sqlViews/qwqgxFygofx/data?paging=false
 
 -- tei count based on SEX and risk-group
 SELECT teav2.value sex , count( teav2.value)
@@ -509,6 +511,7 @@ WHERE teav1.trackedentityattributeid = 2619 and teav1.value ilike
 between '2022-01-01' and '2022-12-31' and org.path like '%cCTQiGkKcTk%'
 group by teav2.value,teav1.created::date;
 
+-- ALL_TEI_DATA_URL
 -- https://tracker.hivaids.gov.np/save-child-2.27/api/29/sqlViews/NHCQz7jhFzk/data.json?paging=false
 
 
@@ -811,6 +814,15 @@ INNER JOIN programmessage_phonenumbers prgmsg_phone ON prgmsg_phone.programmessa
 INNER JOIN users ur ON ur.userid = prgmsg.lastupdatedby;
 
 
+SELECT prgmsg.created, prgmsg.lastupdated, prgmsg.text, prgmsg.subject, 
+prgmsg.processeddate, prgmsg.messagestatus,
+prgmsg.trackedentityinstanceid,prgmsg.programinstanceid, prgmsg.programstageinstanceid, 
+prgmsg.lastupdatedby,ur.username, prgmsg_phone.phonenumber recevier_phone_number
+from programmessage prgmsg
+INNER JOIN programmessage_phonenumbers prgmsg_phone ON prgmsg_phone.programmessagephonenumberid = prgmsg.id
+INNER JOIN userinfo ur ON ur.userinfoid= prgmsg.lastupdatedby;
+
+
 select programmessagephonenumberid, phonenumber from 
 programmessage_phonenumbers;
 
@@ -1074,6 +1086,69 @@ WHERE dv.value is not null and de.uid in ( 'iZh9grkk98m','wuAHX0gKS8l','cy6AxDBf
 -- Clients currently on ART treatment (Other sex) -- GmgNmZqqmQh
 
 // 20230512152609
+
+
+{
+"httpStatus": "Conflict",
+"httpStatusCode": 409,
+"status": "ERROR",
+"message": "Query failed because a referenced table does not exist. Please ensure analytics job was run (SqlState: 42P01)",
+"devMessage": "SqlState: 42P01",
+"errorCode": "E7144"
+}
+
+{
+	"dataValues": [
+	{
+	"dataElement": "PFRK0hsXRDS",
+	"period": "2024",
+	"orgUnit": "cCTQiGkKcTk",
+	"value": "109.0",
+	"storedBy": "[aggregated]",
+	"created": "2024-04-02",
+	"lastUpdated": "2024-04-02",
+	"comment": "[aggregated]",
+	"followup": false
+	}
+  ]
+}
+
+{
+	"dataValues": [
+	{
+	"dataElement": "dyVaodqebsx",
+	"period": "202403",
+	"orgUnit": "cCTQiGkKcTk",
+	"value": "11806",
+	"storedBy": "[aggregated]",
+	"created": "2024-04-01",
+	"lastUpdated": "2024-04-01",
+	"comment": "[aggregated]"
+	},
+	{
+	"dataElement": "FT9oYMkFHQp",
+	"period": "202403",
+	"orgUnit": "cCTQiGkKcTk",
+	"value": "13361",
+	"storedBy": "[aggregated]",
+	"created": "2024-04-01",
+	"lastUpdated": "2024-04-01",
+	"comment": "[aggregated]"
+	},
+	{
+	"dataElement": "GmgNmZqqmQh",
+	"period": "202403",
+	"orgUnit": "cCTQiGkKcTk",
+	"value": "439.0",
+	"storedBy": "[aggregated]",
+	"created": "2024-04-01",
+	"lastUpdated": "2024-04-01",
+	"comment": "[aggregated]"
+	}
+  ]
+}
+
+
 // https://links.hispindia.org/hivtracker/api/32/analytics/dataValueSet.json?dimension=dx%3AdyVaodqebsx%3BFT9oYMkFHQp%3BGmgNmZqqmQh&dimension=ou%3AUSER_ORGUNIT&dimension=pe%3ATHIS_MONTH&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&aggregationType=LAST&completedOnly=false
 
 {
@@ -2323,3 +2398,219 @@ WHERE dv.value is not null and de.uid in ( 'iZh9grkk98m','wuAHX0gKS8l','cy6AxDBf
 -- GpiKTSMr9cT -- ART treatment initiated (female) during reporting period
 -- ks2XmKnTumm -- ART treatment initiated (male) during reporting period
 -- NgYO0OJ1oAG -- ART treatment initiated (other sex) during reporting period
+
+
+
+-- query for lost_to_follow_up new event creation through schedular 15/05/2024
+
+select * from programstage where uid = 'YRSdePjzzfs'
+
+SELECT tei.uid  as tei_uid,  psi.uid as event, psi.executiondate::date,  psi.status ,
+eventdatavalues -> 'WpBa1L6xxPC' ->> 'value' as art_status,
+extract (epoch from (CURRENT_DATE - cast(psi.executiondate AS timestamp)))::integer/86400 
+as dayDiffrence FROM programstageinstance psi
+INNER JOIN programinstance pi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN program prg ON pi.programid = prg.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN organisationunit org ON psi.organisationunitid = org .organisationunitid
+WHERE prg.uid = 'L78QzNqadTV' and psi.deleted is false and psi.programstageid = 2537 and
+eventdatavalues -> 'WpBa1L6xxPC' is not null  and 
+eventdatavalues -> 'WpBa1L6xxPC' ->> 'value' = 'lost_to_follow_up' 
+AND cast(psi.executiondate AS DATE) < CURRENT_DATE - interval '90 day' 
+order by psi.executiondate desc;
+
+
+SELECT tei.uid  as tei_uid,  psi.uid as event, psi.executiondate::date,  psi.status ,
+eventdatavalues -> 'WpBa1L6xxPC' ->> 'value' as art_status
+FROM programstageinstance psi
+INNER JOIN programinstance pi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN program prg ON pi.programid = prg.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN organisationunit org ON psi.organisationunitid = org .organisationunitid
+WHERE prg.uid = 'L78QzNqadTV' and psi.deleted is false and psi.programstageid = 2537 and
+eventdatavalues -> 'WpBa1L6xxPC' is not null  and 
+eventdatavalues -> 'WpBa1L6xxPC' ->> 'value' = 'missing' 
+order by psi.executiondate desc;
+
+-- distinct tei list with ART Follow-up stage and art_status value entered
+SELECT distinct(tei.uid ) as tei_uid
+FROM programstageinstance psi
+INNER JOIN programinstance pi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN program prg ON pi.programid = prg.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN organisationunit org ON psi.organisationunitid = org .organisationunitid
+WHERE prg.uid = 'L78QzNqadTV' and psi.deleted is false and psi.programstageid in (
+select programstageid from programstage where uid = 'YRSdePjzzfs') 
+AND psi.eventdatavalues -> 'WpBa1L6xxPC' is not null
+
+
+-- tei latest event with ART Follow-up stage and art_status value entered
+SELECT tei.uid as tei_uid,  psi.uid as event, psi.executiondate::date,  psi.status,
+psi.eventdatavalues -> 'WpBa1L6xxPC' ->> 'value' as art_status,org.uid as orgUnitUID,pi.uid as enrollment,
+extract (epoch from (CURRENT_DATE - cast(psi.executiondate AS timestamp)))::integer/86400 as dayDiffrence 
+FROM programstageinstance psi
+INNER JOIN programinstance pi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN program prg ON pi.programid = prg.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN organisationunit org ON psi.organisationunitid = org .organisationunitid
+WHERE prg.uid = 'L78QzNqadTV' and psi.deleted is false and psi.programstageid in (
+select programstageid from programstage where uid = 'YRSdePjzzfs') 
+AND psi.eventdatavalues -> 'WpBa1L6xxPC' is not null
+-- and eventdatavalues -> 'WpBa1L6xxPC' ->> 'value' = 'lost_to_follow_up' 
+-- and cast(psi.executiondate AS DATE) < CURRENT_DATE - interval '90 day' 
+and tei.uid = 'A05NyiJjsdI'
+ORDER BY psi.executiondate desc LIMIT 1;
+
+-- if dayDiffrence > 90 and art_status = 'lost_to_follow_up' then create new event with date event_date+ 90 days and value 'missing'
+
+select * from programstageinstance 
+order by created desc limit 100;
+
+
+CUSTOM_SMS_TASK:d.Z.t("Scheduled Custom SMS"),PUSH_TO_AGGREGATE_DATAELEMENT:d.Z.t("Push To Aggregate DataElement"),CREATE_MISSING_EVENT:d.Z.t("Create Missing ART Follow-up stage Event")
+"PUSH_TO_AGGREGATE_DATAELEMENT","CREATE_MISSING_EVENT",
+
+
+select *  from jobconfiguration where name in ('Custom SMS Task', 'Scheduled Custom SMS');
+select * from jobconfiguration where name = 'Push to Agg DataElement';
+select * from jobconfiguration where name = 'Create Missing ART Follow-up stage Event';
+
+-- v40 nepal_biometric server war file ( with server application )  local machine for testing finger-print dhis.config
+{"host":"localhost","port":8091,"dhisUrl":"http://localhost:8091/hiv","sqlViewID":"qwqgxFygofx","fingerprintStringAttribute":"uiOMHu4LtAP","fidAttribute":"UHoTGT1dtjj","program_hiv":"L78QzNqadTV","biometric_user_name":"admin","biometric_user_password":"District@1"}
+
+
+-- v40 nepal_biometric server war file ( with server application )  production machine finger-print dhis.config
+{"host":"tracker.hivaids.gov.np","port":443,"dhisUrl":"https://tracker.hivaids.gov.np/save-child-2.27","sqlViewID":"qwqgxFygofx","fingerprintStringAttribute":"uiOMHu4LtAP","fidAttribute":"UHoTGT1dtjj","program_hiv":"L78QzNqadTV","biometric_user_name":"admin","biometric_user_password":"District@1"}
+
+
+-- v40 nepal_biometric client-application for client local machine finger-print cdhis.config
+{"dhisUrl":"https://tracker.hivaids.gov.np/save-child-2.27","fingerprintUrl":"http://localhost:8080/NepalFingerprintServer","host":"tracker.hivaids.gov.np","port":443,"attribute_fid":"UHoTGT1dtjj","attribute_fid_code":"fingerprint_id","attribute_template":"uiOMHu4LtAP","attribute_template_code":"fingerprint_str","attrubute_client_code":"drKkLxaGFwv","program_hiv":"L78QzNqadTV"}
+
+-- v40 nepal_biometric client-application for client personal testing finger-print cdhis.config
+{"dhisUrl":"http://localhost:8091/hiv","fingerprintUrl":"http://localhost:8091/NepalFingerprintServer","host":"localhost","port":8091,"attribute_fid":"UHoTGT1dtjj","attribute_fid_code":"fingerprint_id","attribute_template":"uiOMHu4LtAP","attribute_template_code":"fingerprint_str","attrubute_client_code":"drKkLxaGFwv","program_hiv":"L78QzNqadTV"}
+
+
+-- run query on production 14/06/2024
+
+select * from optionset where uid = 'n4l2MwOLWL4';
+
+select * from optionvalue where optionsetid = 4726768 
+order by name;
+
+update optionvalue set sort_order = 1 where optionvalueid = 4726369;
+update optionvalue set sort_order = 2 where optionvalueid = 4726704;
+
+update optionvalue set sort_order = 1 where optionvalueid = 4725452;
+update optionvalue set sort_order = 2 where optionvalueid = 4725488;
+
+update optionvalue set sort_order = 1 where optionvalueid = 4725123;
+update optionvalue set sort_order = 2 where optionvalueid = 4726188;
+
+update optionvalue set sort_order = 1 where optionvalueid = 4726419;
+update optionvalue set sort_order = 2 where optionvalueid = 4726415;
+update optionvalue set sort_order = 3 where optionvalueid = 4726386;
+update optionvalue set sort_order = 4 where optionvalueid = 4725474;
+
+-- run query on production 18/06/2024
+update optionvalue set sort_order = 1 where optionvalueid = 4725252;
+update optionvalue set sort_order = 2 where optionvalueid = 4726365;
+
+update optionvalue set sort_order = 1 where optionvalueid = 4725125;
+update optionvalue set sort_order = 2 where optionvalueid = 4726422;
+
+update optionvalue set sort_order = 1 where optionvalueid = 4725472;
+update optionvalue set sort_order = 2 where optionvalueid = 4726372;
+
+update optionvalue set sort_order = 1 where optionvalueid = 4726362;
+update optionvalue set sort_order = 2 where optionvalueid = 4726366;
+update optionvalue set sort_order = 3 where optionvalueid = 4726448;
+update optionvalue set sort_order = 4 where optionvalueid = 4726692;
+
+
+-- multiple registration with same client-code -- 16/06/2024
+
+-- 20/06/2024
+
+update optionvalue set sort_order = 1 where optionvalueid = 4724905;
+update optionvalue set sort_order = 2 where optionvalueid = 4725310;
+
+
+select ops.uid optionsetUID, ops.name optionsetName, opv.uid optionUID, opv.name optionName, 
+opv.code optionCode, opv.sort_order from optionvalue opv 
+INNER JOIN optionset ops ON ops.optionsetid = opv.optionsetid
+order by ops.name, opv.sort_order;
+
+select * from trackedentityattributevalue where trackedentityattributeid in (
+select trackedentityattributeid from trackedentityattribute where uid in 
+( 'drKkLxaGFwv')) and value = 'SA001000730671';
+
+select * from programinstance where trackedentityinstanceid 
+in (5221452,5221453);
+
+-- delete duplicate TEI -- 18/06/2024
+
+delete from trackedentityattributevalue where trackedentityinstanceid 
+in (5221453);
+
+delete from trackedentityinstance where trackedentityinstanceid 
+in (5221453);
+
+delete from programinstance where trackedentityinstanceid 
+in (5221453);
+
+
+-- 19/06/2024 SMS program 2.40 
+-- HIV-tracker SMS program sms send details query 
+
+
+SELECT prgmsg.created, prgmsg.lastupdated, prgmsg.text, prgmsg.subject, 
+prgmsg.processeddate, prgmsg.messagestatus,
+prgmsg.trackedentityinstanceid,prgmsg.programinstanceid, prgmsg.programstageinstanceid, 
+prgmsg.lastupdatedby,urinfo.username, prgmsg_phone.phonenumber recevier_phone_number
+from programmessage prgmsg
+INNER JOIN programmessage_phonenumbers prgmsg_phone ON prgmsg_phone.programmessagephonenumberid = prgmsg.id
+INNER JOIN userinfo urinfo ON urinfo.userinfoid= prgmsg.lastupdatedby
+ORDER by prgmsg.created desc;
+
+
+select programmessagephonenumberid, phonenumber from 
+programmessage_phonenumbers;
+
+
+
+-- programMSG in HIV tracker sending SMS 
+
+select prgmsg.created, prgmsg.lastupdated, prgmsg.text, prgmsg.subject, 
+prgmsg.messagestatus,
+prgmsg.trackedentityinstanceid,prgmsg.programinstanceid, prgmsg.programstageinstanceid, 
+prgmsg.lastupdatedby,ur.username, prgmsg_phone.phonenumber recevier_phone_number
+from programmessage prgmsg
+INNER JOIN programmessage_phonenumbers prgmsg_phone ON prgmsg_phone.programmessagephonenumberid = prgmsg.id
+INNER JOIN userinfo ur ON ur.userinfoid = prgmsg.lastupdatedby
+where prgmsg.processeddate::date between  '2021-01-12' and '2024-07-14' order by prgmsg.processeddate desc ;
+
+
+-- programMSG -- uXmR9vhlX6A
+select prgmsg.created, prgmsg.lastupdated, prgmsg.text, prgmsg.subject, 
+prgmsg.messagestatus,
+prgmsg.trackedentityinstanceid,prgmsg.programinstanceid, prgmsg.programstageinstanceid, 
+prgmsg.lastupdatedby,ur.username, prgmsg_phone.phonenumber recevier_phone_number
+from programmessage prgmsg
+INNER JOIN programmessage_phonenumbers prgmsg_phone ON prgmsg_phone.programmessagephonenumberid = prgmsg.id
+INNER JOIN userinfo ur ON ur.userinfoid = prgmsg.lastupdatedby;
+
+
+
+-- hiv_tracker tei_list_5_yea less event_date from today date 22/10/2024
+
+SELECT tei.uid as tei_uid,org.uid AS orgUnit_uid, 
+psi.uid as event, psi.executiondate::date AS event_date
+FROM programstageinstance psi
+INNER JOIN programinstance pi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN program prg ON pi.programid = prg.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN organisationunit org ON psi.organisationunitid = org .organisationunitid
+WHERE prg.uid = 'L78QzNqadTV' and psi.deleted is false and psi.programstageid in (
+select programstageid from programstage where uid = 'zRUw1avYEvI') 
+AND psi.executiondate is not null and org.path like '%aXquUzlrYYv%'
+AND cast(psi.executiondate AS DATE) >= cast('2024-10-24' AS DATE) - interval '5 year';

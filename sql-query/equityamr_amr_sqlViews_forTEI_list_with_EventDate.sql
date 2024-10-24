@@ -975,6 +975,23 @@ INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunit
 WHERE teav1.trackedentityattributeid =  3418 
 and psi.status != 'COMPLETED';
 
+-- 28/05/2024
+-- incomplete event list with CR number
+SELECT psi.uid AS eventUID,teav2.value as Patient_Name ,teav1.value as CR_Number, 
+org.name AS orgName,psi.executiondate::date as Event_date,
+psi.status AS Event_Status, psi.completeddate::date AS Completed_Date,
+psi.completedby AS Completed_By FROM trackedentityattributevalue teav1
+INNER JOIN ( SELECT trackedentityinstanceid,value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid = 474720 ) teav2
+on teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+WHERE teav1.trackedentityattributeid =  3418 
+and psi.status != 'COMPLETED' and prg.uid not in ('L7bu48EI54J');
+
 
 -- incomplete event list with CR number and name not for Sample Testing Program
 
@@ -992,6 +1009,57 @@ INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanc
 INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
 WHERE teav1.trackedentityattributeid =  3418 
 and psi.status != 'COMPLETED' and prg.uid not in ('L7bu48EI54J');
+
+
+-- amr tanda production incomplete event list with CR number and eventDataValue 19/04/2024
+SELECT psi.uid AS eventUID,teav2.value as Patient_Name ,teav1.value as CR_Number, 
+org.name AS orgName,psi.executiondate::date as Event_date,
+psi.status AS Event_Status, psi.completeddate::date AS Completed_Date,
+psi.completedby AS Completed_By FROM trackedentityattributevalue teav1
+INNER JOIN ( SELECT trackedentityinstanceid,value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid = 474720 ) teav2
+on teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+WHERE teav1.trackedentityattributeid =  3418 and org.uid = 'bLfOUtl4eZd'
+and psi.executiondate BETWEEN '2021-01-01' AND '2021-12-31'
+and psi.status != 'COMPLETED' and prg.uid in ('dzizG8i1cmP') 
+AND  psi.eventdatavalues -> 'SaQe2REkGVw' is not null
+and eventdatavalues -> 'SaQe2REkGVw' ->> 'value' = 'Escherichia coli';
+
+
+
+-- amr tanda production incomplete event list with CR number and eventDataValue 19/04/2024
+SELECT psi.uid AS eventUID,teav1.value as CR_Number, 
+org.name AS orgName,psi.executiondate::date as Event_date,
+psi.status AS Event_Status, eventdatavalues -> 'SaQe2REkGVw' ->> 'value'
+FROM trackedentityattributevalue teav1
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+WHERE teav1.trackedentityattributeid =  3418 and org.uid = 'bLfOUtl4eZd'
+and psi.executiondate BETWEEN '2021-01-01' AND '2021-12-31'
+and psi.status != 'COMPLETED' and prg.uid in ('dzizG8i1cmP') 
+AND  psi.eventdatavalues -> 'SaQe2REkGVw' is not null
+and eventdatavalues -> 'SaQe2REkGVw' ->> 'value' = 'ECO';
+
+
+OU - RPGMC Tanda - bLfOUtl4eZd
+Program - Enterobacteriaceae -  dzizG8i1cmP
+Data Element - Organism -  SaQe2REkGVw
+
+
+
+
+
+
+
+
 
 
 https://ln2.hispindia.org/amr_vnimport/api/dataValues.json?paging=false&pe=202301&ds=oG3BlD3M9IE&de=ivbdHXXpwZ5&ou=zCSRdpPXo5a&cc=bdutjzPz3lA&cp=v6QVa6b0sO9;FwCOqlaRrPm;lgT5XFn2CzA;n0wkVSON7Tz&co=HllvX50cXC0
@@ -1094,3 +1162,109 @@ and periodid in ( select periodid from period where startdate >= '2023-01-01'
 and enddate <= '2023-12-31' and periodtypeid = 8)and dataelementid in ( 
 21922527,21922513,21922514,21922515,21922516,21922517,21922518,21922519,
 21922520,21922521,21922522,21922523,21922524,21922525,21922526,21746340);
+
+-- delete TEI enrollment/event and aggregated data based on eventDate on AMR varanasi import
+
+select * from trackedentityinstance where 
+trackedentityinstanceid in ( select trackedentityinstanceid
+from programinstance where
+programinstanceid in ( select programinstanceid
+from programstageinstance where 
+executiondate::date between '2023-06-01' and '2023-12-31'));
+
+select * from programinstance where
+programinstanceid in ( select programinstanceid
+from programstageinstance where 
+executiondate::date between '2023-06-01' and '2023-12-31');
+
+select * from programstageinstance where 
+executiondate::date between '2023-06-01' and '2023-12-31';
+
+select * from datavalue where
+periodid in ( select periodid from period where startdate >= '2023-06-01' 
+and enddate <= '2023-12-31' and periodtypeid = 10);
+
+select * from datavalueaudit where
+periodid in ( select periodid from period where startdate >= '2023-06-01' 
+and enddate <= '2023-12-31' and periodtypeid = 10);
+
+
+-- delete aggregated
+
+delete from datavalue where
+periodid in ( select periodid from period where startdate >= '2023-06-01' 
+and enddate <= '2023-12-31' and periodtypeid = 10);
+
+delete from datavalueaudit where
+periodid in ( select periodid from period where startdate >= '2023-06-01' 
+and enddate <= '2023-12-31' and periodtypeid = 10);
+
+-- delete tracker data
+
+delete from trackedentityattributevalue where 
+trackedentityinstanceid in ( select trackedentityinstanceid
+from programinstance where
+programinstanceid in ( select programinstanceid
+from programstageinstance where 
+executiondate::date between '2023-06-01' and '2023-12-31'));
+
+delete from trackedentityattributevalueaudit where 
+trackedentityinstanceid in ( select trackedentityinstanceid
+from programinstance where
+programinstanceid in ( select programinstanceid
+from programstageinstance where 
+executiondate::date between '2023-06-01' and '2023-12-31'));
+
+delete from trackedentitydatavalueaudit where programstageinstanceid
+in ( select programstageinstanceid from programstageinstance where 
+executiondate::date between '2023-06-01' and '2023-12-31');
+
+delete from programstageinstance where 
+executiondate::date between '2023-06-01' and '2023-12-31';
+
+delete from programinstance where 
+trackedentityinstanceid in ( select trackedentityinstanceid
+from programinstance where
+programinstanceid in ( select programinstanceid
+from programstageinstance where 
+executiondate::date between '2023-06-01' and '2023-12-31'));
+
+delete from trackedentityinstance where 
+trackedentityinstanceid in ( select trackedentityinstanceid
+from programinstance where
+programinstanceid in ( select programinstanceid
+from programstageinstance where 
+executiondate::date between '2023-06-01' and '2023-12-31'));
+
+
+-- AMR varanasi issue in new COC isolate Type 02/05/2024
+
+select * from categoryoptioncombo
+where name = 'CCU, Other departments, Pus/exudate'
+order by created desc;
+
+select name, count(name) from categoryoptioncombo
+group by  name 
+having count(name) > 1
+order by name
+
+select * from categoryoptioncombo
+where name like '%isolate%' order by name
+
+-- AMR varanasi production issue in new COC isolate Type 07/05/2024
+
+select name,categoryoptioncomboid,uid from categoryoptioncombo
+order by created desc;
+
+select name, count(name) from categoryoptioncombo
+group by  name 
+having count(name) > 1
+order by name
+
+delete  from categoryoptioncombo where 
+categoryoptioncomboid in ( 22148116,22148112); -- 52985
+
+-- AMR varanasi production issue in new COC isolate Type 24/07/2024 for analytics issue value = 0000-01-03
+update trackedentityattributevalue set value = '2024-01-03'
+where trackedentityattributeid = 3419 and trackedentityinstanceid = 21739591
+

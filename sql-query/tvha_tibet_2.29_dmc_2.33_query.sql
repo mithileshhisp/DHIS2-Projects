@@ -418,3 +418,39 @@ WHERE psi.programstageid in ( select programstageid from programstage where uid 
 and tei.trackedentityinstanceid in (421565) and de.uid = 'Jrax4JcLZK4';
 
 
+
+-- dmc soft delete issue 30/07/2024
+
+delete from programinstance where deleted = true;
+
+delete from programinstancecomments where programinstanceid in(
+select programinstanceid from programinstance where deleted = true)
+
+
+delete from programstageinstance where programinstanceid in(
+select programinstanceid from programinstance where deleted = true)
+
+delete from trackedentitydatavalueaudit where programstageinstanceid
+in ( select programstageinstanceid from programstageinstance where programinstanceid in(
+select programinstanceid from programinstance where deleted = true));
+
+delete from programstageinstancecomments where programstageinstanceid
+in ( select programstageinstanceid from programstageinstance where programinstanceid in(
+select programinstanceid from programinstance where deleted = true));
+
+
+SELECT psi.uid as eventUID,de.uid as dataElementUID,
+cast(data.value::json ->> 'value' AS VARCHAR) AS de_value,de.valuetype FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON  pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN dataelement de ON de.uid = data.key
+where de.uid = 'YBMVx48hw5o' in('c8IacFDh4ql', 'B5BoWbyB1sY','YBMVx48hw5o',
+'xZqLVgpvZsQ','vuLLG8CaXCP','TXAtcwYELX3','JoRiAfYbhqI',
+'c8IacFDh4ql','DKvKXRjkX0O','vg8lQ8kHnLL','fF7wxNym0Un');
+
+
+-- change in programIndicator INDICATOR
+
+-- programIndicator/nTySTtFbryp in filter event-count
+#{u0c2uIZBvks.YBMVx48hw5o} == 'Live birth 1' && #{u0c2uIZBvks.YBMVx48hw5o} == 'Live birth 2' && A{vbUue5poEcT} == 'ST' && A{vbUue5poEcT} == 'OT' && A{vbUue5poEcT} == 'G' && A{vbUue5poEcT} == 'OBC' 
