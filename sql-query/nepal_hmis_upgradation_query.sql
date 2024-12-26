@@ -257,3 +257,45 @@ LEFT JOIN map ma ON ma.mapid = dasitem.mapid
 LEFT JOIN eventreport evrep ON evrep.eventreportid = dasitem.eventreport
 LEFT JOIN visualization vis ON vis.visualizationid = dasitem.visualizationid
 order by das.lastupdated desc;
+
+
+-- datavalue sum based on COC
+SELECT org.uid AS orgUnitUid,  de.uid AS deUID,
+SUM( cast( value as numeric) ),
+CONCAT (split_part(pe.startdate::TEXT,'-', 1), split_part(pe.enddate::TEXT,'-', 2)) 
+as isoPeriod,pety.name  FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN organisationunit org On org.organisationunitid = dv.sourceid
+INNER join period pe ON pe.periodid = dv.periodid
+INNER join periodtype pety ON pety.periodtypeid = pe.periodtypeid
+WHERE dv.dataelementid IN ( select dataelementid from dataelement where uid in ( 'XBZPrqWn6OG')) 
+AND dv.sourceid IN (select organisationunitid from organisationunit 
+where path like '%elOK8Y2b3Qn%') AND dv.periodid IN 
+(select periodid from period 
+where periodtypeid = 4758
+and startdate >= '2022-01-01' and 
+enddate <= '2024-12-31' ) GROUP BY org.uid,de.uid,
+pe.startdate,pe.enddate,pety.name;
+
+
+
+
+
+-- sum based on periods -- 05/11/2024
+
+SELECT org.uid AS orgUnitUid, org.name AS orgUnitName, de.uid AS deUID, de.name AS deName, 
+SUM( cast( value as numeric) ) FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN organisationunit org On org.organisationunitid = dv.sourceid
+WHERE dv.dataelementid IN ( select dataelementid from dataelement where uid in (
+'QJXDS374FL7', 'O0LVG8R8UPi', 'WqLhMox6u5s', 'uDEe2DLpNf4', 'pfBSJgGzmUT', 'lSmRsc4EX4u', 
+'KVdjXOnhbGq', 'ejB5Wtu3kVJ', 'E3QKzVDQE5B', 'CofKyFHumWx', 'ZouGfFRrpse', 'YsGEPZpQe6I', 
+'FHU3UYSbHKJ', 'E3xhEA1oeJd', 'cYOeeJikhrK', 'iDZL9StfKBp', 'FXGyhXPbGf4', 'eQLgQnRthFy', 
+'kgUqFmv4gEM', 'yz99h1xdt4V', 'GmsqnhxaZJa', 'IkOkQJMOrdj', 'AtkwRd4KZy8', 'yaos4Jzbp7Q', 
+'cKtRhs9xC1H', 'sT5qVbr2iCf', 'l3w3WwUpXca', 'ZLoDeEmpypb', 'MHAmn8Lrbud', 'ikw26VrSnHH', 
+'hITgdvklyDS', 'F75Ofi034Vc', 'yRxgzTOaHpQ', 'sA0OnoEtmIN', 'IsaEep9Rro7', 'S8v99VpXaVm', 
+'SYMC85nGD4q', 'ZbhYKew0RAn', 'x9bxR6p7fvQ', 'lJC6GiZYFLI')) 
+AND dv.sourceid IN (select organisationunitid from organisationunit 
+where path like '%b3vBdsycgAD%') AND dv.periodid IN 
+(select periodid from period where startdate >= '2022-01-01' and enddate <= '2022-12-31'
+and periodtypeid = 3) GROUP BY org.uid,org.name,de.uid,de.name order by org.name;

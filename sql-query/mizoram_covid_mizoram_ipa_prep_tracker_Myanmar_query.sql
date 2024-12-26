@@ -2328,3 +2328,22 @@ WHERE psi.programstageid in ( select programstageid from programstage
 where uid in ('BrZ8MF97cDH' ,'OdnWnPECtFq')) AND  event_ou.uid = 'eGJTsaMKQ4E'
 AND psi.status = 'SCHEDULE' order by psi.duedate::date desc
 
+
+
+-- Myanmar hmis -- 07/11/2024
+-- queries for dataValueSet Monthly dataValue
+SELECT de.uid AS dataElementUID,de.name AS dataElementName, coc.uid AS categoryOptionComboUID, 
+coc.name AS categoryOptionComboName, attcoc.uid AS attributeOptionComboUID,attcoc.name AS
+attributeOptionComboName, org.uid AS organisationunitUID, org.name AS organisationunitName, 
+dv.value, dv.storedby,dv.created, dv.lastupdated, CONCAT (split_part(pe.startdate::TEXT,'-', 1), 
+split_part(pe.startdate::TEXT,'-', 2)) as isoPeriod, pety.name FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+INNER join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+INNER join periodtype pety ON pety.periodtypeid = pe.periodtypeid
+WHERE dv.value is not null and dv.deleted is not true
+and dv.dataelementid in ( select dataelementid from
+datasetelement where datasetid in ( select datasetid from dataset
+where uid = 'gWFInBWIufX'));

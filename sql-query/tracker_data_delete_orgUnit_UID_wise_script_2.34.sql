@@ -39,7 +39,7 @@ begin;
 -- 9) programinstance 
       
 	  delete from programinstance where organisationunitid in (
-	  select organisationunitid from organisationunit where uid = 'mJhY0bFkp3s');
+	  select organisationunitid from organisationunit where uid = 'CrO47WdGZp0');
 
 -- 10) trackedentityinstance 
 

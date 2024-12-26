@@ -2614,3 +2614,39 @@ WHERE prg.uid = 'L78QzNqadTV' and psi.deleted is false and psi.programstageid in
 select programstageid from programstage where uid = 'zRUw1avYEvI') 
 AND psi.executiondate is not null and org.path like '%aXquUzlrYYv%'
 AND cast(psi.executiondate AS DATE) >= cast('2024-10-24' AS DATE) - interval '5 year';
+
+
+-- hiv tracker query as on 21/12/2024 to 24/12/2024 at Nepal
+
+select * from userinfo;
+
+select userinfoid,uid,username,surname,firstname,password
+from userinfo where username like 'stc_%';
+
+="update userinfo set password = '"&G2&"' where username = '"&C2&"';"
+
+-- event dataValue null
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID,
+psi.eventdatavalues as datavalues, ps.uid as programStageUID, ps.name as programStageName,
+psi.executiondate as eventDate from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and psi.eventdatavalues -> 'ilmyEDhD3FH' is null
+order by psi.executiondate desc;
+
+SELECT org.uid as orgunit,tei.uid as tei,teav.value AS sex, psi.uid as eventID,
+ps.uid as programStageUID, ps.name as programStageName,
+psi.executiondate::date as eventDate from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false and psi.executiondate is not null 
+and psi.eventdatavalues -> 'ilmyEDhD3FH' is null and ps.uid = 'ngJg5lvavdO'
+and teav.trackedentityattributeid in( select trackedentityattributeid from trackedentityattribute where uid = 'TN7r3ws7IG9')
+order by psi.executiondate desc;

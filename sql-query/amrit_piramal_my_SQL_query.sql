@@ -7169,6 +7169,14 @@ and organisationunitid in (9765212,9765210,9765213,
 9765211,9765209,9765214,9765208,9765207,9765206,9765205)
 and created::date in('2024-07-22', '2024-07-23');
 
+select count(*) from programstageinstance 
+where programstageid in ( select programstageid
+from programstage where uid = 'qJbHjQBuG3G') 
+and organisationunitid in (9765212,9765210,9765213,
+9765211,9765209,9765214,9765208,9765207,9765206,9765205)
+and created::date in('2024-12-21');
+
+
 -- CSR partner value
 SELECT psi.uid as eventUID, cast(data.value::json ->> 'value' AS VARCHAR) AS csr_partner,
 psi.executiondate::date FROM programstageinstance psi
@@ -8169,5 +8177,16 @@ psi.created::date = '2024-09-05';
 
 
 select * from datavalueaudit;
+
+-- aggregated query
+
+select * from dataelement where uid = 'VUIdBUiRccB' -- 23013082
+select * from organisationunit	where uid = 'NQjElqVFZTm' -- 65
+
+select * from datavalue where 
+dataelementid = 23013082 and sourceid = 65
+
+delete from datavalue where 
+dataelementid = 23013082 and sourceid = 65
 			
 			

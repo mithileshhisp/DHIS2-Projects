@@ -148,7 +148,32 @@ INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
 INNER JOIN program prg ON prg.programid = pi.programid
 INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
 INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
-INNER JOIN dataelement de ON de.uid = data.key;
+INNER JOIN dataelement de ON de.uid = data.key
+WHERE and psi.executiondate BETWEEN '2023-07-01' AND '2024-12-31'
+and org.uid = 'SLBSGMCH';
+
+
+
+
+SELECT psi.uid AS eventUID,teav1.value as CR_Number, 
+org.name AS orgName,psi.executiondate::date as Event_date,
+psi.status AS Event_Status, eventdatavalues -> 'SaQe2REkGVw' ->> 'value'
+FROM trackedentityattributevalue teav1
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+WHERE teav1.trackedentityattributeid =  3418 and org.uid = 'bLfOUtl4eZd'
+and psi.executiondate BETWEEN '2021-01-01' AND '2021-12-31'
+and psi.status != 'COMPLETED' and prg.uid in ('dzizG8i1cmP') 
+AND  psi.eventdatavalues -> 'SaQe2REkGVw' is not null
+and eventdatavalues -> 'SaQe2REkGVw' ->> 'value' = 'ECO';
+
+
+
+
+
 
 
 -- de optionSet optionValue
@@ -1054,7 +1079,27 @@ Program - Enterobacteriaceae -  dzizG8i1cmP
 Data Element - Organism -  SaQe2REkGVw
 
 
+SELECT teav2.value as Patient_Name,teav1.value as CR_Number, 
+psi.uid eventID,psi.created::date,psi.lastupdated::date,psi.executiondate::date as eventdate, 
+psi.storedby,psi.status,psi.completeddate::date,psi.completedby,org.uid AS orgUID,org.name AS orgName,
+prg.uid AS prgUID, prg.name AS prgName,
+de.name AS dataElementName, data.key as de_uid,cast(data.value::json ->> 'value' AS VARCHAR) AS de_value 
+FROM trackedentityattributevalue teav1
 
+INNER JOIN ( SELECT trackedentityinstanceid,value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid = 474720 ) teav2
+on teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
+
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE
+INNER JOIN dataelement de ON de.uid = data.key
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+WHERE teav1.trackedentityattributeid =  3418 
+AND psi.executiondate BETWEEN '2023-07-01' AND '2024-12-31' 
+and org.uid = 'SalGKJqIV3t';
 
 
 

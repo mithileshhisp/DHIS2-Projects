@@ -245,3 +245,82 @@ INNER JOIN dataelement de ON de.dataelementid = audit.dataelementid
 inner JOIN organisationunit org ON org.organisationunitid = audit.organisationunitid
 where audit.created::date between '2023-08-01' and '2024-08-31'
 and audit.periodid =58530;
+
+
+
+-- 05/12/2024 merge LEMT instance to lep production
+
+select * from organisationunit
+where uid in ('LSJOAoS8Gwv','YrhOAKfPLdm','ubEyliQLSKd','yG9NjOqTGfi');
+
+delete from organisationunit
+where uid in ('LSJOAoS8Gwv','YrhOAKfPLdm','ubEyliQLSKd','yG9NjOqTGfi');
+
+delete from orgunitgroupmembers where organisationunitid
+in ( 102997,102998,102999,103000);
+
+
+
+
+
+="update organisationunit set code = '"&B2&"', name  = '"&C2&"', shortname = '"&D2&"' where uid = '"&A2&"';"
+
+
+select parent.name as parent_name,orgunit.organisationunitid, orgunit.uid,
+orgunit.name,orgunit.hierarchylevel from organisationunit orgunit 
+INNER JOIN organisationunit parent ON parent.organisationunitid = orgunit.parentid
+where orgunit.hierarchylevel = 2 order by parent.name;
+
+
+select parent.name as parent_name,orgunit.organisationunitid, orgunit.uid,
+orgunit.name,orgunit.hierarchylevel from organisationunit orgunit 
+INNER JOIN organisationunit parent ON parent.organisationunitid = orgunit.parentid
+where orgunit.hierarchylevel = 3 and orgunit.geometry is null order by parent.name;
+
+geometry
+
+
+
+select parent.name as parent_name, parent.uid as parent_uid, 
+parent.organisationunitid as parent_id, orgunit.openingdate as org_openingdate,
+orgunit.organisationunitid as org_id, orgunit.uid as org_uide,
+orgunit.name as org_name, orgunit.hierarchylevel from organisationunit orgunit 
+INNER JOIN organisationunit parent ON parent.organisationunitid = orgunit.parentid
+where orgunit.hierarchylevel = 4 order by parent.name;
+
+
+select parent.name as parent_name,orgunit.organisationunitid, orgunit.uid,
+orgunit.name,orgunit.hierarchylevel,
+cast(orgUnitAttribute.value::json ->> 'value' AS VARCHAR) as year
+from organisationunit orgunit 
+JOIN json_each_text(orgunit.attributevalues::json) orgUnitAttribute ON TRUE 
+INNER JOIN attribute attr ON attr.uid = orgUnitAttribute.key
+INNER JOIN organisationunit parent ON parent.organisationunitid = orgunit.parentid
+where attr.uid = 'Y07jK5iVcxM' AND  orgunit.hierarchylevel = 3 order by parent.name;
+
+
+SELECT orgGrp.name orgGrpName, orgGrp.uid orgGrpUID, grpm.orgunitgroupid, grpm.organisationunitid,
+org.name orgName, org.uid orgUID from orgunitgroupmembers grpm
+INNER JOIN orgunitgroup orgGrp on orgGrp.orgunitgroupid = grpm.orgunitgroupid
+INNER JOIN organisationunit org ON org.organisationunitid = grpm.organisationunitid
+where grpm.orgunitgroupid = 46576;
+
+
+
+SELECT de.uid AS dataElementUID,coc.uid AS categoryOptionComboUID, org.uid AS organisationunitUID,
+org.name AS organisationunitName,dv.value, dv.storedby, CONCAT (split_part(pe.startdate::TEXT,'-', 1)) 
+as isoPeriod FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN datasetelement dse ON dse.dataelementid = dv.dataelementid
+INNER JOIN dataset ds ON ds.datasetid = dse.datasetid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+inner join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+WHERE ds.uid in ('psffCPn7pDW') 
+and dv.value is not null and dv.deleted = false order by pe.startdate;
+
+update attribute set uid = 'Y07jK5iVcxM' 
+where uid = 'jDi5rVore2O';
+
+update orgunitgroup set uid = 'Lfknzyd1hjQ'
+where uid = 'BCds3eIM894'
