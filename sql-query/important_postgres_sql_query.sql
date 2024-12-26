@@ -1,67 +1,4 @@
 
--- links -- 172.105.47.164 96 4444
--- M!th!lesh@123
--- Dh!sUs3Rp@SS1
--- ln2  172.104.173.245  96 5454   Dh!$U$3R#p@SS
--- ln1  139.162.61.147   96  dhis@hisp 3333
--- https://ln4.hispindia.org/ https://amrhp.hispindia.org/dhis2 -- 172.105.47.158 -- 22 -- ict kenya -- 4646 -- dhis -- d#$h!s@0987 -- https://ln4.hispindia.org/
--- https://ln4.hispindia.org/ -- 172.105.47.158
--- ln3.hispindia.org IP 172.105.57.28 96 mithilesh M1UnTyYLnE6&h 
- -- create user on poatgres
-
--- permission
-
-chown mithilesh:mithilesh /home/mithilesh/dhis-web-tracker-capture/ -R
-
--- postgres restart
- -- sudo /etc/init.d/postgresql restart
- 
- -- 9199990989
-
--- ll -larth
--- eventDataValue update dataElement-value
-
--- any desk -- 
-
--- http://dhislx.hispindia.org:8080/nepalhmis/dhis-web-commons/security/login.action
--- http://122.176.44.47:8080/nepalhmis
--- office server details
--- host -- server : dhislx.hispindia.org
--- User : mithilesh , hisp
--- pass: mithi@217, hisp
--- port 22
-
--- database details
--- #Database connection URL
--- connection.url = jdbc:postgresql:nepal_hmis_v240
--- #Database username
--- connection.username = hispin
--- #Database password
--- connection.password = G@T3r@f2ef@
-
--- su postgres
--- psql
---\c nepal_hmis_v240 hispin
-
--- postgres restart create database
-
-
--- nepalhmis production client application 2.40 
-
--- 28/08/2024
--- application link http://10.10.12.102:8080/nepalhmis/dhis-web-user-profile/#/aboutPage
--- prduction link -- https://hmis.gov.np/hmis/dhis-web-commons/security/login.action
-
--- production link -- hmis.gov.np/hmis
---SSL VPN Details:VPN userportal: https://202.166.205.218:8443/userportal/webpages/myaccount/login.jsp
---VPN username: hisp
---VPN Password: Hmis@12345678
---Private IP: 10.10.12.102
---Credentials: hmis/hmis1234
---SSH port: 22[27/05/24, 4:02:35 PM]
--- database name nepalhmis_v240
--- database username -- hisp database password -- @#G24g@#th3$G4
-
 
 sudo -u hmis /home/hisp/tomcat-nepalhmis/bin/startup.sh
 
@@ -88,7 +25,7 @@ pg_dump -U dhis  -d leprosy_pilot_v240 -T analytics* > /home/mithilesh/leprosy_p
 
 
 
-dh15#202@4us3r123$
+
 login to postgres
 
 sudo -s
@@ -157,7 +94,7 @@ pg_dump -U dhis2-user  -d mizoramipa_238 -T analytics* > /home/dbadmin/mizoramip
 
 
 
--- 3#@gR#1E2e2w2
+
 
 pg_dump -U dhis  -d prodhis_myanmar_v240 -T analytics* > /home/dhisadmin/prodhis_myanmar_v240_22March2024.sql
 
@@ -165,7 +102,7 @@ pg_dump -U dhis  -d dev_myanmar_238 -T analytics* > /home/dhisadmin/dev_myanmar_
 
 -- amr new server testing instance/server
 pg_dump -U amr_dhis  -d amr_jimma_v240 -T analytics* > /home/mithilesh/amr_jimma_v240_24June2024.sql
--- D%$GBewTY@@#44
+
 
 -- all tables list with sizes
 
