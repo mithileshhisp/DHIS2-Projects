@@ -849,6 +849,42 @@ update programruleaction  set created = now()::timestamp where created ='2023-03
 update programruleaction  set lastupdated = now()::timestamp where lastupdated ='2023-03-28';
 
 
+
+-- 13/10/2025
+
+select * from programrulevariable 
+where programid in ( select programid from 
+program where uid = 'cUjoGJK4gPL');
+
+
+
+select * from programrule order by  programruleid desc; -- 279522
+select * from programrule where  programruleid > 279522;
+
+update programrule set created = now()::timestamp where created ='2025-06-16';
+update programrule  set lastupdated = now()::timestamp where lastupdated ='2025-06-16';
+
+
+
+select programruleactionid,uid,created,lastupdated,lastupdatedby,actiontype,programruleid,dataelementid,content, 
+data,evaluationtime,environments
+ from programruleaction where programruleid 
+in (select programruleid from programrule where programid in
+( select programid from program where uid = 'cUjoGJK4gPL'));
+
+
+insert into programruleaction (programruleactionid,uid,created,lastupdated,actiontype,programruleid, data,evaluationtime) values
+="(nextval('hibernate_sequence'),'"&A2&"', '2025-10-13', '2025-10-13','"&F2&"',"&C2&",'"&H2&"','"&I2&"'),"
+
+
+select * from programruleaction order by  programruleactionid desc; -- 279350
+select * from programruleaction where  programruleactionid > 279350;
+
+
+update programruleaction  set created = now()::timestamp where created ='2025-10-13';
+update programruleaction  set lastupdated = now()::timestamp where lastupdated ='2025-10-13';
+
+
 ="update programruleaction set dataelementid  = "&H2&" where programruleactionid = "&B2&";"
 ="update programruleaction set content  = '"&I2&"' where programruleactionid = "&B2&";"
 ="update programruleaction set data  = '"&J2&"' where programruleactionid = "&B2&";"
@@ -2053,6 +2089,8 @@ order by psi.executiondate DESC LIMIT 1;
 
 -- mandalay_nap_test -- District1#
 -- saurabh -- District1#
+-- admin -- District@1
+-- hispdev -- Devhisp@1
 
 -- SQL-Views 
 -- tei_list -- fBvJF2kxDYJ
@@ -2328,6 +2366,106 @@ WHERE psi.programstageid in ( select programstageid from programstage
 where uid in ('BrZ8MF97cDH' ,'OdnWnPECtFq')) AND  event_ou.uid = 'eGJTsaMKQ4E'
 AND psi.status = 'SCHEDULE' order by psi.duedate::date desc
 
+-- update transfer_in and transfer_out as on 13/01/2025
+-- take from trackedentityprogramowner table INSTEAD of enrollment table( programinstance)
+
+-- transfer in 
+
+SELECT tei.uid AS teiUID, psi.uid AS eventUID, psi.status,
+enroll_ou.uid AS enroll_org, enroll_ou.name AS enroll_name, event_ou.uid AS event_org,
+event_ou.name AS event_name,
+psi.executiondate::date as Event_date,
+psi.duedate::date as due_date,
+psi.created::date as created_date  FROM programstageinstance psi
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+inner join trackedentityprogramowner prg_owner ON prg_owner.trackedentityinstanceid = tei.trackedentityinstanceid
+inner join organisationunit enroll_ou on enroll_ou.organisationunitid = prg_owner.organisationunitid
+INNER JOIN organisationunit event_ou ON event_ou.organisationunitid = psi.organisationunitid
+
+WHERE psi.programstageid in ( select programstageid from programstage
+where uid in ('BrZ8MF97cDH' ,'OdnWnPECtFq')) AND  event_ou.uid = '${orgunit}'
+AND psi.status = 'SCHEDULE' order by psi.duedate::date desc
+
+
+
+SELECT tei.uid AS teiUID, psi.uid AS eventUID, psi.status,
+enroll_ou.uid AS enroll_org, enroll_ou.name AS enroll_name, event_ou.uid AS event_org,
+event_ou.name AS event_name,
+psi.executiondate::date as Event_date,
+psi.duedate::date as due_date,
+psi.created::date as created_date  FROM programstageinstance psi
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+inner join trackedentityprogramowner prg_owner ON prg_owner.trackedentityinstanceid = tei.trackedentityinstanceid
+inner join organisationunit enroll_ou on enroll_ou.organisationunitid = prg_owner.organisationunitid
+INNER JOIN organisationunit event_ou ON event_ou.organisationunitid = psi.organisationunitid
+
+WHERE psi.programstageid in ( select programstageid from programstage
+where uid in ('BrZ8MF97cDH' ,'OdnWnPECtFq'))
+AND psi.status = 'SCHEDULE' order by psi.duedate::date desc
+
+
+-- transfer out
+
+SELECT tei.uid AS teiUID, psi.uid AS eventUID, psi.status,
+enroll_ou.uid AS enroll_org, enroll_ou.name AS enroll_name, event_ou.uid AS event_org,
+event_ou.name AS event_name,
+psi.executiondate::date as Event_date,
+psi.duedate::date as due_date,
+psi.created::date as created_date FROM programstageinstance psi
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+inner join trackedentityprogramowner prg_owner ON prg_owner.trackedentityinstanceid = tei.trackedentityinstanceid
+inner join organisationunit enroll_ou on prg_owner.organisationunitid = enroll_ou.organisationunitid
+
+
+
+INNER JOIN organisationunit event_ou ON event_ou.organisationunitid = psi.organisationunitid
+
+
+WHERE psi.programstageid in ( select programstageid from programstage
+where uid in ('BrZ8MF97cDH' ,'OdnWnPECtFq')) AND  enroll_ou.uid = '${orgunit}'
+AND psi.status = 'SCHEDULE' order by psi.duedate::date desc
+
+
+
+SELECT tei.uid AS teiUID, psi.uid AS eventUID, psi.status,
+enroll_ou.uid AS enroll_org, enroll_ou.name AS enroll_name, event_ou.uid AS event_org,
+event_ou.name AS event_name,
+psi.executiondate::date as Event_date,
+psi.duedate::date as due_date,
+psi.created::date as created_date FROM programstageinstance psi
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+inner join trackedentityprogramowner prg_owner ON prg_owner.trackedentityinstanceid = tei.trackedentityinstanceid
+inner join organisationunit enroll_ou on prg_owner.organisationunitid = enroll_ou.organisationunitid
+
+
+
+INNER JOIN organisationunit event_ou ON event_ou.organisationunitid = psi.organisationunitid
+
+
+WHERE psi.programstageid in ( select programstageid from programstage
+where uid in ('BrZ8MF97cDH' ,'OdnWnPECtFq')) 
+AND psi.status = 'SCHEDULE' order by psi.duedate::date desc
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 -- Myanmar hmis -- 07/11/2024
@@ -2347,3 +2485,348 @@ WHERE dv.value is not null and dv.deleted is not true
 and dv.dataelementid in ( select dataelementid from
 datasetelement where datasetid in ( select datasetid from dataset
 where uid = 'gWFInBWIufX'));
+
+-- 19/02/2025
+-- delete program from prep_tracker
+
+delete from program_attributes where programid = 15112764;
+
+delete from program_organisationunits 
+where programid = 15112764;
+
+delete from periodboundary where programindicatorid
+in ( select programindicatorid from programindicator 
+where programid = 15112764);
+
+delete from visualization_datadimensionitems where 
+datadimensionitemid in (select datadimensionitemid 
+from datadimensionitem where programindicatorid
+in ( select programindicatorid from programindicator 
+where programid = 15112764));
+
+
+delete from datadimensionitem where programindicatorid
+in ( select programindicatorid from programindicator 
+where programid = 15112764);
+
+delete from programindicatorlegendsets where programindicatorid
+in ( select programindicatorid from programindicator 
+where programid = 15112764);
+
+delete from programindicator 
+where programid = 15112764;
+
+delete from trackedentitydatavalueaudit where 
+programstageinstanceid in (select programstageinstanceid 
+from programstageinstance where programinstanceid
+in ( select programinstanceid from programinstance 
+where programid = 15112764));
+
+delete from programstageinstancecomments where 
+programstageinstanceid in (select programstageinstanceid 
+from programstageinstance where programinstanceid
+in ( select programinstanceid from programinstance 
+where programid = 15112764));
+
+delete from programstageinstance where programinstanceid
+in ( select programinstanceid from programinstance 
+where programid = 15112764);
+
+delete from programinstance 
+where programid = 15112764;
+
+delete from programruleaction where programruleid
+in ( select programruleid from programrule 
+where programid = 15112764);
+
+delete from programrule 
+where programid = 15112764;
+
+delete from programrulevariable 
+where programid = 15112764;
+
+delete from programstagesection_dataelements where 
+programstagesectionid in (select programstagesectionid 
+from programstagesection where programstageid
+in ( select programstageid from programstage 
+where programid = 15112764));
+
+delete from programstagesection where programstageid
+in ( select programstageid from programstage 
+where programid = 15112764);
+
+delete from programstagedataelement where programstageid
+in ( select programstageid from programstage 
+where programid = 15112764);
+
+delete from programstage 
+where programid = 15112764;
+
+delete from trackedentityprogramowner 
+where programid = 15112764;
+
+delete from program where programid = 15112764;
+
+
+-- 20/02/2025
+
+-- source -- https://train-dhis-mm.icap.baosystems.com, saurabh Hisp@1234 
+-- destination -- https://hmis.moh.gov.mm/events
+
+-- program_organisationunits list
+select prg.uid prg_uid, prg.name as prg_name,org.uid org_uid, org.organisationunitid, 
+org.name as org_name,org.shortname as org_short_name from program_organisationunits prg_org
+INNER JOIN organisationunit org on org.organisationunitid = prg_org.organisationunitid
+INNER JOIN program prg ON prg.programid = prg_org.programid
+
+
+
+-- enrollment list with org_unit details
+SELECT org.uid org_uid, org.organisationunitid, org.name as org_name,org.shortname as org_short_name,
+prg.uid prg_uid, prg.name as prg_name, tei.uid AS tei_uid, tei.trackedentityinstanceid
+from trackedentityinstance tei
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN organisationunit org ON org.organisationunitid = pi.organisationunitid
+
+-- event list with org_unit details
+
+SELECT org.uid org_uid, org.organisationunitid, org.name as org_name,org.shortname as org_short_name,
+prg.uid prg_uid, prg.name as prg_name, ps.uid prg_stage_uid, ps.name as prg_stage_name,
+tei.uid AS tei_uid, tei.trackedentityinstanceid,pi.uid as enrollment_uid,psi.uid as event_uid
+from trackedentityinstance tei
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid;
+
+
+
+-- TEI and multiple attribute value
+SELECT tei.uid AS teiUID,teav1.value as client_ID ,teav2.value as prEP_ID_Number
+FROM trackedentityattributevalue teav1
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN ( SELECT trackedentityinstanceid,value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid = 8907 ) teav2
+on teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
+INNER JOIN programinstance pi ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN organisationunit org ON pi.organisationunitid = org.organisationunitid
+WHERE org.uid = 'Cc2ntGA27wX' AND teav1.trackedentityattributeid =  38775;
+
+
+-- enrollment list with org_unit details TEI and multiple attribute value
+
+SELECT org.uid org_uid, org.organisationunitid, org.name as org_name,org.shortname as org_short_name,
+prg.uid prg_uid, prg.name as prg_name, pi.enrollmentdate::date enrollment_date,
+tei.uid AS tei_uid, tei.trackedentityinstanceid,
+teav1.value as ClientID, teav2.value as PrEPIDNumber, teav3.value as MPI
+from trackedentityinstance tei
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN organisationunit org ON org.organisationunitid = pi.organisationunitid
+left join  ( SELECT trackedentityinstanceid,value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid in( select trackedentityattributeid from trackedentityattribute where uid = 'P3Spi0kT92n') ) 
+teav1 on tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+left join  ( SELECT trackedentityinstanceid,value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid in( select trackedentityattributeid from trackedentityattribute where uid = 'n2gG7cdigPc'))
+teav2 on tei.trackedentityinstanceid = teav2.trackedentityinstanceid
+left join  ( SELECT trackedentityinstanceid,value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid in( select trackedentityattributeid from trackedentityattribute where uid = 'm5ooA17z7xD')) 
+teav3 on tei.trackedentityinstanceid = teav3.trackedentityinstanceid
+
+
+
+
+
+-- production -- https://hmis.moh.gov.mm/events/
+
+-- enrollment_count_PrEP_program
+select count(*) from programinstance
+where programid in ( select programid
+from program where uid = 'bASezt1TUKD' ); -- 4
+
+-- enrollment_list_PrEP_program
+SELECT org.uid org_uid, org.organisationunitid, org.name as org_name,org.shortname as org_short_name,
+prg.uid prg_uid, prg.name as prg_name, tei.uid AS tei_uid, tei.trackedentityinstanceid
+from trackedentityinstance tei
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN organisationunit org ON org.organisationunitid = pi.organisationunitid
+where prg.uid = 'bASezt1TUKD';
+
+
+
+-- event_count_PrEP_program
+select count(*) from programstageinstance
+where programstageid in ( select programstageid
+from programstage where programid  in ( 
+select programid from program where uid = 'bASezt1TUKD'  ) ) -- 18
+
+
+-- 19/03/2025
+
+SELECT de.uid AS dataElementUID,de.name AS dataElementName, coc.uid AS categoryOptionComboUID, 
+coc.name AS categoryOptionComboName, attcoc.uid AS attributeOptionComboUID,attcoc.name AS
+attributeOptionComboName, org.uid AS organisationunitUID, org.name AS organisationunitName, 
+dv.value, dv.storedby, CONCAT (split_part(pe.startdate::TEXT,'-', 1), split_part(pe.startdate::TEXT,'-', 2)) 
+as isoPeriod, pety.name FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+INNER join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+INNER join periodtype pety ON pety.periodtypeid = pe.periodtypeid
+
+where de.uid in ( 'nOkJHjX83Sz','YaH0kaDPYGd') and org.uid = 'rtiV4HcUKdg'
+AND dv.periodid IN (select periodid from period where startdate >= '2024-04-01' 
+and enddate <= '2024-06-30');
+
+WHERE dv.value is not null and dv.deleted is not true; 
+
+-- prep_tracker event report list 20/03/2025
+select ev.uid,ev.name,prg.name as prgName,ps.name as prgstagename from eventvisualization  ev
+inner join program prg ON ev.programid = prg.programid
+inner join programstage ps on ev.programstageid = ps.programstageid
+
+
+-- --- myr_registry_v241
+
+-- 03/06/2025
+-- 11/06/2025 
+select * from optionset  order by optionsetid desc;
+
+update optionset set uid = 'i9QjkBofI82' where uid = 'lfgOvyYxD2x';
+update optionset set uid = 'MDNwHnWn2Ik' where uid = 'E6oNJPzh3r7';
+
+select * from optionvalue  where optionsetid in( 1433,1434 );
+select * from optionvalue  where optionsetid in( 1433,1434 );
+
+insert into optionvalue (optionvalueid, uid, code, name, created, lastupdated, sort_order, optionsetid ) values
+="(nextval('hibernate_sequence'),'"&A2&"','"&C2&"','"&B2&"', '2025-06-03','2025-06-03',"&E2&","&F2&" ),"
+
+update optionvalue set created = now()::timestamp where created ='2025-06-03';
+update optionvalue set lastupdated = now()::timestamp where lastupdated ='2025-06-03';
+
+-- 11/06/2025 
+select * from optionset  order by optionsetid desc;
+
+update optionset set uid = 'tsKhFiAohCL' where uid = 'OgP133wqNxl';
+update optionset set uid = 'xn6rqfYrTTz' where uid = 'VgP9t52r6WN';
+
+select * from optionvalue  where optionsetid in( 24529,24530 );
+
+-- 1606/2025
+select * from optionset  order by optionsetid desc;
+
+select * from optionset where uid = 'MDNwHnWn2Ik';
+
+update optionset set valuetype = 'NUMBER' where uid = 'MDNwHnWn2Ik';
+
+select * from optionset  order by optionsetid desc;
+
+select * from optionset where uid = 'MDNwHnWn2Ik';
+
+update optionset set valuetype = 'NUMBER' where uid = 'MDNwHnWn2Ik';
+
+update optionset set valuetype = 'NUMBER' where uid = 'tsKhFiAohCL';
+
+update optionset set valuetype = 'NUMBER' where uid = 'xn6rqfYrTTz';
+
+="update optionvalue set code  = '"&C2&"' where optionvalueid = "&A2&" and uid = '"&B2&"';"
+
+
+select * from programrule order by  programruleid desc; -- 24791
+select * from programrule where  programruleid > 24791;
+
+insert into programrule (programruleid,uid,created,lastupdated,name,description, programid,rulecondition,priority) values
+="(nextval('hibernate_sequence'),'"&A2&"', '2025-06-16', '2025-06-16','"&D2&"','"&E2&"',"&F2&",'"&G2&"',"&H2&"),"
+
+
+insert into programrule (programruleid,uid,created,lastupdated,name,description, programid,rulecondition) values
+="(nextval('hibernate_sequence'),'"&A2&"', '2025-06-16', '2025-06-16','"&D2&"','"&E2&"',"&F2&",'"&G2&"',),"
+
+-- 16/06 and 20/06/2025
+update programrule set created = now()::timestamp where created ='2025-06-16';
+update programrule set lastupdated = now()::timestamp where lastupdated ='2025-06-16';
+
+
+insert into programruleaction (programruleactionid,uid,created,lastupdated,actiontype,programruleid,dataelementid,content, data,evaluationtime) values
+="(nextval('hibernate_sequence'),'"&A2&"', '2025-06-16', '2025-06-16','"&F2&"',"&E2&","&G2&",'"&H2&"','"&I2&"','"&J2&"'),"
+
+
+update programruleaction set created = now()::timestamp where created ='2025-06-16';
+update programruleaction set lastupdated = now()::timestamp where lastupdated ='2025-06-16';
+
+
+select * from programruleaction order by  programruleid desc; -- 48151
+select * from programruleaction where  programruleid > 48151;
+
+="update programrule set rulecondition  = '"&G2&"', priority =2 where programruleid = "&B2&" and uid = '"&A2&"';"
+
+delete from programruleaction where programruleid in (
+select programruleid from programrule where programid = 24102) and uid in ( 'v8AAyvDmXNx',
+'cwdA8Iywti2','H10XN07jpoC','beokgPbi2BD');
+
+select uid, programruleid from programrule where programid = 24102
+and  programruleid = 49614;
+
+-- 08/07/2025
+-- delete program -- 2.41
+select * from program where programid in ( 50160,49031);
+
+delete from trackedentitydatavalueaudit where eventid in
+( select eventid from event where enrollmentid in (
+select enrollmentid from enrollment 
+where programid in ( 50160,49031))); -- 16
+
+delete from event where enrollmentid in (
+select enrollmentid from enrollment 
+where programid in ( 50160,49031)); -- 5
+
+delete from enrollment where programid in ( 50160,49031); --2 
+
+delete from programruleaction where programruleid in (
+select programruleid from programrule 
+where programid in ( 50160,49031)); -- 256
+
+delete from programrule where programid in ( 50160,49031); -- 254
+
+delete from programrulevariable where programid in ( 50160,49031); -- 20 
+
+delete from programstagedataelement where programstageid in (
+select programstageid from programstage 
+where programid in ( 50160,49031)); -- 130
+
+delete from programstagesection_dataelements where programstagesectionid in
+( select programstagesectionid from programstagesection where programstageid in (
+select programstageid from programstage 
+where programid in ( 50160,49031))); -- 57
+
+delete from programstagesection where programstageid in (
+select programstageid from programstage 
+where programid in ( 50160,49031)); --7
+
+delete from programstage where programid in ( 50160,49031);  -- 2
+
+
+delete from program where programid in ( 50160,49031); -- 2
+
+
+-- Organisation Unit Hierarchy up to level 4
+select
+ou1.uid as Level1uid1, ou1.organisationunitid as ou1Id, max(ou1.code) as Level1Code, max(ou1.name) as Level1Name,
+ou2.uid as Level2uid2, ou2.organisationunitid as ou2Id, max(ou2.code) as Level2Code, max(ou2.name) as Level2Name,
+ou3.uid as Level3uid3, ou3.organisationunitid as ou3Id, max(ou3.code) as Level3Code, max(ou3.name) as Level3Name,
+ou4.uid as Level4uid4, ou4.organisationunitid as ou4Id, max(ou4.code) as Level4Code, max(ou4.name) as Level4Name
+
+from _orgunitstructure ous
+
+LEFT  join organisationunit ou1 on ou1.organisationunitid = ous.idlevel1
+LEFT  join organisationunit ou2 on ou2.organisationunitid = ous.idlevel2
+LEFT  join organisationunit ou3 on ou3.organisationunitid = ous.idlevel3
+LEFT  join organisationunit ou4 on ou4.organisationunitid = ous.idlevel4
+
+
+group by ou1.uid,ou1.organisationunitid,ou2.uid,ou2.organisationunitid,ou3.uid,ou3.organisationunitid,
+ou4.uid,ou4.organisationunitid;

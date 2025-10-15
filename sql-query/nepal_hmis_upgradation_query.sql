@@ -247,6 +247,22 @@ where EXTRACT(month FROM AGE(current_date,lastlogin::date))::int >= 6
 order by lastlogin desc;
 
 
+SELECT 
+    userinfoid,
+    uid,
+    surname,
+    firstname,
+    username,
+    lastlogin,
+    AGE(current_date, lastlogin) AS time_since_lastlogin,  -- full interval
+    EXTRACT(YEAR FROM AGE(current_date, lastlogin))::int AS years_since_lastlogin,
+    EXTRACT(MONTH FROM AGE(current_date, lastlogin))::int AS months_since_lastlogin,
+    EXTRACT(DAY FROM AGE(current_date, lastlogin))::int AS days_since_lastlogin,
+    disabled
+FROM userinfo;
+
+
+
 -- dashboard list and its items with map,eventreport,visualization etc 04/09/2024
 select das.name AS dashboard_name, ma.name AS map_name,
 evrep.name AS event_report_name, vis.name AS visualization_name,
@@ -299,3 +315,78 @@ AND dv.sourceid IN (select organisationunitid from organisationunit
 where path like '%b3vBdsycgAD%') AND dv.periodid IN 
 (select periodid from period where startdate >= '2022-01-01' and enddate <= '2022-12-31'
 and periodtypeid = 3) GROUP BY org.uid,org.name,de.uid,de.name order by org.name;
+
+
+
+-- 20/01/2025
+-- datavalue sum based on COC
+SELECT org.uid AS orgUnitUid, org.name as orgUnitName,de.uid AS deUID,
+SUM( cast( value as numeric) ),
+CONCAT (split_part(pe.startdate::TEXT,'-', 1), split_part(pe.enddate::TEXT,'-', 2)) 
+as isoPeriod,pety.name  FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN organisationunit org On org.organisationunitid = dv.sourceid
+INNER join period pe ON pe.periodid = dv.periodid
+INNER join periodtype pety ON pety.periodtypeid = pe.periodtypeid
+WHERE dv.dataelementid IN ( select dataelementid from dataelement where uid in ( 'XBZPrqWn6OG')) 
+GROUP BY org.uid,org.name,de.uid,
+pe.startdate,pe.enddate,pety.name;
+
+
+-- 04/07/2025 
+-- issue in analytics and period issues in resource table generation
+
+SELECT pt.name,pe.periodid,pe.startdate,pe.enddate
+FROM period pe
+JOIN periodtype pt ON pt.periodtypeid = pe.periodtypeid
+WHERE  pt.name = 'SixMonthly';
+
+select * from periodtype;
+
+select periodid,count(value) from datavalue where periodid in (1365523,
+1041365,873128,315672) group by periodid; 
+
+select periodid,count(value) from datavalue where periodid in (39443860,
+39439148,39443859) group by periodid; 
+
+
+delete from period where periodid in ( 39443860,
+39439148,39443859) and periodtypeid = 5412;
+
+
+
+-- for Developer trainig 
+-- https://links.hispindia.org/hmis_workshop/dhis-web-scheduler/index.html#/job/add
+-- https://docs.dhis2.org/en/use/user-guides/dhis-core-version-241/exchanging-data/metadata-synchronization.html#reference-information-metadata-synchronization-configuration-parameters
+-- https://eyeseetea.com/dhis2-api-know-how/
+-- api/metadata/
+-- https://docs.dhis2.org/en/full/develop/dhis-core-version-master/developer-manual.html
+-- api/metadata/version
+-- https://links.hispindia.org/hmis_workshop/api/metadata/version/history
+
+-- https://developers.dhis2.org/
+-- https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-240/introduction.html
+-- 
+
+
+
+https://links.hispindia.org/hmis_training/api/29/sqlViews/DF28IOV6ZEy/data?paging=false
+
+{aggregationType: "SUM", code: "1123", domainType: "AGGREGATE", valueType: "NUMBER",…}
+aggregationType
+: 
+"SUM"
+categoryCombo
+: 
+{id: "bjDvmb4bfuf"}
+code
+: 
+"1123"
+domainType
+: 
+"AGGREGATE"
+legendSets: []
+name: "test123"
+shortName: "test123"
+valueType: "NUMBER"
+zeroIsSignificant: true

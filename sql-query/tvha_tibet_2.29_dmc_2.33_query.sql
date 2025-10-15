@@ -343,6 +343,56 @@ and userid in ( select userid from users where username in ( 'newggsnagar'));
 delete from userkeyjsonvalue where namespace = 'trackerCaptureGridColumns'
 and userid in ( select userid from users where username in ( 'newggsnagar'));
 
+-- 17/04/2025
+
+select * from usersetting where userinfoid in ( select userid from users where username in 
+( 'ggsnagar' ) );
+
+delete from usersetting where userinfoid in ( select userid from users where username in 
+( 'ggsnagar' ) );
+
+select * from userkeyjsonvalue where namespace = 'trackerCaptureGridColumns'
+and userid in ( select userid from users where username in ( 'ggsnagar'));
+
+delete from userkeyjsonvalue where namespace = 'trackerCaptureGridColumns'
+and userid in ( select userid from users where username in ( 'ggsnagar'));
+
+-- soft delete 17/04/2025
+delete from programinstance where deleted is true;
+
+delete from programinstanceaudit where programinstanceid in (
+select programinstanceid from programinstance where deleted is true);
+
+delete from programinstancecomments where programinstanceid in (
+select programinstanceid from programinstance where deleted is true);
+
+delete from programstageinstance where programinstanceid in (
+select programinstanceid from programinstance where deleted is true);
+
+delete from trackedentitydatavalueaudit where programstageinstanceid in (
+select programstageinstanceid from programstageinstance where programinstanceid in (
+select programinstanceid from programinstance where deleted is true));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- 21/02/2025
+
+
+
+
+
 
 -- issue related to soft delete of TEI,enrollment,events
 delete from programinstance where deleted is true;
@@ -454,3 +504,28 @@ where de.uid = 'YBMVx48hw5o' in('c8IacFDh4ql', 'B5BoWbyB1sY','YBMVx48hw5o',
 
 -- programIndicator/nTySTtFbryp in filter event-count
 #{u0c2uIZBvks.YBMVx48hw5o} == 'Live birth 1' && #{u0c2uIZBvks.YBMVx48hw5o} == 'Live birth 2' && A{vbUue5poEcT} == 'ST' && A{vbUue5poEcT} == 'OT' && A{vbUue5poEcT} == 'G' && A{vbUue5poEcT} == 'OBC' 
+
+
+-- dmc soft delete issue
+-- 12/06/2025
+
+
+delete from programinstance where deleted = true;
+
+delete from programinstanceaudit where programinstanceid in(
+select programinstanceid from programinstance where deleted = true);
+
+delete from programinstancecomments where programinstanceid in(
+select programinstanceid from programinstance where deleted = true);
+
+
+delete from programstageinstance where programinstanceid in(
+select programinstanceid from programinstance where deleted = true);
+
+delete from trackedentitydatavalueaudit where programstageinstanceid
+in ( select programstageinstanceid from programstageinstance where programinstanceid in(
+select programinstanceid from programinstance where deleted = true));
+
+delete from programstageinstancecomments where programstageinstanceid
+in ( select programstageinstanceid from programstageinstance where programinstanceid in(
+select programinstanceid from programinstance where deleted = true));

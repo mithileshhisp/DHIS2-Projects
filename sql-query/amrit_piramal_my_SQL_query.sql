@@ -6901,6 +6901,9 @@ AND pi.organisationunitid in (  7774555,7774550,7774558,7774560,7774551,7774554,
 -- STFC MMU Event count
 -- https://samiksha.piramalswasthya.org/amrit/api/29/sqlViews/H7CoTXMw1dh/data?paging=false
 
+
+https://samiksha.piramalswasthya.org/amrit/api/events.json?program=NMGbY2nXCKu&orgUnit=TmJCcHKmOOy&ouMode=SELECTED&status=ACTIVE&filter=QRE1IBSOKdE:eq:30002200414304&skipPaging=true
+
 -- 27363 -- start cron from 17/07/2024 at 2024-07-17 00:47:01 == 27363 -- done at 2024-07-17 06:11:28 for stfc_mmu_Project_2022_17July2024 file
 -- 34884 58644 -- start cron from 17/07/2024 at 2024-07-17 12:30:02 == 58644 + 27363 = 86007  -- done for stfc_Event-MMU-STFC Project_2023-01-01_023-05-01_17July2024
 -- 57974 -- start cron from 2024-07-18 10:40:02 86007 + 57974 = 143,981 done as on 2024-07-18 22:34:17 for stfc_Event-MMU_2023-05-01_2023-09-01_18July2024_1
@@ -6915,6 +6918,7 @@ AND pi.organisationunitid in (  7774555,7774550,7774558,7774560,7774551,7774554,
 
 -- 4767 pushing event start . 2024-08-23 18:18:02 stfc_missing_event_from_Aug_12_to_20_23Aug2024.xlsx
 
+-- STFC visit code event list -- 
 SELECT psi.uid as eventUID,de.uid as dataElementUID,psi.organisationunitid,org.uid as orgUID,
 cast(data.value::json ->> 'value' AS VARCHAR) AS de_value,psi.created::date FROM programstageinstance psi
 JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
@@ -6946,6 +6950,24 @@ in (7774555,7774550,7774558,7774560,7774551,7774554,
 7774548,7774549,7774553,7774556,7774552,7774557,7774559,7774561,7774547)
 and  psi.programstageid in ( select programstageid
 from programstage where uid = 'qJbHjQBuG3G') and executiondate::date = '2024-07-17';
+
+
+-- STFC visit code event list -- 
+SELECT teav.value benregid, psi.uid as eventUID,de.uid as dataElementUID,psi.organisationunitid,org.uid as orgUID,
+cast(data.value::json ->> 'value' AS VARCHAR) AS de_value, psi.created::date FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON  pi.programinstanceid = psi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN dataelement de ON de.uid = data.key
+where de.uid = 'QRE1IBSOKdE' AND teav.trackedentityattributeid = 7210  and psi.organisationunitid 
+in (7774555,7774550,7774558,7774560,7774551,7774554,
+7774548,7774549,7774553,7774556,7774552,7774557,7774559,7774561,7774547)
+and  psi.programstageid in ( select programstageid
+from programstage where uid = 'qJbHjQBuG3G') and executiondate::date
+in ( '2025-02-07', '2025-02-09');
+
+
 
 
 -- end
@@ -8188,5 +8210,119 @@ dataelementid = 23013082 and sourceid = 65
 
 delete from datavalue where 
 dataelementid = 23013082 and sourceid = 65
+
+
+-- 31/12/2024
+-- delete program Agent Queue Time_104
+
+delete from program_organisationunits
+where programid = 6345893;
+
+select * from programindicator
+where programid = 6345893;
+
+select * from periodboundary where programindicatorid
+in ( select programindicatorid from programindicator
+where programid = 6345893);
+
+delete from periodboundary where programindicatorid
+in ( select programindicatorid from programindicator
+where programid = 6345893);
+
+delete from programindicator
+where programid = 6345893;
+
+delete from programstagesection_dataelements
+where programstagesectionid in ( select programstagesectionid
+from programstagesection where programstageid
+in ( select programstageid from programstage
+where programid = 6345893));
+
+delete from programstagesection where programstageid
+in ( select programstageid from programstage
+where programid = 6345893);
+
+delete from programstagedataelement where programstageid
+in ( select programstageid from programstage
+where programid = 6345893);
+
+delete from programstage
+where programid = 6345893;
+
+delete from program_attributes
+where programid = 6345893;
+
+delete from program where 
+programid = 6345893;
+
+
+-- 08/01/2024
+
+-- delete program Agent Status_104
+
+delete from program_organisationunits
+where programid = 6342321;
+
+select * from programindicator
+where programid = 6342321;
+
+select * from periodboundary where programindicatorid
+in ( select programindicatorid from programindicator
+where programid = 6342321);
+
+delete from periodboundary where programindicatorid
+in ( select programindicatorid from programindicator
+where programid = 6342321);
+
+delete from visualization_datadimensionitems where 
+datadimensionitemid in (select datadimensionitemid from  
+datadimensionitem where programindicatorid
+in ( select programindicatorid from programindicator
+where programid = 6342321));
+
+delete from datadimensionitem where programindicatorid
+in ( select programindicatorid from programindicator
+where programid = 6342321);
+
+
+
+
+delete from programindicator
+where programid = 6342321;
+
+
+
+delete from programstagesection_dataelements
+where programstagesectionid in ( select programstagesectionid
+from programstagesection where programstageid
+in ( select programstageid from programstage
+where programid = 6342321));
+
+delete from programstagesection where programstageid
+in ( select programstageid from programstage
+where programid = 6342321);
+
+delete from programstagedataelement where programstageid
+in ( select programstageid from programstage
+where programid = 6342321);
+
+delete from programstage
+where programid = 6342321;
+
+delete from program_attributes
+where programid = 6342321;
+
+delete from program where 
+programid = 6342321;
+
+
+select * from programstage where 
+programid = 6342321
+
+select * from programstageinstance
+where programstageid = 6342332
+
+select * from program
+
 			
 			

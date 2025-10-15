@@ -1,7 +1,79 @@
 
 
-sudo -u hmis /home/hisp/tomcat-nepalhmis/bin/startup.sh
 
+
+-- find command
+grep -rl --include="*.js" "/pmnp_is/dhis-web-reports/"
+
+find and replace command in ubantu
+
+find . -name "*.js" -exec sed -i 's|/pmnp_is/|../../../|g' {} +
+
+--
+pg_dump -U dhis  -d pmnp_is_240 -T analytics* > /home/mithilesh/pmnp_is_240_04May2025.sql
+pg_dump -U dhis  -d bhutan_hhs -T analytics* > /home/mithilesh/bhutan_hhs_24May2025.sql
+
+-- permission
+
+-- PMNP 
+chown mithilesh:mithilesh /home/mithilesh/dhis-web-tracker-capture/ -R
+
+chown mithilesh:mithilesh /home/mithilesh/dhis-service-administration-2.34.10-SNAPSHOT.jar -R
+
+chown mithilesh:mithilesh /home/mithilesh/dhis-service-administration-2.34.10-SNAPSHOT.jar -R
+chown PNMP_UAT_Admin1:PNMP_UAT_Admin1 /home/PNMP_UAT_Admin1/dhis-web-dataentry-2.40.8.1.jar -R
+
+-- start tomcat from user
+
+sudo -u hmis /home/hisp/tomcat-nepalhmis/bin/startup.sh
+sudo -u dhis /var/dhis/tomcat-dhis-renew/bin/startup.sh
+
+sudo -u pmnp /data/dhis2/tomcat_pmnp_is/bin/startup.sh
+sudo -u pmnp /data/dhis/tomcat-pmnp-pro/bin/startup.sh
+
+-- production restart
+-- /opt/restart_tomcat_pmnp.sh
+-- postgres restart
+ -- sudo /etc/init.d/postgresql restart
+
+
+-- .sh file details
+
+# Give it a few seconds to shut down gracefully
+sleep 10
+
+# Kill any remaining Tomcat processes
+echo "Killing any remaining Tomcat processes..."
+ps aux | grep 'tomcat-pmnp-pro' | grep -v grep | awk '{print $2}' | xargs -r kill -9
+
+# Start Tomcat as 'pmnp' user
+echo "Starting Tomcat as 'pmnp' user..."
+sudo -u pmnp /data/dhis/tomcat-pmnp-pro/bin/startup.sh
+
+echo "Tomcat restart complete."
+root@ip-10-185-50-10:/home/PNMP_Prod_APP_Admin1#
+
+-- mv activeUserList.vm /data/dhis/tomcat-pmnp-pro/webapps/app/dhis-web-dataentry/
+-- chown pmnp. /data/dhis/tomcat-pmnp-pro/webapps/app/dhis-web-dataentry/ -R
+-- chown pmnp. /data/dhis/tomcat-pmnp-pro/webapps/app/WEB-INF/lib/ -R
+-- mv dhis-web-dataentry-2.40.8.1.jar  /data/dhis/tomcat-pmnp-pro/webapps/app/WEB-INF/lib/
+
+
+
+-- PMNP end
+
+
+
+ -- 9199990989
+
+-- ll -larth
+-- eventDataValue update dataElement-value
+
+
+
+
+sudo -u hmis /home/hisp/tomcat-nepalhmis/bin/startup.sh
+sudo -u dhis /var/dhis/tomcat-dhis-renew/bin/startup.sh
 
 pg_dump -U hisp  -d odk_v238 -T analytics* > /home/mithilesh/odk_v240_backup27May2024.sql
 
@@ -22,8 +94,6 @@ pg_dump -U dhis  -d leprosy_pilot_238 -T analytics* > /home/mithilesh/leprosy_pi
 pg_dump -U dhis  -d leprosy_pilot_v240 -T analytics* > /home/mithilesh/leprosy_pilot_v240_11Dec2024.sql
 
 	leprosy_pilot_v240
-
-
 
 
 login to postgres
@@ -91,8 +161,6 @@ pg_dump -U dhis  -d hiv_tracker_238_26102022 -t program_attribute_group > /home/
 pg_dump -U dhis2-user  -d mizoramipa_238 -T analytics* > /home/dbadmin/mizoramipa_238_07Feb2024.sql
 
 pg_dump -U dhis2-user  -d mizoramipa_238 -T analytics* > /home/dbadmin/mizoramipa_238_17June2024.sql
-
-
 
 
 
@@ -1098,6 +1166,15 @@ INFO  2024-04-26T18:02:50,673 Generating resource table: '_periodstructure' (Jdb
 
 -- A way to confirm the list of current existing years that are used during the Analytics Export process is running this query:
 -- wrong period issue in run analytics
+
+
+select distinct (extract(year
+from pe.startdate)) as datayear ,pe.periodid
+from period pe order by
+datayear desc;
+
+
+
 ( select distinct (extract(year
 from pe.startdate)) as datayear ,pe.periodid
 from period pe )
@@ -1144,9 +1221,26 @@ datayear asc;
 
 
 -- Based on start/end years supported, find the invalid executiondate in events.
-select psi.executiondate from programstageinstance psi where
+select psi.uid, psi.code, psi.duedate,psi.executiondate from programstageinstance psi where
 (EXTRACT(year from psi.executiondate) < 1990 
  or EXTRACT(year from psi.executiondate) > 2029);
+
+
+-- 2.41 query
+select ev.uid, ev.scheduleddate ,ev.occurreddate  from event ev where
+(EXTRACT(year from ev.occurreddate) < 1900
+ or EXTRACT(year from ev.occurreddate) > 2050);
+
+select ev.uid eventID,ev.eventid , ev.occurreddate::date,
+ev.scheduleddate::date,org.uid orgUID,org.name orgName, data.key as dataElement_uid,
+cast(data.value::json ->> 'value' AS VARCHAR) AS wrong_date from event ev
+JOIN json_each_text(ev.eventdatavalues::json) data ON TRUE 
+INNER JOIN dataelement de ON de.uid = data.key
+INNER JOIN organisationunit org ON org.organisationunitid = ev.organisationunitid
+where cast(data.value::json ->> 'value' AS VARCHAR) like '%0000-%' and 
+(EXTRACT(year from ev.occurreddate) < 1900 
+or EXTRACT(year from ev.occurreddate) > 2050) 
+order by ev.occurreddate;
 
 
 -- Based on start/end years supported, find the invalid duedate in events.
@@ -1171,6 +1265,19 @@ where de.uid = 'VxScEPPSjq8' and
 (EXTRACT(year from psi.executiondate) < 1990 
 or EXTRACT(year from psi.executiondate) > 2029) 
 order by psi.executiondate;
+
+
+select tei.uid as tei_uid, org.uid as org_uid, org.name as org_name, 
+prg.uid as prg_uid, prg.name as prg_name, teav.trackedentityinstanceid, 
+teav.trackedentityattributeid, teav.value,teav.storedby  from trackedentityattributevalue teav
+inner join trackedentityinstance tei on tei.trackedentityinstanceid = teav.trackedentityinstanceid
+inner join organisationunit org on org.organisationunitid = tei.organisationunitid
+inner join programinstance pi on pi.trackedentityinstanceid = tei.trackedentityinstanceid
+inner join program prg on prg.programid = pi.programid
+where trackedentityattributeid = 61187 and value like '0%'
+order by value;
+
+
 
 
 delete from programstageinstance  where 
@@ -1252,3 +1359,134 @@ order by messageconversationid;
 
 
 https://ln4.hispindia.org/timor_dev/api/analytics/dataValueSet.json?dimension=dx:K8VVrMcSAUD;K81oZQ4b5Vl;QwOHKYNmdN9;Tak313dv0CT;IfECSBYqrqV;eu9RAPEMXhb;BfoLPFMyQzkB;ragjEZ11Bti;FDxVW7nURcD;doyR9jQvv92;GkgzaLmrg5S;MzPenhNCmy2;ck9AtliGzns;KjbIihlYc5D;v6mPHFvH2Ho;npDd2ehR91M&dimension=pe:202401&dimension=ou:NdWZGvjX3BN&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&completedOnly=false
+
+
+
+SELECT data.key as de_uid,
+cast(data.username::json → ‘value’ AS VARCHAR) AS de_value
+FROM programstageinstance psi
+JOIN json_each_text(eventdatavalues::json) data ON true
+
+{"id": 10997, "uid": "WcmqYQ15AH7", "surname": "PHC", "username": "KamichuPHC_AHS", "firstName": "Kamichu"}
+
+select psi.uid, psi.organisationunitid, org.name org_name,psi.created::date, psi.executiondate::date,
+ ps.name stage_name,psi.eventdatavalues,
+cast(psi.createdbyuserinfo::json ->> 'username' AS VARCHAR) as user_name
+from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+where cast(psi.createdbyuserinfo::json ->> 'username' AS VARCHAR) = 'SamtengangPHC_AHS'
+order by psi.created desc;
+
+
+
+-- find wrong date format
+SELECT trackedentityinstanceid,trackedentityattributeid,value
+FROM trackedentityattributevalue
+WHERE trackedentityattributeid in ( 2010 )
+and value NOT SIMILAR TO '^[0-9]{4}-[0-9]{2}-[0-9]{2}$'; 
+
+
+SELECT trackedentityinstanceid,
+       trackedentityattributeid,
+       value
+FROM trackedentityattributevalue
+WHERE trackedentityattributeid = 2010
+  AND value !~ '^[0-9]{4}-[0-9]{2}-[0-9]{2}$';
+  
+  
+  
+-- If you also want to exclude NULL or empty values:
+
+
+SELECT trackedentityinstanceid,
+       trackedentityattributeid,
+       value
+FROM trackedentityattributevalue
+WHERE trackedentityattributeid = 2010
+  AND value IS NOT NULL
+  AND value <> ''
+  AND value !~ '^[0-9]{4}-[0-9]{2}-[0-9]{2}$';
+  
+  
+-- top most query execute traffic for database
+SELECT datname, usename, client_addr, application_name,
+       state, query_start, now() - query_start as duration,
+       left(query, 200) AS query
+FROM pg_stat_activity
+WHERE state <> 'idle'
+ORDER BY duration DESC;  
+
+
+SELECT datname, usename, client_addr, application_name,
+       state, query_start, now() - query_start as duration,
+       left(query, 200) AS query
+FROM pg_stat_activity
+WHERE state = 'idle'
+ORDER BY duration DESC; 
+
+SELECT datname,
+       COUNT(*) AS idle_connections
+FROM pg_stat_activity
+WHERE state = 'idle'
+GROUP BY datname;
+
+-- If you want only long-idle connections (e.g., idle more than 10 minutes):
+
+SELECT pid,
+       usename,
+       datname,
+       client_addr,
+       state,
+       now() - state_change AS idle_duration
+FROM pg_stat_activity
+WHERE state = 'idle'
+  AND now() - state_change > interval '10 minutes';
+  
+  
+--Ah 👍 you want just the count of idle (ideal 😅) connections in PostgreSQL.
+
+--You can do it with a simple query:
+
+SELECT COUNT(*) AS idle_connections
+FROM pg_stat_activity
+WHERE state = 'idle';
+
+--🔎 If you want to check by database:
+SELECT datname,
+       COUNT(*) AS idle_connections
+FROM pg_stat_activity
+WHERE state = 'idle'
+GROUP BY datname;
+
+--🔎 If you want to check only long idle (e.g., > 10 minutes):
+SELECT COUNT(*) AS long_idle_connections
+FROM pg_stat_activity
+WHERE state = 'idle'
+  AND now() - state_change > interval '10 minutes';
+  
+-- PMNP duplicate attributeValue query
+
+SELECT value, COUNT(*) AS duplicate_count
+FROM trackedentityattributevalue
+GROUP BY value
+HAVING COUNT(*) > 1;
+
+SELECT tea_value.*
+FROM trackedentityattributevalue tea_value
+JOIN (
+    SELECT value
+    FROM trackedentityattributevalue
+    GROUP BY value
+    HAVING COUNT(*) > 1
+) dup ON tea_value.value = dup.value
+where tea_value.trackedentityattributeid = 2002;
+
+
+SELECT trackedentityinstanceid, value, COUNT(*) AS duplicate_count
+FROM trackedentityattributevalue
+
+where trackedentityattributeid = 2002
+GROUP BY trackedentityinstanceid, value
+HAVING COUNT(*) > 1;
+  

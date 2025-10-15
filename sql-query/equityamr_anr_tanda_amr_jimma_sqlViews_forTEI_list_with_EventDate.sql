@@ -1,0 +1,1683 @@
+
+-- SQL-View-Id -- WKhh3qxwcPW -- name -- AMRNEWDATAVIEW
+-- query
+
+-- api
+
+-- https://ln1.hispindia.org/equityamr/api/trackedEntityInstances.json?ouMode=DESCENDANTS&program=L7bu48EI54J&ou=wN35yT3J6Du&order=lastUpdated:desc&skipPaging=true
+
+-- https://ln1.hispindia.org/equityamr/api/trackedEntityInstances?paging=false&fields=trackedEntityInstance&filter=nFrlz82c6jS:eq:3016&ou=wN35yT3J6Du&trackedEntityType=tOJvIFXsB5V
+
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID, 
+psi.eventdatavalues as datavalues, psi.created::date as created, psi.executiondate::date as eventDate
+from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false and psi.executiondate >  CURRENT_DATE - INTERVAL '2 months'  order by psi.executiondate desc,psi.created desc
+
+
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID, 
+psi.eventdatavalues as datavalues, psi.created::date as created, psi.executiondate::date as eventDate
+from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and prg.uid in ( 'L7bu48EI54J','vMmE5HHjPF7')  
+and psi.executiondate >  CURRENT_DATE - INTERVAL '2 months'  order by psi.executiondate desc;
+
+
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID, 
+psi.eventdatavalues as datavalues, psi.created::date as created, psi.executiondate::date as eventDate
+from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and prg.uid in ( 'L7bu48EI54J','vMmE5HHjPF7')  
+and psi.created >  CURRENT_DATE - INTERVAL '2 months'  order by psi.created desc;
+
+-- 25/07/2023
+
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID, 
+psi.eventdatavalues as datavalues, psi.created::date as created, psi.executiondate::date as eventDate
+from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and prg.uid in ( 'L7bu48EI54J','vMmE5HHjPF7') 
+and org.path LIKE '%ANGhR1pa8I5%'and psi.executiondate >  CURRENT_DATE - INTERVAL '2 months'  
+order by psi.executiondate desc;
+
+
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID, 
+psi.eventdatavalues as datavalues, psi.created::date as created, psi.executiondate::date as eventDate
+from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and prg.uid in ( 'L7bu48EI54J','vMmE5HHjPF7') 
+and org.path LIKE '%${orgunit}%'and psi.executiondate >  CURRENT_DATE - INTERVAL '2 months'  
+order by psi.executiondate desc;
+
+
+
+-- updated query
+
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID, 
+psi.eventdatavalues as datavalues, psi.created::date as created, psi.executiondate::date as eventDate
+from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false order by psi.executiondate desc,psi.created desc
+
+
+ -- for sample testing only
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID, 
+psi.eventdatavalues as datavalues, psi.created::date as created, psi.executiondate::date as eventDate
+from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and prg.uid in ( 'L7bu48EI54J','vMmE5HHjPF7')  order by psi.executiondate desc,psi.created desc
+
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID, 
+psi.eventdatavalues as datavalues, psi.created::date as created, psi.executiondate::date as eventDate
+from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and prg.uid in ( 'L7bu48EI54J','vMmE5HHjPF7')  
+and psi.created >  CURRENT_DATE - INTERVAL '2 months' order by psi.executiondate desc,psi.created desc
+
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID, 
+psi.eventdatavalues as datavalues, psi.created::date as created, psi.executiondate::date as eventDate
+from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and prg.uid in ( 'L7bu48EI54J','vMmE5HHjPF7')  
+and tei.created >  CURRENT_DATE - INTERVAL '2 months' order by psi.executiondate desc,psi.created desc;
+
+-- event list with trackedentityattributevalue
+SELECT org.name AS orgName,tei.uid AS teiUID,teav.value as CR_Number,psi.uid eventID,
+psi.executiondate::date,psi.status,psi.completeddate::date,psi.completedby 
+FROM programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = tei.trackedentityinstanceid
+where psi.status = 'COMPLETED' and org.uid in ( 'bLfOUtl4eZd','SalGKJqIV3t')
+and teav.trackedentityattributeid =  3418;
+
+
+-- event list with multiple TEA value trackedentityattributevalue
+SELECT teav2.value as Patient_Name ,teav1.value as CR_Number, 
+org.name AS orgName,psi.executiondate::date as Event_date,
+psi.status AS Event_Status, psi.completeddate::date AS Completed_Date,
+psi.completedby AS Completed_By FROM trackedentityattributevalue teav1
+INNER JOIN ( SELECT trackedentityinstanceid,value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid = 474720 ) teav2
+on teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+WHERE teav1.trackedentityattributeid =  3418 and org.uid in ( 'bLfOUtl4eZd','SalGKJqIV3t')
+and psi.status = 'COMPLETED';
+
+
+-- all eventDataValue
+
+SELECT psi.uid eventID,psi.created::date,psi.lastupdated::date,psi.executiondate::date as eventdate, 
+psi.storedby,psi.status,psi.completeddate::date,psi.completedby,org.uid AS orgUID,org.name AS orgName,
+prg.uid AS prgUID, prg.name AS prgName,ps.uid AS prgStageUID, ps.name AS prgStageName,
+de.name AS dataElementName, data.key as de_uid,cast(data.value::json ->> 'value' AS VARCHAR) AS de_value 
+FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN dataelement de ON de.uid = data.key
+WHERE and psi.executiondate BETWEEN '2023-07-01' AND '2024-12-31'
+and org.uid = 'SLBSGMCH';
+
+
+
+
+SELECT psi.uid AS eventUID,teav1.value as CR_Number, 
+org.name AS orgName,psi.executiondate::date as Event_date,
+psi.status AS Event_Status, eventdatavalues -> 'SaQe2REkGVw' ->> 'value'
+FROM trackedentityattributevalue teav1
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+WHERE teav1.trackedentityattributeid =  3418 and org.uid = 'bLfOUtl4eZd'
+and psi.executiondate BETWEEN '2021-01-01' AND '2021-12-31'
+and psi.status != 'COMPLETED' and prg.uid in ('dzizG8i1cmP') 
+AND  psi.eventdatavalues -> 'SaQe2REkGVw' is not null
+and eventdatavalues -> 'SaQe2REkGVw' ->> 'value' = 'ECO';
+
+
+-- amr tanda production 
+-- list of events with CR Number and Organism 21/04/2025
+
+SELECT psi.uid AS eventUID,teav1.value as CR_Number, 
+org.name AS orgName,psi.executiondate::date as Event_date,
+psi.status AS Event_Status, eventdatavalues -> 'SaQe2REkGVw' ->> 'value' as Organism
+FROM trackedentityattributevalue teav1
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+WHERE teav1.trackedentityattributeid =  3418 
+and psi.executiondate BETWEEN '2024-11-01' AND '2025-04-30';
+
+
+
+
+
+
+
+-- de optionSet optionValue
+SELECT de.name deName,de.uid deUid ,os.name optionsetName,
+os.uid optionsetUid ,ov.uid optionValueUid ,ov.name optionValueName,
+ov.code optionValueCode FROM optionvalue ov
+INNEr JOIN optionset os ON os.optionsetid = ov.optionsetid
+INNER JOIN dataelement de ON de.optionsetid = os.optionsetid;
+
+
+-- 
+SELECT psi.uid eventID,psi.executiondate::date, data.key as de_uid,
+cast(data.value::json ->> 'value' AS VARCHAR) AS de_value, psi.created::date,
+prg.uid AS prgUID,de.name AS dataElementName FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN dataelement de ON de.uid = data.key
+where org.uid = 'J2lJXpkaTZC' and de.uid = 'dRKIjwIDab4' 
+and psi.executiondate::date between  '2023-04-01' 
+and '2023-04-30' ;
+
+
+-- 31/05/2023
+
+select opg.optiongroupid optionGrpID, opg.uid optionGrpUID, opg.name optionGrpName,
+opv.optionvalueid, opv.uid optionUID, opv.name optionName, opv.code optionCode from optiongroup opg
+INNER JOIN optiongroupmembers opgm ON opgm.optiongroupid = opg.optiongroupid
+INNER JOIN optionvalue opv ON opv.optionvalueid = opgm.optionid
+where opg.uid = 'TzkUQCsDv6P'
+order by opg.name;
+
+select * from optionvalue where uid = 'ADf1CAKWGwt';
+
+select * from optionvalue where optionsetid is  null
+order by created desc;
+
+delete from optionvalue where optionsetid is  null
+order by created desc;
+
+delete from optiongroupmembers where optionid in (
+select optionvalueid from optionvalue where optionsetid is  null);
+
+
+-- 19/07/2023 AMR varanasi delete optionvalue which r not optionset
+select * from optionvalue where optionsetid is  null
+and code = 'Semen'
+order by created desc ;
+
+delete from optionvalue where optionsetid is  null
+order by created desc;
+
+delete from optiongroupmembers where optionid in (
+select optionvalueid from optionvalue where optionsetid is  null);
+
+
+
+
+
+
+
+-- AMR tanda for upgrade and add new aggregation logic
+
+-- 15/06/2023 to 17/06/2023
+
+select * from dataelement where uid = 'SaQe2REkGVw'; -- Organism -- Tracker -- code -- Organism
+
+select * from dataelement where uid = 'Lc7YC95p0km'; -- Organism (Age and Gender) -- -- Tracker -- code --ORG_AGE_GEN
+select * from dataelement where uid = 'SaQe2REkGVw';
+
+update dataelement set attributevalues ='{}'
+where uid = 'SaQe2REkGVw';
+
+update dataelement set attributevalues = '{}'
+where uid = 'SaQe2REkGVw';
+
+update dataelement set code ='Organism'
+where uid = 'Lc7YC95p0km';
+
+update dataelement set code ='Organism'
+where uid = 'Lc7YC95p0km';
+
+update dataelement set code ='Organism_old'
+where uid = 'SaQe2REkGVw';
+
+
+set metadatatype attribute value to Organism for dataelement  -- Lc7YC95p0km;
+
+update dataset set code = 'organismsIsolatedAntibioticWise_old' 
+where uid = 'TZAFADC2vK0';
+
+update dataset set code = 'organismsIsolatedAntibioticWise' 
+where uid = 'hhnNVOZPrSa';
+
+
+update dataset set code = 'organismsIsolated_old' 
+where uid = 'fqDBu4H2xRX';
+
+update dataset set code = 'organismsIsolated' 
+where uid = 'cOtGbcL12N0';
+
+update dataelement set code = null where uid in ('WwmJhFtEYet','pFlXIWJ4WLr','u7y7RK6IWXM', 'iH780RzlRZB','S2zgq3Yen6r','WJEtaSYUH19');
+
+select * from datavalue order by 
+created desc;
+
+select * from dataelement where dataelementid 
+in ( 21979618,21977858);
+select * from categoryoptioncombo where categoryoptioncomboid
+in ( 21744421,21744407,20);
+
+select * from datavalue order by 
+created desc;
+
+delete from datavalue where dataelementid in ( 21980132,
+21980132,21978373,21979682,21979682,21977921);
+
+-- http://127.0.0.1:8091/amr/api/dataValues.json?paging=false&pe=202306&ds=hhnNVOZPrSa&de=uKdTimLSdjx&ou=bLfOUtl4eZd&cc=PvoQryFqDr1&cp=o2KJuGuyUQ8;OYrOCirjxOn;L9MeYmVFIgo&co=HllvX50cXC0
+
+
+-- delete program rule -- 'bCV67bYyjVa', 's7IsuiPpkI8'
+
+-- prg -- dzizG8i1cmP -- stage --UW26ioWbKzv to stage -- Q3UjBKHk5St
+-- prg -- rMiBliR4FGr -- stage --xnUTNC3qxp2 to stage -- dyWSTPoKXnp
+
+select * from programstageinstance  where programstageid in ( 
+select programstageid from programstage where uid = 'UW26ioWbKzv'); -- 3643
+
+select * from programstageinstance  where programstageid in ( 
+select programstageid from programstage where uid = 'xnUTNC3qxp2'); -- 267
+
+-- delete programrule Show non-urine samples -- bCV67bYyjVa and Show non-urine samples -- s7IsuiPpkI8
+
+-- d2:yearsBetween(A{age}, V{enrollment_date}) < 18 -- 0-17
+
+-- (d2:yearsBetween(A{age}, V{enrollment_date}) > 17) && (d2:yearsBetween(A{age}, V{enrollment_date}) < 46) -- 18-45
+
+-- (d2:yearsBetween(A{age}, V{enrollment_date}) > 45) && (d2:yearsBetween(A{age}, V{enrollment_date}) < 61) -- 46-60
+-- (d2:yearsBetween(A{age}, V{enrollment_date}) > 60) && (d2:yearsBetween(A{age}, V{enrollment_date}) < 76) -- 61-75
+-- d2:yearsBetween(A{age}, V{enrollment_date}) > 75 -- >75
+
+-- 15/06/2023
+
+delete from programruleaction where programruleid in (
+select programruleid from programrule where uid in 
+('bCV67bYyjVa', 's7IsuiPpkI8'));
+
+delete from programrule where uid in 
+('bCV67bYyjVa', 's7IsuiPpkI8');
+
+-- move stage data from one stage to another stage
+-- also for equityamr_bihar_v234 -- 28/06/2023
+update programstageinstance set programstageid = 4731 
+where programstageid in ( 
+select programstageid from programstage where uid = 'UW26ioWbKzv');
+
+update programstageinstance set programstageid = 9389 
+where programstageid in ( 
+select programstageid from programstage where uid = 'xnUTNC3qxp2');
+
+select * from programstageinstance where programstageid in (
+select programstageid from programstage where uid 
+in( 'UW26ioWbKzv', 'xnUTNC3qxp2'));
+
+-- stage delete also from AMR-Varanashi
+
+delete from programstagesection_dataelements where programstagesectionid in 
+( select programstagesectionid from programstagesection where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv'))); -- 234
+
+delete from programruleaction where programstagesectionid in 
+( select programstagesectionid from programstagesection where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv'))); -- 6
+
+delete from programstagesection where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv')); -- 18
+
+delete from programruleaction where programruleid in 
+( select programruleid from programrule where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv'))); -- 0
+
+delete from programrule where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv')); -- 0
+
+delete from programstagedataelement where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv')); -- 235
+
+delete from eventvisualization_dataelementdimensions where trackedentitydataelementdimensionid in 
+( select trackedentitydataelementdimensionid from trackedentitydataelementdimension 
+ where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv'))); -- 82
+
+delete from trackedentitydataelementdimension where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv')); -- 82
+
+
+delete from eventvisualization_attributedimensions where eventvisualizationid in 
+( select eventvisualizationid from eventvisualization 
+ where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv'))); -- 4
+
+delete from eventvisualization_columns where eventvisualizationid in 
+( select eventvisualizationid from eventvisualization 
+ where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv'))); -- 90
+
+delete from eventvisualization_organisationunits where eventvisualizationid in 
+( select eventvisualizationid from eventvisualization 
+ where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv'))); -- 2
+
+delete from eventvisualization where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv')); --2 
+ 
+delete from trackedentitydatavalueaudit where programstageinstanceid in 
+( select programstageinstanceid from programstageinstance 
+ where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv'))); -- 21
+
+delete from programstageinstance where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv')); --2 
+ 
+delete from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv');
+ 
+delete from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv'); --2 
+
+-- update event list for incomplete
+
+-- event list with multiple TEA value trackedentityattributevalue
+SELECT psi.uid AS eventUID,teav2.value as Patient_Name ,teav1.value as CR_Number, 
+org.name AS orgName,psi.executiondate::date as Event_date,
+psi.status AS Event_Status, psi.completeddate::date AS Completed_Date,
+psi.completedby AS Completed_By FROM trackedentityattributevalue teav1
+INNER JOIN ( SELECT trackedentityinstanceid,value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid = 474720 ) teav2
+on teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+WHERE teav1.trackedentityattributeid =  3418 and org.uid in ( 'bLfOUtl4eZd','SalGKJqIV3t')
+and psi.status = 'COMPLETED' and psi.executiondate 
+between '2023-06-01' and '2023-06-30' and prg.uid not in ('L7bu48EI54J'); -- 347
+
+="update programstageinstance set status  = '"&C2&"' where uid = '"&A2&"';"
+
+select * from period where periodid = 21993778; 
+select * from datavalue where periodid = 21993778; -- 1725
+select *  from datavalueaudit where periodid = 21993778; -- 699
+
+delete from datavalue where periodid = 21993778;
+delete from datavalueaudit where periodid = 21993778;
+
+-- for AMR Varanasi
+-- 16/06/2023 delete dataelement where domaintype = 'AGGREGATE'; before import
+-- https://ln2.hispindia.org/amr_varanasi/
+
+select * from categorycombo;
+select * from dataelement where domaintype = 'AGGREGATE';
+
+select count(*) from dataelement; -- 416
+select count(*) from dataelement where domaintype = 'AGGREGATE';
+
+delete from visualization_datadimensionitems where datadimensionitemid in 
+(select datadimensionitemid from datadimensionitem where dataelementid
+in ( select dataelementid from dataelement where domaintype = 'AGGREGATE'));
+
+delete from  datadimensionitem where dataelementid
+in ( select dataelementid from dataelement where domaintype = 'AGGREGATE');
+
+delete from  dataelementgroupmembers where dataelementid
+in ( select dataelementid from dataelement where domaintype = 'AGGREGATE');
+
+delete from  datasetelement where dataelementid
+in ( select dataelementid from dataelement where domaintype = 'AGGREGATE');
+
+delete from dataelement where domaintype = 'AGGREGATE';
+
+
+
+-- for AMR Varanasi delete dataelementcategory Pathogen / Suspected coloniser 22/06/2023
+
+
+
+delete from categorydimension_items where categorydimensionid in (
+select categorydimensionid from categorydimension where categoryid in (
+select categoryid from dataelementcategory where uid = 'VS4iXUJFlka'));
+
+delete from visualization_categorydimensions where categorydimensionid in (
+select categorydimensionid from categorydimension where categoryid in (
+select categoryid from dataelementcategory where uid = 'VS4iXUJFlka'));
+
+delete from categorydimension where categoryid in (
+select categoryid from dataelementcategory where uid = 'VS4iXUJFlka');
+
+delete from dataelementcategory where uid = 'VS4iXUJFlka';
+
+-- delete dataelementcategoryoption Pathogen - W1rrkaYiEFT  Suspected coloniser - EZnpCoCuq1I
+
+delete from categoryoptioncombos_categoryoptions
+where categoryoptionid in ( select categoryoptionid from
+dataelementcategoryoption where uid 
+in('W1rrkaYiEFT', 'EZnpCoCuq1I'));
+
+delete from dataelementcategoryoption where uid 
+in('W1rrkaYiEFT', 'EZnpCoCuq1I');
+
+
+select * from categoryoptioncombo where name like
+'%Pathogen%'
+
+select * from categoryoptioncombo where name like
+'%Suspected coloniser%'
+
+delete from categorycombos_optioncombos where 
+categoryoptioncomboid in (select categoryoptioncomboid
+from categoryoptioncombo where name like
+'%Pathogen%');
+
+delete from categoryoptioncombos_categoryoptions where 
+categoryoptioncomboid in (select categoryoptioncomboid
+from categoryoptioncombo where name like
+'%Pathogen%');
+
+delete from datavalue where 
+attributeoptioncomboid in (select categoryoptioncomboid
+from categoryoptioncombo where name like
+'%Pathogen%');
+
+delete from datavalueaudit where 
+attributeoptioncomboid in (select categoryoptioncomboid
+from categoryoptioncombo where name like
+'%Pathogen%');
+
+delete from categoryoptioncombo where name like
+'%Pathogen%';
+
+
+
+delete from categorycombos_optioncombos where 
+categoryoptioncomboid in (select categoryoptioncomboid
+from categoryoptioncombo where name like
+'%Suspected coloniser%');
+
+delete from categoryoptioncombos_categoryoptions where 
+categoryoptioncomboid in (select categoryoptioncomboid
+from categoryoptioncombo where name like
+'%Suspected coloniser%');
+
+delete from datavalue where 
+attributeoptioncomboid in (select categoryoptioncomboid
+from categoryoptioncombo where name like
+'%Suspected coloniser%');
+
+delete from datavalueaudit where 
+attributeoptioncomboid in (select categoryoptioncomboid
+from categoryoptioncombo where name like
+'%Suspected coloniser%');
+
+delete from categoryoptioncombo where name like
+'%Suspected coloniser%';
+
+
+-- for AMR Varanasi delete optionsets 22/06/2023
+
+update dataelement set optionsetid = null where optionsetid in (
+select optionsetid from optionset where 
+uid in ('NsnxXMTpxrY', 'hRHti3LG2H9'));
+
+delete from optiongroupmembers where optionid in (
+select optionvalueid from optionvalue where optionsetid in (
+select optionsetid from optionset where 
+uid in ('NsnxXMTpxrY', 'hRHti3LG2H9')));
+
+delete from optionvalue where optionsetid in (
+select optionsetid from optionset where 
+uid in ('NsnxXMTpxrY', 'hRHti3LG2H9'));
+
+delete from programruleaction where optiongroupid in (
+select optiongroupid from optiongroup where optionsetid in (
+select optionsetid from optionset where 
+uid in ('NsnxXMTpxrY', 'hRHti3LG2H9')));
+
+delete from optiongroup where optionsetid in (
+select optionsetid from optionset where 
+uid in ('NsnxXMTpxrY', 'hRHti3LG2H9'));
+
+delete from optionset where 
+uid in ('NsnxXMTpxrY', 'hRHti3LG2H9');
+
+-- for AMR Varanasi 04/08/2023
+
+update dataelementcategoryoption set publicaccess = 'rwrw----';
+
+-- equityamr upgradation fro 2.34 to 2.38 10/07/2023
+
+-- event list with multiple TEA value trackedentityattributevalue
+SELECT psi.uid AS eventUID,teav2.value as Patient_Name ,teav1.value as CR_Number, 
+org.name AS orgName,psi.executiondate::date as Event_date,
+psi.status AS Event_Status, psi.completeddate::date AS Completed_Date,
+psi.completedby AS Completed_By FROM trackedentityattributevalue teav1
+INNER JOIN ( SELECT trackedentityinstanceid,value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid = 474720 ) teav2
+on teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+WHERE teav1.trackedentityattributeid =  3418 
+and psi.status = 'COMPLETED' and psi.executiondate 
+between '2023-07-01' and '2023-07-31' and prg.uid 
+not in ('L7bu48EI54J','vMmE5HHjPF7'); -- 26
+
+-- update july event from COMPLETED to ACTIVE
+="update programstageinstance set status  = 'ACTIVE' where uid = '"&A2&"';"
+
+select * from datavalue where 
+periodid = 21929764;
+
+select * from period where periodid = 21929764; 
+select * from datavalue where periodid = 21929764; -- 208
+select *  from datavalueaudit where periodid = 21929764; -- 52
+
+-- delete aggregated datavalue for july
+delete from datavalue where periodid = 21929764;
+delete from datavalueaudit where periodid = 21929764;
+
+select * from period order by startdate desc;
+
+-- used for list list with sample collection date lab id sample-type
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID, 
+psi.eventdatavalues as datavalues, psi.created::date as created, psi.executiondate::date as eventDate,psi.deleted
+from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and prg.uid in ( 'L7bu48EI54J','vMmE5HHjPF7')  and psi.executiondate is not null
+and psi.executiondate >  CURRENT_DATE - INTERVAL '2 months' order by psi.executiondate desc;
+
+select CURRENT_DATE - INTERVAL '2 months'
+
+-- stage delete also from equityamr
+
+select * from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv');
+
+delete from programstagesection_dataelements where programstagesectionid in 
+( select programstagesectionid from programstagesection where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv'))); -- 132
+
+delete from programruleaction where programstagesectionid in 
+( select programstagesectionid from programstagesection where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv'))); -- 6
+
+delete from programstagesection where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv')); -- 20
+
+delete from programruleaction where programruleid in 
+( select programruleid from programrule where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv'))); -- 2
+
+delete from programrule where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv')); -- 2
+
+delete from programstagedataelement where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv')); -- 133
+
+delete from eventvisualization_dataelementdimensions where trackedentitydataelementdimensionid in 
+( select trackedentitydataelementdimensionid from trackedentitydataelementdimension 
+ where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv'))); -- 0
+
+delete from trackedentitydataelementdimension where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv')); -- 0
+
+
+delete from eventvisualization_attributedimensions where eventvisualizationid in 
+( select eventvisualizationid from eventvisualization 
+ where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv'))); -- 0
+
+delete from eventvisualization_columns where eventvisualizationid in 
+( select eventvisualizationid from eventvisualization 
+ where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv'))); -- 0
+
+delete from eventvisualization_organisationunits where eventvisualizationid in 
+( select eventvisualizationid from eventvisualization 
+ where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv'))); -- 0
+
+delete from eventvisualization where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv')); --0 
+ 
+delete from trackedentitydatavalueaudit where programstageinstanceid in 
+( select programstageinstanceid from programstageinstance 
+ where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv'))); -- 144
+
+delete from programstageinstance where programstageid in (
+select programstageid from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv')); --4 
+ 
+delete from programstage where uid 
+in('xnUTNC3qxp2', 'UW26ioWbKzv'); --2 
+
+
+-- AMR tanda production delete duplicate coc
+
+select * from categoryoptioncombo  
+where uid in ( 'eC0WJnw7XFP','XwZmsrgz90e');
+
+select * from period where periodid = 21876310; -- feb 2022
+select * from dataelement where dataelementid = 21746308; -- Klebsiella pneumoniae - AW
+select * from organisationunit where organisationunitid = 385680; -- RPGMC
+select * from categoryoptioncombo  where uid in ( 'eC0WJnw7XFP');
+
+eC0WJnw7XFP -- 21840069 coc - 1
+XwZmsrgz90e -- 21874232 coc - 452
+
+select * from datavalue where categoryoptioncomboid in ( 21840069 );
+select * from datavalue where categoryoptioncomboid in ( 21874232 );
+
+select * from datavalue where attributeoptioncomboid in ( 21840069 );
+select * from datavalue where attributeoptioncomboid in ( 21874232 );
+
+-- eC0WJnw7XFP -- 21840069 to be deleted
+-- XwZmsrgz90e -- 21874232
+
+
+delete from categorycombos_optioncombos 
+where categoryoptioncomboid in ( 21840069); -- 1
+
+delete from categoryoptioncombos_categoryoptions 
+where categoryoptioncomboid in ( 21840069); -- 2
+
+delete from datavalue 
+where categoryoptioncomboid in ( 21840069); -- 1
+
+delete from categoryoptioncombo  
+where categoryoptioncomboid in ( 21840069);
+
+-- Cefoperazone-sulbactam
+
+-- oaP95BtU2mN - Cefoperazone-sulbactam -- 21831804
+-- FH7D9HvXueQ - Cefoperazone-Sulbactam -- 21874222
+
+select * from dataelementcategoryoption
+where categoryoptionid = 21831804;
+
+select * from dataelementcategoryoption
+where name = 'Cefoperazone-Sulbactam';
+
+delete  from dataelementcategoryoption
+where categoryoptionid = 21831804;
+
+delete from categorydimension_items
+where categoryoptionid = 21831804;
+
+
+select * from optionvalue 
+where code = 'Cefoperazone-Sulbactam';
+
+
+SELECT psi.uid AS eventUID,  de.dataelementid, 
+cast(data.value::json ->> 'value' AS VARCHAR) AS de_value FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN dataelement de ON de.uid = data.key
+WHERE de.uid = 'Qsx6EEKMxoX' and
+eventdatavalues -> 'Qsx6EEKMxoX' ->> 'value' = 'Cefoperazone-sulbactam';
+
+-- equityamr 
+-- coc to be deleted
+-- Cefoperazone-sulbactam, Intermediate -- lN0OVFrHVDc
+-- Cefoperazone-sulbactam, Resistant -- eC0WJnw7XFP
+
+select * from categoryoptioncombo  
+where uid in ( 'lN0OVFrHVDc','eC0WJnw7XFP');
+
+select * from datavalue where categoryoptioncomboid in ( 21840069,21840070 ); -- 0
+select * from datavalue where attributeoptioncomboid in ( 21840069,21840070 ); -- 0
+
+select * from categoryoptioncombo  
+where categoryoptioncomboid in ( 21840069,21840070 );
+
+delete from categorycombos_optioncombos
+where categoryoptioncomboid in ( 21840069,21840070 ); --2
+
+delete from categoryoptioncombos_categoryoptions
+where categoryoptioncomboid in ( 21840069,21840070 ); -- 4
+
+delete from datavalueaudit
+where categoryoptioncomboid in ( 21840069,21840070 ); -- 2
+
+
+delete from categoryoptioncombo  
+where categoryoptioncomboid in ( 21840069,21840070 );
+
+
+select * from dataelementcategoryoption
+where name = 'Cefoperazone-sulbactam';
+
+select * from dataelementcategoryoption
+where categoryoptionid = 21831804;
+
+delete  from dataelementcategoryoption
+where categoryoptionid = 21831804;
+
+delete from categorydimension_items
+where categoryoptionid = 21831804; -- 123
+
+-- AMR Varanasi 31/08/2023 delete Favorites created before 22/08/2023
+
+delete from visualization_categorydimensions
+where visualizationid in ( select visualizationid
+from visualization where created::date < '2023-08-22'); -- 623
+
+delete from visualization_columns
+where visualizationid in ( select visualizationid
+from visualization where created::date < '2023-08-22'); -- 623
+
+delete from visualization_filters
+where visualizationid in ( select visualizationid
+from visualization where created::date < '2023-08-22'); -- 928
+
+delete from visualization_organisationunits
+where visualizationid in ( select visualizationid
+from visualization where created::date < '2023-08-22'); -- 55
+
+delete from visualization_rows
+where visualizationid in ( select visualizationid
+from visualization where created::date < '2023-08-22'); -- 514
+
+delete from visualization_datadimensionitems
+where visualizationid in ( select visualizationid
+from visualization where created::date < '2023-08-22'); -- 839
+
+delete from visualization_periods
+where visualizationid in ( select visualizationid
+from visualization where created::date < '2023-08-22'); -- 31
+
+delete from visualization_dataelementgroupsetdimensions
+where visualizationid in ( select visualizationid
+from visualization where created::date < '2023-08-22'); -- 28
+
+delete from visualization_orgunitlevels
+where visualizationid in ( select visualizationid
+from visualization where created::date < '2023-08-22'); -- 1
+
+delete from visualization where
+created::date < '2023-08-22'; -- 358
+
+
+
+---- AMR Varanasi pending TEI list in SQL-view in dataEntry app que
+
+-- pending sample result
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID,
+psi.eventdatavalues as datavalues, psi.created as created, 
+psi.executiondate as eventDate from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and 
+psi.executiondate >  CURRENT_DATE - INTERVAL '2 months' 
+and  psi.eventdatavalues -> 'u8VDCIwa3w4' is null and prg.uid = 'L7bu48EI54J'
+order by psi.executiondate desc;
+
+-- pending Antibiotics result
+
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID,
+psi.eventdatavalues as datavalues, psi.created as created, 
+psi.executiondate as eventDate, psi.status from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and 
+psi.executiondate >  CURRENT_DATE - INTERVAL '2 months' 
+and  psi.eventdatavalues -> 'u8VDCIwa3w4' is not null
+and eventdatavalues -> 'u8VDCIwa3w4' ->> 'value' in ( 'Organism growth detected' ) and psi.status  =  'ACTIVE'
+order by psi.executiondate desc;
+
+-- updated as on 06/12/2023
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID,
+psi.eventdatavalues as datavalues, psi.created as created, 
+psi.executiondate as eventDate, psi.status,prg.name from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and 
+psi.executiondate >  CURRENT_DATE - INTERVAL '2 months' 
+and psi.status  =  'ACTIVE' AND prg.uid != 'L7bu48EI54J'
+order by psi.executiondate desc;
+
+-- Pending Antibiotics Recived
+
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID,
+psi.eventdatavalues as datavalues, psi.created as created, 
+psi.executiondate as eventDate, psi.status from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and 
+psi.executiondate >  CURRENT_DATE - INTERVAL '2 months' 
+and  psi.eventdatavalues -> 'u8VDCIwa3w4' is not null
+and eventdatavalues -> 'u8VDCIwa3w4' ->> 'value' in ( 'Organism growth detected' )  and psi.status = 'COMPLETED'
+order by psi.executiondate desc;
+
+-- updated as on 06/12/2023
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID,
+psi.eventdatavalues as datavalues, psi.created as created, 
+psi.executiondate as eventDate, psi.status,prg.name from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and 
+psi.executiondate >  CURRENT_DATE - INTERVAL '2 months' 
+ and psi.status = 'COMPLETED' AND prg.uid != 'L7bu48EI54J'
+order by psi.executiondate desc;
+
+
+
+
+
+-- pending list
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID,
+psi.eventdatavalues as datavalues, psi.created as created, 
+psi.executiondate as eventDate from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and 
+psi.executiondate >  CURRENT_DATE - INTERVAL '2 months' 
+and  psi.eventdatavalues -> 'u8VDCIwa3w4' is null
+order by psi.executiondate desc;
+
+-- Sterile list
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID,
+psi.eventdatavalues as datavalues, psi.created as created, 
+psi.executiondate as eventDate from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and 
+psi.executiondate >  CURRENT_DATE - INTERVAL '2 months' 
+and  psi.eventdatavalues -> 'u8VDCIwa3w4' is not null
+and eventdatavalues -> 'u8VDCIwa3w4' ->> 'value' = 'Sterile'
+order by psi.executiondate desc;
+
+
+SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID,
+psi.eventdatavalues as datavalues, psi.created as created, 
+psi.executiondate as eventDate,eventdatavalues -> 'u8VDCIwa3w4' ->> 'value' as Sterile
+from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false  and 
+psi.executiondate >  CURRENT_DATE - INTERVAL '2 months' 
+and  psi.eventdatavalues -> 'u8VDCIwa3w4' is not null
+and eventdatavalues -> 'u8VDCIwa3w4' ->> 'value' = 'Sterile'
+order by psi.executiondate desc;
+
+-- 
+
+
+
+
+-- incomplete event list with CR number and name
+
+SELECT psi.uid AS eventUID,teav2.value as Patient_Name ,teav1.value as CR_Number, 
+org.name AS orgName,psi.executiondate::date as Event_date,
+psi.status AS Event_Status, psi.completeddate::date AS Completed_Date,
+psi.completedby AS Completed_By FROM trackedentityattributevalue teav1
+INNER JOIN ( SELECT trackedentityinstanceid,value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid = 474720 ) teav2
+on teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+WHERE teav1.trackedentityattributeid =  3418 
+and psi.status != 'COMPLETED';
+
+-- 28/05/2024
+-- incomplete event list with CR number
+SELECT psi.uid AS eventUID,teav2.value as Patient_Name ,teav1.value as CR_Number, 
+org.name AS orgName,psi.executiondate::date as Event_date,
+psi.status AS Event_Status, psi.completeddate::date AS Completed_Date,
+psi.completedby AS Completed_By FROM trackedentityattributevalue teav1
+INNER JOIN ( SELECT trackedentityinstanceid,value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid = 474720 ) teav2
+on teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+WHERE teav1.trackedentityattributeid =  3418 
+and psi.status != 'COMPLETED' and prg.uid not in ('L7bu48EI54J');
+
+
+-- incomplete event list with CR number and name not for Sample Testing Program
+
+SELECT psi.uid AS eventUID,teav2.value as Patient_Name ,teav1.value as CR_Number, 
+org.name AS orgName,psi.executiondate::date as Event_date,
+psi.status AS Event_Status, psi.completeddate::date AS Completed_Date,
+psi.completedby AS Completed_By FROM trackedentityattributevalue teav1
+INNER JOIN ( SELECT trackedentityinstanceid,value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid = 474720 ) teav2
+on teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+WHERE teav1.trackedentityattributeid =  3418 
+and psi.status != 'COMPLETED' and prg.uid not in ('L7bu48EI54J');
+
+
+-- amr tanda production incomplete event list with CR number and eventDataValue 19/04/2024
+SELECT psi.uid AS eventUID,teav2.value as Patient_Name ,teav1.value as CR_Number, 
+org.name AS orgName,psi.executiondate::date as Event_date,
+psi.status AS Event_Status, psi.completeddate::date AS Completed_Date,
+psi.completedby AS Completed_By FROM trackedentityattributevalue teav1
+INNER JOIN ( SELECT trackedentityinstanceid,value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid = 474720 ) teav2
+on teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+WHERE teav1.trackedentityattributeid =  3418 and org.uid = 'bLfOUtl4eZd'
+and psi.executiondate BETWEEN '2021-01-01' AND '2021-12-31'
+and psi.status != 'COMPLETED' and prg.uid in ('dzizG8i1cmP') 
+AND  psi.eventdatavalues -> 'SaQe2REkGVw' is not null
+and eventdatavalues -> 'SaQe2REkGVw' ->> 'value' = 'Escherichia coli';
+
+
+
+-- amr tanda production incomplete event list with CR number and eventDataValue 19/04/2024
+SELECT psi.uid AS eventUID,teav1.value as CR_Number, 
+org.name AS orgName,psi.executiondate::date as Event_date,
+psi.status AS Event_Status, eventdatavalues -> 'SaQe2REkGVw' ->> 'value'
+FROM trackedentityattributevalue teav1
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+WHERE teav1.trackedentityattributeid =  3418 and org.uid = 'bLfOUtl4eZd'
+and psi.executiondate BETWEEN '2021-01-01' AND '2021-12-31'
+and psi.status != 'COMPLETED' and prg.uid in ('dzizG8i1cmP') 
+AND  psi.eventdatavalues -> 'SaQe2REkGVw' is not null
+and eventdatavalues -> 'SaQe2REkGVw' ->> 'value' = 'ECO';
+
+
+OU - RPGMC Tanda - bLfOUtl4eZd
+Program - Enterobacteriaceae -  dzizG8i1cmP
+Data Element - Organism -  SaQe2REkGVw
+
+
+SELECT teav2.value as Patient_Name,teav1.value as CR_Number, 
+psi.uid eventID,psi.created::date,psi.lastupdated::date,psi.executiondate::date as eventdate, 
+psi.storedby,psi.status,psi.completeddate::date,psi.completedby,org.uid AS orgUID,org.name AS orgName,
+prg.uid AS prgUID, prg.name AS prgName,
+de.name AS dataElementName, data.key as de_uid,cast(data.value::json ->> 'value' AS VARCHAR) AS de_value 
+FROM trackedentityattributevalue teav1
+
+INNER JOIN ( SELECT trackedentityinstanceid,value FROM trackedentityattributevalue 
+WHERE trackedentityattributeid = 474720 ) teav2
+on teav1.trackedentityinstanceid = teav2.trackedentityinstanceid
+
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE
+INNER JOIN dataelement de ON de.uid = data.key
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+WHERE teav1.trackedentityattributeid =  3418 
+AND psi.executiondate BETWEEN '2023-07-01' AND '2024-12-31' 
+and org.uid = 'SalGKJqIV3t';
+
+
+
+
+
+
+
+https://ln2.hispindia.org/amr_vnimport/api/dataValues.json?paging=false&pe=202301&ds=oG3BlD3M9IE&de=ivbdHXXpwZ5&ou=zCSRdpPXo5a&cc=bdutjzPz3lA&cp=v6QVa6b0sO9;FwCOqlaRrPm;lgT5XFn2CzA;n0wkVSON7Tz&co=HllvX50cXC0
+
+
+https://ln2.hispindia.org/amr_vnimport/api/dataValues?paging=false&pe=202301&ds=oG3BlD3M9IE&de=ivbdHXXpwZ5&ou=zCSRdpPXo5a&cc=bdutjzPz3lA&cp=v6QVa6b0sO9;FwCOqlaRrPm;lgT5XFn2CzA;n0wkVSON7Tz&co=HllvX50cXC0&value=1
+
+
+v6QVa6b0sO9;FwCOqlaRrPm;lgT5XFn2CzA;n0wkVSON7Tz
+
+http://127.0.0.1:8091/amr/api/dataValues.json?paging=false&pe=202309&ds=A57wLN9xqjq&de=niIjSge7ObN&ou=h7fXhILHCAO&cc=PvoQryFqDr1&cp=o2KJuGuyUQ8;vwWRiZcQqKr;XQTJmE3Mo92&value=1&co=fyoAwpSvmIB
+
+oG3BlD3M9IE
+
+ivbdHXXpwZ5
+
+fyoAwpSvmIB
+
+fyoAwpSvmIB
+
+de: ivbdHXXpwZ5
+co: HllvX50cXC0
+ds: oG3BlD3M9IE
+ou: zCSRdpPXo5a
+pe: 202301
+value: 1
+cc: bdutjzPz3lA
+cp: lgT5XFn2CzA;v6QVa6b0sO9;FwCOqlaRrPm;n0wkVSON7Tz
+
+select * from datavalue;
+select * from datavalueaudit;
+
+delete from datavalue;
+delete from datavalueaudit;
+
+
+-- 08/11/2023
+-- delete all dashboard form AMR Tanda production instance
+
+select * from dashboard;
+
+delete from dashboard;
+delete from dashboard_items;
+
+delete from visualization_columns;
+delete from visualization_datadimensionitems;
+delete from visualization_filters;
+delete from visualization_organisationunits;
+delete from visualization_rows;
+delete from dashboarditem;
+delete from dashboarditem_reports;
+delete from visualization_dataelementgroupsetdimensions;
+delete from visualization_categoryoptiongroupsetdimensions;
+delete from visualization_categorydimensions;
+delete from visualization_periods;
+delete from visualization_yearlyseries;
+delete from visualization_orgunitlevels;
+delete from visualization;
+
+-- 20/12/2023
+-- delete all dashboard form equityamr_bihar_v238  production instance
+
+delete from dashboard_items;
+
+delete from dashboard 
+where dashboardid in (
+21912624,
+21901324,
+21914146,
+21901339,
+21917273,
+21917699,
+21917936,
+21888137,
+21889076,
+21901384,
+21947138,
+21947719,
+21947720,
+21954536,
+21963558,
+21967131,
+21960720,
+21980515);
+
+delete from visualization_categorydimensions where visualizationid in (
+21853736,
+21907524);
+
+-- delete datavalue from equityamr production 08/02/2024
+
+delete from datavalue where sourceid = 21888164 
+and periodid in ( select periodid from period where startdate >= '2023-01-01' 
+and enddate <= '2023-12-31' and periodtypeid = 8)and dataelementid in ( 
+21922527,21922513,21922514,21922515,21922516,21922517,21922518,21922519,
+21922520,21922521,21922522,21922523,21922524,21922525,21922526,21746340);
+
+delete from datavalueaudit where organisationunitid = 21888164 
+and periodid in ( select periodid from period where startdate >= '2023-01-01' 
+and enddate <= '2023-12-31' and periodtypeid = 8)and dataelementid in ( 
+21922527,21922513,21922514,21922515,21922516,21922517,21922518,21922519,
+21922520,21922521,21922522,21922523,21922524,21922525,21922526,21746340);
+
+-- delete TEI enrollment/event and aggregated data based on eventDate on AMR varanasi import
+
+select * from trackedentityinstance where 
+trackedentityinstanceid in ( select trackedentityinstanceid
+from programinstance where
+programinstanceid in ( select programinstanceid
+from programstageinstance where 
+executiondate::date between '2023-06-01' and '2023-12-31'));
+
+select * from programinstance where
+programinstanceid in ( select programinstanceid
+from programstageinstance where 
+executiondate::date between '2023-06-01' and '2023-12-31');
+
+select * from programstageinstance where 
+executiondate::date between '2023-06-01' and '2023-12-31';
+
+select * from datavalue where
+periodid in ( select periodid from period where startdate >= '2023-06-01' 
+and enddate <= '2023-12-31' and periodtypeid = 10);
+
+select * from datavalueaudit where
+periodid in ( select periodid from period where startdate >= '2023-06-01' 
+and enddate <= '2023-12-31' and periodtypeid = 10);
+
+
+-- delete aggregated
+
+delete from datavalue where
+periodid in ( select periodid from period where startdate >= '2023-06-01' 
+and enddate <= '2023-12-31' and periodtypeid = 10);
+
+delete from datavalueaudit where
+periodid in ( select periodid from period where startdate >= '2023-06-01' 
+and enddate <= '2023-12-31' and periodtypeid = 10);
+
+-- delete tracker data
+
+delete from trackedentityattributevalue where 
+trackedentityinstanceid in ( select trackedentityinstanceid
+from programinstance where
+programinstanceid in ( select programinstanceid
+from programstageinstance where 
+executiondate::date between '2023-06-01' and '2023-12-31'));
+
+delete from trackedentityattributevalueaudit where 
+trackedentityinstanceid in ( select trackedentityinstanceid
+from programinstance where
+programinstanceid in ( select programinstanceid
+from programstageinstance where 
+executiondate::date between '2023-06-01' and '2023-12-31'));
+
+delete from trackedentitydatavalueaudit where programstageinstanceid
+in ( select programstageinstanceid from programstageinstance where 
+executiondate::date between '2023-06-01' and '2023-12-31');
+
+delete from programstageinstance where 
+executiondate::date between '2023-06-01' and '2023-12-31';
+
+delete from programinstance where 
+trackedentityinstanceid in ( select trackedentityinstanceid
+from programinstance where
+programinstanceid in ( select programinstanceid
+from programstageinstance where 
+executiondate::date between '2023-06-01' and '2023-12-31'));
+
+delete from trackedentityinstance where 
+trackedentityinstanceid in ( select trackedentityinstanceid
+from programinstance where
+programinstanceid in ( select programinstanceid
+from programstageinstance where 
+executiondate::date between '2023-06-01' and '2023-12-31'));
+
+
+-- AMR varanasi issue in new COC isolate Type 02/05/2024
+
+select * from categoryoptioncombo
+where name = 'CCU, Other departments, Pus/exudate'
+order by created desc;
+
+select name, count(name) from categoryoptioncombo
+group by  name 
+having count(name) > 1
+order by name
+
+select * from categoryoptioncombo
+where name like '%isolate%' order by name
+
+-- AMR varanasi production issue in new COC isolate Type 07/05/2024
+
+select name,categoryoptioncomboid,uid from categoryoptioncombo
+order by created desc;
+
+select name, count(name) from categoryoptioncombo
+group by  name 
+having count(name) > 1
+order by name
+
+delete  from categoryoptioncombo where 
+categoryoptioncomboid in ( 22148116,22148112); -- 52985
+
+-- AMR varanasi production issue in new COC isolate Type 24/07/2024 for analytics issue value = 0000-01-03
+update trackedentityattributevalue set value = '2024-01-03'
+where trackedentityattributeid = 3419 and trackedentityinstanceid = 21739591
+
+
+-- 27/02/2025
+-- amr cskhphv_amr update events status and delete aggregated data
+
+select * from program;
+
+select * from programstageinstance where programstageid in (
+select programstageid from programstage where programid in (
+153,133)) and executiondate::date > '2024-08-01';
+
+update programstageinstance set status = 'ACTIVE'
+where programstageid in (
+select programstageid from programstage where programid in (
+153,133)) and executiondate::date > '2024-08-01';
+
+
+
+-- 10/03/2025
+
+
+select count(*) from datavalue;
+
+delete from datavalue;
+delete from datavalueaudit;
+
+select * from programstageinstance where programstageid in (
+select programstageid from programstage where programid in (
+153,133));
+
+
+update programstageinstance set status = 'ACTIVE'
+where programstageid in (
+select programstageid from programstage where programid in (
+153,133));
+
+
+
+
+-- combat-AMR - JIMMA data move -- 04/03/2025
+
+update userinfo set password = '$2a$10$ygJzpL.g054Z9RSPF1w6Y.SI3FhlqpPO4Hut690n6aHQG1BdvWKsa' 
+where username = 'admin';
+
+
+select * from trackedentityinstance;
+
+select uid from trackedentityinstance;
+
+
+select uid from programstageinstance;
+
+select count(*) from trackedentityinstance; -- 8508 -- 8508 
+select count(*) from trackedentityattributevalue; -- 58636 -- 58636
+select count(*) from programinstance; -- 10806 -- 10806
+select count(*) from programstageinstance; -- 14626 -- 7215
+
+
+select count(*) from trackedentityinstance
+where trackedentityinstance.deleted is true;
+
+select count(*) from programinstance
+where programinstance.deleted is true;
+
+select count(*) from programstageinstance
+where programstageinstance.deleted is true;
+
+
+select * from trackedentityinstance 
+where uid = 'CVsHUJi1MjV'; -- 251147
+
+delete from trackedentityinstance 
+where uid = 'CVsHUJi1MjV';
+
+
+delete from trackedentityprogramowner 
+where trackedentityinstanceid = 251147;
+
+delete from programstageinstance where programstageinstance.programinstanceid 
+in ( select programinstanceid from programinstance 
+where trackedentityinstanceid = 251147);
+
+delete from trackedentitydatavalueaudit t where programstageinstanceid 
+in ( select programstageinstanceid from programstageinstance where programstageinstance.programinstanceid 
+in ( select programinstanceid from programinstance 
+where trackedentityinstanceid = 251147));
+
+-- eventdataValue
+SELECT psi.uid eventID,data.key as de_uid,cast(data.value::json ->> 'value' AS VARCHAR) AS de_value,  
+prg.uid as programUID
+FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN dataelement de ON de.uid = data.key
+where de.uid = 'VbUbBX7G6Jf' and cast(data.value::json ->> 'value' AS VARCHAR) = 'Sterile'
+
+SELECT psi.uid eventID,data.key as de_uid,cast(data.value::json ->> 'value' AS VARCHAR) AS de_value,  
+prg.uid as programUID
+FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN dataelement de ON de.uid = data.key
+where de.uid = 'tHo3CgNT0GS'
+
+
+-- monthly data 
+SELECT de.uid AS dataElementUID,de.name AS dataElementName, coc.uid AS categoryOptionComboUID, 
+coc.name AS categoryOptionComboName, attcoc.uid AS attributeOptionComboUID,attcoc.name AS
+attributeOptionComboName, org.uid AS organisationunitUID, org.name AS organisationunitName, 
+dv.value, dv.storedby, CONCAT (split_part(pe.startdate::TEXT,'-', 1), split_part(pe.startdate::TEXT,'-', 2)) 
+as isoPeriod, pety.name FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+INNER join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+INNER join periodtype pety ON pety.periodtypeid = pe.periodtypeid
+WHERE dv.value is not null and dv.deleted is not true; 
+
+select count(*) from datavalue; -- 18065
+
+
+select * from programstageinstance where uid = 'sbZJIs8oJXt';
+delete from programstageinstance where uid = 'sbZJIs8oJXt';
+
+
+-- for asella 02/04/2025
+
+select count(*) from trackedentityinstance; -- 834 --  834
+select count(*) from trackedentityattributevalue; -- 4999 -- 4999
+select count(*) from programinstance; -- 1351 -- 1351
+select count(*) from programstageinstance; -- 1506 -- 1506
+select count(*) from datavalue; -- 1906 -- 1749
+
+
+--delete from datavalue;
+
+--delete from datavalueaudit;
+
+select uid, programstageinstanceid,status from programstageinstance;
+
+update programstageinstance set status = 'ACTIVE' 
+where status = 'COMPLETED';
+
+select count(*) from programstageinstance 
+where status = 'ACTIVE' ;
+select * from dataelement where uid = 'd2t9LIFIqDN'
+
+update dataelement set uid = 'wRJZfIBBpHW' where uid = 'd2t9LIFIqDN';
+update dataelement set uid = 'BkkOjrizSJE' where uid = 'bwuQXHIwaKU';
+update dataelement set uid = 'gmr0GG4YCYr' where uid = 'SGy9Dnqvk9j';
+update dataelement set uid = 'CojbvoDlxBC' where uid = 'qnvjhW24l2I';
+update dataelement set uid = 'fSLDycAVjV9' where uid = 'sr0oLbx7uNN';
+
+update programstage set uid = 'vZz5JLX9HSt' where uid = 'oJYU31smxof';
+
+
+
+select name, uid from categoryoptioncombo where uid = 'F0OvB4hGfF4'
+
+select name, uid from categoryoptioncombo where name = 'Skin, IPD'
+
+
+
+SELECT psi.uid eventID,data.key as de_uid,cast(data.value::json ->> 'value' AS VARCHAR) AS de_value,  
+prg.uid as programUID
+FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN dataelement de ON de.uid = data.key
+where de.uid = 'VbUbBX7G6Jf' and cast(data.value::json ->> 'value' AS VARCHAR) = 'Sterile'
+
+-- Sterile value will be updated to No aerobic growth
+
+
+SELECT psi.uid eventID,data.key as de_uid,cast(data.value::json ->> 'value' AS VARCHAR) AS de_value,  
+prg.uid as programUID
+FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN dataelement de ON de.uid = data.key
+where de.uid = 'tHo3CgNT0GS'
+
+
+select uid from trackedentityinstance;
+
+-- 22/04/2025
+-- AMR Tanda production update event status and 
+-- delete aggregated datavalue from Nov-2024 to April-2025
+
+SELECT psi.uid AS eventUID,teav1.value as CR_Number, 
+org.name AS orgName,psi.executiondate::date as Event_date,
+psi.status AS Event_Status, eventdatavalues -> 'SaQe2REkGVw' ->> 'value' as Organism
+FROM trackedentityattributevalue teav1
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+WHERE teav1.trackedentityattributeid =  3418 
+and psi.executiondate BETWEEN '2024-11-01' AND '2025-04-30';
+
+-- 28/04/2025
+-- AMR Tanda production completed event list 
+SELECT psi.uid AS eventUID,teav1.value as CR_Number, 
+org.name AS orgName,psi.executiondate::date as Event_date,psi.completeddate::date as completed_date,
+psi.status AS Event_Status, eventdatavalues -> 'SaQe2REkGVw' ->> 'value' as Organism
+FROM trackedentityattributevalue teav1
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+WHERE teav1.trackedentityattributeid =  3418 and psi.status = 'COMPLETED'
+and psi.completeddate BETWEEN '2025-04-22' AND '2025-04-24';
+
+and psi.executiondate BETWEEN '2024-11-01' AND '2025-04-30';
+
+
+
+select psi.uid,psi.status from programstageinstance psi 
+where psi.executiondate BETWEEN '2024-11-01' AND '2025-04-30';
+
+update programstageinstance set status = 'ACTIVE'
+where executiondate BETWEEN '2024-11-01' AND '2025-04-30';
+
+
+
+select * from datavalue
+where periodid in ( select periodid from period where startdate 
+ >= '2024-11-01');
+
+select * from datavalueaudit
+where periodid in ( select periodid from period where startdate 
+ >= '2024-11-01');
+
+delete from datavalueaudit
+where periodid in ( select periodid from period where startdate 
+ >= '2024-11-01');
+
+delete from datavalue
+where periodid in ( select periodid from period where startdate 
+ >= '2024-11-01');
+
+
+
+
+-- 22/05/2025
+-- Equity AMR event list with CR number Organisms and update event status to ACTIVE and 
+-- delete aggregated datavalue from Nov-2024 to April-2025
+
+-- event list with Organism and CR number not in sample testing program
+SELECT psi.uid AS eventUID,teav1.value as CR_Number, 
+org.name AS orgName,psi.executiondate::date as Event_date,psi.completeddate::date as completed_date,
+psi.status AS Event_Status, eventdatavalues -> 'SaQe2REkGVw' ->> 'value' as Organism,prg.uid
+FROM trackedentityattributevalue teav1
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+WHERE teav1.trackedentityattributeid =  3418 and prg.uid not in ('L7bu48EI54J')
+and psi.executiondate BETWEEN '2024-11-01' AND '2025-05-31';
+
+
+-- run as on 22/05/2025
+select psi.uid,psi.status from programstageinstance psi 
+where psi.programstageid not in ( select programstageid from programstage
+where programid in ( select programid from program where uid = 'L7bu48EI54J'))
+and psi.executiondate BETWEEN '2024-11-01' AND '2025-05-31';
+
+update programstageinstance set status = 'ACTIVE'
+where  programstageid not in ( select programstageid from programstage
+where programid in ( select programid from program where uid = 'L7bu48EI54J'))
+and executiondate BETWEEN '2024-11-01' AND '2025-05-31'; -- 2140
+
+
+
+-- run as on 22/05/2025
+select * from datavalue
+where periodid in ( select periodid from period where startdate 
+ >= '2024-11-01');
+
+select * from datavalueaudit
+where periodid in ( select periodid from period where startdate 
+ >= '2024-11-01');
+
+delete from datavalueaudit
+where periodid in ( select periodid from period where startdate 
+ >= '2024-11-01'); -- 3041
+
+delete from datavalue
+where periodid in ( select periodid from period where startdate 
+ >= '2024-11-01'); -- 2378
+ 
+ 
+ -- 30/05/2025
+-- Varanasi AMR Varanasi event list with CR number Organisms and update event status to ACTIVE and 
+-- delete aggregated datavalue from Oct-2024 to May-2025
+
+-- event list with Organism and CR number not in sample testing program
+
+SELECT psi.uid AS eventUID,teav1.value as CR_Number, 
+org.name AS orgName,psi.executiondate::date as Event_date,psi.completeddate::date as completed_date,
+psi.status AS Event_Status, eventdatavalues -> 'SaQe2REkGVw' ->> 'value' as Organism,prg.uid
+FROM trackedentityattributevalue teav1
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+WHERE teav1.trackedentityattributeid =  3418 and prg.uid not in ('L7bu48EI54J')
+and psi.executiondate BETWEEN '2024-10-01' AND '2025-05-31';
+
+-- run as on 22/05/2025
+select psi.uid,psi.status from programstageinstance psi 
+where psi.programstageid not in ( select programstageid from programstage
+where programid in ( select programid from program where uid = 'L7bu48EI54J'))
+and psi.executiondate BETWEEN '2024-10-01' AND '2025-05-31'; -- 62
+
+update programstageinstance set status = 'ACTIVE'
+where  programstageid not in ( select programstageid from programstage
+where programid in ( select programid from program where uid = 'L7bu48EI54J'))
+and executiondate BETWEEN '2024-10-01' AND '2025-05-31'; -- 62
+
+-- run as on 30/05/2025
+select * from datavalue
+where periodid in ( select periodid from period where startdate 
+ >= '2024-10-01'); -- 73
+
+select * from datavalueaudit
+where periodid in ( select periodid from period where startdate 
+ >= '2024-10-01'); -- 65
+
+delete from datavalueaudit
+where periodid in ( select periodid from period where startdate 
+ >= '2024-10-01'); -- 65
+
+delete from datavalue
+where periodid in ( select periodid from period where startdate 
+ >= '2024-10-01'); -- 73 -- 2378

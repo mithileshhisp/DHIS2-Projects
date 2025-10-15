@@ -610,3 +610,142 @@ where uid = 'YRkMteX1TGw')
 and dataelementid in ( select dataelementid
 from dataelement where uid in ( 'r6Jlq4shCIk','NcPUoeDdIbe','UAjWgfrv56R'))
 and categoryoptioncomboid = 15;
+
+-- 06/02/2024 datavalue list with default coc and will be deleted
+
+
+
+select * from datavalue where periodid in ( select periodid
+from period where periodtypeid =3 and startdate >= '2024-01-01')
+and dataelementid in ( select dataelementid from dataelement 
+where uid in ( 'XCjU1G2782I','iR5p5Nkoeof','NcPUoeDdIbe',
+'UAjWgfrv56R','z662hSC2T9z','khBBgYOTpMt','khBBgYOTpMt'))
+and categoryoptioncomboid = 15;
+
+
+SELECT de.uid AS dataElementUID, de.name AS dataElementName, coc.uid AS categoryOptionComboUID, 
+attcoc.uid AS attributeOptionComboUID, org.uid AS organisationunitUID, org.name AS organisationunitName,
+dv.value, dv.storedby, CONCAT (split_part(pe.startdate::TEXT,'-', 1), split_part(pe.enddate::TEXT,'-', 2)) 
+as isoPeriod FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+inner join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+WHERE de.uid in ( 'XCjU1G2782I','iR5p5Nkoeof','NcPUoeDdIbe',
+'UAjWgfrv56R','z662hSC2T9z','khBBgYOTpMt','khBBgYOTpMt') 
+and dv.periodid in (select periodid from period where startdate >= '2024-01-01' 
+and enddate <= '2024-12-31' and periodtypeid = 3 ) and coc.categoryoptioncomboid = 15
+and dv.value is not null and dv.deleted = false;
+
+select * from datavalue where periodid in 
+( select periodid from period where startdate >= '2024-01-01' 
+and enddate <= '2024-12-31' and periodtypeid = 3 )
+and dataelementid in ( select dataelementid from dataelement 
+where uid in ( 'XCjU1G2782I','iR5p5Nkoeof','NcPUoeDdIbe',
+'UAjWgfrv56R','z662hSC2T9z','khBBgYOTpMt','khBBgYOTpMt'))
+and categoryoptioncomboid = 15;
+
+delete from datavalue where periodid in 
+( select periodid from period where startdate >= '2024-01-01' 
+and enddate <= '2024-12-31' and periodtypeid = 3 )
+and dataelementid in ( select dataelementid from dataelement 
+where uid in ( 'XCjU1G2782I','iR5p5Nkoeof','NcPUoeDdIbe',
+'UAjWgfrv56R','z662hSC2T9z','khBBgYOTpMt','khBBgYOTpMt'))
+and categoryoptioncomboid = 15;
+
+-- 23/06/2025
+
+select * from datavalue where periodid in 
+( select periodid from period where startdate >= '2025-05-01' 
+and enddate <= '2025-05-31' and periodtypeid = 3 )
+and dataelementid in ( select dataelementid from dataelement 
+where uid in ( 'o4OoZ7umqCO','XCjU1G2782I','iR5p5Nkoeof',
+'UAjWgfrv56R','z662hSC2T9z','r6Jlq4shCIk')); -- 1597
+
+
+select * from datavalue where periodid in 
+( select periodid from period where startdate >= '2025-05-01' 
+and enddate <= '2025-05-31' and periodtypeid = 3 )
+and dataelementid in ( select dataelementid from dataelement 
+where uid in ( 'o4OoZ7umqCO','XCjU1G2782I','iR5p5Nkoeof',
+'UAjWgfrv56R','z662hSC2T9z','r6Jlq4shCIk')) -- 1597
+and categoryoptioncomboid = 15; -- 10
+
+delete from datavalue where periodid in 
+( select periodid from period where startdate >= '2025-05-01' 
+and enddate <= '2025-05-31' and periodtypeid = 3 )
+and dataelementid in ( select dataelementid from dataelement 
+where uid in ( 'o4OoZ7umqCO','XCjU1G2782I','iR5p5Nkoeof',
+'UAjWgfrv56R','z662hSC2T9z','r6Jlq4shCIk'))
+and categoryoptioncomboid = 15;
+
+
+-- 25/06/2025
+select * from datavalue where periodid in 
+( select periodid from period where startdate >= '2025-01-01' 
+and enddate <= '2025-01-31' and periodtypeid = 3 )
+and dataelementid in ( select dataelementid from dataelement 
+where uid in ( 'NcPUoeDdIbe','UAjWgfrv56R','z662hSC2T9z',
+'o4OoZ7umqCO','r6Jlq4shCIk')) -- 2013
+and categoryoptioncomboid = 15; -- 5
+
+
+delete from datavalue where periodid in 
+( select periodid from period where startdate >= '2025-01-01' 
+and enddate <= '2025-01-31' and periodtypeid = 3 )
+and dataelementid in ( select dataelementid from dataelement 
+where uid in ( 'NcPUoeDdIbe','UAjWgfrv56R','z662hSC2T9z',
+'o4OoZ7umqCO','r6Jlq4shCIk')) 
+and categoryoptioncomboid = 15;
+
+
+
+-- tei attribute value with enrollment orgunit
+
+
+
+-- 10/07/2025
+select * from datavalue where periodid in 
+( select periodid from period where startdate >= '2025-01-01' 
+and enddate <= '2025-05-31' and periodtypeid = 3 )
+and dataelementid in ( select dataelementid from dataelement 
+where uid in ( 'NcPUoeDdIbe','UAjWgfrv56R','z662hSC2T9z',
+'o4OoZ7umqCO','r6Jlq4shCIk','iR5p5Nkoeof','yKdP9xCQAkF',
+'AB4g1myUcy6','X43dDXxYG2o','khBBgYOTpMt','xg4pGiukD5D',
+'ujBcwkiqcEH','smorHd2rgcE','WkB98dQmLjF','XCjU1G2782I',
+'jQ6DtNrM9Hp','Wh6byfL5q89','BwpgJnII74o','LMnTwQPfAVm'))
+and categoryoptioncomboid = 15; 
+
+
+delete from datavalue where periodid in 
+( select periodid from period where startdate >= '2025-01-01' 
+and enddate <= '2025-05-31' and periodtypeid = 3 )
+and dataelementid in ( select dataelementid from dataelement 
+where uid in ( 'NcPUoeDdIbe','UAjWgfrv56R','z662hSC2T9z',
+'o4OoZ7umqCO','r6Jlq4shCIk','iR5p5Nkoeof','yKdP9xCQAkF',
+'AB4g1myUcy6','X43dDXxYG2o','khBBgYOTpMt','xg4pGiukD5D',
+'ujBcwkiqcEH','smorHd2rgcE','WkB98dQmLjF','XCjU1G2782I',
+'jQ6DtNrM9Hp','Wh6byfL5q89','BwpgJnII74o','LMnTwQPfAVm'))
+and categoryoptioncomboid = 15; 
+
+
+Utilisation-Items Provided-IUCD- 10 year  ----------NcPUoeDdIbe
+Utilisation-Items Provided-Implant-5 Years------- UAjWgfrv56R
+Utilisation-Items Provided-Injectables-3 Months------ z662hSC2T9z
+Utilisation-Items Provided-Male Condom-------- o4OoZ7umqCO
+Utilisation-Items Provided-Oral pills (combined)--------r6Jlq4shCIk
+Utilisation-Items Provided-Female Condoms----- iR5p5Nkoeof
+Utilisation-Items Provided-Oral Pills (progesterone only)-------- yKdP9xCQAkF
+Utilisation-Items Provided-Injectable-1 Month------- AB4g1myUcy6
+Utilisation-Items Provided-Injectables-2 Month------ X43dDXxYG2o
+Utilisation-Items Provided-Injectables (Others)------ khBBgYOTpMt
+Utilisation-Items Provided-IUCD-5 year------ xg4pGiukD5D
+Utilisation-Items Provided-IUCD (others) ------ ujBcwkiqcEH
+Utilisation-Items Provided-Implant-3 years(Endoplant------ smorHd2rgcE
+Utilisation-Items Provided-Other Implant- -----WkB98dQmLjF
+Utilisation-Items Provided-EC Pills------ XCjU1G2782I
+Utilisation-Items Provided-EC-IUCD---- jQ6DtNrM9Hp
+Utilisation-Items Provided-EC-Other---- Wh6byfL5q89
+Utilisation-Items Provided-Diaphragm/ Cervical Cap----- BwpgJnII74o
+Utilisation-Items Provided-Spermicide----- LMnTwQPfAVm

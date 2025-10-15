@@ -1,23 +1,3 @@
--- M!th!lesh@123 links -- 172.105.47.164 96 4444
--- push orgUnit to dhis2 lvel 2 and 3 ( state and district )
-
--- take database backup before delete all tracker/aggregated data and import with new query
--- Dh!sUs3Rp@SS1
--- pg_dump -U dhis -d piramal_240 -T analytics* > /home/mithilesh/piramal_240_08Dec2023_with104_Program.sql
-
--- pg_dump -U dhis -d piramal_240 -T analytics* > /home/mithilesh/piramal_240_08Dec2023_with_out_dataValue.sql
-
-
--- piramal new client server details 20/03/2024
-
--- vpn OpenVPN password -- H!$pad77^)
--- IP -- 192.168.45.170
--- port -- 22
--- username - psmri
--- password -- P$mr1@2023$
--- location -- /var/dhis/tomcat-amrit$
--- dhis2-home -- /var/dhis/tomcat-amrit/dhis2
--- production link -- http://14.97.12.103/amrit/dhis-web-commons/security/login.action
 
 
 -- JHarkhand MMU ou list

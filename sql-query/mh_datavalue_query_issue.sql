@@ -374,6 +374,36 @@ and sourceid in ( select organisationunitid from orgunitgroupmembers where orgun
 select orgunitgroupid from orgunitgroup where uid = 'KZrndomu4ju' ) );
 
 
+
+------- 
+
+-- 14/05/2025
+
+-- maharashtra datavalueset query for no of bed for period april-2024 to march-2025
+-- push to period april-2025 to march-2026
+-- dataset name -- Hospital Yearly Information MIES Dataset -- dewVc85OtXn
+-- no of records -- 577 -- push on date -- 14/05/2025
+
+SELECT de.uid AS dataElementUID,de.name AS dataElementName, coc.uid AS categoryOptionComboUID, 
+coc.name AS categoryOptionComboName, attcoc.uid AS attributeOptionComboUID,attcoc.name AS
+attributeOptionComboName, org.uid AS organisationunitUID, org.name AS organisationunitName, 
+dv.value, dv.storedby, dv.created, dv.lastupdated, pe.startdate,pe.enddate,pety.name FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+INNER join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+INNER join periodtype pety ON pety.periodtypeid = pe.periodtypeid
+WHERE de.uid = 'fePK3YQItlG' and dv.periodid in ( select periodid from period where startdate >= '2025-04-01' 
+and enddate <= '2026-03-31' and periodtypeid = 9 ) and 
+dv.value is not null and dv.deleted is not true;
+
+
+
+
+
+
+
 ------- 
 
 -- 29/05/2023
@@ -445,6 +475,25 @@ and sourceid in (21030,9470,9795,9794,87801443,9750,9957,9920,9798,9701,9826,
 9989,9996,8987,9954,9764,9851,7327,43800396,9622,9674,9185,10234,9898,9398,9746,
 32812667,10192,10261,10257,87803409,10298,10338,10193,10272,10373,9346,10293,
 10299,10273,10292,38655490,84269097);
+
+
+
+-- 23/09/2025 dataValue set for one ORG unit
+
+SELECT de.uid AS dataElementUID,de.name AS dataElementName, coc.uid AS categoryOptionComboUID, 
+coc.name AS categoryOptionComboName, attcoc.uid AS attributeOptionComboUID,attcoc.name AS
+attributeOptionComboName, org.uid AS organisationunitUID, org.name AS organisationunitName, 
+dv.value, dv.storedby, dv.created, dv.lastupdated, pe.startdate,pe.enddate,pety.name FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+INNER join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+INNER join periodtype pety ON pety.periodtypeid = pe.periodtypeid
+WHERE org.uid = 'cgbPKTBlUpG' and 
+dv.value is not null and dv.deleted is not true;
+
+
 
 
 

@@ -63,6 +63,41 @@ and de.uid = 'AA2NhokDH60';
 
 
 
+-- createdbyuserinfo
+
+
+select psi.uid, psi.organisationunitid, org.name org_name,psi.created::date, psi.executiondate::date,
+ ps.name stage_name,psi.eventdatavalues,
+cast(psi.createdbyuserinfo::json ->> 'username' AS VARCHAR) as user_name
+from programstageinstance psi
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+where cast(psi.createdbyuserinfo::json ->> 'username' AS VARCHAR) = 'KamichuPHC_AHS'
+order by psi.created desc;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

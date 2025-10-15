@@ -2625,7 +2625,7 @@ from userinfo where username like 'stc_%';
 
 ="update userinfo set password = '"&G2&"' where username = '"&C2&"';"
 
--- event dataValue null
+-- event dataValue null for gendar (SEX)
 SELECT org.uid as orgunit,tei.uid as tei, psi.uid as eventID,
 psi.eventdatavalues as datavalues, ps.uid as programStageUID, ps.name as programStageName,
 psi.executiondate as eventDate from programstageinstance psi
@@ -2635,6 +2635,7 @@ INNER JOIN program prg ON prg.programid = pi.programid
 INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
 INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
 WHERE psi.deleted is false  and psi.eventdatavalues -> 'ilmyEDhD3FH' is null
+and psi.executiondate is not null and psi.deleted = false
 order by psi.executiondate desc;
 
 SELECT org.uid as orgunit,tei.uid as tei,teav.value AS sex, psi.uid as eventID,
@@ -2650,3 +2651,243 @@ WHERE psi.deleted is false and psi.executiondate is not null
 and psi.eventdatavalues -> 'ilmyEDhD3FH' is null and ps.uid = 'ngJg5lvavdO'
 and teav.trackedentityattributeid in( select trackedentityattributeid from trackedentityattribute where uid = 'TN7r3ws7IG9')
 order by psi.executiondate desc;
+
+-- final
+SELECT prg.uid as programUid, psi.uid as eventID,'ilmyEDhD3FH' as dataelementUID,
+teav.value AS sex, tei.uid as teiUid, psi.executiondate::date as eventDate
+from programstageinstance psi
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+
+WHERE psi.deleted is false and psi.executiondate is not null 
+and psi.eventdatavalues -> 'ilmyEDhD3FH' is null
+and psi.executiondate is not null and psi.deleted = false
+and ps.uid in ('ngJg5lvavdO','BN8zKiaR9lI','VUD50raolGD','vMBCMh48dr4','Jf64kZahiNV',
+'VjwQjmnkAuH','shKUI1hZNFk','xYcDpATOc1y','AGxEdizmvwE','nCY5g6oAinV',
+'kwvd7SWaHga','goEnnJeZzyf','QcrwhxcZVSC')and teav.trackedentityattributeid 
+in( select trackedentityattributeid from trackedentityattribute where uid = 'TN7r3ws7IG9')
+order by psi.executiondate desc;
+
+
+
+'ngJg5lvavdO','BN8zKiaR9lI','VUD50raolGD','vMBCMh48dr4','Jf64kZahiNV',
+'VjwQjmnkAuH','shKUI1hZNFk','xYcDpATOc1y','AGxEdizmvwE','nCY5g6oAinV',
+'kwvd7SWaHga','goEnnJeZzyf','QcrwhxcZVSC',
+
+-- stage ids
+
+'HpS6GtD2Yk5','zLxGw3kEplq','zRUw1avYEvI','YRSdePjzzfs','DgAKrnlkpHc',
+'AcmSTzlFRAG','s7NCcAyCwp8','xYcDpATOc1y','AGxEdizmvwE','Jf64kZahiNV',
+'ngJg5lvavdO','BN8zKiaR9lI','vMBCMh48dr4','VjwQjmnkAuH','nCY5g6oAinV',
+'kwvd7SWaHga','QaElbwc8hEb','tH10pNJRqWc','hJUGFnvLrT0','ijBnmlPTzFf',
+'WXPWqQYa9iW','goEnnJeZzyf','VUD50raolGD','pDgejc9BcF3','yyrccizx6YX',
+'BnwOtiAlLa3','hnUdxBChynp','HwRNVlK3gqz','uBRbtf9x2yN','AD4cG001YTy',
+'QcrwhxcZVSC','shKUI1hZNFk','XaSjR6NQBdm','xSZHPJ3Ortq','tj3JshBYA7i',
+
+
+-- Risk group
+-- select * from dataelement where name = 'Risk group' --- 4727904, kNOXyHVm6PF -- attr -- Usl9OzVV46v
+
+SELECT prg.uid as programUid, psi.uid as eventID,'kNOXyHVm6PF' as dataelementUID,
+teav.value AS risk_group, tei.uid as teiUid, psi.executiondate::date as eventDate
+from programstageinstance psi
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+
+WHERE psi.deleted is false and psi.executiondate is not null 
+and psi.eventdatavalues -> 'kNOXyHVm6PF' is null
+and psi.executiondate is not null and psi.deleted = false
+and ps.uid in ( 'goEnnJeZzyf','BN8zKiaR9lI','shKUI1hZNFk','vMBCMh48dr4','VUD50raolGD',
+'Jf64kZahiNV','ngJg5lvavdO','QcrwhxcZVSC','VjwQjmnkAuH''xYcDpATOc1y' )
+and teav.trackedentityattributeid 
+in( select trackedentityattributeid from trackedentityattribute where uid = 'Usl9OzVV46v')
+order by psi.executiondate desc;
+
+
+
+
+
+
+
+
+
+
+xYcDpATOc1y
+
+
+
+-- Age at visit (in years)
+-- zTwMKXGt0xF, -- fOVzjBOZdvQ
+select prg.uid as programUid, psi.uid as eventID, 'zTwMKXGt0xF' as dataelementUID,
+EXTRACT(year FROM AGE(psi.executiondate::date,teav.value::date))::int
+as_on_visit, tei.uid as teiUid, psi.executiondate::date as eventDate, 
+teav.value AS dob from programstageinstance psi
+
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+WHERE psi.deleted is false and psi.executiondate is not null 
+and psi.eventdatavalues -> 'zTwMKXGt0xF' is null 
+and psi.executiondate is not null and psi.deleted = false
+and ps.uid in ('ngJg5lvavdO','BN8zKiaR9lI','VUD50raolGD','vMBCMh48dr4','Jf64kZahiNV',
+'VjwQjmnkAuH','shKUI1hZNFk','xYcDpATOc1y','AGxEdizmvwE','nCY5g6oAinV',
+'kwvd7SWaHga','goEnnJeZzyf','QcrwhxcZVSC')and teav.trackedentityattributeid 
+in( select trackedentityattributeid from trackedentityattribute where uid = 'fOVzjBOZdvQ')
+order by psi.executiondate desc;
+
+
+-- 'FSW type' --  
+-- select * from dataelement where name = 'FSW type' --- 4727323, Xmlo99YA1VR -- attr -- kHXVrFZmmU5
+SELECT prg.uid as programUid, psi.uid as eventID,'Xmlo99YA1VR' as dataelementUID,
+teav.value AS fsw_type, tei.uid as teiUid, psi.executiondate::date as eventDate
+from programstageinstance psi
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+
+WHERE psi.deleted is false and psi.executiondate is not null 
+and psi.eventdatavalues -> 'Xmlo99YA1VR' is null
+and psi.executiondate is not null and psi.deleted = false
+and ps.uid in ( 'BN8zKiaR9lI','vMBCMh48dr4','VUD50raolGD','Jf64kZahiNV','ngJg5lvavdO','QcrwhxcZVSC' )
+and teav.trackedentityattributeid 
+in( select trackedentityattributeid from trackedentityattribute where uid = 'kHXVrFZmmU5')
+order by psi.executiondate desc;
+
+
+-- 'Client of FSW type' --  
+-- select * from dataelement where name = 'Client of FSW type' --- 7827053, E3rrJTR9rrP -- attr -- zGggSXr9jUF
+
+SELECT prg.uid as programUid, psi.uid as eventID,'E3rrJTR9rrP' as dataelementUID,
+teav.value AS cient_of_fsw_type, tei.uid as teiUid, psi.executiondate::date as eventDate
+from programstageinstance psi
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+
+WHERE psi.deleted is false and psi.executiondate is not null 
+and psi.eventdatavalues -> 'E3rrJTR9rrP' is null
+and psi.executiondate is not null and psi.deleted = false
+and ps.uid in ( 'BN8zKiaR9lI','ngJg5lvavdO' )
+and teav.trackedentityattributeid 
+in( select trackedentityattributeid from trackedentityattribute where uid = 'zGggSXr9jUF')
+order by psi.executiondate desc;
+
+
+-- Marital status
+select * from dataelement where name = 'Marital status' --- 4727904, hj1VvyG5UIL -- attr -- okYFdrn1fGD
+
+select * from programstagedataelement
+where dataelementid = 4727665
+
+select * from programstage
+where programstageid  in ( 4728619,4728487,4728570);
+
+SELECT prg.uid as programUid, psi.uid as eventID,'hj1VvyG5UIL' as dataelementUID,
+teav.value AS marital_status, tei.uid as teiUid, psi.executiondate::date as eventDate
+from programstageinstance psi
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = pi.trackedentityinstanceid
+INNER JOIN trackedentityattributevalue teav ON teav.trackedentityinstanceid = pi.trackedentityinstanceid
+
+WHERE psi.deleted is false and psi.executiondate is not null 
+and psi.eventdatavalues -> 'hj1VvyG5UIL' is null
+and psi.executiondate is not null and psi.deleted = false
+and ps.uid in ( 'BN8zKiaR9lI','AGxEdizmvwE','ngJg5lvavdO' )
+and teav.trackedentityattributeid 
+in( select trackedentityattributeid from trackedentityattribute where uid = 'okYFdrn1fGD')
+order by psi.executiondate desc;
+
+
+-- https://tracker.hivaids.gov.np/save-child-2.27/api/sqlViews/qYJQyXbZesE/data?paging=false
+
+-- python3 main_script_eventDataValue_update_xlsx.py
+
+
+-- all eventDataValue
+
+SELECT psi.uid eventID,psi.created::date,psi.lastupdated::date,psi.executiondate::date as eventdate, 
+psi.storedby,psi.status,psi.completeddate::date,psi.completedby,org.uid AS orgUID,org.name AS orgName,
+prg.uid AS prgUID, prg.name AS prgName,ps.uid AS prgStageUID, ps.name AS prgStageName,
+de.name AS dataElementName, data.key as de_uid,cast(data.value::json ->> 'value' AS VARCHAR) AS de_value 
+FROM programstageinstance psi
+JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
+INNER JOIN programinstance pi ON pi.programinstanceid = psi.programinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstage ps ON ps.programstageid = psi.programstageid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+INNER JOIN dataelement de ON de.uid = data.key
+WHERE prg.uid = 'L78QzNqadTV' and psi.deleted is false AND ps.uid = 'tj3JshBYA7i';
+
+
+
+
+
+
+
+
+
+https://tracker.hivaids.gov.np/save-child-2.27/api/29/analytics/events/query/L78QzNqadTV.json?dimension=pe:THIS_YEAR&dimension=ou:cCTQiGkKcTk&dimension=tj3JshBYA7i.drKkLxaGFwv&dimension=tj3JshBYA7i.zTwMKXGt0xF&dimension=tj3JshBYA7i.vGs0hiPd0XS&stage=tj3JshBYA7i&displayProperty=NAME&totalPages=false&outputType=EVENT&desc=eventdate&pageSize=100&page=1
+https://tracker.hivaids.gov.np/save-child-2.27/api/29/analytics/events/query/L78QzNqadTV.json?dimension=pe:THIS_YEAR&dimension=ou:cCTQiGkKcTk&dimension=tj3JshBYA7i.drKkLxaGFwv&dimension=tj3JshBYA7i.zTwMKXGt0xF&dimension=tj3JshBYA7i.vGs0hiPd0XS&dimension=tj3JshBYA7i.lhezJnKvSKp&stage=tj3JshBYA7i&displayProperty=NAME&totalPages=false&outputType=EVENT&desc=eventdate&pageSize=100&page=1
+https://tracker.hivaids.gov.np/save-child-2.27/api/29/analytics/events/query/L78QzNqadTV.json?dimension=pe:THIS_YEAR&dimension=ou:cCTQiGkKcTk&dimension=tj3JshBYA7i.drKkLxaGFwv&dimension=tj3JshBYA7i.zTwMKXGt0xF&dimension=tj3JshBYA7i.vGs0hiPd0XS&dimension=tj3JshBYA7i.naO1oElmXs8&stage=tj3JshBYA7i&displayProperty=NAME&totalPages=false&outputType=EVENT&desc=eventdate&pageSize=100&page=1
+https://tracker.hivaids.gov.np/save-child-2.27/api/29/analytics/events/query/L78QzNqadTV.json?dimension=pe:LAST_5_YEARS&dimension=ou:cCTQiGkKcTk&dimension=tj3JshBYA7i.drKkLxaGFwv&dimension=tj3JshBYA7i.zTwMKXGt0xF&dimension=tj3JshBYA7i.vGs0hiPd0XS&dimension=tj3JshBYA7i.MrBdlILWDa0&stage=tj3JshBYA7i&displayProperty=NAME&totalPages=false&outputType=EVENT&desc=eventdate&pageSize=100&page=1
+
+
+-- update tei registration ORG Unit 
+-- 16/05/2025
+update trackedentityinstance set organisationunitid = 48536
+where trackedentityinstanceid in ( 5215437,1502182,
+993872,4540232,1557304,1557738,725769,5137485,
+1430645,1454061,4534976,1604314,2431001,5406397,1465383,
+1465230,1582859,1558702,1496131,1496503,1473961,1557595,
+1465976,1580717,4532223,4539692,4540880,1454941,4542432);
+
+select trackedentityinstanceid,organisationunitid from trackedentityinstance
+where trackedentityinstanceid in ( 5215437,1502182,
+993872,4540232,1557304,1557738,725769,5137485,
+1430645,1454061,4534976,1604314,2431001,5406397,1465383,
+1465230,1582859,1558702,1496131,1496503,1473961,1557595,
+1465976,1580717,4532223,4539692,4540880,1454941,4542432);
+
+
+
+
+
+-- as on 06/08/2025
+SELECT last_value FROM trackedentityinstance_sequence; -- 5527682  5527847 -- 5527940
+ALTER SEQUENCE trackedentityinstance_sequence RESTART WITH 5530001;
+
+SELECT last_value FROM programinstance_sequence;
+ALTER SEQUENCE programinstance_sequence RESTART WITH 250451;
+
+SELECT last_value FROM programstageinstance_sequence;
+ALTER SEQUENCE programstageinstance_sequence RESTART WITH 250451; -- 
+
+SELECT last_value FROM trackedentitydatavalueaudit_sequence;
+ALTER SEQUENCE trackedentitydatavalueaudit_sequence RESTART WITH 250451;
+
+SELECT last_value FROM hibernate_sequence;
+ALTER SEQUENCE hibernate_sequence RESTART WITH 250451;
+
+-- as on 25/08/2025
+
+SELECT last_value FROM programstageinstance_sequence; -- 12488807
+
+SELECT last_value FROM trackedentityinstance_sequence; -- 5530006
+5530006
+7678477
+-- as on 25/08/2025
+ALTER SEQUENCE trackedentityinstance_sequence RESTART WITH 7678501;

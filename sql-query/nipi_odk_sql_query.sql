@@ -113,3 +113,35 @@ INSERT INTO periodboundary(periodboundaryid, uid, created, lastupdated, boundary
 
 update periodboundary  set created = now()::timestamp where created ='2023-03-10';
 update periodboundary  set lastupdated = now()::timestamp where lastupdated ='2023-03-10';
+
+
+
+
+--- event list with trackedentityattributevalue
+
+SELECT psi.programstageinstanceid ,psi.uid AS eventUID,tei.trackedentityinstanceid,
+tei.uid as tei_uid,teav1.value as patient_id, org.code AS nin,org.uid AS org_uid,
+org.name AS orgName,psi.executiondate::date as Event_date
+FROM trackedentityattributevalue teav1
+INNER JOIN trackedentityinstance tei ON tei.trackedentityinstanceid = teav1.trackedentityinstanceid
+INNER JOIN programinstance pi ON pi.trackedentityinstanceid = tei.trackedentityinstanceid
+INNER JOIN program prg ON prg.programid = pi.programid
+INNER JOIN programstageinstance psi ON psi.programinstanceid = pi.programinstanceid
+INNER JOIN organisationunit org ON org.organisationunitid = psi.organisationunitid
+WHERE teav1.trackedentityattributeid in (select trackedentityattributeid from trackedentityattribute
+where uid = 'vJ5V1IQXZjP' ) and prg.uid = 'Tt9ILP7v4Fd';
+
+SELECT value, COUNT(value)
+FROM trackedentityattributevalue
+where trackedentityattributeid in (select trackedentityattributeid from trackedentityattribute
+where uid = 'vJ5V1IQXZjP') 
+GROUP BY value
+HAVING COUNT(value) > 1
+
+
+SELECT value, COUNT(trackedentityinstanceid) AS No_of_tei
+FROM trackedentityattributevalue 
+where trackedentityattributeid in (select trackedentityattributeid from trackedentityattribute
+where uid = 'vJ5V1IQXZjP') 
+GROUP BY value
+HAVING COUNT(trackedentityinstanceid) > 1 

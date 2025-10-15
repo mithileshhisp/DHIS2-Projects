@@ -5030,3 +5030,16 @@ FROM programstageinstance psi
 JOIN json_each_text(psi.eventdatavalues::json) data ON TRUE 
 INNER JOIN dataelement de ON de.uid = data.key
 where de.uid in ( 'qDpbbFooMvK','X4SzKj7unAE');
+
+
+-- 09/05/2025 user DELETE query in 2.41
+
+
+update dataelement set userid = 46 where userid in (); -- 46
+update message set userid = 46 where userid -- 65
+
+delete from userinfo where userinfoid in 
+
+select * from userinfo where userinfoid 
+
+="update userinfo set disabled = true where userinfoid = "&A2&" and uid = '"&B2&"';"

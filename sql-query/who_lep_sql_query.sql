@@ -28,6 +28,32 @@ in ( 14316, 14918 );
 
 
 
+-- as on 20/03/2025
+-- child population for 2023 and push the same in 2024
+SELECT de.uid AS dataElementUID,coc.uid AS categoryOptionComboUID, org.uid AS organisationunitUID,
+org.name AS organisationunitName,dv.value, dv.storedby, CONCAT (split_part(pe.startdate::TEXT,'-', 1)) 
+as isoPeriod FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+inner join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+WHERE de.uid in ('EnQPW5xZDPX') 
+and pe.startdate >= '2023-01-01' and pe.enddate <= '2023-12-31'
+and dv.value is not null and dv.deleted = false order by pe.startdate;
+
+-- adult population for 2023 and push the same in 2024
+SELECT de.uid AS dataElementUID,coc.uid AS categoryOptionComboUID, org.uid AS organisationunitUID,
+org.name AS organisationunitName,dv.value, dv.storedby, CONCAT (split_part(pe.startdate::TEXT,'-', 1)) 
+as isoPeriod FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+inner join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+WHERE de.uid in ('d1d6EWQZJGB') 
+and pe.startdate >= '2023-01-01' and pe.enddate <= '2023-12-31'
+and dv.value is not null and dv.deleted = false order by pe.startdate;
+
+
 
 
 -- as on 01/04/2024
@@ -324,3 +350,103 @@ where uid = 'jDi5rVore2O';
 
 update orgunitgroup set uid = 'Lfknzyd1hjQ'
 where uid = 'BCds3eIM894'
+
+-- datavalueSet for delete dataValue and its ORG Unit
+-- 16/05/2025
+
+SELECT de.uid AS dataElementUID,de.name AS dataElementName, coc.uid AS categoryOptionComboUID, 
+coc.name AS categoryOptionComboName, attcoc.uid AS attributeOptionComboUID,attcoc.name AS
+attributeOptionComboName, org.uid AS organisationunitUID, org.name AS organisationunitName, 
+dv.value, dv.storedby, dv.created, dv.lastupdated, pe.startdate,pe.enddate,pety.name,
+CONCAT (split_part(pe.startdate::TEXT,'-', 1)) as isoPeriod FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+INNER JOIN categoryoptioncombo AS attcoc ON attcoc.categoryoptioncomboid = dv.attributeoptioncomboid
+INNER join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+INNER join periodtype pety ON pety.periodtypeid = pe.periodtypeid
+where org.uid = 'cbZU7xVW2rJ'
+
+-- delete ORG Unit
+
+delete from datasetsource where sourceid in (
+select organisationunitid from organisationunit where uid = 'cbZU7xVW2rJ');
+
+delete from datavalue where sourceid in (
+select organisationunitid from organisationunit where uid = 'cbZU7xVW2rJ');
+
+delete from datavalueaudit where organisationunitid in (
+select organisationunitid from organisationunit where uid = 'cbZU7xVW2rJ');
+
+delete from orgunitgroupmembers where organisationunitid in (
+select organisationunitid from organisationunit where uid = 'cbZU7xVW2rJ');
+
+delete from userdatavieworgunits where organisationunitid in (
+select organisationunitid from organisationunit where uid = 'cbZU7xVW2rJ');
+
+delete from usermembership where organisationunitid in (
+select organisationunitid from organisationunit where uid = 'cbZU7xVW2rJ');
+
+delete from visualization_organisationunits where organisationunitid in (
+select organisationunitid from organisationunit where uid = 'cbZU7xVW2rJ');
+
+delete from organisationunit where uid = 'cbZU7xVW2rJ';
+
+
+
+begin;
+
+	delete from datasetsource where sourceid in (
+	select organisationunitid from organisationunit where uid in ('HOkLAdpOh2I','cbZU7xVW2rJ'));
+
+	delete from datavalue where sourceid in (
+	select organisationunitid from organisationunit where uid in ('HOkLAdpOh2I','cbZU7xVW2rJ'));
+
+	delete from datavalueaudit where organisationunitid in (
+	select organisationunitid from organisationunit where uid in ('HOkLAdpOh2I','cbZU7xVW2rJ'));
+
+	delete from orgunitgroupmembers where organisationunitid in (
+	select organisationunitid from organisationunit where uid in ('HOkLAdpOh2I','cbZU7xVW2rJ'));
+
+	delete from userdatavieworgunits where organisationunitid in (
+	select organisationunitid from organisationunit where uid in ('HOkLAdpOh2I','cbZU7xVW2rJ'));
+
+	delete from usermembership where organisationunitid in (
+	select organisationunitid from organisationunit where uid in ('HOkLAdpOh2I','cbZU7xVW2rJ'));
+
+	delete from visualization_organisationunits where organisationunitid in (
+	select organisationunitid from organisationunit where uid in ('HOkLAdpOh2I','cbZU7xVW2rJ'));
+	
+	delete from lockexception where organisationunitid in (
+	select organisationunitid from organisationunit where uid in ('HOkLAdpOh2I','cbZU7xVW2rJ'));
+
+	delete from organisationunit where uid in ('HOkLAdpOh2I','cbZU7xVW2rJ');
+
+end;
+
+-- sql-view Leprosy Elimination Monitoring Record -- CdIfs0o6Vo2
+
+SELECT de.uid AS dataElementUID,coc.uid AS categoryOptionComboUID, org.uid AS organisationunitUID,
+org.name AS organisationunitName,dv.value, dv.comment, CONCAT (split_part(pe.startdate::TEXT,'-', 1)) 
+as isoPeriod,CONCAT( org.name,'-',CONCAT (split_part(pe.startdate::TEXT,'-', 1)) ) FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+inner join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+WHERE de.uid in ('SmZe6komFZU','vrltiuqfmsj', 'Im9Wvx4SVYb', 'JypGPnTq5Bf') and org.uid = 'ym7posJV3dV'
+and pe.startdate >= '2006-01-01' and pe.enddate <= '2025-12-31'
+and dv.deleted = false order by pe.startdate;
+
+SELECT de.uid AS dataElementUID,coc.uid AS categoryOptionComboUID, org.uid AS organisationunitUID,
+org.name AS organisationunitName,dv.value, dv.comment, CONCAT (split_part(pe.startdate::TEXT,'-', 1)) 
+as isoPeriod,CONCAT( org.name,'-',CONCAT (split_part(pe.startdate::TEXT,'-', 1)) ) FROM datavalue dv
+INNER JOIN dataelement de ON de.dataelementid = dv.dataelementid
+INNER JOIN categoryoptioncombo AS coc ON coc.categoryoptioncomboid = dv.categoryoptioncomboid
+inner join period pe ON pe.periodid = dv.periodid
+INNER JOIN organisationunit org ON org.organisationunitid = dv.sourceid
+WHERE de.uid in ('SmZe6komFZU','vrltiuqfmsj', 'Im9Wvx4SVYb', 'JypGPnTq5Bf') and org.uid = '${ou}'
+and pe.startdate >= '${startDate}' and pe.enddate <= '${endDate}'
+and dv.deleted = false order by pe.startdate
+
+
+
